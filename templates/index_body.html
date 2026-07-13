@@ -1,0 +1,81 @@
+{JAVASCRIPT}
+
+<!-- Message admin (annonce ponctuelle depuis le panneau FA), conservé au cas où -->
+<!-- BEGIN message_admin_index -->
+<div class="forum-width" style="margin-bottom:12px;">
+	<!-- BEGIN message_admin_titre -->
+	<div class="pfa-admin-msg-title">{message_admin_index.message_admin_titre.MES_TITRE}</div>
+	<!-- END message_admin_titre -->
+	<!-- BEGIN message_admin_txt -->
+	<div class="pfa-admin-msg-txt">{message_admin_index.message_admin_txt.MES_TXT}</div>
+	<!-- END message_admin_txt -->
+</div>
+<!-- END message_admin_index -->
+
+<div class="content-frame">
+	<div class="hero-banner ph ph-dark">image</div>
+
+	<!-- Bloc d'accueil : contenu géré à la main (pas de variable Forumactif pour
+	     "texte de bienvenue"/"staff"/"personnages prédéfinis") — voir README pour
+	     comment le modifier. -->
+	<div class="welcome-grid">
+		<div class="panel gborder">
+			<h4>Bienvenue</h4>
+			<div class="panel-scroll">
+				<div class="subtitle">Terrien&middot;ne de passage</div>
+				<p>Texte de contexte/bienvenue à écrire ici.</p>
+			</div>
+			<span class="link-more">&#9656; Contexte</span>
+		</div>
+
+		<div class="stack-cards">
+			<div class="mini-card gborder staff-card">
+				<span class="label">Staff du forum</span>
+				<div class="avatar-row">
+					<div class="staff-avatar ph"><span class="staff-name">Prenom</span></div>
+					<div class="staff-avatar ph"><span class="staff-name">Prenom</span></div>
+					<div class="staff-avatar ph"><span class="staff-name">Prenom</span></div>
+				</div>
+			</div>
+			<div class="mini-card gborder tall">
+				<div class="avatar-grid">
+					<div class="predef-item"><div class="avatar-sm ph"></div><div class="predef-overlay">Personnage 1, blabla</div></div>
+					<div class="predef-item"><div class="avatar-sm ph"></div><div class="predef-overlay">Personnage 2, blabla</div></div>
+					<div class="predef-item"><div class="avatar-sm ph"></div><div class="predef-overlay">Personnage 3, blabla</div></div>
+					<div class="predef-item"><div class="avatar-sm ph"></div><div class="predef-overlay">Personnage 4, blabla</div></div>
+					<div class="predef-item"><div class="avatar-sm ph"></div><div class="predef-overlay">Personnage 5, blabla</div></div>
+					<div class="predef-item"><div class="avatar-sm ph"></div><div class="predef-overlay">Personnage 6, blabla</div></div>
+				</div>
+				<span class="link-more">Predefinis</span>
+			</div>
+		</div>
+
+		<div class="stack-cards row-layout">
+			<div class="mini-card gborder"><span class="label">Derniers messages</span></div>
+			<div class="event-card gborder">
+				<div class="event-img ph">image</div>
+				<div class="event-overlay-top">
+					<div class="eyebrow">Date</div>
+					<div class="event-title">Titre de l'evenement sur deux lignes</div>
+				</div>
+				<div class="event-overlay-bottom">
+					<span class="event-arrow">&lsaquo;</span>
+					<div class="event-dots"><span class="active"></span><span></span><span></span></div>
+					<span class="event-arrow">&rsaquo;</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="tagline-row">
+		<div class="tagline">&mdash; tagline du forum &mdash;</div>
+		<div class="icon-row"><div class="icon-sq"></div><div class="icon-sq"></div><div class="icon-sq"></div><div class="icon-sq"></div></div>
+	</div>
+</div>
+
+<!-- Catégories/forums réels : {BOARD_INDEX} = sortie de index_box (la boucle
+     catrow/forumrow), une div.admin-frame par catégorie, dans l'ordre où elles
+     sont classées dans le panneau admin Forumactif. Administration et Hors RP
+     y sont mêlées comme les autres à ce stade ; c'est site.js qui les repère
+     par leur nom et les réorganise dans leur mise en page spéciale. -->
+{BOARD_INDEX}

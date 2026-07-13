@@ -1,0 +1,60 @@
+<!-- Liens de recherche rapide : pas repris dans le design (sidebar/mini-boxes
+     "Recherche RPs" les couvrent), gardés cachés pour ne pas perdre la
+     fonctionnalité (accès direct par URL, lecteurs d'écran). -->
+<ul class="linklist top" style="position:absolute; left:-9999px;" aria-hidden="true">
+	<!-- BEGIN switch_user_logged_in -->
+	<li><a href="{U_SEARCH_NEW}">{L_SEARCH_NEW}</a></li>
+	<li><a href="{U_SEARCH_SELF}">{L_SEARCH_SELF}</a></li>
+	<!-- END switch_user_logged_in -->
+	<li><a href="{U_SEARCH_UNANSWERED}">{L_SEARCH_UNANSWERED}</a></li>
+	<!-- BEGIN switch_user_logged_in -->
+	<li><a href="{U_MARK_READ}" accesskey="m">{L_MARK_FORUMS_READ}</a></li>
+	<!-- END switch_user_logged_in -->
+</ul>
+
+<!-- BEGIN catrow -->
+	<!-- BEGIN tablehead -->
+	<div class="admin-frame">
+		<div class="admin-outer">
+			<div class="admin-header">
+				<h2>{catrow.tablehead.L_FORUM}</h2>
+				<span class="chevron">&#9650;</span>
+			</div>
+			<div class="admin-body">
+				<div class="zone-list pfa-cat" data-cat-name="{catrow.tablehead.L_FORUM}">
+	<!-- END tablehead -->
+	<!-- BEGIN forumrow -->
+					<div class="zone-card" data-forum-name="{catrow.forumrow.FORUM_NAME}" data-level="{catrow.forumrow.LEVEL}">
+						<div class="zone-top">
+							<div class="zone-image ph ph-dark">
+								<h3 class="zone-name"><a href="{catrow.forumrow.U_VIEWFORUM}">{catrow.forumrow.FORUM_NAME}</a></h3>
+							</div>
+							<div class="zone-right">
+								<div class="zone-stats">
+									<span class="stat-pill">{catrow.forumrow.TOPICS} {L_TOPICS}</span>
+									<span class="stat-pill">{catrow.forumrow.POSTS} {L_POSTS}</span>
+								</div>
+								<!-- Description brute du forum (texte + éventuellement une image collée
+								     par l'admin) : site.js en extrait l'image pour .zone-image et laisse
+								     le texte ici. Vide si le forum n'a pas de description. -->
+								<div class="zone-desc" data-pfa-desc-raw>{catrow.forumrow.FORUM_DESC}</div>
+								<!-- Sous-forums fournis pré-formatés par Forumactif : site.js réextrait
+								     chaque lien pour le remettre en forme en pilules individuelles. -->
+								<div class="zone-subforums" data-pfa-subforums-raw>{forumrow.SUBFORUMS}</div>
+								<div class="last-msg">
+									<!-- BEGIN switch_topic_title -->
+									<a href="{catrow.forumrow.U_LATEST_TOPIC}" title="{catrow.forumrow.LATEST_TOPIC_TITLE}">{catrow.forumrow.LATEST_TOPIC_NAME}</a> &mdash;
+									<!-- END switch_topic_title -->
+									{catrow.forumrow.USER_LAST_POST}
+								</div>
+							</div>
+						</div>
+					</div>
+	<!-- END forumrow -->
+	<!-- BEGIN tablefoot -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END tablefoot -->
+<!-- END catrow -->
