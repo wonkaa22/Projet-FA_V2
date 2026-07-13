@@ -109,25 +109,25 @@
   var cats = document.querySelectorAll('.pfa-cat');
   if (!cats.length) { return; }
 
-  /* Comparaison tolérante (espaces superflus/insécables possibles autour du
-     nom généré par Forumactif) plutôt qu'un sélecteur d'attribut exact, qui
-     échouerait silencieusement au moindre espace en trop. */
+  /* Le nom de catégorie est lu depuis le <h2> visuel de .admin-header, pas
+     depuis un attribut séparé : sur au moins une installation Forumactif,
+     réutiliser {catrow.tablehead.L_FORUM} une seconde fois dans un attribut
+     de la même catégorie produisait le HTML déjà rendu du <h2> au lieu du
+     nom brut (probable quirk du moteur de template FA face à la même
+     variable utilisée deux fois de suite) — le <h2> lui-même, en revanche,
+     s'est toujours affiché correctement. Comparaison tolérante aux espaces
+     superflus/insécables. */
+  function catName(cat) {
+    var frame = cat.closest('.admin-frame');
+    var h2 = frame ? frame.querySelector('.admin-header h2') : null;
+    return h2 ? h2.textContent.replace(/ /g, ' ').trim() : '';
+  }
   function findCatByName(name) {
     for (var i = 0; i < cats.length; i++) {
-      var raw = (cats[i].getAttribute('data-cat-name') || '').replace(/ /g, ' ').trim();
-      if (raw === name) { return cats[i]; }
+      if (catName(cats[i]) === name) { return cats[i]; }
     }
     return null;
   }
-
-  /* DEBUG temporaire : liste les noms de catégories tels que lus par ce
-     script, dans la console du navigateur (F12 > Console). À retirer une
-     fois Administration/Hors RP confirmés fonctionnels. */
-  try {
-    var debugNames = [];
-    cats.forEach(function (c) { debugNames.push(JSON.stringify(c.getAttribute('data-cat-name'))); });
-    console.log('[pfa debug] catégories détectées :', debugNames.join(', '));
-  } catch (e) { /* ignore */ }
 
   /* 1. Enrichissement générique de chaque carte, quelle que soit la catégorie */
   document.querySelectorAll('.zone-card').forEach(function (card) {
