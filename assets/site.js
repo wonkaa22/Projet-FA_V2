@@ -109,6 +109,26 @@
   var cats = document.querySelectorAll('.pfa-cat');
   if (!cats.length) { return; }
 
+  /* Comparaison tolérante (espaces superflus/insécables possibles autour du
+     nom généré par Forumactif) plutôt qu'un sélecteur d'attribut exact, qui
+     échouerait silencieusement au moindre espace en trop. */
+  function findCatByName(name) {
+    for (var i = 0; i < cats.length; i++) {
+      var raw = (cats[i].getAttribute('data-cat-name') || '').replace(/ /g, ' ').trim();
+      if (raw === name) { return cats[i]; }
+    }
+    return null;
+  }
+
+  /* DEBUG temporaire : liste les noms de catégories tels que lus par ce
+     script, dans la console du navigateur (F12 > Console). À retirer une
+     fois Administration/Hors RP confirmés fonctionnels. */
+  try {
+    var debugNames = [];
+    cats.forEach(function (c) { debugNames.push(JSON.stringify(c.getAttribute('data-cat-name'))); });
+    console.log('[pfa debug] catégories détectées :', debugNames.join(', '));
+  } catch (e) { /* ignore */ }
+
   /* 1. Enrichissement générique de chaque carte, quelle que soit la catégorie */
   document.querySelectorAll('.zone-card').forEach(function (card) {
     var descRaw = card.querySelector('[data-pfa-desc-raw]');
@@ -176,7 +196,7 @@
 
   /* 3. Administration : cadre sur mesure (guidebook statique + 3 sous-cartes
      réelles : Personnages / Vie sur la Lune / Gestion). */
-  var adminCat = document.querySelector('.pfa-cat[data-cat-name="Administration"]');
+  var adminCat = findCatByName('Administration');
   if (adminCat) {
     var adminBody = adminCat.closest('.admin-body');
     var adminForums = {};
@@ -247,7 +267,7 @@
   /* 4. Hors RP : grille à 3 colonnes réelles (Détente / Entraide et partage /
      Archives), et forcée en dernière position quel que soit son rang dans le
      panneau admin. */
-  var horsrpCat = document.querySelector('.pfa-cat[data-cat-name="Hors RP"]');
+  var horsrpCat = findCatByName('Hors RP');
   if (horsrpCat) {
     var horsrpFrame = horsrpCat.closest('.admin-frame');
     var horsrpBody = horsrpCat.closest('.admin-body');
