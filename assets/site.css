@@ -387,3 +387,8 @@
   }
   .zone-subforums { display: flex; flex-wrap: wrap; gap: 8px; }
   .zone-subforums .pill-link { font-size: 10px; padding: 7px 12px; }
+
+  /* ---------- PIED DE PAGE (minimal, voir overall_footer_begin.html) ---------- */
+  .pfa-footer:empty { display: none; }
+  .pfa-footer { padding: 12px 18px; text-align: center; font-size: 11px; color: var(--ink-muted-light); }
+  .pfa-footer a { color: inherit; }

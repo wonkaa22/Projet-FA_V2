@@ -1,0 +1,45 @@
+{PROTECT_FOOTER}
+
+<!-- Switcheroo (multi-personnages) -->
+<script src="https://cdn.jsdelivr.net/gh/caezd/switcheroo@master/monomer.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/caezd/switcheroo@master/switcheroo.js"></script>
+<script type="text/javascript">
+	(function () {
+		if (typeof _userdata !== 'undefined' && _userdata['session_logged_in']) {
+			new Switcheroo('#switcheroo', {
+				logo: '',
+				enableReorder: true,
+				updateAvatar: true,
+				confirm: true,
+				deleteIcon: '×',
+				addIcon: '+'
+			}, {
+				button: { add: "Associer un personnage" },
+				msg: {
+					error:   "Une erreur est survenue lors du changement de personnage.",
+					confirm: "Confirmer le changement de personnage ?"
+				},
+				modal: {
+					password_label: "Mot de passe",
+					username_label: "Nom d'utilisateur",
+					login_button:   "Connexion"
+				}
+			});
+		}
+	})();
+</script>
+
+<!-- Notifications (plugin tiers Notiffi, à installer sur le forum) -->
+<script src="https://cdn.jsdelivr.net/gh/Kim-Bnx/Notiffi@main/notiffi/notiffi.min.js"></script>
+<script type="text/javascript">Notiffi.init();</script>
+
+<!-- JS Projet-FA_V2 (hébergé sur GitHub Pages, cache-bust via ?v= à incrémenter à chaque édition) -->
+<script src="https://wonkaa22.github.io/Projet-FA_V2/site.js?v=1"></script>
+
+<script type="text/javascript">
+//<![CDATA[
+	fa_endpage();
+//]]>
+</script>
+</body>
+</html>
