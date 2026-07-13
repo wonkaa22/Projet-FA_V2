@@ -16,15 +16,27 @@ du thème "Selenujo" existant. Point de départ : mockup HTML/CSS validé
 - `docs/passation-projet-forum-rpg.md` — historique des décisions prises
   avant ce dépôt (palette, architecture, composants, points ouverts).
 
-## Points ouverts à trancher avant d'aller plus loin
+## Décisions prises
 
-1. Quelle palette est le vrai thème par défaut (bleu marine `0d1b2a` vs
-   rose/mauve `e5989b`).
-2. Nombre de "Sous forum" par zone : variable en vrai, prévoir un rendu qui
-   s'adapte.
-3. Numérotation "0X." des sections : générique dans le mockup, à remplacer
-   par le vrai numéro selon la position réelle.
-4. État "connecté" de la sidebar (switch de personnage) : conçu puis retiré
-   du mockup, à réintégrer si besoin.
-5. Page d'accueil vs Portail : `index_body`/`index_box` ou `portal_body` ?
-6. Images réelles à fournir (actuellement tous des placeholders hachurés).
+1. **Palette par défaut : bleu marine** (`0d1b2a`/`415a77`/`778da9`/`e0e1dd`).
+   Le rose/mauve (`6d6875`/`ffe8d6`/`ffcdb2`/`e5989b`) reste le thème
+   "clair" alternatif (toggle).
+2. **Sous-forums par zone : grille flexible** (`flex-wrap`, pas de limite
+   fixe) — la carte de zone grandit en hauteur selon le nombre réel de
+   sous-forums, pas de troncature ni de "+N".
+3. **Page d'accueil = accueil natif** Forumactif (`index_body`/`index_box`),
+   pas de `portal_body` séparé.
+4. **État "connecté" de la sidebar (Switcheroo) : prévu dès la conception**
+   des templates, pas ajouté après-coup — voir
+   `docs/mecanismes-reutilisables-test-astra.md` (section 3 et 4) pour la
+   mécanique technique de référence (point de montage unique dans
+   `overall_header`, déplacé en JS dans la sidebar, détection connecté/invité
+   via lien `logout` dans le nav généré par FA).
+
+## Reste à préciser au fil de l'implémentation (pas bloquant)
+
+- Numérotation "0X." des sections : générique dans le mockup, à remplacer
+  par le vrai numéro selon la position réelle au moment de coder chaque
+  template.
+- Images réelles à fournir par l'utilisateur (actuellement tous des
+  placeholders hachurés).
