@@ -306,6 +306,11 @@
   .gestion-card { display: flex; flex-direction: column; height: 100%; }
   .gestion-card .sub-card-image { height: 220px; margin-top: 4px; }
 
+  /* ---------- HORS RP (0X. Hors RP) - grille de sous-catégories nommées ---------- */
+  .horsrp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; align-items: start; }
+  .horsrp-card { display: flex; flex-direction: column; height: 100%; }
+  .horsrp-card .sub-card-image { flex: 1; min-height: 90px; }
+
   /* ---------- ZONE (0X. Zone) - chevauchements volontaires ---------- */
   .zone-list { display: flex; flex-direction: column; gap: 16px; }
   .zone-card { position: relative; }
@@ -618,6 +623,53 @@
                       <div class="last-msg">Dernier message poste dans ce forum</div>
                     </div>
                   </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-frame">
+          <div class="admin-outer">
+            <div class="admin-header">
+              <h2><span class="num">0X.</span>Hors RP</h2>
+              <span class="chevron">&#9650;</span>
+            </div>
+            <div class="admin-body">
+              <div class="horsrp-grid">
+
+                <div class="sub-card horsrp-card">
+                  <h4>D&eacute;tente</h4>
+                  <div class="pill-list">
+                    <span class="pill-link">Jeux</span>
+                    <span class="pill-link">Discussions</span>
+                    <span class="pill-link">Top-sites</span>
+                  </div>
+                  <div class="sub-card-image ph">image</div>
+                  <div class="last-msg">Dernier message poste dans ce forum</div>
+                </div>
+
+                <div class="sub-card horsrp-card">
+                  <h4>Entraide et partage</h4>
+                  <div class="pill-list">
+                    <span class="pill-link">Galeries</span>
+                    <span class="pill-link">Graphisme</span>
+                  </div>
+                  <div class="sub-card-image ph">image</div>
+                  <div class="last-msg">Dernier message poste dans ce forum</div>
+                </div>
+
+                <div class="sub-card horsrp-card">
+                  <h4>Archives</h4>
+                  <div class="pill-list">
+                    <span class="pill-link">Personnages</span>
+                    <span class="pill-link">RP</span>
+                    <span class="pill-link">Gestion</span>
+                    <span class="pill-link">Detente</span>
+                  </div>
+                  <div class="sub-card-image ph">image</div>
+                  <div class="last-msg">Dernier message poste dans ce forum</div>
                 </div>
 
               </div>
