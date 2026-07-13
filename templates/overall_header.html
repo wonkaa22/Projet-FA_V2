@@ -237,8 +237,8 @@
 
 <!-- Nav FA générée : jamais affichée, sert uniquement de source d'URLs (login/inscription/déconnexion/profil)
      et de détecteur d'état connecté pour le JS (voir pfa-nav-state dans site.js). Ces informations
-     n'existent pas sous forme de variables directes dans overall_header (pas de {U_LOGIN}/{U_LOGOUT}/
-     {USERNAME} disponibles ici), donc on les récupère depuis ce nav plutôt que de les deviner. -->
+     n'existent pas sous forme de variables directes dans overall_header (pas de variable login,
+     logout ou nom d'utilisateur disponible ici), donc on les récupère depuis ce nav plutôt que de les deviner. -->
 <div id="pfaFaNav" style="position:absolute; left:-9999px; top:-9999px;" aria-hidden="true">{GENERATED_NAV_BAR}</div>
 
 <div class="pfa-wrap">
