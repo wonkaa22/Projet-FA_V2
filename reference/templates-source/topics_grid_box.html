@@ -1,0 +1,96 @@
+<!-- BEGIN topics_grid_box -->
+<!-- BEGIN row -->
+<!-- BEGIN header_table -->
+<div class="forumbg announcement">
+	<ul class="topiclist topics">
+		<li class="header">
+			<dl class="icon">
+				<dt>
+{topics_grid_box.row.L_TITLE}
+				</dt>
+			</dl>
+		</li>
+	</ul>
+</div>
+<div class="grid-section">
+	<!-- END header_table -->
+	<!-- BEGIN header_row -->
+	<strong>{topics_grid_box.row.L_TITLE}</strong>
+	<!-- END header_row -->
+	<!-- BEGIN topic -->
+	<!-- BEGIN table_sticky -->
+</div>
+<div class="forumbg">
+	<ul class="topiclist topics">
+		<li class="header">
+			<dl class="icon">
+				<dd class="dterm">
+{topics_grid_box.row.topic.table_sticky.L_TITLE}
+				</dd>
+			</dl>
+		</li>
+	</ul>
+</div>
+<div class="grid-section">
+	<!-- END table_sticky -->
+	<!-- BEGIN line_sticky -->
+	<div class="sticky-separator forumbg"></div>
+	<!-- END line_sticky -->
+	<div class="topic-card {topics_grid_box.row.ROW_ALT_CLASS}">
+		<a href="{topics_grid_box.row.U_VIEW_TOPIC}">
+			<div class="cover-image" style="--cover-image: url('{topics_grid_box.row.U_FB_IMAGE}');">
+				<div class="posts-icon {topics_grid_box.row.FOLDER_CLASSNAME} {topics_grid_box.row.TOPIC_READ_STATUS}" style="background-image:url('{topics_grid_box.row.TOPIC_FOLDER_IMG}');" title="{topics_grid_box.row.L_TOPIC_FOLDER_ALT}"></div>
+				<div class="stats">
+					<span data-tooltip="{L_VIEWS}"><i class="ion-eye"></i> {topics_grid_box.row.VIEWS}</span>
+					<span data-tooltip="{L_REPLIES}"><i class="ion-android-chat"></i> {topics_grid_box.row.REPLIES}</span>
+				</div>
+				<div class="topic-type {topics_grid_box.row.FOLDER_CLASSNAME}">
+{topics_grid_box.row.TOPIC_TYPE}
+				</div>
+				<div class="author-avatar" title="{topics_grid_box.row.L_CREATED_ON_BY}">
+{topics_grid_box.row.TOPIC_AUTHOR_AVATAR}
+				</div>
+			</div>
+		</a>
+		<div class="card-content">
+			<div>
+				<span class="participate-check">{topics_grid_box.row.PARTICIPATE_POST_IMG}</span>
+				<div class="topic-title-container">
+					<!-- BEGIN single_selection -->
+					<input type="radio" name="{topics_grid_box.FIELDNAME}" value="{topics_grid_box.row.FID}" {topics_grid_box.row.L_SELECT} />
+					<!-- END single_selection -->
+					<h2 class="topic-title hierarchy">
+						<a href="{topics_grid_box.row.U_VIEW_TOPIC}" class="topictitle">
+{topics_grid_box.row.TOPIC_TITLE}
+						</a>
+					</h2>
+				</div>
+			</div>
+			<div class="description">
+{topics_grid_box.row.FIRST_POST_TEXT_110}
+			</div>
+			<div class="card-footer">
+				<div class="avatar-footer">
+					<!-- BEGIN avatar -->
+					<span class="lastpost-avatar">{topics_grid_box.row.topic.avatar.LAST_POST_AVATAR}</span>
+					<!-- END avatar -->
+{topics_grid_box.row.LAST_POST_AUTHOR}
+				</div>
+				<div class="time" title="{L_LASTPOST}">
+					<i class="ion-android-time"></i> {topics_grid_box.row.LAST_POST_TIME} {topics_grid_box.row.LAST_POST_IMG}
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END topic -->
+	<!-- BEGIN no_topics -->
+	<div class="posts-section posts-empty row1">
+		<strong>{topics_grid_box.row.L_NO_TOPICS}</strong>
+	</div>
+	<!-- END no_topics -->
+	<!-- BEGIN bottom -->
+</div>
+<!-- END bottom -->
+<!-- BEGIN spacer --><br /><!-- END spacer -->
+<!-- END row -->
+<!-- END topics_grid_box -->
