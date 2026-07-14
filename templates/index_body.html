@@ -22,7 +22,15 @@
 		<div class="panel gborder">
 			<h4>Bienvenue</h4>
 			<div class="panel-scroll">
-				<div class="subtitle" id="pfaWelcomeSubtitle">Terrien&middot;ne de passage</div>
+				<!-- Deux éléments séparés plutôt qu'un texte remplacé en JS : l'invité
+				     est masqué dès la détection de connexion (voir site.js), le nom est
+				     rempli séparément dès qu'il est résolu (Switcheroo peut être
+				     asynchrone). Évite de laisser "Terrien·ne de passage" affiché en
+				     attendant — repère éprouvé sur Test_Astra, même souci au départ. -->
+				<div class="subtitle">
+					<span id="pfaWelcomeName"></span>
+					<span id="pfaWelcomeGuest">Terrien&middot;ne de passage</span>
+				</div>
 				<p>Texte de contexte/bienvenue à écrire ici.</p>
 			</div>
 			<span class="link-more">&#9656; Contexte</span>

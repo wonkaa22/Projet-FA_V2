@@ -55,7 +55,21 @@
     if (el && href) { el.setAttribute('href', href); }
   }
 
-  var isLoggedIn = !!faHref('logout');
+  /* _userdata.session_logged_in en priorité : injecté globalement par
+     Forumactif (déjà utilisé comme repère fiable pour Switcheroo/Notiffi
+     dans overall_footer_end), indépendant du libellé exact des liens de
+     {GENERATED_NAV_BAR}. Le sniffing d'un lien contenant "logout" reste en
+     repli si _userdata est indisponible, mais s'est révélé peu fiable seul
+     sur cette installation (en-tête connecté·e ne se déclenchait jamais). */
+  function isFaLoggedIn() {
+    try {
+      if (typeof _userdata !== 'undefined' && _userdata && typeof _userdata.session_logged_in !== 'undefined') {
+        return !!_userdata.session_logged_in;
+      }
+    } catch (e) { /* ignore */ }
+    return !!faHref('logout');
+  }
+  var isLoggedIn = isFaLoggedIn();
 
   if (!isLoggedIn) {
     setHref('pfaLoginBtn', faHref('login'));
@@ -98,25 +112,16 @@
     notifSlot.appendChild(notifBtn);
   }
 
-  /* Sous-titre du panneau Bienvenue : "Terrien·ne de passage" ne concerne
-     que les invité·es. On bascule tout de suite sur le pseudo du compte FA
-     connecté (repli fiable, disponible dès la connexion, indépendant de
-     Switcheroo) plutôt que d'attendre updateCharName() plus bas, qui ne
-     touchait rien tant qu'aucun nom n'était trouvé — c'est ce qui laissait
-     "Terrien·ne de passage" affiché même connecté·e. updateCharName() vient
-     ensuite raffiner avec le nom du personnage actif dans Switcheroo dès
-     qu'il est disponible (chargement asynchrone). */
-  var welcomeSubtitle = document.getElementById('pfaWelcomeSubtitle');
-  if (welcomeSubtitle) {
-    welcomeSubtitle.setAttribute('data-connected', '1');
-    var accountName = '';
-    try {
-      if (typeof _userdata !== 'undefined' && _userdata && _userdata.username) {
-        accountName = String(_userdata.username);
-      }
-    } catch (e) { /* ignore */ }
-    welcomeSubtitle.textContent = accountName || 'Connecté·e';
-  }
+  /* Sous-titre du panneau Bienvenue : "Terrien·ne de passage" (#pfaWelcomeGuest)
+     ne concerne que les invité·es — masqué dès la détection de connexion,
+     plutôt que remplacé par du texte plus tard (#pfaWelcomeName, rempli à
+     part par updateCharName() ci-dessous). Un seul élément dont on essayait
+     de remplacer le texte laissait "Terrien·ne de passage" affiché tant
+     qu'aucun nom n'était trouvé (Switcheroo asynchrone, ou pas de personnage
+     associé) — repère éprouvé sur Test_Astra, qui a eu ce même souci au
+     départ et l'a corrigé de la même façon (deux éléments séparés). */
+  var welcomeGuest = document.getElementById('pfaWelcomeGuest');
+  if (welcomeGuest) { welcomeGuest.style.display = 'none'; }
 
   /* Nom du personnage actif : lu dans le contenu du switcheroo une fois
      initialisé (texte du personnage sélectionné), mots d'UI de la librairie
@@ -148,10 +153,8 @@
     if (!name) { return; }
     var nameEl = document.getElementById('pfaCharName');
     if (nameEl) { nameEl.textContent = name; }
-    var welcomeSubtitle = document.getElementById('pfaWelcomeSubtitle');
-    if (welcomeSubtitle && welcomeSubtitle.getAttribute('data-connected') === '1') {
-      welcomeSubtitle.textContent = name;
-    }
+    var welcomeName = document.getElementById('pfaWelcomeName');
+    if (welcomeName) { welcomeName.textContent = name; }
   }
   updateCharName();
   /* Switcheroo peut se peupler après coup (chargement asynchrone) : on

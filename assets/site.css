@@ -342,6 +342,7 @@
   .panel-scroll::-webkit-scrollbar-track { background: transparent; }
   .panel-scroll::-webkit-scrollbar-thumb { background: rgba(13,27,42,0.3); border-radius: 3px; }
   .panel .subtitle { font-size: 13px; color: var(--ink-muted-light); margin-bottom: 10px; }
+  #pfaWelcomeName:empty { display: none; }
   .panel p { font-size: 12px; line-height: 1.6; color: var(--ink-body-light); }
   .panel .link-more { display: block; text-align: right; margin-top: 10px; font-size: 12px; color: var(--ink-hi-light); font-weight: 500; flex-shrink: 0; }
   .stack-cards { display: flex; flex-direction: column; gap: 10px; height: 250px; min-height: 0; min-width: 0; }
