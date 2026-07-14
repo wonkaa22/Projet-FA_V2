@@ -1,0 +1,493 @@
+Notiffi est un plugin qui propose une version modernisée du système des notifications.
+
+    Visuellement plus complet, il permet d'afficher les dates des notifications ainsi que l'avatar du membre qui envoie la notification.
+
+    Contrairement à la Toolbar par défaut, il donne accès à la structure HTML des notifications, ce qui permet de les placer n'importe où et sous n'importe quelle forme.
+
+    Il ajoute quelques fonctionnalités supplémentaires, comme la possibilité de marquer toutes les notifications comme lues sans les supprimer, ou bien de tout supprimer d'un seul clic pour un ménage plus rapide.
+
+
+
+Notiffi fonctionne sur toutes les versions de Forumactif, à l'exception de AwesomeBB (en cours).
+
+Un merci à Sen Hime de m'avoir débloqué avec sa solution de proxy, sans lequel j'aurais pas pu faire le plugin avec les alertes de notification en direct ! Découvrez son travail sur Le livre des possibles Et un énoooorme merci à @Poumon, mon partner in crime, qui a rendu ce plugin beaucoup plus accessible avec son super moteur de template Potion ✨
+
+Installer Notiffi
+
+La toolbar doit être activée pour le bon fonctionnement du plugin. Elle est activée par défaut à la création de votre forum mais si vous rencontrez un problème, assurez-vous qu'elle le soit toujours en vous rendant dans votre panneau d'administration : Modules > Toolbar > Activer la toolbar : oui
+Installer le plugin
+
+Dans le template overall_footer_end copiez le code suivant juste avant la fermeture de la balise </body>
+
+<!-- NOTIFFIN PLUGIN -->
+ <script src="https://cdn.jsdelivr.net/gh/Kim-Bnx/Notiffi@main/notiffi/notiffi.min.js"></script>
+ <!-- Initialisation de Notiffi -->
+ <script>Notiffi.init();</script>
+
+Le script de Notiffi vous est proposé en hébergement extérieur afin d'optimiser son fonctionnement et son installation. Ca fait moins de lignes de code à manipuler pour vous, et ça me permet de le mettre à jour plus facilement. Vous pouvez retrouver le code d'origine sur Github. Sentez-vous libre de l'héberger vous-même au besoin !
+Intégrer le HTML
+
+Le HTML du plugin peut être installé dans n'importe quel template. Par défaut, je vous propose de l'installer dans le template overall_header et de copier le code suivant juste après l'ouverture de la balise <body>.
+
+<!-- NOTIFFI -->  
+<!-- BEGIN switch_user_logged_in -->
+ <!-- Bouton pour ouvrir le panneau des notifications -->
+ <div id="notiffi_button">
+     <span class="ntf_button-text">Notifications</span>
+     <template class="unread_count" type="template/potion" data-name="unread_notifs">[count]</template>
+ </div>
+ 
+ <!-- Panneau des notifications -->
+ <div id="notiffi_panel">
+     <!-- Conteneur des notifications -->
+     <template class="all_notifications" type="template/potion" data-name="all_notifs">
+       
+       <!-- Panneau si vide de notification -->
+       [isEmpty]
+           <span class="no_notification">[text]</span>
+       [/isEmpty]
+       
+       <!-- Notification -->
+       [notifs]
+       <div class="notification [type] [read]" data-notif-id="[id]">
+           <div class="notif_details">
+             <div class="notif_avatar">[avatar]</div>
+             <div class="notif_icon">[icon]</div>
+           </div>
+           <div class="notif_content">
+               <div class="notif_text">[text]</div>
+               <div class="notif_time">[time]</div>
+           </div>
+           <button @click="deleteNotif" class="notif_close"><i class="bi bi-x"></i></button>
+       </div>
+       [/notifs]
+       
+     </template>
+     <!-- Fin du conteneur des notifications -->
+   
+   <!-- Conteneur des actions -->
+     <div class="notiffi_manage">
+       <!-- Lien vers la page de gestion des notifications dans le profil --> 
+         <a class="notiffi_see_all" href="/profile?mode=editprofile&page_profil=notifications">Voir toutes les notifications</a>
+       
+         <!-- Bouton d'action -->
+         <div class="notiffi_actions">
+             <button id="notiffi_mark_as_read">Marquer comme lu</button>
+             <button id="notiffi_delete_all">Tout supprimer</button>
+         </div>
+     </div>
+     <!-- Fin du couteur des actions -->
+ </div>
+ <!-- Fin du panneau des notifications -->
+ 
+ <!-- Popup d'alerte d'une nouvelle notification -->
+ <template type="template/potion" data-name="alert_notif">
+   <div class="notification alert [alert.type]">
+           <div class="notif_details">
+             <div class="notif_avatar">[alert.avatar]</div>
+           </div>
+           <div class="notif_content">
+               <div class="notif_text">[alert.text]</div>
+           </div>
+           <button id="alert_dismiss" class="alert_close"><i class="bi bi-x"></i></button>
+       </div>
+ </template>
+ <!-- Fin du popup -->
+<!-- END switch_user_logged_in -->
+<!-- NOTIFFIN -->
+
+Positionnement
+
+Il est recommandé d'installer la structure HTML dans des templates qui construisent l'ensemble des pages de votre forum pour avoir accès aux notifications sur toutes les pages.
+
+Exemples :
+
+    overall_header : le haut du forum
+    overall_footer_end/begin le bas du forum
+
+Par défaut, la structure HTML est placée en position: fixed en CSS. Ce qui veut dire que le HTML s'affranchit de son conteneur et qu'il prend pour repère la fenêtre de votre navigateur. C'est pour ça que l'emplacement HTML importe peu dans la hiérarchie de la page de votre forum.
+
+Il est tout à fait possible d'intégrer le HTML dans un conteneur bien défini (ex: la barre de navigation) afin de l'intégrer à d'autres éléments de la structure de votre forum. N'oubliez pas de modifier le CSS en conséquence.
+Modifier la structure
+
+Vous remarquerez l'utilisation de variables entre crochets comme [count] ou [notifs]...[/notifs] qui fonctionnent comme les {variables} de Forumactif. Il s'agit de Potion, un moteur de template créé par @Poumon ✨
+
+Pour assurer le bon fonctionnement de Notiffi, vous devez suivre quelques obligations :
+
+    Le code HTML doit se trouver entre les commentaires <!-- BEGIN switch_user_logged_in --> et <!-- END switch_user_logged_in --> pour ne s'afficher que pour les membres connectés
+    Ne retirez et ne modifiez pas les attributs type="" et data-name="" des balises &lt;template> : ils assurent l'affichage des données des notifications
+    Ne retirez et ne modifiez pas les attributs id="" de certain éléments : ils assurent le bon fonctionnement de certaines interactions
+
+Pour le reste, sentez-vous libre de restructurer le HTML selon vos envies ! De nouveaux éléments HTML peuvent être ajoutés et les existants peuvent être déplacés.
+Définir l'apparence
+
+Installez le CSS suivant pour définir l'apparence des notifications. Le CSS proposé par défaut suit le design minimaliste du Blank Theme.
+
+/* Notiffi CSS */
+/* Cache la toolbar défaut */
+#fa_toolbar {display: none}
+
+/* Bouton de notification */
+#notiffi_button {
+ cursor: pointer;
+ background: var(--neutral);
+ border-radius: 10px;
+ display: flex;
+ align-items: center;
+ gap: 10px;
+ padding: 5px 10px;
+ position: fixed;
+ z-index: 99;
+ top: 10px;
+ right: 10px;
+ height: 35px;
+}
+
+/* Conteneur du nombre de notification non lues REMPLI */
+.unread_count {
+ position: relative;
+ background: var(--neutralDarker);
+ border-radius: 5px;
+ width: 25px;
+ display: grid;
+ place-items: center;
+ font-weight: 600;
+ font-size: 12px;
+ scale: 1;
+ opacity: 1;
+ aspect-ratio: 1;
+ transition: scale ease-out .2s;
+}
+
+/* Conteneur du nombre de notification non lues VIDE */
+.unread_count:empty {
+ position: absolute;
+ scale: 0;
+ opacity: 0;
+ transition: all ease-out .2s;
+}
+
+
+
+/* Menu des notifications FERMÉ */
+#notiffi_panel {
+ --menuSize: 500px;
+ /* taille du Menu */
+ width: var(--menuSize);
+ position: fixed;
+ z-index: 98;
+ top: 0;
+ height: 100%;
+ right: calc(var(--menuSize) * -1);
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
+ align-items: start;
+ background: var(--neutral);
+ border-left: 1px solid var(--neutralDark);
+ padding: 15px;
+ padding-top: 50px;
+ opacity: 0;
+ visibility: hidden;
+ transition: all ease .7s;
+}
+
+/* Menu des notifications OUVERT */
+#notiffi_panel.open {
+ right: 0;
+ visibility: visible;
+ opacity: 1;
+}
+
+/* Conteneur des notifications */
+.all_notifications {
+ width: 100%;
+ overflow: auto;
+ max-height: 100%;
+ background: var(--neutralDark);
+ padding: 10px;
+ border-radius: 10px;
+ -ms-overflow-style: none;
+ scrollbar-width: none;
+
+ /* Désactive la barre de défilement dans le contenenur */
+ &::-webkit-scrollbar {
+   display: none;
+ }
+}
+
+/* Conteneur des notifications VIDE */
+.no_notification {
+ text-align: center;
+ font-style: italic;
+}
+
+/* Conteneur du footer du menu 
+  (voir toutes les notifications, marquer comme lu, tout supprimer) */
+.notiffi_manage {
+ width: 100%;
+ display: flex;
+ justify-content: space-between;
+}
+
+/* Conteneur des bouton d'action des notifications */
+.notiffi_actions {
+ display: grid;
+ justify-items: end;
+ gap: 5px;
+
+ /* Bouton d'action */
+ button {
+   padding: 2px 10px;
+   background: var(--neutralDark);
+   border-radius: 5px;
+
+   &:hover {
+     color: var(--accentClr)
+   }
+ }
+}
+
+/* Apparence d'une notification */
+.notification {
+ display: flex;
+ gap: 15px;
+ margin-bottom: 5px;
+ padding: 10px;
+ border-radius: 5px;
+ border: 1px solid transparent;
+ transition: border .2s;
+ animation: notiffiFadeIn 0.3s ease-in-out;
+
+ /* Notification au survol */
+ &:hover {
+   border-color: var(--neutralDarker);
+ }
+}
+
+/* Animation d'apparition des notifications */
+@keyframes notiffiFadeIn {
+ from {
+   opacity: 0;
+ }
+
+ to {
+   opacity: 1;
+ }
+}
+
+/* Apparence d'une notification NON LUE */
+.notification.unread {
+ background-color: var(--neutral);
+}
+
+/* Conteneur des détails de la notification (avatar, icone) */
+.notif_details {
+ position: relative;
+ align-self: start;
+}
+
+/* Conteneur de l'avatar */
+.notif_avatar {
+ background: var(--neutral);
+ height: 35px;
+ border-radius: 5px;
+ aspect-ratio: 1;
+
+ /* Image de l'avatar */
+ & img {
+   width: 100%;
+   aspect-ratio: 1;
+   object-fit: cover;
+   object-position: center;
+   border-radius: 5px;
+ }
+}
+
+/* Icone du type de la notification */
+.notif_icon {
+ position: absolute;
+ bottom: -5px;
+ right: -5px;
+ background: var(--neutral);
+ width: 18px;
+ aspect-ratio: 1;
+ display: grid;
+ place-items: center;
+ border-radius: 20px;
+ font-size: 10px;
+}
+
+/* Icone lorsque la notification est non lue */
+.notification.unread .notif_icon {
+ color: var(--neutral);
+ background: var(--accentClr);
+}
+
+/* Conteneur du texte et la date de la notification */
+.notif_content {
+ width: 100%;
+}
+
+/* Date de la notification */
+.notif_time {
+ font-size: var(--little-size);
+ opacity: .8;
+ margin-top: 5px;
+}
+
+/* Bouton de suppression de la notification */
+.notif_close {
+ background: transparent;
+ align-self: start;
+ font-size: 18px;
+ line-height: 0;
+ opacity: 0;
+ border-radius: 100px;
+ aspect-ratio: 1;
+ padding: 2px;
+ transition: all .3s;
+}
+
+/* Affiche le bouton de suppression au survol de la notification */
+.notification:hover .notif_close {
+ opacity: 1
+}
+
+/* Alerte d'une notification */
+.notification.alert {
+ position: fixed;
+ width: 400px;
+ align-items: center;
+ z-index: 99;
+ bottom: 10px;
+ right: 10px;
+ background: var(--neutralDarker);
+ transform: translateY(100%);
+ opacity: 0;
+ filter: blur(5px);
+ transition: all .5s ease-in-out;
+}
+
+.notification.alert.up {
+ transform: translateY(0%);
+ opacity: 1;
+ filter: blur(0);
+ transition: all .5s ease-in-out;
+}
+
+.alert_close {
+ background: var(--neutral);
+ font-size: 18px;
+ line-height: 0;
+ border-radius: 100px;
+ aspect-ratio: 1;
+ padding: 2px;
+}
+
+Options du plugin
+
+Dans le template overall_footer_end vous avez installé ceci :
+
+<!-- Initialisation de Notiffi -->
+<script>Notiffi.init()</script>
+
+C'est ici que les options doivent être ajoutées en respectant la syntaxe suivante :
+
+<!-- Initialisation de Notiffi -->
+<script>Notiffi.init({
+ button: '...',
+ panel: '...',
+ timeout: 5000,
+ icons: {
+   0: '...'
+ },
+})</script>
+
+Fonctionnement
+
+Les options sont facultatives. Vides, Notiffi fonctionnera avec ses valeurs par défaut. Il est autant possible de changer qu'une option que toute celles proposés.
+
+Les options qui attendent des types de valeurs très précises. Ici, vous allez en rencontrer quatre :
+
+    string est une valeur en chaîne de caractère qui s’écrit entre doubles guillemets "". On peut y mettre du texte mais aussi du HTML. Attention ! Remplacez les guillemets de votre HTML par de simples apostrophes sinon votre string va se fermer trop tôt.
+        Exemple : <i class="icon"></i> → <i class='icon'></i>
+    number est une valeur composé uniquement de chiffre.
+    boolean est une valeur binaire qui peut être soit true (vrai) soit false (faux), pour activer ou désactiver une option.
+    object est un objet, une valeur entre crochets { } qui stock plusieurs valeurs associées en clé/valeur. Par exemple : { nom: 'Kim' }
+        nom est la clé
+        'Kim' est la valeur
+
+Chaque valeur d'un objet est séparé par une virgule.
+Options disponibles
+button
+
+Valeur par défaut : "#notiffi_button"
+
+<script>Notiffi.init({
+ button: '#notiffi_button',
+})</script>
+
+C'est le sélecteur de l'élément qui permet d'ouvrir le panneau des notifications au clique.
+panel
+
+Valeur par défaut : "#notiffi_panel"
+
+<script>Notiffi.init({
+ panel: '#notiffi_panel',
+})</script>
+
+C'est le sélecteur de l'élément qui contient les notifications et qui apparait et disparait au clique du bouton.
+timeout
+
+Valeur par défaut : 5000
+
+<script>Notiffi.init({
+ timeout: 5000,
+})</script>
+
+C'est le délais durant lequel l'alerte d'une nouvelle notification reste active. La valeur est en milliseconde, donc 1 seconde = 1000. Par défaut, l'alerte reste 5 secondes (5000) avant de disparaitre.
+disableIcon
+
+Valeur par défaut: false
+
+<script>Notiffi.init({
+ disableIcon: true,
+})</script>
+
+La mention true permet de désactiver l'affichage des icons, ce qui vous permet également de retirer de la variable [icon] dans votre HTML.
+icons
+
+Valeur par défaut : { ... }
+
+<script>Notiffi.init({
+ icons: {
+   0: 'Message privé',
+   1: '🚩',
+   2: '<i class="bi bi-person-fill-add"></i>'
+ }
+})</script>
+
+Cette option permet de changer le contenu de la variable [icon] qui change selon le type de la notification (un nouveau message privé, un report d'abus, une invitation, un tag...). Chaque type de notification est identifié par un ID (un chiffre). La liste ci-dessous indique quel type est associé à quel chiffre. Vous pouvez modifier le contenu par du texte, des emojis ou de l'HTML.
+
+Par défaut, le plugin utilise des icons de la bibliothèque d'icone Bootstrap (installé dans le Blank Theme).
+
+Type de notification :
+ID 	Type
+0 	nouveau message privé
+1 	notif_report
+2 	invitation d'ami
+3 	demande d'ajout à un groupe
+4 	conversation avec un ami
+5 	message sur le mur de profil
+6 	report d'abus
+7 	nouveau poste dans un sujet suivi
+8 	mention
+9 	utilisation d'un tag suivi
+10 	nouvelle notification push
+11 	"j'aime" d'un poste
+12 	"je n'aime pas" d'un poste
+13 	nouveau sujet dans un forum suivi
+14 	nouvelle récompense obtenue
+15 	un membre suivi a posté un nouveau message
+16 	un membre suivi a créé un nouveau sujet
