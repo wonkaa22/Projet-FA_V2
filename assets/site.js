@@ -214,13 +214,21 @@
     adminCat.querySelectorAll('.zone-card').forEach(function (card) {
       adminForums[forumName(card)] = card;
     });
+    /* L'image extraite à l'étape 1 (enrichissement générique) vit sur le
+       fond CSS de .zone-image de la carte d'origine — il faut la reprendre
+       ici plutôt que de repartir d'un placeholder vide, sinon Administration
+       et Hors RP perdent l'image même quand elle est bien configurée côté
+       Forumactif. */
     function extractCardContent(card) {
       if (!card) { return null; }
+      var zoneImg = card.querySelector('.zone-image');
+      var bg = zoneImg ? zoneImg.style.backgroundImage : '';
       return {
         href: (card.querySelector('.zone-name a') || {}).getAttribute
           ? card.querySelector('.zone-name a').getAttribute('href') : '#',
         pillList: card.querySelector('.zone-subforums'),
-        lastMsg: card.querySelector('.last-msg')
+        lastMsg: card.querySelector('.last-msg'),
+        bgImage: bg && bg !== 'none' ? bg : null
       };
     }
     function buildSubCard(title, card, extraClass) {
@@ -240,8 +248,15 @@
         el.appendChild(data.pillList);
       }
       var img = document.createElement('div');
-      img.className = 'sub-card-image ph';
-      img.textContent = 'image';
+      if (data && data.bgImage) {
+        img.className = 'sub-card-image';
+        img.style.backgroundImage = data.bgImage;
+        img.style.backgroundSize = 'cover';
+        img.style.backgroundPosition = 'center';
+      } else {
+        img.className = 'sub-card-image ph';
+        img.textContent = 'image';
+      }
       el.appendChild(img);
       if (data && data.lastMsg) { el.appendChild(data.lastMsg); }
       return el;
@@ -283,10 +298,13 @@
       horsrpForums[forumName(card)] = card;
     });
     function buildHorsrpCard(title, card) {
+      var zoneImg = card ? card.querySelector('.zone-image') : null;
+      var bg = zoneImg ? zoneImg.style.backgroundImage : '';
       var data = card ? {
         href: card.querySelector('.zone-name a') ? card.querySelector('.zone-name a').getAttribute('href') : '#',
         pillList: card.querySelector('.zone-subforums'),
-        lastMsg: card.querySelector('.last-msg')
+        lastMsg: card.querySelector('.last-msg'),
+        bgImage: bg && bg !== 'none' ? bg : null
       } : null;
       var el = document.createElement('div');
       el.className = 'sub-card horsrp-card';
@@ -303,8 +321,15 @@
         el.appendChild(data.pillList);
       }
       var img = document.createElement('div');
-      img.className = 'sub-card-image ph';
-      img.textContent = 'image';
+      if (data && data.bgImage) {
+        img.className = 'sub-card-image';
+        img.style.backgroundImage = data.bgImage;
+        img.style.backgroundSize = 'cover';
+        img.style.backgroundPosition = 'center';
+      } else {
+        img.className = 'sub-card-image ph';
+        img.textContent = 'image';
+      }
       el.appendChild(img);
       if (data && data.lastMsg) { el.appendChild(data.lastMsg); }
       return el;
