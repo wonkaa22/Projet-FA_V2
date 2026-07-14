@@ -109,24 +109,25 @@
   var cats = document.querySelectorAll('.pfa-cat');
   if (!cats.length) { return; }
 
-  /* Le nom de catégorie est lu depuis le <h2> visuel de .admin-header, pas
-     depuis un attribut séparé : sur au moins une installation Forumactif,
-     réutiliser {catrow.tablehead.L_FORUM} une seconde fois dans un attribut
-     de la même catégorie produisait le HTML déjà rendu du <h2> au lieu du
-     nom brut (probable quirk du moteur de template FA face à la même
-     variable utilisée deux fois de suite) — le <h2> lui-même, en revanche,
-     s'est toujours affiché correctement. Comparaison tolérante aux espaces
-     superflus/insécables. */
-  function catName(cat) {
-    var frame = cat.closest('.admin-frame');
-    var h2 = frame ? frame.querySelector('.admin-header h2') : null;
-    return h2 ? h2.textContent.replace(/ /g, ' ').trim() : '';
-  }
-  function findCatByName(name) {
-    for (var i = 0; i < cats.length; i++) {
-      if (catName(cats[i]) === name) { return cats[i]; }
-    }
-    return null;
+  /* Repérage par POSITION, pas par nom : comparer le nom de catégorie
+     (via {catrow.tablehead.L_FORUM}, y compris relu depuis le <h2>) s'est
+     montré peu fiable sur cette installation Forumactif. Administration et
+     Hors RP sont respectivement la première et la dernière catégorie du
+     panneau admin (confirmé) : on s'appuie sur cet ordre, qui ne dépend
+     que du DOM déjà rendu, pas d'une variable de template. Repère éprouvé
+     sur un thème Forumactif tiers fonctionnel (assignation par position,
+     pas par nom). */
+  var adminCat = cats[0];
+  var horsrpCat = cats[cats.length - 1];
+  if (cats.length < 2) { horsrpCat = null; }
+
+  /* Même souci que pour le nom de catégorie : {catrow.forumrow.FORUM_NAME}
+     était dupliqué (attribut data-forum-name + <h3><a>) dans le même
+     forumrow, donc retiré du template — le nom du forum est lu ici
+     directement depuis le lien visuel .zone-name a. */
+  function forumName(card) {
+    var link = card.querySelector('.zone-name a');
+    return link ? link.textContent.replace(/\xa0/g, ' ').trim() : '';
   }
 
   /* 1. Enrichissement générique de chaque carte, quelle que soit la catégorie */
@@ -178,7 +179,7 @@
       var level = parseInt(card.getAttribute('data-level'), 10) || 0;
       if (baseLevel === null) { baseLevel = level; }
       if (level > baseLevel && currentParent) {
-        var name = card.getAttribute('data-forum-name') || '';
+        var name = forumName(card);
         var link = card.querySelector('.zone-name a');
         var href = link ? link.getAttribute('href') : '#';
         var pill = document.createElement('a');
@@ -196,12 +197,11 @@
 
   /* 3. Administration : cadre sur mesure (guidebook statique + 3 sous-cartes
      réelles : Personnages / Vie sur la Lune / Gestion). */
-  var adminCat = findCatByName('Administration');
   if (adminCat) {
     var adminBody = adminCat.closest('.admin-body');
     var adminForums = {};
     adminCat.querySelectorAll('.zone-card').forEach(function (card) {
-      adminForums[card.getAttribute('data-forum-name')] = card;
+      adminForums[forumName(card)] = card;
     });
     function extractCardContent(card) {
       if (!card) { return null; }
@@ -267,13 +267,12 @@
   /* 4. Hors RP : grille à 3 colonnes réelles (Détente / Entraide et partage /
      Archives), et forcée en dernière position quel que soit son rang dans le
      panneau admin. */
-  var horsrpCat = findCatByName('Hors RP');
   if (horsrpCat) {
     var horsrpFrame = horsrpCat.closest('.admin-frame');
     var horsrpBody = horsrpCat.closest('.admin-body');
     var horsrpForums = {};
     horsrpCat.querySelectorAll('.zone-card').forEach(function (card) {
-      horsrpForums[card.getAttribute('data-forum-name')] = card;
+      horsrpForums[forumName(card)] = card;
     });
     function buildHorsrpCard(title, card) {
       var data = card ? {
