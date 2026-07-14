@@ -414,3 +414,122 @@
     }
   }
 })();
+
+/* ── Section basse de l'accueil (index_body : nouveau membre/48h/stats/
+   actions rapides) ─────────────────────────────────────────────────────
+   Le nouveau membre et les connecté·es des dernières 48h n'ont pas de
+   variable Forumactif directe sur l'accueil : on va chercher la page
+   /memberlist déjà triée par FA (mode=joined / mode=lastvisit) et on lit le
+   HTML retourné, exactement comme sur Test_Astra (selNouveauAvatar/
+   selFetchRecent48h dans selenujo.js), qui a le même besoin. */
+(function pfaQuickActionsRelocate() {
+  var qa = document.getElementById('pfaQuickActions');
+  var slot = document.getElementById('pfaQuickActionsSlot');
+  if (!qa || !slot) { return; }
+  qa.removeAttribute('style');
+  qa.removeAttribute('aria-hidden');
+  slot.appendChild(qa);
+})();
+
+(function pfaStatsDigitsOnly() {
+  /* {TOTAL_USERS}/{TOTAL_POSTS} peuvent être une phrase FA complète plutôt
+     qu'un simple nombre selon la version/config du forum (déjà rencontré sur
+     Test_Astra, voir selFixStats) : on ne garde que les chiffres trouvés. */
+  document.querySelectorAll('[data-pfa-raw]').forEach(function (el) {
+    var m = (el.textContent || '').match(/\d[\d\s]*\d|\d/);
+    if (m) { el.textContent = m[0].replace(/\s/g, ''); }
+  });
+})();
+
+(function pfaNewMember() {
+  var nameEl = document.getElementById('pfaNewMemberName');
+  var imgEl = document.getElementById('pfaNewMemberImg');
+  if (!nameEl || !imgEl) { return; }
+  fetch('/memberlist?mode=joined&order=DESC')
+    .then(function (r) { return r.text(); })
+    .then(function (html) {
+      var doc = new DOMParser().parseFromString(html, 'text/html');
+      var row = doc.querySelector('#memberlist tbody tr');
+      if (!row) { return; }
+      var link = row.querySelector('td.avatar-mini a[href]') || row.querySelector('a[href*="/u"]');
+      if (!link) { return; }
+      nameEl.href = link.getAttribute('href');
+      nameEl.textContent = (link.textContent || '').trim();
+      var img = link.querySelector('img');
+      if (img && img.src) {
+        imgEl.style.backgroundImage = 'url(' + img.src + ')';
+        imgEl.style.backgroundSize = 'cover';
+        imgEl.style.backgroundPosition = 'center';
+        imgEl.classList.remove('ph', 'ph-dark');
+      }
+    })
+    .catch(function () { /* ignore */ });
+})();
+
+(function pfaRecent48h() {
+  var zone = document.getElementById('pfaRecent48');
+  if (!zone) { return; }
+
+  function parseLastVisit(text) {
+    text = (text || '').trim();
+    var now = new Date();
+    var hm = text.match(/(\d{1,2}):(\d{2})/);
+    if (/^Aujourd'hui/i.test(text)) {
+      var d1 = new Date(now);
+      if (hm) { d1.setHours(parseInt(hm[1], 10), parseInt(hm[2], 10), 0, 0); }
+      return d1;
+    }
+    if (/^Hier/i.test(text)) {
+      var d2 = new Date(now);
+      d2.setDate(d2.getDate() - 1);
+      if (hm) { d2.setHours(parseInt(hm[1], 10), parseInt(hm[2], 10), 0, 0); }
+      return d2;
+    }
+    var months = {
+      janvier: 0, février: 1, fevrier: 1, mars: 2, avril: 3, mai: 4, juin: 5,
+      juillet: 6, août: 7, aout: 7, septembre: 8, octobre: 9, novembre: 10,
+      décembre: 11, decembre: 11
+    };
+    var dm = text.match(/(\d{1,2})\s+([A-Za-zéûôàè]+)\s+(\d{4})\s*-\s*(\d{1,2}):(\d{2})/);
+    if (dm) {
+      var month = months[dm[2].toLowerCase()];
+      if (typeof month === 'number') {
+        return new Date(parseInt(dm[3], 10), month, parseInt(dm[1], 10), parseInt(dm[4], 10), parseInt(dm[5], 10));
+      }
+    }
+    return null;
+  }
+
+  fetch('/memberlist?mode=lastvisit&order=DESC')
+    .then(function (r) { return r.text(); })
+    .then(function (html) {
+      var doc = new DOMParser().parseFromString(html, 'text/html');
+      var rows = doc.querySelectorAll('#memberlist tbody tr');
+      var now = new Date();
+      var limit = 48 * 60 * 60 * 1000;
+      var members = [];
+      for (var i = 0; i < rows.length; i++) {
+        var tds = rows[i].querySelectorAll('td');
+        if (tds.length < 5) { continue; }
+        var link = tds[1].querySelector('a[href]');
+        var visitDate = parseLastVisit(tds[4].textContent);
+        if (!link || !visitDate) { continue; }
+        var diff = now.getTime() - visitDate.getTime();
+        if (diff < 0 || diff > limit) { break; }
+        members.push({ href: link.getAttribute('href'), name: link.textContent.trim() });
+      }
+      if (!members.length) {
+        zone.textContent = 'Personne connecté·e ces dernières 48h.';
+        return;
+      }
+      zone.textContent = '';
+      for (var k = 0; k < members.length; k++) {
+        var a = document.createElement('a');
+        a.href = members[k].href;
+        a.textContent = members[k].name;
+        zone.appendChild(a);
+        if (k < members.length - 1) { zone.appendChild(document.createTextNode(', ')); }
+      }
+    })
+    .catch(function () { zone.textContent = ''; });
+})();

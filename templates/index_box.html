@@ -1,16 +1,22 @@
-<!-- Liens de recherche rapide : pas repris dans le design (sidebar/mini-boxes
-     "Recherche RPs" les couvrent), gardés cachés pour ne pas perdre la
-     fonctionnalité (accès direct par URL, lecteurs d'écran). -->
-<ul class="linklist top" style="position:absolute; left:-9999px;" aria-hidden="true">
+<!-- Barre d'actions rapides (Nouveaux sujets/Derniers sujets actifs/Voir ses
+     sujets/Marquer tout comme lu/Supprimer les cookies) : vraie fonctionnalité
+     FA, disponible seulement ici côté variables (portée index_box), donc
+     rendue ici puis déplacée en JS (pfaQuickActions, voir site.js) dans la
+     carte "membres/posts" de la nouvelle section basse de l'accueil
+     (index_body.html) — même technique que pour le bouton Notiffi. -->
+<div class="pfa-quickactions" id="pfaQuickActions" style="position:absolute; left:-9999px;" aria-hidden="true">
 	<!-- BEGIN switch_user_logged_in -->
-	<li><a href="{U_SEARCH_NEW}">{L_SEARCH_NEW}</a></li>
-	<li><a href="{U_SEARCH_SELF}">{L_SEARCH_SELF}</a></li>
+	<a class="pfa-qa-btn" href="{U_SEARCH_NEW}"><i class="ion-ios-flame"></i><span class="pfa-qa-tip">{L_SEARCH_NEW}</span></a>
+	<a class="pfa-qa-btn" href="{U_SEARCH_SELF}"><i class="ion-ios-box-outline"></i><span class="pfa-qa-tip">{L_SEARCH_SELF}</span></a>
+	<a class="pfa-qa-btn" href="{U_MARK_READ}" accesskey="m"><i class="ion-android-checkmark-circle"></i><span class="pfa-qa-tip">{L_MARK_FORUMS_READ}</span></a>
 	<!-- END switch_user_logged_in -->
-	<li><a href="{U_SEARCH_UNANSWERED}">{L_SEARCH_UNANSWERED}</a></li>
-	<!-- BEGIN switch_user_logged_in -->
-	<li><a href="{U_MARK_READ}" accesskey="m">{L_MARK_FORUMS_READ}</a></li>
-	<!-- END switch_user_logged_in -->
-</ul>
+	<!-- BEGIN switch_on_index -->
+	<a class="pfa-qa-btn" href="{U_TODAY_ACTIVE}"><i class="ion-ios-time-outline"></i><span class="pfa-qa-tip">{L_TODAY_ACTIVE}</span></a>
+	<!-- BEGIN switch_delete_cookies -->
+	<a class="pfa-qa-btn" href="{switch_on_index.switch_delete_cookies.U_DELETE_COOKIES}" rel="nofollow"><i class="ion-trash-a"></i><span class="pfa-qa-tip">{switch_on_index.switch_delete_cookies.L_DELETE_COOKIES}</span></a>
+	<!-- END switch_delete_cookies -->
+	<!-- END switch_on_index -->
+</div>
 
 <!-- BEGIN catrow -->
 	<!-- BEGIN tablehead -->

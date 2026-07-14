@@ -92,3 +92,101 @@
      mêlées comme les autres à ce stade ; c'est site.js qui les repère par
      leur nom et les réorganise dans leur mise en page spéciale. -->
 {BOARD_INDEX}
+
+<!-- Section basse de l'accueil : mélange de vraies variables Forumactif
+     (nouveau membre/en ligne/statistiques/chatbox, via fetch JS pour les deux
+     premières — voir pfaNewMember()/pfaRecent48h() dans site.js, technique
+     reprise de Test_Astra) et de contenu géré à la main (groupes : lorem
+     ipsum + nombre de membres à ajuster à la main pour chaque groupe, comme
+     Préliens attendus/Staff plus haut). -->
+<div class="content-frame pfa-hub">
+	<div class="pfa-hub-row">
+		<div class="mini-card gborder pfa-hub-card">
+			<span class="label">La Lune vient d'accueillir</span>
+			<div class="pfa-newmember">
+				<div class="pfa-newmember-img ph ph-dark" id="pfaNewMemberImg"></div>
+				<a class="pfa-newmember-bubble" id="pfaNewMemberName" href="#">&hellip;</a>
+			</div>
+		</div>
+
+		<div class="mini-card gborder pfa-hub-card">
+			<span class="label">Actuellement en ligne</span>
+			<div class="pfa-online">
+				<!-- BEGIN disable_viewonline -->
+				<p class="pfa-online-count">{TOTAL_USERS_ONLINE}</p>
+				<p class="pfa-online-list">{L_CONNECTED_MEMBERS} {LOGGED_IN_USER_LIST}</p>
+				<!-- END disable_viewonline -->
+			</div>
+		</div>
+
+		<div class="mini-card gborder pfa-hub-card pfa-hub-stats ph ph-dark">
+			<div class="pfa-stats-overlay">
+				<span id="pfaStatMembers" data-pfa-raw>{TOTAL_USERS}</span> membres
+				<br />
+				<span id="pfaStatPosts" data-pfa-raw>{TOTAL_POSTS}</span> messages
+			</div>
+			<!-- Barre d'actions rapides déplacée ici depuis index_box.html (voir site.js) -->
+			<div class="pfa-hub-quickslot" id="pfaQuickActionsSlot"></div>
+		</div>
+	</div>
+
+	<div class="pfa-hub-row">
+		<div class="mini-card gborder pfa-hub-card">
+			<span class="label">Courrier terrien</span>
+			<div class="pfa-shoutbox">
+				{CHATBOX_BOTTOM}
+			</div>
+		</div>
+
+		<div class="mini-card gborder pfa-hub-card">
+			<span class="label">Dernières 48h</span>
+			<div class="pfa-recent48" id="pfaRecent48">&hellip;</div>
+		</div>
+
+		<!-- Groupes : au survol, la carte concernée s'étend et affiche sa description,
+		     les autres se réduisent. data-count = nombre de membres à ajuster à la main
+		     pour chaque groupe (pas de variable Forumactif pour ça sur l'accueil). -->
+		<div class="pfa-groups gborder" id="pfaGroups">
+			<div class="pfa-group-card ph ph-dark" data-count="0">
+				<div class="pfa-group-count">0</div>
+				<div class="pfa-group-overlay">
+					<h4>Groupe 1</h4>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+					<a href="#">Voir le groupe &rarr;</a>
+				</div>
+			</div>
+			<div class="pfa-group-card ph ph-dark" data-count="0">
+				<div class="pfa-group-count">0</div>
+				<div class="pfa-group-overlay">
+					<h4>Groupe 2</h4>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+					<a href="#">Voir le groupe &rarr;</a>
+				</div>
+			</div>
+			<div class="pfa-group-card ph ph-dark" data-count="0">
+				<div class="pfa-group-count">0</div>
+				<div class="pfa-group-overlay">
+					<h4>Groupe 3</h4>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+					<a href="#">Voir le groupe &rarr;</a>
+				</div>
+			</div>
+			<div class="pfa-group-card ph ph-dark" data-count="0">
+				<div class="pfa-group-count">0</div>
+				<div class="pfa-group-overlay">
+					<h4>Groupe 4</h4>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+					<a href="#">Voir le groupe &rarr;</a>
+				</div>
+			</div>
+			<div class="pfa-group-card ph ph-dark" data-count="0">
+				<div class="pfa-group-count">0</div>
+				<div class="pfa-group-overlay">
+					<h4>Groupe 5</h4>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+					<a href="#">Voir le groupe &rarr;</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

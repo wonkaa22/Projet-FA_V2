@@ -657,3 +657,72 @@
     border-radius: 10px 10px 0 0;
   }
   .pfa-admin-msg-txt { padding: 8px 16px; font-size: 12px; color: var(--ink-body-light); background: var(--section); border-radius: 0 0 10px 10px; }
+
+  /* ---------- SECTION BASSE ACCUEIL (nouveau membre/en ligne/stats/chatbox/48h/groupes) ---------- */
+  .pfa-hub-row { display: flex; gap: 12px; height: 220px; }
+  .pfa-hub-row + .pfa-hub-row { margin-top: 12px; }
+  .pfa-hub-card { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+
+  .pfa-newmember { flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
+  .pfa-newmember-img { width: 100%; flex: 1; min-height: 0; border-radius: 10px; }
+  .pfa-newmember-bubble { flex-shrink: 0; background: var(--section); color: var(--ink-body-light); border-radius: 20px; padding: 8px 16px; font-size: 11px; text-align: center; text-decoration: none; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .pfa-online { flex: 1; min-height: 0; overflow-y: auto; font-size: 11px; color: var(--ink-body-light); line-height: 1.7; }
+  .pfa-online-count { font-weight: 600; margin-bottom: 4px; }
+
+  .pfa-hub-stats { position: relative; display: flex; flex-direction: column; justify-content: flex-end; color: var(--ink-hi-dark); }
+  .pfa-stats-overlay { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 14px; line-height: 1.5; }
+  .pfa-stats-overlay span { font-size: 22px; font-weight: 600; }
+  .pfa-hub-quickslot { position: absolute; top: 10px; right: 10px; display: flex; flex-direction: column; gap: 6px; }
+
+  /* Boutons d'action rapide (Nouveaux sujets/Derniers sujets actifs/Voir ses
+     sujets/Marquer tout comme lu/Supprimer les cookies), déplacés ici depuis
+     index_box.html en JS (voir pfaQuickActions dans site.js). */
+  .pfa-qa-btn { position: relative; width: 30px; height: 30px; border-radius: 50%; background: var(--section); color: var(--ink-body-light); display: flex; align-items: center; justify-content: center; font-size: 13px; text-decoration: none; }
+  .pfa-qa-tip {
+    position: absolute; right: 38px; top: 50%; transform: translateY(-50%);
+    background: var(--frame1); color: var(--ink-hi-dark); font-size: 10px;
+    white-space: nowrap; padding: 5px 10px; border-radius: 6px;
+    opacity: 0; pointer-events: none; transition: opacity 0.15s ease;
+  }
+  .pfa-qa-btn:hover .pfa-qa-tip { opacity: 1; }
+
+  .pfa-shoutbox { flex: 1; min-height: 0; overflow: hidden; border-radius: 10px; }
+  .pfa-shoutbox iframe { width: 100%; height: 100%; border-radius: 10px; }
+
+  .pfa-recent48 { flex: 1; min-height: 0; overflow-y: auto; font-size: 11px; color: var(--ink-body-light); line-height: 1.7; }
+  .pfa-recent48 a { color: var(--ink-hi-light); }
+
+  /* Groupes : au survol d'une carte, elle s'étend (flex-grow) et affiche sa
+     description ; les autres, faute d'espace, ne restent visibles qu'en très
+     fine bande (compte de membres en transparence dessus). */
+  .pfa-groups { flex: 2; min-width: 0; display: flex; gap: 6px; overflow: hidden; padding: 0; }
+  .pfa-group-card { flex: 1; min-width: 0; position: relative; border-radius: 10px; overflow: hidden; cursor: pointer; transition: flex-grow 0.35s ease; }
+  .pfa-group-card:hover { flex-grow: 6; }
+  .pfa-group-count {
+    position: absolute; top: 10px; left: 0; right: 0; text-align: center;
+    font-size: 22px; font-weight: 600; color: rgba(224,225,221,0.5);
+    transition: opacity 0.2s ease;
+  }
+  .pfa-group-card:hover .pfa-group-count { opacity: 0; }
+  .pfa-group-overlay {
+    position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end;
+    gap: 6px; padding: 14px 12px; white-space: normal;
+    background: linear-gradient(to top, rgba(13,27,42,0.94), rgba(13,27,42,0) 75%);
+    opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
+  }
+  .pfa-group-card:hover .pfa-group-overlay { opacity: 1; pointer-events: auto; }
+  .pfa-group-overlay h4 { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 15px; color: var(--ink-hi-dark); }
+  .pfa-group-overlay p { font-size: 10px; line-height: 1.4; color: var(--ink-body-dark); }
+  .pfa-group-overlay a { font-size: 10px; color: var(--ink-hi-dark); font-weight: 600; }
+
+  /* ---------- NOS PARTENAIRES (overall_footer_begin, sur toutes les pages) ---------- */
+  .pfa-partners-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .pfa-partners-grid .ph { height: 56px; border-radius: 8px; }
+  .pfa-partners-label { display: block; text-align: right; margin-top: 10px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px; color: var(--ink-hi-dark); }
+
+  /* ---------- LIGNE DE LIENS FORUMACTIF OBLIGATOIRE (overall_footer_end) ----------
+     Ne peut pas être retirée (FA la réinjecte même sans {PROTECT_FOOTER} dans le
+     template) : reléguée en arrière-plan visuel plutôt qu'affichée en avant. */
+  .pfa-fa-footer { text-align: center; font-size: 10px; color: var(--ink-muted-light); opacity: 0.55; padding: 10px 16px 4px; }
+  .pfa-fa-footer a { color: inherit; }
