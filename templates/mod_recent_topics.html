@@ -8,17 +8,22 @@
 	<!-- BEGIN classical_row -->
 	<!-- BEGIN recent_topic_row -->
 	<div class="sel-recent-row">
-		<a href="{classical_row.recent_topic_row.U_TITLE}" class="sel-recent-title">{classical_row.recent_topic_row.L_TITLE}</a>
-		<div class="sel-recent-meta">
-			<span class="sel-recent-author">
-				<!-- BEGIN switch_poster -->
-				<a href="{classical_row.recent_topic_row.switch_poster.U_POSTER}">{classical_row.recent_topic_row.switch_poster.S_POSTER}</a>
-				<!-- END switch_poster -->
-				<!-- BEGIN switch_poster_guest -->
-				{classical_row.recent_topic_row.switch_poster_guest.S_POSTER}
-				<!-- END switch_poster_guest -->
-			</span>
-			<span class="sel-recent-time">{classical_row.recent_topic_row.S_POSTTIME}</span>
+		<div class="sel-recent-inner">
+			<a href="{classical_row.recent_topic_row.U_TITLE}" class="sel-recent-title">
+				<span class="sel-recent-moon">&#127769;</span>
+				<span class="sel-recent-title-text">{classical_row.recent_topic_row.L_TITLE}</span>
+			</a>
+			<div class="sel-recent-meta">
+				<span class="sel-recent-author">
+					<!-- BEGIN switch_poster -->
+					<a href="{classical_row.recent_topic_row.switch_poster.U_POSTER}">{classical_row.recent_topic_row.switch_poster.S_POSTER}</a>
+					<!-- END switch_poster -->
+					<!-- BEGIN switch_poster_guest -->
+					{classical_row.recent_topic_row.switch_poster_guest.S_POSTER}
+					<!-- END switch_poster_guest -->
+				</span>
+				<span class="sel-recent-time">{classical_row.recent_topic_row.S_POSTTIME}</span>
+			</div>
 		</div>
 	</div>
 	<!-- END recent_topic_row -->
