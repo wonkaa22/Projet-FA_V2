@@ -68,13 +68,24 @@
   var profileHref = faHref('profile');
   setHref('pfaEditProfileBtn', profileHref);
 
-  /* Avatar du compte actif : _userdata.avatar est une chaîne <img ...>
-     injectée globalement par Forumactif (pas propre à un template), fiable
-     même si {AVATAR} n'existe pas en tant que variable ici. */
+  /* Avatar du compte actif : _userdata expose une URL (avatar_link, ou à
+     défaut user_avatar/avatar_full/avatar selon la version FA), pas du HTML
+     tout fait — on construit l'<img> nous-mêmes, comme sur Test_Astra
+     (selenujo.js, populatePreview). Chemin relatif résolu vers l'origine
+     du forum, fiable même si {AVATAR} n'existe pas en tant que variable ici. */
   try {
     var avatarEl = document.getElementById('pfaCharAvatar');
-    if (avatarEl && typeof _userdata !== 'undefined' && _userdata && _userdata.avatar) {
-      avatarEl.innerHTML = _userdata.avatar;
+    if (avatarEl && typeof _userdata !== 'undefined' && _userdata) {
+      var avatarSrc = _userdata['avatar_link'] || _userdata['user_avatar'] || _userdata['avatar_full'] || _userdata['avatar'] || '';
+      if (avatarSrc) {
+        if (!/^https?:\/\//.test(avatarSrc)) {
+          avatarSrc = window.location.origin + '/' + avatarSrc.replace(/^\//, '');
+        }
+        var avImg = document.createElement('img');
+        avImg.src = avatarSrc;
+        avImg.alt = '';
+        avatarEl.appendChild(avImg);
+      }
     }
   } catch (e) { /* ignore */ }
 
@@ -88,10 +99,24 @@
   }
 
   /* Sous-titre du panneau Bienvenue : "Terrien·ne de passage" ne concerne
-     que les invité·es, remplacé par le nom du personnage actif une fois
-     connecté·e. */
+     que les invité·es. On bascule tout de suite sur le pseudo du compte FA
+     connecté (repli fiable, disponible dès la connexion, indépendant de
+     Switcheroo) plutôt que d'attendre updateCharName() plus bas, qui ne
+     touchait rien tant qu'aucun nom n'était trouvé — c'est ce qui laissait
+     "Terrien·ne de passage" affiché même connecté·e. updateCharName() vient
+     ensuite raffiner avec le nom du personnage actif dans Switcheroo dès
+     qu'il est disponible (chargement asynchrone). */
   var welcomeSubtitle = document.getElementById('pfaWelcomeSubtitle');
-  if (welcomeSubtitle) { welcomeSubtitle.setAttribute('data-connected', '1'); }
+  if (welcomeSubtitle) {
+    welcomeSubtitle.setAttribute('data-connected', '1');
+    var accountName = '';
+    try {
+      if (typeof _userdata !== 'undefined' && _userdata && _userdata.username) {
+        accountName = String(_userdata.username);
+      }
+    } catch (e) { /* ignore */ }
+    welcomeSubtitle.textContent = accountName || 'Connecté·e';
+  }
 
   /* Nom du personnage actif : lu dans le contenu du switcheroo une fois
      initialisé (texte du personnage sélectionné), mots d'UI de la librairie

@@ -84,7 +84,7 @@
      s'aligne avec le reste de la mise en page ; .main-content compense
      l'espace laissé par la sidebar sortie du flux (voir plus bas). */
   .sidebar-shell {
-    width: 300px; flex-shrink: 0; transition: width 0.25s ease;
+    width: 340px; flex-shrink: 0; transition: width 0.25s ease;
     position: fixed; top: 30px;
     left: max(16px, calc((100vw - 1600px) / 2 + 16px));
     height: calc(100vh - 60px);
@@ -303,11 +303,28 @@
   .pagination-dots { display: flex; gap: 8px; }
   .pdot { width: 24px; height: 24px; border-radius: 50%; background: var(--section); color: var(--ink-body-light); display: flex; align-items: center; justify-content: center; font-size: 11px; }
 
-  /* 300px (largeur sidebar) + 22px : même écart que le gap entre cadres
-     dans .outer-frame, pour que l'espacement soit visuellement cohérent. */
-  .main-content { flex: 1; display: flex; flex-direction: column; gap: 12px; min-width: 0; margin-left: 322px; transition: margin-left 0.25s ease; }
+  /* margin-left compense la sidebar, sortie du flux normal par son
+     position:fixed (voir .sidebar-shell) : .main-content n'a donc plus de
+     poussée automatique par flex, il faut la reproduire à la main.
+     Le calcul de .sidebar-shell (left) inclut déjà un décalage de 16px par
+     rapport au bord réel de .pfa-wrap (même décalage que le +16px de ce
+     calc) ; l'oublier ici sous-estimait l'écart de 16px, ce qui laissait un
+     espace quasi invisible (6px) au lieu du gap voulu. Total : 16px
+     (décalage sidebar) + 340px (largeur sidebar) + 22px (même écart que le
+     gap entre cadres dans .outer-frame, pour un espacement cohérent). */
+  .main-content { flex: 1; display: flex; flex-direction: column; gap: 12px; min-width: 0; margin-left: 378px; transition: margin-left 0.25s ease; }
   .sidebar-shell.collapsed ~ .main-content { margin-left: 0; }
-  .outer-frame { background: var(--frame1); border-radius: 28px; padding: 22px; display: flex; flex-direction: column; gap: 22px; }
+  /* color/a en repli : .outer-frame accueille aussi le contenu natif Forumactif
+     qu'on n'a pas de template dédié pour habiller (page d'inscription/CGU,
+     mot de passe oublié, rapports...). Ce contenu n'a pas de couleur de texte
+     à lui (contrairement à nos composants .gborder/.panel/etc, qui définissent
+     toujours la leur) : sans repli il hérite de body { color: var(--ink-body-light) },
+     pensée pour un fond clair, sur le fond sombre de .outer-frame (--frame1) —
+     texte et cases à cocher quasi invisibles par manque de contraste. Nos
+     composants gardent leur propre couleur explicite (plus spécifique), donc
+     ce repli ne touche que le contenu natif non habillé. */
+  .outer-frame { background: var(--frame1); border-radius: 28px; padding: 22px; display: flex; flex-direction: column; gap: 22px; color: var(--ink-body-dark); }
+  .outer-frame a { color: var(--ink-hi-dark); }
   .content-frame { background: var(--frame2); border-radius: 20px; padding: 18px; display: flex; flex-direction: column; gap: 14px; }
   .admin-frame { background: var(--frame2); border-radius: 20px; padding: 6px; }
   .hero-banner { height: 220px; border-radius: 14px; }
