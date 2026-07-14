@@ -237,7 +237,10 @@
     color: var(--ink-hi-light);
   }
   .admin-header h2 .num { color: var(--ink-muted-light); font-size: 18px; margin-right: 8px; }
-  .admin-header .chevron { color: var(--ink-muted-light); }
+  .admin-header .chevron { color: var(--ink-muted-light); display: inline-block; transition: transform 0.2s ease; }
+  .admin-header { cursor: pointer; user-select: none; }
+  .admin-outer.is-collapsed .admin-body { display: none; }
+  .admin-outer.is-collapsed .admin-header .chevron { transform: rotate(180deg); }
 
   .admin-body { padding: 16px; display: flex; flex-direction: column; gap: 14px; }
 
@@ -277,6 +280,11 @@
 
   .two-columns { display: grid; grid-template-columns: 1.6fr 1fr; gap: 14px; align-items: start; }
   .left-stack { display: flex; flex-direction: column; gap: 14px; }
+
+  /* ---------- HORS RP (grille de 3 sous-cartes) ---------- */
+  .horsrp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; align-items: start; }
+  .horsrp-card { display: flex; flex-direction: column; height: 100%; }
+  .horsrp-card .sub-card-image { flex: 1; min-height: 90px; }
 
   .sub-card {
     border-radius: 14px;

@@ -23,6 +23,17 @@
   });
 })();
 
+/* Repli/dépli de chaque catégorie (Administration, Zones, Hors RP...) via
+   la flèche de son en-tête. */
+(function pfaCategoryCollapse() {
+  document.querySelectorAll('.admin-header').forEach(function (header) {
+    header.addEventListener('click', function () {
+      var outer = header.closest('.admin-outer');
+      if (outer) { outer.classList.toggle('is-collapsed'); }
+    });
+  });
+})();
+
 /* État connecté/invité de la sidebar.
    overall_header n'a accès ni à switch_user_logged_in, ni à des variables
    directes de login/logout/nom d'utilisateur (contrairement à index_box ou
@@ -236,8 +247,6 @@
       return el;
     }
     if (adminBody) {
-      var wrap = document.createElement('div');
-
       var guidebook = document.createElement('div');
       guidebook.className = 'guidebook-panel';
       guidebook.innerHTML =
@@ -257,10 +266,9 @@
       cols.appendChild(leftStack);
       cols.appendChild(buildSubCard('Gestion', adminForums['Gestion'], 'gestion-card'));
 
-      wrap.appendChild(guidebook);
-      wrap.appendChild(cols);
       adminBody.innerHTML = '';
-      adminBody.appendChild(wrap);
+      adminBody.appendChild(guidebook);
+      adminBody.appendChild(cols);
     }
   }
 
