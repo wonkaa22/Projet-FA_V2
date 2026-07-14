@@ -68,6 +68,31 @@
   var profileHref = faHref('profile');
   setHref('pfaEditProfileBtn', profileHref);
 
+  /* Avatar du compte actif : _userdata.avatar est une chaîne <img ...>
+     injectée globalement par Forumactif (pas propre à un template), fiable
+     même si {AVATAR} n'existe pas en tant que variable ici. */
+  try {
+    var avatarEl = document.getElementById('pfaCharAvatar');
+    if (avatarEl && typeof _userdata !== 'undefined' && _userdata && _userdata.avatar) {
+      avatarEl.innerHTML = _userdata.avatar;
+    }
+  } catch (e) { /* ignore */ }
+
+  /* Notiffi (bouton) : rendu dans overall_header, déplacé ici une seule fois
+     dans son emplacement définitif (la sidebar est globale, pas besoin de le
+     redéplacer page par page). */
+  var notifBtn = document.getElementById('notiffi_button');
+  var notifSlot = document.getElementById('pfaNotifSlot');
+  if (notifBtn && notifSlot && notifBtn.parentNode !== notifSlot) {
+    notifSlot.appendChild(notifBtn);
+  }
+
+  /* Sous-titre du panneau Bienvenue : "Terrien·ne de passage" ne concerne
+     que les invité·es, remplacé par le nom du personnage actif une fois
+     connecté·e. */
+  var welcomeSubtitle = document.getElementById('pfaWelcomeSubtitle');
+  if (welcomeSubtitle) { welcomeSubtitle.setAttribute('data-connected', '1'); }
+
   /* Nom du personnage actif : lu dans le contenu du switcheroo une fois
      initialisé (texte du personnage sélectionné), mots d'UI de la librairie
      filtrés ; repli sur _userdata.username si vide. */
@@ -95,8 +120,13 @@
   }
   function updateCharName() {
     var name = findCharName();
+    if (!name) { return; }
     var nameEl = document.getElementById('pfaCharName');
-    if (name && nameEl) { nameEl.textContent = name; }
+    if (nameEl) { nameEl.textContent = name; }
+    var welcomeSubtitle = document.getElementById('pfaWelcomeSubtitle');
+    if (welcomeSubtitle && welcomeSubtitle.getAttribute('data-connected') === '1') {
+      welcomeSubtitle.textContent = name;
+    }
   }
   updateCharName();
   /* Switcheroo peut se peupler après coup (chargement asynchrone) : on

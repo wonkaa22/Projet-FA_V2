@@ -41,7 +41,7 @@
      vrai site, les pages ont une hauteur variable : on passe donc à min-height +
      sidebar collante (voir .sidebar-shell) pour garder le même rendu visuel
      (colonne fixe, contenu qui défile) sur une page qui peut dépasser l'écran. */
-  .pfa-wrap { max-width: 1400px; min-height: calc(100vh - 60px); margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+  .pfa-wrap { max-width: 1600px; min-height: calc(100vh - 60px); margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
 
   .layout { display: flex; gap: 14px; align-items: flex-start; flex: 1; min-height: 0; }
 
@@ -79,14 +79,14 @@
      position: fixed plutôt que sticky : sticky casse dès qu'un ancêtre a un
      overflow particulier (fréquent avec le CSS de base de Forumactif, hors
      de notre contrôle), fixed s'ancre toujours à la fenêtre. .pfa-wrap étant
-     centré (max-width 1400px, margin auto) sur les grands écrans, le calc()
+     centré (max-width 1600px, margin auto) sur les grands écrans, le calc()
      ci-dessous reproduit cette position centrée pour que la colonne fixe
      s'aligne avec le reste de la mise en page ; .main-content compense
      l'espace laissé par la sidebar sortie du flux (voir plus bas). */
   .sidebar-shell {
     width: 300px; flex-shrink: 0; transition: width 0.25s ease;
     position: fixed; top: 30px;
-    left: max(16px, calc((100vw - 1400px) / 2 + 16px));
+    left: max(16px, calc((100vw - 1600px) / 2 + 16px));
     height: calc(100vh - 60px);
     z-index: 10;
   }
@@ -113,8 +113,13 @@
   .side-icons { display: flex; gap: 14px; font-size: 13px; color: var(--ink-muted-dark); }
   .auth-buttons { display: flex; gap: 8px; }
   .btn-ghost { flex: 1; background: var(--section); color: var(--ink-body-light); border-radius: 6px; padding: 8px 4px; font-size: 11px; text-align: center; letter-spacing: 0.5px; }
-  .char-header { display: flex; align-items: center; justify-content: space-between; }
-  .char-header h3 { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500; font-size: 22px; color: var(--ink-hi-dark); line-height: 1.2; }
+  .char-header { display: flex; align-items: center; gap: 10px; }
+  .char-header h3 { flex: 1; min-width: 0; font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500; font-size: 22px; color: var(--ink-hi-dark); line-height: 1.2; overflow-wrap: break-word; }
+  .char-avatar-lg { flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; background: var(--section); }
+  .char-avatar-lg img { width: 100%; height: 100%; object-fit: cover; }
+  .char-avatar-lg:empty { display: none; }
+  .char-header-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .pfa-notif-slot:empty { display: none; }
   .edit-pill {
     background: var(--section); border-radius: 20px; width: 60px; height: 22px;
     display: flex; align-items: center; justify-content: center;
@@ -126,25 +131,181 @@
   .char-switch { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .char-avatar { width: 40px; height: 40px; border-radius: 50%; }
   .char-avatar.plus { display:flex; align-items:center; justify-content:center; background: var(--section); color: var(--ink-body-light); font-size: 16px; }
-  /* Reskin de base pour le widget tiers Switcheroo (multi-personnages) : la
-     structure DOM exacte de la librairie n'a pas pu être inspectée hors-ligne,
-     ce reset générique est à affiner une fois testé en conditions réelles sur
-     le forum (voir docs/mecanismes-reutilisables-test-astra.md, section 3). */
-  #switcheroo { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-  #switcheroo img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+  /* ---------- SWITCHEROO (multi-personnages) ----------
+     Vraies classes du plugin (docs/Switcheroo.txt), recolorées avec nos
+     tokens au lieu du CSS d'origine (Test_Astra a fait pareil, même
+     technique). */
+  .switcheroo { color: var(--ink-body-dark); font-size: 11px; }
+  .switcheroo[position="static"] { position: relative; }
+  .switcheroo__squircles { display: flex; margin: 0; padding: 0; list-style: none; gap: 8px; }
+  .switcheroo[direction="horizontal"] .switcheroo__squircles { flex-direction: row; flex-wrap: wrap; }
+  .switcheroo[direction="vertical"] .switcheroo__squircles { flex-direction: column; }
+  .switcheroo__squircle {
+    position: relative; display: grid; place-items: center;
+    background-color: var(--section); width: 40px; height: 40px;
+    border-radius: 50%; cursor: pointer;
+    transition: border-radius 128ms ease, background 128ms ease;
+  }
+  .switcheroo__squircle:hover { border-radius: 10px; }
+  .switcheroo__avatar img {
+    width: 40px; height: 40px; object-fit: cover; object-position: center;
+    border-radius: 50%; transition: border-radius 128ms ease;
+  }
+  .switcheroo__squircle.active, .switcheroo__squircle.active img { border-radius: 10px; cursor: default; }
+  .switcheroo__squircle:before {
+    content: ""; display: block; background: transparent;
+    border: 2px solid var(--ink-hi-dark); border-radius: 50%;
+    height: 48px; width: 48px; opacity: 0; pointer-events: none;
+    position: absolute; top: -4px; left: -4px; z-index: -1;
+    transition: border-radius 128ms ease, opacity 64ms ease;
+  }
+  .switcheroo__squircle.active:before, .switcheroo__squircle:hover:before { opacity: 1; border-radius: 12px; }
+  .switcheroo__delete {
+    display: grid; place-items: center; position: absolute;
+    width: 16px; height: 16px; top: -5px; right: -5px;
+    border-radius: 50%; background-color: #d97a63;
+    transform: scale(0); opacity: 1; transition: transform 128ms ease;
+    cursor: pointer; color: #fff; font-size: 10px;
+  }
+  .switcheroo__squircle:hover .switcheroo__delete { transform: scale(1); }
+  .switcheroo__popper {
+    background-color: var(--chip-bg); color: var(--chip-ink);
+    padding: 6px 10px; position: absolute; width: max-content;
+    border-radius: 4px; z-index: 20; opacity: 0; font-size: 10px;
+    transition: opacity 64ms ease, transform 128ms ease; pointer-events: none;
+  }
+  .switcheroo[direction="horizontal"] .switcheroo__popper { top: 130%; left: 50%; transform: translateX(-50%) scale(0.96); }
+  .switcheroo[direction="vertical"] .switcheroo__popper { left: 130%; top: 50%; transform: translateY(-50%) scale(0.96); }
+  .switcheroo[direction="horizontal"] .switcheroo__squircle:hover .switcheroo__popper { opacity: 1; transform: translateX(-50%) scale(1); }
+  .switcheroo[direction="vertical"] .switcheroo__squircle:hover .switcheroo__popper { opacity: 1; transform: translateY(-50%) scale(1); }
+  .switcheroo__logo, .switcheroo__divider { display: none; }
+  .switcheroo__squircle--button { background: var(--chip-bg); color: var(--chip-ink); font-size: 16px; }
+  .switcheroo__squircle--button:hover { border-radius: 10px; }
+
+  /* Fenêtre de connexion/association (Monomer) */
+  .monomer-overlay {
+    position: fixed; z-index: 999; top: 0; left: 0; opacity: 0;
+    width: 100%; height: 100%; transition: 0.2s opacity ease;
+    background: rgba(13,27,42,0.6);
+  }
+  .monomer-modal {
+    position: fixed; z-index: 999; top: 50%; left: 50%; opacity: 0;
+    width: 94%; max-width: 340px; transition: 0.2s opacity ease;
+    transform: translate(-50%, -50%); border-radius: 12px;
+    background: var(--frame2); color: var(--ink-body-light);
+  }
+  .switcheroo__form { padding: 26px; border-radius: 12px; }
+  .switcheroo__form-row { display: flex; flex-flow: column; align-items: flex-start; margin-bottom: 14px; }
+  .switcheroo__form-label { margin-bottom: 6px; font-size: 11px; text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px; }
+  .switcheroo__form-input {
+    padding: 8px; font-size: 13px; border-radius: 6px; width: 100%;
+    background-color: var(--bg-page); border: none !important;
+    border-bottom: 2px solid var(--frame1) !important; color: var(--ink-body-light);
+  }
+  .switcheroo__form-button {
+    border-radius: 6px; padding: 8px 14px; border: none; outline: none;
+    text-transform: uppercase; font-size: 11px; align-self: flex-end;
+    background-color: var(--chip-bg); color: var(--chip-ink); cursor: pointer;
+  }
+  .monomer-modal.monomer-open, .monomer-overlay.monomer-open { opacity: 1; }
+  .monomer-close {
+    font-size: 16px; display: grid; place-items: center; width: 22px; height: 22px;
+    position: absolute; top: -8px; right: -8px; cursor: pointer; color: #fff;
+    border: 0; outline: none; background: #d97a63; border-radius: 50%; padding: 0;
+  }
+
+  /* ---------- NOTIFFI (notifications) ----------
+     Vraies classes du plugin (docs/Notiffi.txt). Bouton déplacé en JS dans
+     la sidebar (voir site.js) plutôt que laissé en position:fixed flottant
+     par défaut ; le panneau reste en overlay fixe. */
+  #notiffi_button {
+    cursor: pointer; background: var(--section); border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px; position: relative; font-size: 14px; flex-shrink: 0;
+  }
+  .unread_count {
+    position: absolute; top: -4px; right: -4px; background: #d97a63; color: #fff;
+    border-radius: 5px; min-width: 16px; height: 16px; display: grid;
+    place-items: center; font-weight: 600; font-size: 9px; padding: 0 3px;
+  }
+  .unread_count:empty { display: none; }
+  #notiffi_panel {
+    --menuSize: 320px; width: var(--menuSize); position: fixed; z-index: 200;
+    top: 0; height: 100%; right: calc(var(--menuSize) * -1);
+    display: flex; flex-direction: column; gap: 10px; align-items: stretch;
+    background: var(--frame1); color: var(--ink-body-dark);
+    padding: 15px; padding-top: 50px; opacity: 0; visibility: hidden;
+    transition: right 0.3s ease, opacity 0.3s ease; overflow-y: auto;
+  }
+  #notiffi_panel.open { right: 0; visibility: visible; opacity: 1; }
+  .all_notifications { width: 100%; background: var(--frame2); padding: 10px; border-radius: 10px; }
+  .no_notification { text-align: center; font-style: italic; font-size: 12px; color: var(--ink-muted-dark); padding: 10px; }
+  .notiffi_manage { width: 100%; display: flex; justify-content: space-between; align-items: center; font-size: 11px; }
+  .notiffi_see_all { color: var(--ink-hi-dark); text-decoration: none; }
+  .notiffi_actions { display: grid; justify-items: end; gap: 5px; }
+  .notiffi_actions button { padding: 4px 10px; background: var(--section); color: var(--ink-body-light); border-radius: 6px; font-size: 10px; }
+  .notification { display: flex; gap: 10px; margin-bottom: 6px; padding: 8px; border-radius: 8px; border: 1px solid transparent; }
+  .notification:hover { border-color: rgba(224,225,221,0.2); }
+  .notification.unread { background-color: rgba(224,225,221,0.08); }
+  .notif_details { position: relative; align-self: start; flex-shrink: 0; }
+  .notif_avatar { background: var(--section); height: 32px; width: 32px; border-radius: 6px; overflow: hidden; }
+  .notif_avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .notif_icon {
+    position: absolute; bottom: -4px; right: -4px; background: var(--frame1);
+    width: 16px; height: 16px; display: grid; place-items: center;
+    border-radius: 50%; font-size: 9px;
+  }
+  .notification.unread .notif_icon { color: var(--frame1); background: var(--ink-hi-dark); }
+  .notif_content { width: 100%; min-width: 0; }
+  .notif_text { font-size: 11px; line-height: 1.4; }
+  .notif_text a { color: var(--ink-hi-dark); }
+  .notif_time { font-size: 10px; opacity: 0.6; margin-top: 4px; }
+  .notif_close {
+    background: transparent; align-self: start; font-size: 14px; line-height: 0;
+    opacity: 0; border-radius: 100px; padding: 2px; transition: opacity .2s; color: inherit;
+  }
+  .notification:hover .notif_close { opacity: 1; }
+  .notification.alert {
+    position: fixed; width: 280px; align-items: center; z-index: 300;
+    bottom: 16px; right: 16px; background: var(--frame1); color: var(--ink-body-dark);
+    border-radius: 10px; padding: 10px; box-shadow: 0 8px 20px rgba(13,27,42,0.3);
+  }
+  .alert_close { background: transparent; color: inherit; border: 0; cursor: pointer; align-self: start; }
+
   .nav-row { display: flex; gap: 8px; align-items: center; }
   .nav-btn { flex: 1; background: var(--section); color: var(--ink-body-light); border-radius: 6px; padding: 8px 4px; font-size: 11px; text-align: center; letter-spacing: 0.5px; }
   .nav-chevron { color: var(--ink-muted-dark); font-size: 12px; width: 16px; text-align: center; cursor: pointer; user-select: none; }
   .nav-row.is-collapsed .nav-btn { display: none; }
   .plugin-box { height: 110px; border: 1px dashed rgba(224,225,221,0.35); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-muted-dark); font-style: italic; }
   .two-col { display: flex; gap: 10px; }
-  .side-card { flex: 1; height: 150px; border-radius: 10px; position: relative; font-size: 10px; letter-spacing: 0.5px; }
-  .side-card .label { position: absolute; top: 8px; left: 10px; z-index: 2; }
-  .side-card .label.bottom { top: auto; bottom: 8px; right: 10px; }
+  .side-card {
+    flex: 1; height: 150px; min-height: 0; border-radius: 10px;
+    font-size: 10px; letter-spacing: 0.5px;
+    display: flex; flex-direction: column; gap: 6px; padding: 10px;
+  }
+  .side-card--reverse { flex-direction: column-reverse; }
+  .side-card .label { flex-shrink: 0; color: var(--ink-muted-light); }
+  .side-card .label.bottom { text-align: right; }
+  .side-card-list {
+    flex: 1; min-height: 0; overflow-y: auto; list-style: none;
+    display: flex; flex-direction: column; gap: 6px;
+    font-size: 10px; line-height: 1.4; color: var(--ink-body-light);
+    scrollbar-width: thin; scrollbar-color: rgba(224,225,221,0.3) transparent;
+  }
+  .side-card-list::-webkit-scrollbar { width: 5px; }
+  .side-card-list::-webkit-scrollbar-track { background: transparent; }
+  .side-card-list::-webkit-scrollbar-thumb { background: rgba(224,225,221,0.3); border-radius: 3px; }
+  .side-card-list li { padding-left: 12px; position: relative; }
+  .side-card-list li::before {
+    content: ""; position: absolute; left: 0; top: 6px;
+    width: 4px; height: 4px; border-radius: 50%; background: var(--ink-muted-light);
+  }
   .pagination-dots { display: flex; gap: 8px; }
   .pdot { width: 24px; height: 24px; border-radius: 50%; background: var(--section); color: var(--ink-body-light); display: flex; align-items: center; justify-content: center; font-size: 11px; }
 
-  .main-content { flex: 1; display: flex; flex-direction: column; gap: 12px; min-width: 0; margin-left: 314px; transition: margin-left 0.25s ease; }
+  /* 300px (largeur sidebar) + 22px : même écart que le gap entre cadres
+     dans .outer-frame, pour que l'espacement soit visuellement cohérent. */
+  .main-content { flex: 1; display: flex; flex-direction: column; gap: 12px; min-width: 0; margin-left: 322px; transition: margin-left 0.25s ease; }
   .sidebar-shell.collapsed ~ .main-content { margin-left: 0; }
   .outer-frame { background: var(--frame1); border-radius: 28px; padding: 22px; display: flex; flex-direction: column; gap: 22px; }
   .content-frame { background: var(--frame2); border-radius: 20px; padding: 18px; display: flex; flex-direction: column; gap: 14px; }
