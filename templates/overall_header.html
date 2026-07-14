@@ -100,7 +100,7 @@
 	<link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet"/>
 
 	<!-- CSS Projet-FA_V2 (hébergé sur GitHub Pages, cache-bust via ?v= à incrémenter à chaque édition) -->
-	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=6"/>
+	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=7"/>
 
 	<!-- Thème clair/sombre : appliqué avant le <body> pour éviter un flash du mauvais thème -->
 	<script type="text/javascript">
@@ -271,6 +271,8 @@
 						<nav id="switcheroo" class="switcheroo" direction="horizontal" position="static"></nav>
 					</div>
 					<a class="btn-ghost" id="pfaLogoutBtn" href="#" style="margin-top:8px; display:block;">Déconnexion</a>
+					<!-- Ne rend rien pour les comptes non-admin/modo (masqué par CSS si vide) -->
+					<div class="pfa-admin-link">{ADMIN_LINK}</div>
 				</div>
 
 				<div class="nav-row">
