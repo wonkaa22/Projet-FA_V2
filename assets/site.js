@@ -123,29 +123,37 @@
   var welcomeGuest = document.getElementById('pfaWelcomeGuest');
   if (welcomeGuest) { welcomeGuest.style.display = 'none'; }
 
-  /* Nom du personnage actif : lu dans le contenu du switcheroo une fois
-     initialisé (texte du personnage sélectionné), mots d'UI de la librairie
-     filtrés ; repli sur _userdata.username si vide. */
+  /* Nom du personnage actif : _userdata.username en priorité, pas le contenu
+     du switcheroo. Switcheroo change de personnage en ré-authentifiant sur
+     le vrai compte FA associé (voir docs/Switcheroo.txt, formulaire
+     username/password du "+") : après un changement, _userdata reflète donc
+     déjà le bon compte, au rechargement de la page. Parcourir le texte du
+     switcheroo au hasard (premier nœud non-UI trouvé) piochait le premier
+     compte associé dans l'ordre du DOM plutôt que le compte réellement actif
+     (repéré via .switcheroo__squircle.active) : connecté·e en tant que
+     second compte, le nom du premier restait affiché. Gardé en repli
+     seulement (via .switcheroo__squircle.active .switcheroo__popper, qui
+     porte le pseudo de CE compte précis) si _userdata est indisponible. */
   var UI_WORDS = ['anonymous', 'associer', 'ajouter', 'personnage', 'compte', 'connect'];
   function isUiText(t) {
     var l = t.toLowerCase();
     return UI_WORDS.some(function (w) { return l.indexOf(w) !== -1; });
   }
   function findCharName() {
-    var sw = document.getElementById('switcheroo');
-    if (sw) {
-      var walker = document.createTreeWalker(sw, NodeFilter.SHOW_TEXT, null, false);
-      var node;
-      while ((node = walker.nextNode())) {
-        var text = node.nodeValue.trim();
-        if (text.length > 2 && !isUiText(text)) { return text; }
-      }
-    }
     try {
       if (typeof _userdata !== 'undefined' && _userdata && _userdata.username && !isUiText(String(_userdata.username))) {
         return String(_userdata.username);
       }
     } catch (e) { /* ignore */ }
+    var sw = document.getElementById('switcheroo');
+    if (sw) {
+      var activeSquircle = sw.querySelector('.switcheroo__squircle.active');
+      var popper = activeSquircle && activeSquircle.querySelector('.switcheroo__popper');
+      if (popper) {
+        var activeText = popper.textContent.trim();
+        if (activeText.length > 2 && !isUiText(activeText)) { return activeText; }
+      }
+    }
     return '';
   }
   function updateCharName() {
