@@ -1,0 +1,39 @@
+Il est possible de modifier le texte par défaut implémenté par Forumactif avec une simple ligne de Javascript. C'est une solution souvent utilisée par les rpgistes et légère au chargement de votre page.
+
+<script type="text/javascript">
+ $(".CIBLE").html($(".CIBLE").html().replace("TEXTE DEFAULT", "NOUVEAU TEXTE"));
+</script>
+
+Comprendre le code
+
+    Ciblez l'élément à modifier par son conteneur. Si l'élément (un bloc, un bouton, autre...) n'est pas contenu dans une .class, ajoutez-en une.
+    Copier le texte par défaut de Forumactif et collez-le à l'emplacement "texte défaut".
+    Écrivez votre nouveau texte dans l'emplacement "nouveau texte".
+
+Installation (option simple mais peu optimisée)
+
+Vous pouvez installer ce code directement dans le template qui contient le texte à modifier. Par exemple, pour modifier des textes du QEEL, le code sera à copier n'importe où dans le template index_body Par exemple, ce code est déjà présent dans le Blank Theme (voir ligne 114 à 129).
+Installation (option optimisée mais à part)
+
+Si vous êtes à l'aise avec l'installation de javascript sur FA, vous pouvez créer un nouveau code javascript depuis votre panneau d'administration Modules → HTML & Javascript → Gestion des codes Javascript. Nommez-le comme bon vous semble et cochez le placement sur toutes les pages.
+
+$(function(){
+ $(".CIBLE").html($(".CIBLE").html().replace("TEXTE DEFAULT", "NOUVEAU TEXTE"));
+});
+
+Attention, certain texte par défaut de FA changent en fonction de certaine situation. Par exemple, dans le QEEL, s'il n'y a qu'un membre le texte sera au singulier puis passera au pluriel s'il y a plusieurs membres. Prévoyez donc une modification pour chaque condition.
+
+Vous pouvez répéter la ligne de javascript plusieurs fois à la suite pour chaque modification. L'importance étant qu'elles restent entre la balise script ou function{}
+Exemple en pratique
+
+Ici on veut changer le texte par défaut des derniers connectés dans le QEEL en installant tout dans le template index_body (dans mon cas, j'utilise l'id (#) plutôt que la class (.class))
+
+<!-- Derniers connectés au cours de ces Xh -->
+<div class="qeel-right" id="last_connected">
+ {L_CONNECTED_MEMBERS}
+
+</div>
+
+<script type="text/javascript">
+ $("#last_connected").html($("#last_connected").html().replace("Membres connectés au cours des 24 dernières heures :", "Connectés récemment"));
+</script>

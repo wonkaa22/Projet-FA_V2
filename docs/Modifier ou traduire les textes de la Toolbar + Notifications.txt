@@ -1,0 +1,202 @@
+Sur Forumactif, les options de personnalisation des textes affichés dans la barre d’outils (toolbar) et les notifications sont souvent limitées. Par exemple, les boutons comme Partager, Connexion, S’enregistrer, etc., sont généralement fixes, et les messages de notification ont une structure rigide.
+
+Ce script jQuery vous permet de personnaliser les libellés de la toolbar ainsi que les messages de notifications.
+Informations
+
+    Le script est normalement compatible avec toutes les versions de forum.
+    Merci à 'Christa Lostmindy pour la modernation du jquery.
+    Le tutoriel original provient de Shadow du Forum des Forums, modifié et retapé pour maintenant.
+    Le tutoriel est utilisable avec Notiffi.
+
+
+Placement
+
+Créez une nouvelle page javascript en cochant bien sur toutes les pages, avec un titre explicite (ex. Modification texte Toolbar + Notifications)
+
+CODE
+
+$(function () {
+ const toolbar_alias = {
+   Share: "Partagez",
+   Login: "Connexion",
+   Register: "S'enregistrer",
+   Welcome: "Bienvenue",
+   Notifications: "Notifications",
+
+   See_my_profile: "Voir mon profil",
+   Edit_profile: "Editer mon profil",
+   All_Topics: "Mes sujets",
+   All_Messages: "Mes messages",
+   js_topics_followed: "Mes sujets suivis",
+   Admin_panel: "Panneau d'administration",
+   Logout: "Déconnexion",
+   Follow: "Suivre",
+   Unfollow: "Ne plus suivre",
+
+   Notif_see_all: "Voir toutes les notifications",
+   Notif_priv_msg: 'Vous avez reçu un <a href="/privmsg?folder=inbox&nid=%(nid)s">message privé</a> de la part de <a href="/u%(id)d">%(name)s</a>',
+   Notif_report: '<a href="/u%(id)d">%(name)s</a> a créé un <a href="/report?nid=%(nid)s">rapport de message</a>',
+   Notif_friend_req: 'Vous avez reçu une <a href="/profile?mode=editprofile&nid=%(nid)s&page_profil=friendsfoes">demande d\'ami</a> de la part de <a href="/u%(id)d">%(name)s</a>',
+   Notif_group_req: '<a href="/u%(id)d">%(name)s</a> a effectué une demande d\'adhésion au groupe <a href="/g%(group_id)d-%(group_url_name)s?nid=%(nid)s">%(group_name)s</a>',
+   Notif_friend_con: '<a href="/u%(id)d">%(name)s</a> vient de se connecter au forum',
+   Notif_wall_msg: '<a href="/u%(id)d">%(name)s</a> a écrit un message sur <a href="/u%(self)dwall?nid=%(nid)s">votre mur</a>',
+   Notif_abuse: '<a href="/admin/?mode=active&nid=%(nid)s&part=misc&sub=support&tid=1b7c44d018b7dc6d843ae280023382d4&_tc=1747490030">Un abus</a> a été signalé',
+   Notif_topic_watch2: '<a href="/u%(id)d">%(name)s</a> a écrit un message dans <a href="/t%(topic_id)d-%(topic_name)s?nid=%(nid)s#%(post_id)d">%(topic_title)s</a>',
+   Notif_topic_watch_p2: '<a href="/u%(id)d">%(name)s</a> a écrit un message dans <a href="/t%(topic_id)dp%(start)d-%(topic_name)s?nid=%(nid)s#%(post_id)d">%(topic_title)s</a>',
+   Notif_topic_watch_guest2: 'Un invité a écrit un message dans <a href="/t%(topic_id)d-%(topic_name)s?nid=%(nid)s#%(post_id)d">%(topic_title)s</a>',
+   Notif_topic_watch_p_guest2: 'Un invité a écrit un message dans <a href="/t%(topic_id)dp%(start)d-%(topic_name)s?nid=%(nid)s#%(post_id)d">%(topic_title)s</a>',
+
+   Notif_topic_watch: '<a href="/u%(id)d">%(name)s</a> a écrit un message dans <a href="/t%(topic_id)d-%(topic_name)s?nid=%(nid)s#%(post_id)d">un sujet que vous suivez</a>',
+   Notif_topic_watch_p: '<a href="/u%(id)d">%(name)s</a> a écrit un message dans <a href="/t%(topic_id)dp%(start)d-%(topic_name)s?nid=%(nid)s#%(post_id)d">un sujet que vous suivez</a>',
+   Notif_topic_watch_guest: 'Un invité a écrit un message dans <a href="/t%(topic_id)d-%(topic_name)s?nid=%(nid)s#%(post_id)d">un sujet que vous suivez</a>',
+   Notif_topic_watch_p_guest: 'Un invité a écrit un message dans <a href="/t%(topic_id)dp%(start)d-%(topic_name)s?nid=%(nid)s#%(post_id)d">un sujet que vous suivez</a>',
+
+   Notif_mention: '<a href="/u%(id)d">%(name)s</a> vous a tagué dans <a href="/t%(topic_id)dp%(start)d-%(topic_name)s?nid=%(nid)s#%(post_id)d">%(topic_title)s</a>',
+   Notif_like: '<a href="/u%(id)d">%(name)s</a> a aimé votre message dans <a href="/t%(topic_id)dp%(start)d-%(topic_name)s?nid=%(nid)s#%(post_id)d">%(topic_display_name)s</a>',
+   Notif_dislike: '<a href="/u%(id)d">%(name)s</a> n\'a pas aimé votre message dans <a href="/t%(topic_id)dp%(start)d-%(topic_name)s?nid=%(nid)s#%(post_id)d">%(topic_display_name)s</a>',
+
+   Notif_hashtag: 'Le mot-clé <a href="/tags/%(tag)s">#%(tag)s</a> a été taggué dans <a href="/t%(topic_id)dp%(start)d-%(topic_name)s?nid=%(nid)s#%(post_id)d">un sujet</a>',
+   Notif_forum_watch:
+     '%(name)s a publié <a href="/t%(topic_id)d-%(topic_name)s?nid=%(nid)s">%(topic_title)s</a> dans le forum <a href="/f%(forum_id)d-%(forum_name)s?nid=%(nid)s">%(forum_title)s</a>',
+
+   Notif_advert_validate: 'Votre annonce "%(ad_title)s" a été validée. <a href="/d%(ad_id)d-%(ad_url)s?nid=%(nid)s">Voir l\'annonce</a>',
+   Notif_advert_delete: 'Votre annonce "%(ad_title)s" a été suprimée.',
+   Notif_advert_refuse: 'Votre annonce "%(ad_title)s" a été  refusée. <a href="/post?d=%(ad_id)d&f=%(forum_id)d&nid=%(nid)s">Voir l\'annonce</a>',
+   Notif_advert_expired:
+     'Votre annonce "%(ad_title)s" est arrivée au terme de sa diffusion. Vous pouvez la remettre en ligne en <a href="/post?d=%(ad_id)d&f=%(forum_id)d&nid=%(nid)s">cliquant ici</a>',
+
+   Notif_award: '<div class="notif_award" style="--award-image:url(\'%(award_image)s\')"></div><div class="notif_award_text">%(award_notif)s</div>',
+
+   Notif_followers_new_topic: 'Le membre suivi <a href="/u%(id)d">%(name)s</a> a publié <a href="/t%(topic_id)d-%(topic_name)s?nid=%(nid)s">%(topic_title)s</a>',
+   Notif_followers_new_post2: 'Le membre suivi <a href="/u%(id)d">%(name)s</a> a répondu au sujet <a href="/t%(topic_id)d-%(topic_name)s?nid=%(nid)s#%(post_id)d">%(topic_title)s</a>',
+   Notif_followers_new_post_p2: 'Le membre suivi <a href="/u%(id)d">%(name)s</a> a répondu au sujet <a href="/t%(topic_id)dp%(start)d-%(topic_name)s?nid=%(nid)s#%(post_id)d">%(topic_title)s</a>',
+   Notif_followers_new_post: 'Le membre suivi <a href="/u%(id)d">%(name)s</a> a publié un message <a href="/t%(topic_id)d-%(topic_name)s?nid=%(nid)s#%(post_id)d">dans un sujet</a>',
+   Notif_followers_new_post_p: 'Le membre suivi <a href="/u%(id)d">%(name)s</a> a publié un message <a href="/t%(topic_id)dp%(start)d-%(topic_name)s?nid=%(nid)s#%(post_id)d">dans un sujet</a>',
+
+   All_PMs: "Mes messages privés",
+   No_assigned_rank: "Aucun rang spécial assigné",
+   Posts: "Messages",
+   PMs: "MPs",
+   Reputation: "Réputation",
+ };
+
+ if (window._lang) for (let i in toolbar_alias) window._lang[i] = toolbar_alias[i];
+});
+
+Fonctionnement
+
+Dans ce script, tout ce que vous allez modifier ou personnaliser se trouve dans une variable appelée toolbar_alias.
+
+toolbar_alias est un objet JavaScript, c’est-à-dire une structure qui stocke des données sous forme de paires clé–valeur, un peu comme un dictionnaire où chaque clé est liée à un texte ou une valeur spécifique.
+
+Dedans, vous retrouverez ce genre d'élément :
+
+Share: "Partagez",
+Login: "Connexion",
+
+Ces deux lignes sont ce qu’on appelle des paires clé-valeur.
+
+    La clé (Share ou Login), est le nom utilisé dans le code source pour identifier cet élément.
+    La valeur "Partagez" ou "Connexion", est le texte qui sera affiché.
+
+Vous pouvez supprimer les paires dont vous n'avez aucune utilité pour éviter d'alourdir le script, par contre n'oubliez pas de vérifier que chaque paire est bien terminée par une ,
+Explication supplémentaire du script
+
+Vous n'avez pas besoin de toucher à cette partie, mais expliquons malgré tout son utilité : if (window._lang) for (let i in toolbar_alias) window._lang[i] = toolbar_alias[i];
+
+Cette ligne vérifie si l'objet _lang existe, puis pour chaque clé de toolbar_alias, elle copie sa valeur dans _lang, ajoutant ou remplaçant les traductions existantes.
+
+_lang est un objet global utilisé dans le code source Forumactif pour stocker des chaînes de texte traduisibles. clic droit ou ctrl+u → afficher le code source de la page.
+Passer du Jquery au Javascript
+
+Si vous préférez dev votre forum en javascript uniquement, vous pouvez remplacer
+
+$(function () {
+
+par
+
+document.addEventListener('DOMContentLoaded', function() {
+
+Les variables de notifications
+
+Les notifications utilisent des variables dynamiques, qui sont des éléments entre parenthèses dans un format spécifique comme %(variable)s ou %(variable)d. Ces variables sont remplacées automatiquement par des valeurs précises (comme un nom d’utilisateur, un identifiant, etc.) au moment de l’affichage.
+Variable 	Description
+%(id)d 	L'id de l'utilisateur qui envoie la notification
+%(self)d 	Votre id d'utilisateur
+%(name)s 	Le pseudo de l'utilisateur qui a envoyé la notification
+%(post_id)d 	L'id du message du sujet cité
+%(start)d 	L'id de la page du sujet cité
+%(topic_id)d 	L'id du sujet cité
+%(topic_name)s 	Le nom d'un sujet cité
+%(group_id)d 	L'id d'un groupe cité
+%(group_url_name)s 	Le lien vers la page d'un groupe cité
+%(group_name)s 	Le nom d'un groupe cité
+%(tag)s 	Le hashtag qui a été tagué dans un sujet
+%(nid)s 	L'id de la notification
+
+Prenons la notification d'un message posté dans un sujet en exemple :
+
+Notif_topic_watch2: 'Notif_topic_watch2 <a href="/u%(id)d">%(name)s</a> a écrit un message dans <a href="/t%(topic_id)d-%(topic_name)s?nid=%(nid)s#%(post_id)d">%(topic_title)s</a>',
+
+En html, le résultat sera donc le suivant :
+
+<div class="notif_text">Notif_topic_watch2 <a href="/u2">Sixtine</a> a écrit un message dans <a href="/t113-poster-un-tutoriel?nid=3#1022">Poster un tutoriel</a></div>
+
+En suivant, notre tableau :
+Pour le pseudo
+
+    %(id)d représente l'id de l'expéditeur → u%(id)d donnera donc un résultat comme u1, u2, etc.
+    %(name)s représente le nom de l'expéditeur
+
+<a href="/u%(id)d">%(name)s</a> deviendra donc, par exemple <a href="/u2">Sixtine</a>
+Pour le lien
+
+Forumactif construit ses liens de cette manière : https://blankthemerpg.forumactif.com/t113-poster-un-tutoriel#1022, t équivaut à topic. Avec cette information :
+
+    %(topic_id)d représente l'id du sujet → sur notre lien d'exemple, c'est 113
+    %(topic_name)s représente le nom du sujet → poster-un-tutoriel
+    %(nid)s représente l'id de la notification, pour savoir à quel message est reliée quelle notification →p our notre exemple, considérons que son id est "3".
+    %(post_id)d représente l'id du message → sur notre lien d'exemple, c'est 1022
+
+Résultat
+
+<a href="/t%(topic_id)d-%(topic_name)s?nid=%(nid)s#%(post_id)d">%(topic_title)s</a> deviendra donc, avec notre exemple : <a href="/t113-poster-un-tutoriel?nid=3#1022">Poster un tutoriel</a>
+
+    les clés ne doivent pas être changées, car ce sont elles qui sont utilisées en interne pour référencer chaque texte.
+    Les variables dynamiques dans les notifications doivent impérativement rester intactes dans la chaîne de texte pour fonctionner.
+    Pour les notifications, on utilise ' au lieu de " pour définir la chaîne de caractères qu'est la valeur. Il faudra donc échapper les apostrophes avec un antislash \ pour que le script fonctionne. Exemple : Register: 'S\'enregistrer',
+
+Explication des notifications
+Clé 	Type 	Description
+Notif_see_all 	Général 	Lien pour voir toutes les notifications
+Notif_priv_msg 	Message privé 	Notification de réception d’un message privé
+Notif_report 	Modération 	Notification de rapport de message
+Notif_friend_req 	Réseau social 	Demande d’ami reçue
+Notif_group_req 	Groupe 	Demande d’adhésion à un groupe
+Notif_friend_con 	Réseau social 	Connexion d’un ami
+Notif_wall_msg 	Message personnel 	Message posté sur votre mur
+Notif_abuse 	Modération 	Notification d’un abus signalé
+Notif_topic_watch2 	Suivi de sujet 	Nouveau message dans un sujet suivi
+Notif_topic_watch_p2 	Suivi de sujet 	Nouveau message dans un sujet suivi (pagination)
+Notif_topic_watch_guest2 	Suivi de sujet 	Message d’un invité dans un sujet suivi
+Notif_topic_watch_p_guest2 	Suivi de sujet 	Message d’un invité dans un sujet suivi (pagination)
+Notif_topic_watch 	Suivi de sujet 	Message dans un sujet suivi (lien plus générique)
+Notif_topic_watch_p 	Suivi de sujet 	Idem, avec pagination
+Notif_topic_watch_guest 	Suivi de sujet 	Message invité dans un sujet suivi
+Notif_topic_watch_p_guest 	Suivi de sujet 	Message invité avec pagination dans un sujet suivi
+Notif_mention 	Mention 	Vous avez été mentionné dans un sujet
+Notif_like 	Réaction 	Quelqu’un a aimé votre message
+Notif_dislike 	Réaction 	Quelqu’un n’a pas aimé votre message
+Notif_hashtag 	Tag 	Un mot-clé a été taggué dans un sujet
+Notif_forum_watch 	Suivi de forum 	Nouveau sujet dans un forum suivi
+Notif_advert_validate 	Annonce 	Votre annonce a été validée
+Notif_advert_delete 	Annonce 	Votre annonce a été supprimée
+Notif_advert_refuse 	Annonce 	Votre annonce a été refusée
+Notif_advert_expired 	Annonce 	Votre annonce est expirée
+Notif_award 	Récompense 	Vous avez reçu une récompense
+Notif_followers_new_topic 	Suivi utilisateur 	Un utilisateur suivi a publié un nouveau sujet
+Notif_followers_new_post2 	Suivi utilisateur 	Un utilisateur suivi a répondu à un sujet
+Notif_followers_new_post_p2 	Suivi utilisateur 	Idem avec pagination
+Notif_followers_new_post 	Suivi utilisateur 	Un utilisateur suivi a posté dans un sujet
+Notif_followers_new_post_p 	Suivi utilisateur 	Idem avec pagination
+

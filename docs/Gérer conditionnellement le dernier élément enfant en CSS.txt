@@ -1,0 +1,110 @@
+C'est devenu fréquent d'afficher vos forums sur deux colonnes ces dernières années, et c'est encore plus simple à faire si vous utilisez les grilles CSS. Seulement voilà, ce n'est pas parfait à vos yeux :
+
+    S'il y a un nombre impair d'éléments à afficher, le dernier sera tout seul dans sa colonne et vous ne trouvez pas ça esthétique
+    Vous n'avez aucun contrôle sur le nombre d'éléments qui vont s'afficher (ou, plus précisément, vous voulez éviter de faire du cas par cas qui va rallonger votre CSS à l'infini)
+
+Ce tutoriel répondra à votre question existentielle : oui, il existe en CSS la possibilité de cibler spécifiquement cet élément pour l'afficher différemment !
+Et ça marchera aussi pour plus de colonnes.
+
+Mise en application
+
+Comme souvent, tout repose sur le CSS et une habile combinaison de sélecteurs.
+
+Si vous n'êtes pas au point sur ce qu'est un sélecteur CSS, faites un tour sur l'article du MDN sur la syntaxe CSS , l'article sur les sélecteurs et celui sur les listes de sélecteurs.
+
+Quand vous lisez la page sur les sélecteurs, vous réalisez qu'il y a plein de sélecteurs différents : les sélecteurs de type, de classe, d'identifiant, d'attribut, les combinateurs, etc. La combinaison de tous ces sélecteurs s'appelle également un sélecteur, et c'est le mot clé ici : on peut combiner les sélecteurs.
+Exemple de mise en pratique
+
+Prenons ce code HTML comme exemple :
+
+<div class="demo">
+ <div>1</div>
+ <div>2</div>
+ <div>3</div>
+ <div>4</div>
+ <div>5</div>
+</div>
+
+Notre conteneur avec la classe demo affiche ses enfants sous forme de grille à deux colonnes avec le CSS suivant :
+
+.demo {
+ display:grid;
+ grid-template-columns: repeat(2, 1fr);
+}
+
+L'écriture du sélecteur
+
+Pour cibler les enfants div à l'intérieur du conteneur ayant la classe demo, j'utiliserai une combinaison de trois sélecteurs : un sélecteur de classe, un sélecteur d'enfants directs, et un sélecteur de type : .demo > div.
+
+Mais on ne veut pas cibler n'importe quel élément div, on veut en cibler un qui soit le dernier enfant de son conteneur. Pour ça, on a une pseudo-classe bien pratique, :last-child. Tout seul, ça s'écrirait div:last-child.
+
+En plus de ça, dans notre exemple, quand le dernier élément est tout seul sur sa ligne, il est à une position impaire (le 3°, le 5°, le 7°, etc...), . En CSS on peut sélectionner le énième enfant d'un conteneur parent avec la pseudo-classe :nth-child(). Et pour sélectionner en particulier les enfants impairs, on a une notation spécifique, :nth-child(odd). Encore une fois, tout seul, ça s'écrirait div:nth-child(odd)
+
+Et si on combine ces deux sélecteurs ensemble, on va pouvoir écrire un sélecteur qui ciblera un élément div qui est :
+
+    le dernier enfant de son parent
+    à une position numérique impaire
+
+Ce qui s'écrira div:last-child:nth-child(odd).
+
+Notre sélecteur final sera donc :
+
+.demo > div:last-child:nth-child(odd)
+
+Écriture de la règle CSS
+
+Maintenant, on voudrait bien que l'élément sélectionné, s'il existe (si le dernier élément est pair, le sélecteur ne cible rien du tout), prenne deux colonnes au lieu d'une seule. Pour ça, on va utiliser la propriété grid-column, et utiliser la valeur span 2 qui donne l'instruction d'occuper deux colonnes plutôt qu'une.
+
+.demo > div:last-child:nth-child(odd) {
+ grid-column: span 2;
+}
+
+Je ne vais pas expliquer comment marchent les grilles CSS dans ce tutoriel, mais sachez que vous pouvez obtenir le même résultat en écrivant grid-column: 1 / -1.
+
+Cette écriture (1/-1) permet d'indiquer que l'élément commence au début de la ligne et finit "au début de la ligne en partant de la fin" (d'où le -1). C'est surtout pratique dans les cas où on ne sait pas combien il y a de colonnes et qu'on veut que notre élément occupe toutes les colonnes d'un coup, mais ça vous sera certainement utile de le savoir pour vos futurs projets personnels.
+
+Et voilà, vous avez désormais la possibilité d'afficher votre dernière cellule sur tout l'espace plutôt que sur une seule colonne !
+Et s'il y a plus de deux colonnes ?
+
+Bon, c'est bien beau tout ça, mais penchons nous sur un cas de figure plus compliqué : votre grille ne fait pas 2 colonnes, mais TROIS ! Du coup, à l'affichage, on sera bien embêtés pour le cinquième élément, mais aussi le quatrième.
+exemple d'affichage d'éléments sur trois colonnes, lorsqu'il n'y a que quatre, ou cinq éléments, la ligne finale n'est pas remplie
+Le pseudo-élément :nth-child()
+
+Pour le coup ça ne va plus être une question de sélectionner un élément pair ou impair, là. Pour ça, il va falloir utiliser nos sélecteurs :nth-child() de façon un peu plus avancée. J'ai parlé plus haut de sélectionner le énième enfant, ou "n-ième" enfant d'un conteneur.
+
+    :nth-child(5) cible le 5ième élément enfant,
+    :nth-child(n) cible le "n-ième" élément enfant. C'est à dire tous, il ne sert strictement à rien là XD "n" est juste un nombre entier qui commence à zéro et s'en va vers l'infini, ou un peu avant.
+    :nth-child(n+1) va correspondre à :nth-child(1), :nth-child(2), etc., ce qui ne sert strictement à rien
+    :nth-child(2n) va correspondre à :nth-child(2), :nth-child(4), :nth-child(6), ce qui correspond aux éléments impairs (on l'écrira aussi :nth-child(even)
+    :nth-child(3n+1) va correspondre à :nth-child( 4 ), :nth-child( 7 )... Oh ?
+    :nth-child(3n+2) va correspondre à :nth-child( 5 ), :nth-child( 8 )... Oh oh !
+
+Pour notre grille à 3 colonnes, on aimerait bien pouvoir cibler les cas de figure où le dernier élément est dans la première ou la deuxième colonne, et ces deux derniers sélecteurs collent parfaitement à notre besoin.
+Écriture de la règle CSS
+
+Notre objectif est que lorsqu'il n'y a qu'un ou deux éléments sur la dernière ligne de notre grille CSS, ils occupent tout l'espace restant, ce qui veut dire que
+
+    le dernier élément placé dans la première colonne occupera 3 colonnes
+    Le dernier élément placé dans la deuxième colonne occupera 2 colonnes
+
+On aura besoin de deux règles CSS différentes, puisqu'on a deux cas de figure à gérer, et ça s'écrira comme ceci :
+
+.demo > div:last-child:nth-child(3n+1) {
+ grid-column: span 3;
+}
+.demo > div:last-child:nth-child(3n+2) {
+ grid-column: span 2;
+}
+
+exemple d'affichage d'éléments sur trois colonnes, lorsqu'il n'y a que quatre, ou cinq éléments, le dernier élément occupe toute la place disponible
+
+Et ainsi de suite en fonction de votre nombre de colonnes et de ce que vous souhaitez faire !
+Conclusion
+
+Je n'ai fait que des exemples super basiques, à vous d'expérimenter pour faire des trucs plus stylés, par exemple pour afficher le dernier élément "au milieu" ou bien pour que les deux derniers éléments d'un affichage à 3 colonnes s'affichent sur 2 colonnes (indice : ça impliquera de faire un affichage grid à 6 colonnes).
+
+En attendant, je ne peux que vous recommander de lire un peu de documentation, et de vous entrainer !
+Liens utiles
+
+    Le guide complet de grid (en anglais) (https://css-tricks.com/complete-guide-css-grid-layout/)
+    Useful nth-child recipes (en anglais) (https://css-tricks.com/useful-nth-child-recipies/)

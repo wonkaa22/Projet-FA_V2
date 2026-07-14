@@ -1,0 +1,183 @@
+Quand vous personnalisez vos catégories, vous avez parfois envie de personnaliser l'affichage des informations du dernier message posté dans les catégories, en particulier séparer le pseudo et la date pour les afficher à votre préférence. Cependant, ni Forumactif ni le Blank Theme par défaut ne vous permettent d'aller très loin.
+
+Dans ce tutoriel, on va utiliser quelques petites modifications pour rendre la personnalisation plus facile avec une pointe de JS et de CSS à la rescousse. A vous ensuite de faire usage de votre imagination pour personnaliser tout ça !
+Installation
+1 ◆ Localiser la cible
+
+Commencez par repérer dans le Blank Theme la partie correspondant à l'affichage du dernier message posté dans les catégories. Pour cela, rendez-vous dans votre panneau d'administration, onglet Affichage » Templates » Général, et éditez votre template index_box.
+
+Vous repèrerez la partie qui vous intéresse au niveau de ce commentaire :
+
+<!-- Conteneur du du dernier message -->
+
+Le code du Blank Theme est susceptible de changer au fil de vos modifications (il est là pour ça !) et de ses mises à jour, mais vous devriez trouver un code ressemblant à ceci :
+
+<!-- Conteneur du du dernier message -->
+<div class="forum_lastpost lastpost">
+   <span>
+       <!-- Tire du dernier message -->
+       <!-- BEGIN switch_topic_title -->
+       <a href="{catrow.forumrow.U_LATEST_TOPIC}" title="{catrow.forumrow.LATEST_TOPIC_TITLE}" class="lastpost_link">{catrow.forumrow.LATEST_TOPIC_NAME}</a>
+       <!-- END switch_topic_title -->
+
+       <!-- Date et auteur -->
+       {catrow.forumrow.USER_LAST_POST}
+   </span>
+</div>
+
+Vous pouvez facilement manipuler l'emplacement du titre du dernier message posté, par contre la date et l'auteur sont inclus dans une seule variable, {catrow.forumrow.USER_LAST_POST}. C'est sur cette variable qu'on va travailler : notre objectif est de séparer le HTML qu'elle génère en deux parties.
+
+Commencez par l'encadrer par l'élément et la classe de votre choix, par exemple :
+
+<!-- Date et auteur -->
+<div class="lastpost_auteurdate">{catrow.forumrow.USER_LAST_POST}</div>
+
+2 ◆ Une pointe de Javascript
+
+Direction cette fois ci dans la section Modules » HTML & Javascript » Gestion des codes Javascript. Créez un nouveau script, que vous activerez sur l'index et sur les sous-forums (ce sont les emplacements où s'affichent les catégories).
+
+/**
+* Script de séparation de la date et du pseudo du dernier message posté sur les catégories
+* Par 'Christa Lostmindy, pour le Blank Theme
+*/
+
+document.addEventListener('DOMContentLoaded', () => {
+   const CONFIG_LASTPOST = {
+       selecteur: 'lastpost_auteurdate',
+       classePseudo : 'lastpost_auteur',
+       classeDate : 'lastpost_date'
+   };
+
+   document.querySelectorAll(`.${CONFIG_LASTPOST.selecteur}`).forEach(data => {
+       const elements = data.innerHTML.split('&lt;'+'br'+'>');
+
+       const infoPseudo = document.createElement('div');
+       infoPseudo.classList.add(CONFIG_LASTPOST.classePseudo);
+
+       const infoDate = document.createElement('div');
+       infoDate.classList.add(CONFIG_LASTPOST.classeDate);
+       
+       if (elements.length === 2) {
+           infoDate.innerHTML = elements[0];
+           infoPseudo.innerHTML = elements[1];
+           data.replaceWith(infoPseudo, infoDate);
+       } 
+   });
+});
+
+NOTE temporaire 2025 : La mise en page des tutos caffouille un peu dernièrement, du coup j'ai dû tricher pour que ça s'affiche correctement, mais sur votre forum vous pouvez remplacer split('<'+'br'+'>'), par split('<br>'). Si vous voyez &lt;, remplacez le par <.
+
+Enregistrez votre script et regardez le code source de votre forum, vous constaterez que la date et le pseudo sont désormais placés dans leurs "conteneurs" spécifiques :
+
+<div class="lastpost_auteur"> ... </div>
+<div class="lastpost_date"> ... </div>
+
+Si besoin, vous pouvez très simplement changer les noms de classes utilisées en modifiant cette partie du script :
+
+const CONFIG_LASTPOST = {
+   selecteur: 'lastpost_auteurdate',
+   classePseudo : 'lastpost_auteur',
+   classeDate : 'lastpost_date'
+};
+
+Faites juste attention à ne pas perdre de guillemets ou de virgules par accident.
+3 ◆ La magie du CSS
+
+Si tout s'est bien passé, le HTML final généré devrait avoir cette forme là (avec la version de base du Blank Theme) :
+
+<div class="forum_lastpost lastpost">
+   <span>
+       <!-- Titre du dernier message -->
+       <a href="URL DU SUJET" title="TITRE DU SUJET" class="lastpost_link">TITRE ABREGE</a>
+
+       <!-- Date et auteur -->
+       <div class="lastpost_auteur"> ... </div>
+       <div class="lastpost_date"> ... </div>
+   </span>
+</div>
+
+Si vous êtes comme moi et que la présence d'éléments <div> dans un <span> vous fait un peu grincer des dents, je vous invite à modifier le template pour éviter ça. Pour éviter de compliquer le tutoriel, on va faire avec, ce n'est pas très grave.
+
+Vous pouvez à présent utiliser le pouvoir des styles CSS pour contrôler le rendu :
+
+.forum_laspost.lastpost > span {
+   /* mise en forme du conteneur titre/auteur/date */
+}
+.lastpost_link { 
+   /* mise en forme du lien du titre */
+}
+.lastpost_auteur {
+   /* mise en forme de l'auteur */
+}
+.lastpost_date {
+   /* mise en forme de la date */
+}
+
+Exemples de personnalisation
+Pour changer l'ordre
+
+Vous pouvez utiliser flexbox pour réagencer verticalement (ou horizontalement) l'ordre des trois blocs
+
+.forum_laspost.lastpost > span {
+   display:flex;
+   flex-direction:column;
+   flex-gap:5px;
+}
+.lastpost_link { 
+   order:2;
+}
+.lastpost_auteur {
+   order:1;
+}
+.lastpost_date {
+   order:3;
+}
+
+Pour les mettre en ligne
+
+Il suffit de s'assurer que les trois soient des éléments inline, ou bien d'utiliser flexbox. Vous pouvez également rajouter un séparateur automatiquement avec ::before.
+
+.lastpost_auteur {
+   display:inline;
+}
+.lastpost_auteur::before {
+   content:" par ";
+}
+.lastpost_date {
+   display:inline;
+}
+.lastpost_date::before {
+   content:" - ";
+}
+
+L'exemple de la démo
+
+Notez que si on veut bien faire, il vaut mieux écrire en directement dans le template le texte "Dernier message par " plutôt qu'utiliser un ::before. C'est juste un exemple pour la démonstration. (Faites ce que je dis, pas ce que je fais !)
+
+.forum_lastpost > span {
+   display:flex;
+   flex-direction:column;
+   gap:5px
+}
+
+.lastpost_link {
+   order:2
+}
+
+.lastpost_auteur {
+   order:1;
+   text-align:center;
+   border-bottom:1px dashed currentcolor;
+   padding-bottom:5px;
+}
+
+.lastpost_auteur::before {
+   content:"Dernier message par ";
+}
+
+.lastpost_date {
+   order:3;
+   font-size:smaller;
+   font-style:italic;
+   text-align:right;
+}

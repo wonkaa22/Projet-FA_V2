@@ -1,0 +1,138 @@
+Sur Forumactif, on peut rajouter des champs de contact aux profils des utilisateurs. Parfois c'est pour les réseaux sociaux, parfois c'est pour faire un lien vers une fiche de personnage, un sujet de présentation, etc. Mais lorsqu'il s'agit d'afficher ces liens dans le profil des messages, les possibilités de personnalisation sont limitées. Et en plus, au survol, tous ces champs de contact ont la même infobulle "Voir le site de l'utilisateur". Pas forcément très parlant !
+
+Dans ce tutoriel, on va s'attaquer au problème pour élargir vos possibilités de personnalisation du champ dans le profil des messages.
+
+Fonctionnement des champs de contact
+
+Pour bien commencer, il va falloir savoir où, exactement, on doit intervenir pour faire opérer la magie. Pour ça, on n'y coupe pas, c'est l'heure de la théorie.
+Les champs de contact
+
+Pour rappel, les champs de contact se customisent dans le panneau d'administration, rubrique Utilisateurs & Groupes, dans Utilisateurs → Profils → Champs contact. Lorsque vous définissez vos champs, remplissez le champ URL de l'icône avec le lien d'une image (le nom du fichier doit être unique !) et veillez à ce que l'affichage soit bien actif dans les messages.
+
+Ce tutoriel a été testé en priorité avec les champs de contact de type adresse internet. Il ne marche pas pour les numéros de téléphone, mais a l'air de fonctionner pour la plupart des réseaux sociaux.
+
+Pas envie de créer une image pour chacun de vos champs de contact ? Vous pouvez utiliser un faux lien d'image tant qu'il est "valide". Par exemple https://img.com/fiche.png passera très bien car le code ne va chercher que la fin du lien fiche.png. Pensez à utiliser un nom d'image différent pour chaque bouton de contact et voilà !
+Notez cependant que le rendu final risque d'être imbuvable si vous avez des utilisateurs dont le javascript est désactivé (une piste à explorer si on vous remonte des bugs).
+
+Au moment de l'affichage dans votre profil, chacun des champs de contact (s'il est rempli) sera en principe affiché par Forumactif avec le code suivant (dans les messages) :
+
+<a href="LIEN INDIQUE PAR LE MEMBRE" title="Visiter le site web de l'utilisateur" target="_blank" rel="nofollow"><img src="URL ICONE DE CONTACT" alt="LIEN INDIQUE PAR LE MEMBRE"></a>
+
+Notez le texte "Visiter le site..." et l'absence de classe CSS qui sont la source de nos problèmes.
+Le repérage
+
+Pour bien cibler nos champs de contact et y pratiquer notre tour de magie, on cherche avant tout à identifier les champs de contact dans les messages et dans les pages de profil.
+Méthode 1 : En inspectant le code
+
+Ouvrez la page d'un message, et faites clic droit → inspecter l'élément sur les liens de contact. Un panneau va s'afficher et vous montrer la structure HTML de votre page. En cliquant au bon endroit, vous allez directement tomber sur les éléments qui nous intéressent.
+Repérez l'élément HTML qui englobe tous les liens de contact, car c'est l'élément qui va permettre au script de cibler la partie voulue. Par exemple, dans l'inspecteur d'éléments, vous pourriez avoir ceci :
+
+<div class="post_contact">
+ <a href="/privmsg?mode=post&u=1" class="profile-icon" title="Envoyer un message privé">MP</a>
+ <a href="https://blankthemerpg.forumactif.com/t2-ma-fiche" title="Voir la fiche du personnage" target="_blank" rel="nofollow">Fiche</a>
+</div>
+
+Le sélecteur des liens de contact sera donc .post_contact.
+Méthode 2 : en inspectant les templates
+
+Rendez-vous dans votre panneau d'administration, rubrique Affichage → Templates
+
+    Les champs de contact des messages se trouvent dans le template Général → viewtopic_body et ils s'affichent grâce à ce bout de code :
+
+<!-- BEGIN contact_field -->
+ {postrow.displayed.contact_field.CONTENT}
+<!-- END contact_field -->
+
+    Les champs de contact des pages de profil se trouvent dans le template Profil → profile_view_body et ils s'affichent grâce à ce bout de code :
+
+<!-- BEGIN contact_field -->
+ <div class="contact{contact_field.ID}">{contact_field.CONTENT}</div>
+<!-- END contact_field -->
+
+Ces codes peuvent être différents selon votre situation, pas de panique, cherchez la boucle contact_field et vous devriez avoir le bout de code qui va bien quelles que soient les modifications existantes dans vos templates.
+
+Lorsque vous tenez le bon bout, regardez un peu autour pour voir si cette partie est incluse dans un conteneur (généralement un <div></div>) avec une classe unique.
+L'exemple du Blank Theme (cliquez pour voir)
+
+S'il n'y a pas de classe unique pour cette partie du code dans votre version du template (c'est le cas de la version de base de modernBB), englobez cette partie du code dans un conteneur avec un nom de classe de votre choix.
+Fin de repérage !
+
+A ce stade du tutoriel, vous devriez avoir noté deux choses :
+
+    Le sélecteur des champs de contact dans les messages : Sur le Blank Theme, c'est .post_contact, sur modernBB, vous le définirez vous-même ;
+    Le sélecteur des champs de contact dans la page de profil : Sur le Blank Theme, c'est .profile_contact, sur modernBB, vous le définirez vous-même ;
+    Vous allez en avoir besoin pour la suite !
+
+Note : Même si on parle de ModernBB en tant que version de référence, ce tutoriel fonctionnera sur toutes les versions de FA.
+
+La magie du Javascript
+Installation du script
+
+Créez un nouveau javascript sur votre forum en lui donnant un titre explicite, que vous activerez sur toutes les pages.
+
+Voir le tutoriel pour installer du javascript si vous ne savez pas, ou plus, comment faire.
+
+Dans la zone de texte, collez le script des champs de contact que vous trouverez sur l'espace Github du Blank Theme.
+
+Vous n'avez que deux sections à modifier :
+
+    Ciblage des champs de contact Les commentaires fournis dans le code sont assez explicites. Ces deux paramètres attendent les sélecteurs de champs de contact que l'on a repérés lors de l'étape précédente.
+
+const contactFields_selectorInTopic = ".post_contact"; // Sélecteur des champs de contact dans les messages
+const contactFields_selectorInProfile = ".profile_contact"; // Sélecteur des champs de contact dans la page de profil
+
+Pour en savoir plus sur les sélecteurs, consultez le tutoriel sur les sélecteurs.
+
+    La liste des modifications C'est ici que vous allez personnaliser les champs de contact selon vos besoins. Encore une fois, les commentaires sont assez explicites. Vous pouvez dupliquer chaque objet - les blocs contenus entre accolades { } - pour chaque contact ajouté.
+
+    urlImg : contient le nom de fichier de l'image que vous avez attribuée au champ de contact. Si vous avez mis un lien comme https://img.com/fiche.png, mettez seulement la fin du lien fiche.png.
+    text : contient le texte affiché en guise de lien. Peut accepter du HTML !
+    info : le petit texte qui apparaitra au survol du lien (exemple : survolez ce lien)
+    class : Si vous souhaitez avoir un rendu différent entre les différents liens de contact, vous pouvez leur attribuer une classe individuelle. Laissez vide ("") si vous n'en avez pas l'usage.
+
+/* Liste des champs à personnaliser */
+const contactFields_list = [
+  {
+    text: "MP", // Texte du lien pour envoyer un MP
+  },
+
+  /* Pour chaque champ de contact à personnaliser, dupliquez le code suivant */
+  {
+    urlImg: "image.png", // Nom de l'image du champ de contact (voir documentation)
+    text: "Nom du champ", // Texte du champ de contact (peut contenir du HTML)
+    info: "Information du lien en infobulle", // Infobulle au survol du lien
+    class: "", // Une classe à attribuer au lien, si vous voulez
+  },
+];
+
+Ne modifiez que le champ text du premier objet qui contient text: "MP". C'est le seul champ de contact qui ne nécessite pas d'autre information à remplir.
+Ça ne marche pas avec Wombat ?!?
+
+Mais si, mais si ! Il suffit juste d'en informer la visionneuse Wombat via son script d'initialisation, qui se trouve en principe dans votre template overall_footer_end et devrait ressembler à ceci :
+
+new Wombat({
+   /* plein d'options ici */
+});
+
+Wombat permet de rajouter une option afterLoad qui chargera un script après avoir affiché le profil. On va l'ajouter comme ci-dessous, afin d'appeler la fonction du script de personnalisation des champs de contact.
+
+new Wombat({
+ afterLoad: function(aside, overlay) {
+
+   /* Personnalisation des champs de contact du profil */
+   try { customContactField_inProfile(contactFields_list, contactFields_selectorInProfile); }
+   catch { console.log("[Erreur profils Wombat] : Il manque le script de personnalisation des champs de contact")};
+
+   /* D'autres scripts peuvent être ajoutés en plus de celui là !*/
+ },
+ /* autres options Wombat */
+});
+
+Et avec ça, vous avez tous les outils pour personnaliser vos champs de contact aussi bien dans les messages que dans la page de profil !
+Conclusion
+
+Si tout s'est bien passé, le script devrait modifier le code final à l'affichage des messages, sous la forme suivante
+
+<a href="LIEN INDIQUE PAR LE MEMBRE" title="TEXTE DE REMPLACEMENT DE L'INFOBULLE" target="_blank" rel="nofollow">HTML DE REMPLACEMENT DE L'IMAGE</a>  
+
+Vous devriez désormais avoir un rendu qui colle à vos préférences !
