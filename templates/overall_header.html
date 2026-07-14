@@ -100,7 +100,7 @@
 	<link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet"/>
 
 	<!-- CSS Projet-FA_V2 (hébergé sur GitHub Pages, cache-bust via ?v= à incrémenter à chaque édition) -->
-	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=4"/>
+	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=5"/>
 
 	<!-- Thème clair/sombre : appliqué avant le <body> pour éviter un flash du mauvais thème -->
 	<script type="text/javascript">
@@ -285,13 +285,18 @@
 					<div class="nav-chevron" data-target="pfaNavB">&or;</div>
 				</div>
 
-				<!-- Colonne gauche FA (modules/plugins assignés par l'admin, ex. météo) -->
-				<!-- BEGIN giefmod_index1 -->
-				<div class="plugin-box">{giefmod_index1.MODVAR}</div>
+				<!-- Colonne droite FA (modules/plugins assignés par l'admin, ex. météo) :
+				     giefmod_index2, pas giefmod_index1 — la colonne gauche est réservée
+				     au widget "Derniers messages" du cadre d'accueil (voir index_body.html
+				     et docs/module-derniers-messages-forumactif.md), les deux zones sont
+				     indépendantes côté Forumactif mais utilisent la même colonne si on ne
+				     les distingue pas. -->
+				<!-- BEGIN giefmod_index2 -->
+				<div class="plugin-box">{giefmod_index2.MODVAR}</div>
 				<!-- BEGIN saut -->
 				<div style="height:{SPACE_ROW}px"></div>
 				<!-- END saut -->
-				<!-- END giefmod_index1 -->
+				<!-- END giefmod_index2 -->
 
 				<div class="two-col">
 					<div class="side-card gborder ph"><span class="label">Préliens attendus</span></div>

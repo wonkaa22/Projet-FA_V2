@@ -202,6 +202,27 @@
   .mini-card.tall { flex: 1; display: flex; flex-direction: column; }
   .mini-card.tall .avatar-grid { flex: 1; grid-auto-rows: 1fr; }
   .mini-card.tall .link-more { margin-top: 8px; flex-shrink: 0; }
+
+  /* ---------- DERNIERS MESSAGES (widget natif mod_recent_topics) ---------- */
+  .sel-recent-list {
+    flex: 1; min-height: 0; overflow-y: auto; margin-top: 8px;
+    display: flex; flex-direction: column; gap: 8px;
+    scrollbar-width: thin; scrollbar-color: rgba(13,27,42,0.3) transparent;
+  }
+  .sel-recent-list::-webkit-scrollbar { width: 6px; }
+  .sel-recent-list::-webkit-scrollbar-track { background: transparent; }
+  .sel-recent-list::-webkit-scrollbar-thumb { background: rgba(13,27,42,0.3); border-radius: 3px; }
+  .sel-recent-row { padding-bottom: 8px; border-bottom: 1px solid rgba(13,27,42,0.12); }
+  .sel-recent-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .sel-recent-title {
+    display: block; font-size: 11px; font-weight: 500; line-height: 1.3;
+    color: var(--ink-hi-light); text-decoration: none;
+  }
+  .sel-recent-meta {
+    display: flex; justify-content: space-between; gap: 8px;
+    font-size: 10px; color: var(--ink-muted-light); margin-top: 3px;
+  }
+  .sel-recent-author a { color: inherit; text-decoration: none; }
   .stack-cards.row-layout { flex-direction: row; height: 100%; }
   .stack-cards.row-layout .mini-card { flex: 1; height: 100%; }
   .stack-cards.row-layout .event-card { width: 160px; flex-shrink: 0; height: 100%; }

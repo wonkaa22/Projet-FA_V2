@@ -51,7 +51,12 @@
 		</div>
 
 		<div class="stack-cards row-layout">
-			<div class="mini-card gborder"><span class="label">Derniers messages</span></div>
+			<div class="mini-card gborder tall">
+				<span class="label">Derniers messages</span>
+				<!-- Widget natif Forumactif "Sujets récents" (colonne gauche), voir
+				     docs/module-derniers-messages-forumactif.md pour l'activer côté admin. -->
+				<!-- BEGIN giefmod_index1 -->{giefmod_index1.MODVAR}<!-- END giefmod_index1 -->
+			</div>
 			<div class="event-card gborder">
 				<div class="event-img ph">image</div>
 				<div class="event-overlay-top">

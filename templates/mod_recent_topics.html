@@ -1,0 +1,59 @@
+<!-- Template du widget natif Forumactif "Sujets récents" (Templates > Portails
+     > mod_recent_topics). Structure de variables reprise telle quelle de
+     Test_Astra (FA_mod_recent_topics.html, fonctionnelle, validée), classes
+     CSS adaptées au design system du mockup v4. Voir
+     docs/module-derniers-messages-forumactif.md pour le tutoriel complet
+     (activation du module, assignation à la colonne gauche). -->
+<div class="sel-recent-list" id="pfaRecentList">
+	<!-- BEGIN classical_row -->
+	<!-- BEGIN recent_topic_row -->
+	<div class="sel-recent-row">
+		<a href="{classical_row.recent_topic_row.U_TITLE}" class="sel-recent-title">{classical_row.recent_topic_row.L_TITLE}</a>
+		<div class="sel-recent-meta">
+			<span class="sel-recent-author">
+				<!-- BEGIN switch_poster -->
+				<a href="{classical_row.recent_topic_row.switch_poster.U_POSTER}">{classical_row.recent_topic_row.switch_poster.S_POSTER}</a>
+				<!-- END switch_poster -->
+				<!-- BEGIN switch_poster_guest -->
+				{classical_row.recent_topic_row.switch_poster_guest.S_POSTER}
+				<!-- END switch_poster_guest -->
+			</span>
+			<span class="sel-recent-time">{classical_row.recent_topic_row.S_POSTTIME}</span>
+		</div>
+	</div>
+	<!-- END recent_topic_row -->
+	<!-- END classical_row -->
+</div>
+<script type="text/javascript">
+//<![CDATA[
+(function () {
+	var MNUMS = ['jan', 'fev', 'mar', 'avr', 'mai', 'juin', 'juil', 'ao', 'sep', 'oct', 'nov', 'dec'];
+	var els = document.querySelectorAll('#pfaRecentList .sel-recent-time');
+	for (var i = 0; i < els.length; i++) {
+		var raw = els[i].textContent.trim();
+		var lo = raw.toLowerCase();
+		var out = '';
+		if (lo.indexOf('aujourd') !== -1) {
+			var mt = raw.match(/(\d{1,2}):(\d\d)/);
+			if (mt) { out = mt[1] + 'h' + mt[2]; }
+		} else if (lo.indexOf('hier') !== -1) {
+			out = 'hier';
+		} else {
+			var md = raw.match(/(\d{1,2})\s+([A-Za-zà-ÿ]+)/);
+			if (md) {
+				var jour = md[1];
+				var mword = md[2].toLowerCase();
+				var numMois = 0;
+				for (var j = 0; j < MNUMS.length; j++) {
+					if (mword.indexOf(MNUMS[j]) === 0) { numMois = j + 1; break; }
+				}
+				if (numMois > 0) {
+					out = (jour.length < 2 ? '0' : '') + jour + '/' + (numMois < 10 ? '0' : '') + numMois;
+				}
+			}
+		}
+		if (out) { els[i].textContent = out; }
+	}
+})();
+//]]>
+</script>
