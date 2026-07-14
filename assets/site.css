@@ -663,12 +663,15 @@
   .pfa-hub-row + .pfa-hub-row { margin-top: 12px; }
   .pfa-hub-card { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 
-  .pfa-newmember { flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
-  .pfa-newmember-img { width: 100%; flex: 1; min-height: 0; border-radius: 10px; }
-  .pfa-newmember-bubble { flex-shrink: 0; background: var(--section); color: var(--ink-body-light); border-radius: 20px; padding: 8px 16px; font-size: 11px; text-align: center; text-decoration: none; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  /* Image en rectangle vertical à gauche, nom à droite */
+  .pfa-newmember { flex: 1; min-height: 0; display: flex; flex-direction: row; align-items: center; gap: 12px; }
+  .pfa-newmember-img { width: 64px; height: 100%; flex-shrink: 0; border-radius: 10px; }
+  .pfa-newmember-bubble { flex: 1; min-width: 0; background: var(--section); color: var(--ink-body-light); border-radius: 20px; padding: 10px 16px; font-size: 12px; text-align: center; text-decoration: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-  .pfa-online { flex: 1; min-height: 0; overflow-y: auto; font-size: 11px; color: var(--ink-body-light); line-height: 1.7; }
-  .pfa-online-count { font-weight: 600; margin-bottom: 4px; }
+  /* Comme .pfa-recent48 : uniquement les pseudos (texte natif FA masqué,
+     voir pfaOnlineNamesOnly() dans site.js), pas de compte/libellé. */
+  .pfa-online, .pfa-recent48 { flex: 1; min-height: 0; overflow-y: auto; font-size: 11px; color: var(--ink-body-light); line-height: 1.7; }
+  .pfa-online a, .pfa-recent48 a { color: var(--ink-hi-light); }
 
   .pfa-hub-stats { position: relative; display: flex; flex-direction: column; justify-content: flex-end; color: var(--ink-hi-dark); }
   .pfa-stats-overlay { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 14px; line-height: 1.5; }
@@ -689,9 +692,6 @@
 
   .pfa-shoutbox { flex: 1; min-height: 0; overflow: hidden; border-radius: 10px; }
   .pfa-shoutbox iframe { width: 100%; height: 100%; border-radius: 10px; }
-
-  .pfa-recent48 { flex: 1; min-height: 0; overflow-y: auto; font-size: 11px; color: var(--ink-body-light); line-height: 1.7; }
-  .pfa-recent48 a { color: var(--ink-hi-light); }
 
   /* Groupes : au survol d'une carte, elle s'étend (flex-grow) et affiche sa
      description ; les autres, faute d'espace, ne restent visibles qu'en très
@@ -717,9 +717,12 @@
   .pfa-group-overlay a { font-size: 10px; color: var(--ink-hi-dark); font-weight: 600; }
 
   /* ---------- NOS PARTENAIRES (overall_footer_begin, sur toutes les pages) ---------- */
-  .pfa-partners-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-  .pfa-partners-grid .ph { height: 56px; border-radius: 8px; }
-  .pfa-partners-label { display: block; text-align: right; margin-top: 10px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px; color: var(--ink-hi-dark); }
+  .pfa-partners-label { display: block; margin-bottom: 12px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px; color: var(--ink-hi-dark); }
+  .pfa-partners-body { display: flex; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+  .pfa-partners-big { display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; }
+  .pfa-partners-big .ph { width: 250px; height: 60px; border-radius: 8px; }
+  .pfa-partners-grid { display: flex; flex-wrap: wrap; gap: 8px; flex: 1; }
+  .pfa-partners-grid .ph { width: 50px; height: 50px; border-radius: 8px; }
 
   /* ---------- LIGNE DE LIENS FORUMACTIF OBLIGATOIRE (overall_footer_end) ----------
      Ne peut pas être retirée (FA la réinjecte même sans {PROTECT_FOOTER} dans le

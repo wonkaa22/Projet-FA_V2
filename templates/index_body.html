@@ -111,10 +111,15 @@
 
 		<div class="mini-card gborder pfa-hub-card">
 			<span class="label">Actuellement en ligne</span>
-			<div class="pfa-online">
+			<!-- Texte natif FA (compte total, libellés) gardé hors champ : seuls
+			     les pseudos (liens dans la liste des connecté·es fournie par FA)
+			     sont réaffichés, extraits en JS (voir pfaOnlineNamesOnly() dans
+			     site.js). Ne jamais écrire une variable FA entre accolades dans un
+			     commentaire HTML ici : elle serait quand même substituée. -->
+			<div class="pfa-online" id="pfaOnlineNames">&hellip;</div>
+			<div style="position:absolute; left:-9999px;" aria-hidden="true">
 				<!-- BEGIN disable_viewonline -->
-				<p class="pfa-online-count">{TOTAL_USERS_ONLINE}</p>
-				<p class="pfa-online-list">{L_CONNECTED_MEMBERS} {LOGGED_IN_USER_LIST}</p>
+				<span id="pfaOnlineRaw">{L_CONNECTED_MEMBERS} {LOGGED_IN_USER_LIST}</span>
 				<!-- END disable_viewonline -->
 			</div>
 		</div>
@@ -133,8 +138,11 @@
 	<div class="pfa-hub-row">
 		<div class="mini-card gborder pfa-hub-card">
 			<span class="label">Courrier terrien</span>
+			<!-- Cbox (cbox.ws), pas la Chatbox native Forumactif — remplacer boxid/boxtag
+			     par ceux de votre propre Cbox (créée sur https://www.cbox.ws, comme sur
+			     Test_Astra qui utilise le même service pour "Courrier terrien"). -->
 			<div class="pfa-shoutbox">
-				{CHATBOX_BOTTOM}
+				<iframe src="https://www5.cbox.ws/box/?boxid=VOTRE_BOXID&boxtag=VOTRE_BOXTAG" width="100%" height="100%" allowtransparency="yes" allow="autoplay" frameborder="0" marginheight="0" marginwidth="0" scrolling="auto"></iframe>
 			</div>
 		</div>
 

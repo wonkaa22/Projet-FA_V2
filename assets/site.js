@@ -410,7 +410,18 @@
       horsrpBody.appendChild(grid);
     }
     if (horsrpFrame && horsrpFrame.parentNode) {
-      horsrpFrame.parentNode.appendChild(horsrpFrame);
+      /* Forcé en dernière position parmi les catégories, mais PAS forcément
+         dernier enfant de .outer-frame : la section basse de l'accueil
+         (.pfa-hub) est un frère statique déjà présent après {BOARD_INDEX}
+         dans le HTML — un simple appendChild() la dépasserait et ferait
+         apparaître Hors RP après elle. On insère donc juste avant .pfa-hub
+         si elle existe, sinon on garde l'ancien comportement (fin du parent). */
+      var hub = horsrpFrame.parentNode.querySelector('.pfa-hub');
+      if (hub) {
+        horsrpFrame.parentNode.insertBefore(horsrpFrame, hub);
+      } else {
+        horsrpFrame.parentNode.appendChild(horsrpFrame);
+      }
     }
   }
 })();
@@ -439,6 +450,29 @@
     var m = (el.textContent || '').match(/\d[\d\s]*\d|\d/);
     if (m) { el.textContent = m[0].replace(/\s/g, ''); }
   });
+})();
+
+(function pfaOnlineNamesOnly() {
+  /* {LOGGED_IN_USER_LIST} est un bloc FA tout formé (compte + libellés) ;
+     seuls les pseudos (les liens qu'il contient) sont gardés, même principe
+     que .pfa-recent48. Rendu hors-champ (#pfaOnlineRaw) puis reconstruit ici,
+     comme selWhoIsOnline() sur Test_Astra. */
+  var raw = document.getElementById('pfaOnlineRaw');
+  var out = document.getElementById('pfaOnlineNames');
+  if (!out) { return; }
+  var links = raw ? raw.querySelectorAll('a[href]') : [];
+  if (!links.length) {
+    out.textContent = 'Personne en ligne pour le moment.';
+    return;
+  }
+  out.textContent = '';
+  for (var i = 0; i < links.length; i++) {
+    var a = document.createElement('a');
+    a.href = links[i].getAttribute('href');
+    a.textContent = links[i].textContent.trim();
+    out.appendChild(a);
+    if (i < links.length - 1) { out.appendChild(document.createTextNode(', ')); }
+  }
 })();
 
 (function pfaNewMember() {
