@@ -95,7 +95,12 @@
      .sidebar-shell.collapsed *). */
   .sidebar-shell.collapsed { width: 76px; }
   .sidebar { width: 100%; height: 100%; padding: 18px; display: flex; flex-direction: column; gap: 14px; border-radius: 20px; overflow-y: auto; overflow-x: hidden; transition: opacity 0.2s ease; }
-  .sidebar-shell.collapsed .sidebar { align-items: center; padding: 18px 8px; }
+  /* overflow: visible en mode rail : le contenu replié (avatar + 8 icônes)
+     tient largement dans la hauteur disponible, pas besoin du défilement
+     interne d'.sidebar — et le overflow-x:hidden d'.sidebar (nécessaire en
+     mode déplié) coupait sinon les infobulles au survol, qui débordent
+     forcément d'un rail de 76px de large. */
+  .sidebar-shell.collapsed .sidebar { align-items: center; padding: 18px 8px; overflow: visible; }
   /* Mode rail : masque tout ce qui ne tient pas en icône seule (texte, cartes,
      switcheroo, image de nav...), garde connexion/inscription (invité) ou
      avatar/notif/messages/déconnexion (connecté·e) + les 5 boutons de nav
@@ -811,9 +816,7 @@
   /* ---------- INFOBULLE AU SURVOL (toutes les icônes de la sidebar) ----------
      Générique via l'attribut data-tip="..." plutôt qu'une classe par bouton :
      évite d'ajouter un <span> dans chaque bouton (notif/messages/déconnexion/
-     connexion/inscription/nav/chevrons/replier/thème). Toujours affichée au
-     survol, y compris sidebar dépliée, pour les boutons qui n'ont pas de
-     libellé texte visible à côté de l'icône (notif/messages/déconnexion).
+     connexion/inscription/nav/chevrons/replier/thème).
      position:relative seulement là où il n'y a pas déjà un positionnement
      (.side-toggle est déjà en absolute pour se caler sur le bord de la
      sidebar — un position:relative générique l'aurait cassé). */
@@ -826,3 +829,12 @@
     opacity: 0; pointer-events: none; transition: opacity 0.15s ease; z-index: 20;
   }
   [data-tip]:hover::after { opacity: 1; }
+  /* .nav-btn/.btn-ghost affichent déjà leur libellé en clair sidebar dépliée
+     (.nav-btn-text) : l'infobulle n'y sert que repliée (icône seule). Les
+     autres (notif/messages/déconnexion/side-toggle/chevrons) n'ont jamais de
+     libellé visible à côté de leur icône, donc gardent l'infobulle tout le
+     temps (règle du dessus). */
+  .sidebar-shell:not(.collapsed) .nav-btn:hover::after,
+  .sidebar-shell:not(.collapsed) .btn-ghost:hover::after {
+    opacity: 0;
+  }
