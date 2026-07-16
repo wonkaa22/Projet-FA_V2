@@ -79,6 +79,7 @@
   headGuest.style.display = 'none';
   headUser.style.display = '';
   setHref('pfaLogoutBtn', faHref('logout'));
+  setHref('pfaMessagesBtn', faHref('privmsg'));
   var profileHref = faHref('profile');
   setHref('pfaEditProfileBtn', profileHref);
 
