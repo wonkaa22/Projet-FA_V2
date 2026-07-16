@@ -568,3 +568,22 @@
     })
     .catch(function () { zone.textContent = ''; });
 })();
+
+/* {PROTECT_FOOTER} (ligne de liens Forumactif obligatoire) ne rend rien à
+   l'intérieur de .pfa-fa-footer : FA injecte ce contenu tel quel, à la suite
+   de .pfa-wrap, sans passer par la variable à cet endroit — laissant
+   .pfa-fa-footer vide et le vrai contenu non stylé juste avant. On récupère
+   ici tout ce qui se trouve entre .pfa-wrap et .pfa-fa-footer (le contenu
+   réel) pour le déplacer dedans, où il reçoit le style discret. */
+(function pfaFaFooterRelocate() {
+  var wrap = document.querySelector('.pfa-fa-footer');
+  var pfaWrap = document.querySelector('.pfa-wrap');
+  if (!wrap || !pfaWrap || wrap.childNodes.length) { return; }
+  var collected = [];
+  var node = wrap.previousSibling;
+  while (node && node !== pfaWrap) {
+    collected.unshift(node);
+    node = node.previousSibling;
+  }
+  collected.forEach(function (n) { wrap.appendChild(n); });
+})();
