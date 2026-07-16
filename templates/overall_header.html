@@ -100,7 +100,7 @@
 	<link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet"/>
 
 	<!-- CSS Projet-FA_V2 (hébergé sur GitHub Pages, cache-bust via ?v= à incrémenter à chaque édition) -->
-	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=16"/>
+	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=17"/>
 
 	<!-- Thème clair/sombre : appliqué avant le <body> pour éviter un flash du mauvais thème -->
 	<script type="text/javascript">
@@ -241,6 +241,42 @@
      logout ou nom d'utilisateur disponible ici), donc on les récupère depuis ce nav plutôt que de les deviner. -->
 <ul id="pfaFaNav" style="position:absolute; left:-9999px; top:-9999px;" aria-hidden="true"><li>{GENERATED_NAV_BAR}</li></ul>
 
+<!-- Popup "Liens utiles" (ouverte par le bouton nav du même nom, voir site.js).
+     Contenu géré à la main pour l'instant (pas de variable Forumactif pour ça)
+     — 3 catégories de lorem ipsum à remplacer par les vraies catégories/liens. -->
+<div class="pfa-modal-overlay" id="pfaUsefulLinksOverlay">
+	<div class="pfa-modal">
+		<div class="pfa-modal-close" id="pfaUsefulLinksClose" role="button" tabindex="0" aria-label="Fermer">&times;</div>
+		<h3>Liens utiles</h3>
+		<div class="pfa-modal-cats">
+			<div class="pfa-modal-cat">
+				<h4>Catégorie 1</h4>
+				<div class="pfa-modal-links">
+					<a class="pfa-modal-link" href="#">Lien 1</a>
+					<a class="pfa-modal-link" href="#">Lien 2</a>
+					<a class="pfa-modal-link" href="#">Lien 3</a>
+				</div>
+			</div>
+			<div class="pfa-modal-cat">
+				<h4>Catégorie 2</h4>
+				<div class="pfa-modal-links">
+					<a class="pfa-modal-link" href="#">Lien 1</a>
+					<a class="pfa-modal-link" href="#">Lien 2</a>
+					<a class="pfa-modal-link" href="#">Lien 3</a>
+				</div>
+			</div>
+			<div class="pfa-modal-cat">
+				<h4>Catégorie 3</h4>
+				<div class="pfa-modal-links">
+					<a class="pfa-modal-link" href="#">Lien 1</a>
+					<a class="pfa-modal-link" href="#">Lien 2</a>
+					<a class="pfa-modal-link" href="#">Lien 3</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 <div class="pfa-wrap">
 	<div class="layout">
 
@@ -281,22 +317,26 @@
 				</div>
 
 				<!-- Image (ex-bannière du haut) en carré à gauche des boutons de nav,
-				     répartis sur 3 lignes plus serrées pour compenser la place prise. -->
+				     répartis sur 3 lignes plus serrées pour compenser la place prise.
+				     Icône + libellé dans chaque bouton : seule l'icône reste visible
+				     quand la sidebar est repliée (voir .sidebar-shell.collapsed). -->
 				<div class="nav-block">
 					<a class="nav-square-img ph ph-dark" href="{U_INDEX}">image</a>
 					<div class="nav-rows">
 						<div class="nav-row">
-							<a class="nav-btn" href="{U_INDEX}">Accueil</a>
-							<a class="nav-btn" href="{U_SEARCH}">Recherche</a>
+							<a class="nav-btn" href="{U_INDEX}"><i class="ion-home nav-btn-icon"></i><span class="nav-btn-text">Accueil</span></a>
+							<a class="nav-btn" href="{U_SEARCH}"><i class="ion-ios-search-strong nav-btn-icon"></i><span class="nav-btn-text">Recherche</span></a>
 							<div class="nav-chevron" data-target="pfaNavA">&and;</div>
 						</div>
 						<div class="nav-row" id="pfaNavA">
-							<a class="nav-btn" href="{U_MEMBERLIST}">Membres</a>
-							<a class="nav-btn" href="#">Guidebook</a>
+							<a class="nav-btn" href="{U_MEMBERLIST}"><i class="ion-ios-people nav-btn-icon"></i><span class="nav-btn-text">Membres</span></a>
+							<a class="nav-btn" href="#"><i class="ion-ios-book nav-btn-icon"></i><span class="nav-btn-text">Guidebook</span></a>
 							<div class="nav-chevron" data-target="pfaNavB">&or;</div>
 						</div>
 						<div class="nav-row" id="pfaNavB">
-							<a class="nav-btn" href="#">Liens utiles</a>
+							<!-- Ouvre la popup "Liens utiles" (voir #pfaUsefulLinksOverlay plus bas) au
+							     lieu de naviguer directement. -->
+							<a class="nav-btn" href="#" id="pfaUsefulLinksBtn"><i class="ion-link nav-btn-icon"></i><span class="nav-btn-text">Liens utiles</span></a>
 						</div>
 					</div>
 				</div>

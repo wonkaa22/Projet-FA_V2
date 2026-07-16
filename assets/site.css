@@ -90,9 +90,42 @@
     height: calc(100vh - 60px);
     z-index: 10;
   }
-  .sidebar-shell.collapsed { width: 0; }
+  /* Repliée : pas à 0, mais un rail étroit qui garde l'avatar/notif/messages/
+     déconnexion et les boutons de nav en icônes seules (voir plus bas, règles
+     .sidebar-shell.collapsed *). */
+  .sidebar-shell.collapsed { width: 76px; }
   .sidebar { width: 100%; height: 100%; padding: 18px; display: flex; flex-direction: column; gap: 14px; border-radius: 20px; overflow-y: auto; overflow-x: hidden; transition: opacity 0.2s ease; }
-  .sidebar-shell.collapsed .sidebar { opacity: 0; pointer-events: none; }
+  .sidebar-shell.collapsed .sidebar { align-items: center; padding: 18px 8px; }
+  /* Mode rail : masque tout ce qui ne tient pas en icône seule (texte, cartes,
+     switcheroo, image de nav...), garde avatar/notif/messages/déconnexion +
+     les 5 boutons de nav (empilés, en rond, icône seule). */
+  .sidebar-shell.collapsed .auth-buttons,
+  .sidebar-shell.collapsed .char-header h3,
+  .sidebar-shell.collapsed .char-switch,
+  .sidebar-shell.collapsed .edit-pill,
+  .sidebar-shell.collapsed .pfa-admin-link,
+  .sidebar-shell.collapsed .nav-square-img,
+  .sidebar-shell.collapsed .nav-chevron,
+  .sidebar-shell.collapsed .nav-btn-text,
+  .sidebar-shell.collapsed .plugin-box,
+  .sidebar-shell.collapsed .two-col,
+  .sidebar-shell.collapsed .pagination-dots {
+    display: none;
+  }
+  .sidebar-shell.collapsed .char-switch-wrap { align-items: center; }
+  .sidebar-shell.collapsed .char-header { flex-direction: column; gap: 8px; }
+  .sidebar-shell.collapsed .char-header-actions { flex-direction: column; }
+  .sidebar-shell.collapsed .nav-block { flex-direction: column; align-items: center; }
+  .sidebar-shell.collapsed .nav-rows { align-items: center; }
+  .sidebar-shell.collapsed .nav-row { flex-direction: column; gap: 6px; }
+  /* En rail, les 5 boutons restent tous visibles : le repli individuel de
+     ligne (chevron, masqué ici) ne s'applique qu'en mode déplié. */
+  .sidebar-shell.collapsed .nav-row.is-collapsed .nav-btn { display: flex; }
+  .sidebar-shell.collapsed .nav-btn {
+    flex: none; width: 36px; height: 36px; border-radius: 50%; padding: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 15px;
+  }
+  .sidebar-shell.collapsed .nav-btn-icon { display: inline-block; }
   .sidebar.frame1 { background: var(--frame1); }
   .side-toggle {
     position: absolute;
@@ -288,6 +321,9 @@
   /* Réduits (padding) suite à l'ajout de l'image carrée à gauche, police
      inchangée volontairement (11px, comme avant). */
   .nav-btn { flex: 1; background: var(--section); color: var(--ink-body-light); border-radius: 6px; padding: 6px 4px; font-size: 11px; text-align: center; letter-spacing: 0.5px; }
+  /* Icône cachée par défaut (bouton texte) : révélée seulement quand la
+     sidebar est repliée (voir .sidebar-shell.collapsed .nav-btn-icon). */
+  .nav-btn-icon { display: none; }
   .nav-chevron { color: var(--ink-muted-dark); font-size: 12px; width: 16px; text-align: center; cursor: pointer; user-select: none; }
   .nav-row.is-collapsed .nav-btn { display: none; }
   .plugin-box { height: 110px; border: 1px dashed rgba(224,225,221,0.35); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-muted-dark); font-style: italic; }
@@ -327,7 +363,8 @@
      (décalage sidebar) + 340px (largeur sidebar) + 22px (même écart que le
      gap entre cadres dans .outer-frame, pour un espacement cohérent). */
   .main-content { flex: 1; display: flex; flex-direction: column; gap: 12px; min-width: 0; margin-left: 378px; transition: margin-left 0.25s ease; }
-  .sidebar-shell.collapsed ~ .main-content { margin-left: 0; }
+  /* 16px (décalage sidebar) + 76px (largeur rail replié) + 22px (gap) */
+  .sidebar-shell.collapsed ~ .main-content { margin-left: 114px; }
   /* color/a en repli : .outer-frame accueille aussi le contenu natif Forumactif
      qu'on n'a pas de template dédié pour habiller (page d'inscription/CGU,
      mot de passe oublié, rapports...). Ce contenu n'a pas de couleur de texte
@@ -743,3 +780,24 @@
      template) : reléguée en arrière-plan visuel plutôt qu'affichée en avant. */
   .pfa-fa-footer { text-align: center; font-size: 10px; color: var(--ink-muted-light); opacity: 0.55; padding: 10px 16px 4px; }
   .pfa-fa-footer a { color: inherit; }
+
+  /* ---------- POPUP "LIENS UTILES" ---------- */
+  .pfa-modal-overlay {
+    position: fixed; inset: 0; z-index: 300;
+    background: rgba(13,27,42,0.6);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; visibility: hidden; transition: opacity 0.2s ease;
+  }
+  .pfa-modal-overlay.open { opacity: 1; visibility: visible; }
+  .pfa-modal {
+    position: relative; background: var(--frame1); color: var(--ink-body-dark);
+    border-radius: 20px; padding: 28px; width: min(90vw, 640px); max-height: 80vh;
+    overflow-y: auto;
+  }
+  .pfa-modal h3 { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 24px; color: var(--ink-hi-dark); margin-bottom: 18px; }
+  .pfa-modal-close { position: absolute; top: 16px; right: 20px; font-size: 20px; line-height: 1; cursor: pointer; color: var(--ink-muted-dark); }
+  .pfa-modal-cats { display: flex; gap: 20px; flex-wrap: wrap; }
+  .pfa-modal-cat { flex: 1; min-width: 160px; }
+  .pfa-modal-cat h4 { font-size: 12px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; color: var(--ink-muted-dark); margin-bottom: 10px; }
+  .pfa-modal-links { display: flex; flex-direction: column; gap: 8px; }
+  .pfa-modal-link { background: var(--section); color: var(--ink-body-light); border-radius: 6px; padding: 8px 12px; font-size: 12px; text-decoration: none; }

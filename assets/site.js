@@ -23,6 +23,32 @@
   });
 })();
 
+/* Popup "Liens utiles" */
+(function pfaUsefulLinksModal() {
+  var btn = document.getElementById('pfaUsefulLinksBtn');
+  var overlay = document.getElementById('pfaUsefulLinksOverlay');
+  var closeBtn = document.getElementById('pfaUsefulLinksClose');
+  if (!btn || !overlay) { return; }
+  function open(e) {
+    if (e) { e.preventDefault(); }
+    overlay.classList.add('open');
+  }
+  function close() { overlay.classList.remove('open'); }
+  btn.addEventListener('click', open);
+  if (closeBtn) {
+    closeBtn.addEventListener('click', close);
+    closeBtn.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); close(); }
+    });
+  }
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) { close(); }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { close(); }
+  });
+})();
+
 /* Repli/dépli de chaque catégorie (Administration, Zones, Hors RP...) via
    la flèche de son en-tête. */
 (function pfaCategoryCollapse() {
