@@ -101,7 +101,7 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
 
 	<!-- CSS Projet-FA_V2 (hébergé sur GitHub Pages, cache-bust via ?v= à incrémenter à chaque édition) -->
-	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=19"/>
+	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=20"/>
 
 	<!-- Thème clair/sombre : appliqué avant le <body> pour éviter un flash du mauvais thème -->
 	<script type="text/javascript">
@@ -283,13 +283,19 @@
 
 		<div class="sidebar-shell" id="pfaSidebarShell">
 			<div class="side-toggle collapse" id="pfaSidebarCollapseBtn" role="button" tabindex="0" aria-label="Replier la colonne">&#8249;</div>
-			<div class="side-toggle theme" id="pfaThemeBtn" role="button" tabindex="0" aria-label="Changer de thème" onclick="pfaToggleTheme()">&#9681;</div>
+			<!-- Icône = thème vers lequel le clic bascule (pas le thème actif) :
+			     soleil visible en thème sombre (clic -> clair), lune visible en
+			     thème clair (clic -> sombre), voir .theme-icon-sun/-moon dans site.css. -->
+			<div class="side-toggle theme" id="pfaThemeBtn" role="button" tabindex="0" aria-label="Changer de thème" onclick="pfaToggleTheme()">
+				<i class="fa-solid fa-sun theme-icon-sun"></i>
+				<i class="fa-solid fa-moon theme-icon-moon"></i>
+			</div>
 
 			<aside class="sidebar frame1" id="pfaSidebar">
 
 				<!-- En-tête invité (visible par défaut) -->
 				<div class="auth-buttons" id="pfaHeadGuest">
-					<a class="btn-ghost" id="pfaLoginBtn" href="#">Connexion</a>
+					<a class="btn-ghost" id="pfaLoginBtn" href="#"><i class="fa-solid fa-right-to-bracket"></i> Connexion</a>
 					<a class="btn-ghost" id="pfaRegisterBtn" href="{U_REGISTER}">Inscription</a>
 				</div>
 
@@ -302,8 +308,8 @@
 						<div class="char-header-actions">
 							<!-- Bouton Notiffi déplacé ici en JS depuis overall_header (voir site.js) -->
 							<div class="pfa-notif-slot" id="pfaNotifSlot"></div>
-							<a class="char-icon-btn" id="pfaMessagesBtn" href="#" aria-label="Messages privés"><i class="ion-email"></i></a>
-							<a class="char-icon-btn" id="pfaLogoutBtn" href="#" aria-label="Déconnexion"><i class="ion-log-out"></i></a>
+							<a class="char-icon-btn" id="pfaMessagesBtn" href="#" aria-label="Messages privés"><i class="fa-solid fa-envelope"></i></a>
+							<a class="char-icon-btn" id="pfaLogoutBtn" href="#" aria-label="Déconnexion"><i class="fa-solid fa-right-from-bracket"></i></a>
 							<a class="edit-pill" id="pfaEditProfileBtn" href="#" aria-label="Éditer le profil"></a>
 						</div>
 					</div>
@@ -329,19 +335,19 @@
 					<a class="nav-square-img ph ph-dark" href="{U_INDEX}">image</a>
 					<div class="nav-rows">
 						<div class="nav-row">
-							<a class="nav-btn" href="{U_INDEX}"><i class="ion-home nav-btn-icon"></i><span class="nav-btn-text">Accueil</span></a>
-							<a class="nav-btn" href="{U_SEARCH}"><i class="ion-ios-search-strong nav-btn-icon"></i><span class="nav-btn-text">Recherche</span></a>
+							<a class="nav-btn" href="{U_INDEX}"><i class="fa-solid fa-house nav-btn-icon"></i><span class="nav-btn-text">Accueil</span></a>
+							<a class="nav-btn" href="{U_SEARCH}"><i class="fa-solid fa-magnifying-glass nav-btn-icon"></i><span class="nav-btn-text">Recherche</span></a>
 							<div class="nav-chevron" id="pfaScrollTopBtn" role="button" tabindex="0" aria-label="Haut de page">&and;</div>
 						</div>
 						<div class="nav-row" id="pfaNavA">
-							<a class="nav-btn" href="{U_MEMBERLIST}"><i class="ion-ios-people nav-btn-icon"></i><span class="nav-btn-text">Membres</span></a>
-							<a class="nav-btn" href="#"><i class="ion-ios-book nav-btn-icon"></i><span class="nav-btn-text">Guidebook</span></a>
+							<a class="nav-btn" href="{U_MEMBERLIST}"><i class="fa-solid fa-users nav-btn-icon"></i><span class="nav-btn-text">Membres</span></a>
+							<a class="nav-btn" href="#"><i class="fa-solid fa-book nav-btn-icon"></i><span class="nav-btn-text">Guidebook</span></a>
 							<div class="nav-chevron" id="pfaScrollBottomBtn" role="button" tabindex="0" aria-label="Bas de page">&or;</div>
 						</div>
 						<div class="nav-row" id="pfaNavB">
 							<!-- Ouvre la popup "Liens utiles" (voir #pfaUsefulLinksOverlay plus bas) au
 							     lieu de naviguer directement. -->
-							<a class="nav-btn" href="#" id="pfaUsefulLinksBtn"><i class="ion-link nav-btn-icon"></i><span class="nav-btn-text">Liens utiles</span></a>
+							<a class="nav-btn" href="#" id="pfaUsefulLinksBtn"><i class="fa-solid fa-file-lines nav-btn-icon"></i><span class="nav-btn-text">Liens utiles</span></a>
 						</div>
 					</div>
 				</div>

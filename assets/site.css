@@ -140,6 +140,11 @@
   }
   .side-toggle.collapse { top: 20px; }
   .side-toggle.theme { top: 64px; font-size: 13px; }
+  /* Icône = destination du clic, pas le thème actif : soleil en thème sombre
+     (clic -> clair), lune en thème clair (clic -> sombre). */
+  .theme-icon-moon { display: none; }
+  html.light .theme-icon-sun { display: none; }
+  html.light .theme-icon-moon { display: inline-block; }
   .side-icons { display: flex; gap: 14px; font-size: 13px; color: var(--ink-muted-dark); }
   .auth-buttons { display: flex; gap: 8px; }
   .btn-ghost { flex: 1; background: var(--section); color: var(--ink-body-light); border-radius: 6px; padding: 8px 4px; font-size: 11px; text-align: center; letter-spacing: 0.5px; }
