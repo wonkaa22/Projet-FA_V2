@@ -101,7 +101,7 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
 
 	<!-- CSS Projet-FA_V2 (hébergé sur GitHub Pages, cache-bust via ?v= à incrémenter à chaque édition) -->
-	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=21"/>
+	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=22"/>
 
 	<!-- Thème clair/sombre : appliqué avant le <body> pour éviter un flash du mauvais thème -->
 	<script type="text/javascript">
@@ -189,7 +189,7 @@
 
 <!-- Notifications (plugin tiers Notiffi, à installer sur le forum) : rendu uniquement pour les comptes connectés -->
 <!-- BEGIN switch_user_logged_in -->
-<div id="notiffi_button">
+<div id="notiffi_button" data-tip="Voir mes notifications">
 	<span class="ntf_button-text" aria-label="Notifications"><i class="fa-solid fa-bell"></i></span>
 	<template class="unread_count" type="template/potion" data-name="unread_notifs">[count]</template>
 </div>
@@ -282,11 +282,11 @@
 	<div class="layout">
 
 		<div class="sidebar-shell" id="pfaSidebarShell">
-			<div class="side-toggle collapse" id="pfaSidebarCollapseBtn" role="button" tabindex="0" aria-label="Replier la colonne">&#8249;</div>
+			<div class="side-toggle collapse" id="pfaSidebarCollapseBtn" role="button" tabindex="0" aria-label="Replier la colonne" data-tip="Replier/déplier la colonne">&#8249;</div>
 			<!-- Icône = thème vers lequel le clic bascule (pas le thème actif) :
 			     soleil visible en thème sombre (clic -> clair), lune visible en
 			     thème clair (clic -> sombre), voir .theme-icon-sun/-moon dans site.css. -->
-			<div class="side-toggle theme" id="pfaThemeBtn" role="button" tabindex="0" aria-label="Changer de thème" onclick="pfaToggleTheme()">
+			<div class="side-toggle theme" id="pfaThemeBtn" role="button" tabindex="0" aria-label="Changer de thème" data-tip="Changer de thème" onclick="pfaToggleTheme()">
 				<i class="fa-solid fa-sun theme-icon-sun"></i>
 				<i class="fa-solid fa-moon theme-icon-moon"></i>
 			</div>
@@ -297,8 +297,8 @@
 				     boutons de nav : texte caché et bouton mis en rond quand la
 				     sidebar est repliée (voir .sidebar-shell.collapsed .btn-ghost). -->
 				<div class="auth-buttons" id="pfaHeadGuest">
-					<a class="btn-ghost" id="pfaLoginBtn" href="#"><i class="fa-solid fa-right-to-bracket nav-btn-icon"></i><span class="nav-btn-text">Connexion</span></a>
-					<a class="btn-ghost" id="pfaRegisterBtn" href="{U_REGISTER}"><i class="fa-solid fa-user-plus nav-btn-icon"></i><span class="nav-btn-text">Inscription</span></a>
+					<a class="btn-ghost" id="pfaLoginBtn" href="#" data-tip="Connexion"><i class="fa-solid fa-right-to-bracket nav-btn-icon"></i><span class="nav-btn-text">Connexion</span></a>
+					<a class="btn-ghost" id="pfaRegisterBtn" href="{U_REGISTER}" data-tip="Inscription"><i class="fa-solid fa-user-plus nav-btn-icon"></i><span class="nav-btn-text">Inscription</span></a>
 				</div>
 
 				<!-- En-tête connecté·e (masqué par défaut, révélé par site.js) -->
@@ -310,9 +310,9 @@
 						<div class="char-header-actions">
 							<!-- Bouton Notiffi déplacé ici en JS depuis overall_header (voir site.js) -->
 							<div class="pfa-notif-slot" id="pfaNotifSlot"></div>
-							<a class="char-icon-btn" id="pfaMessagesBtn" href="#" aria-label="Messages privés"><i class="fa-solid fa-envelope"></i></a>
-							<a class="char-icon-btn" id="pfaLogoutBtn" href="#" aria-label="Déconnexion"><i class="fa-solid fa-right-from-bracket"></i></a>
-							<a class="edit-pill" id="pfaEditProfileBtn" href="#" aria-label="Éditer le profil"></a>
+							<a class="char-icon-btn" id="pfaMessagesBtn" href="#" aria-label="Messages privés" data-tip="Voir mes messages"><i class="fa-solid fa-envelope"></i></a>
+							<a class="char-icon-btn" id="pfaLogoutBtn" href="#" aria-label="Déconnexion" data-tip="Déconnexion"><i class="fa-solid fa-right-from-bracket"></i></a>
+							<a class="edit-pill" id="pfaEditProfileBtn" href="#" aria-label="Éditer le profil" data-tip="Éditer le profil"></a>
 						</div>
 					</div>
 					<div class="char-switch" id="pfaCharSwitch">
@@ -337,19 +337,19 @@
 					<a class="nav-square-img ph ph-dark" href="{U_INDEX}">image</a>
 					<div class="nav-rows">
 						<div class="nav-row">
-							<a class="nav-btn" href="{U_INDEX}"><i class="fa-solid fa-house nav-btn-icon"></i><span class="nav-btn-text">Accueil</span></a>
-							<a class="nav-btn" href="{U_SEARCH}"><i class="fa-solid fa-magnifying-glass nav-btn-icon"></i><span class="nav-btn-text">Recherche</span></a>
-							<div class="nav-chevron" id="pfaScrollTopBtn" role="button" tabindex="0" aria-label="Haut de page">&and;</div>
+							<a class="nav-btn" href="{U_INDEX}" data-tip="Accueil"><i class="fa-solid fa-house nav-btn-icon"></i><span class="nav-btn-text">Accueil</span></a>
+							<a class="nav-btn" href="{U_SEARCH}" data-tip="Recherche"><i class="fa-solid fa-magnifying-glass nav-btn-icon"></i><span class="nav-btn-text">Recherche</span></a>
+							<div class="nav-chevron" id="pfaScrollTopBtn" role="button" tabindex="0" aria-label="Haut de page" data-tip="Haut de page">&and;</div>
 						</div>
 						<div class="nav-row" id="pfaNavA">
-							<a class="nav-btn" href="{U_MEMBERLIST}"><i class="fa-solid fa-users nav-btn-icon"></i><span class="nav-btn-text">Membres</span></a>
-							<a class="nav-btn" href="#"><i class="fa-solid fa-book nav-btn-icon"></i><span class="nav-btn-text">Guidebook</span></a>
-							<div class="nav-chevron" id="pfaScrollBottomBtn" role="button" tabindex="0" aria-label="Bas de page">&or;</div>
+							<a class="nav-btn" href="{U_MEMBERLIST}" data-tip="Membres"><i class="fa-solid fa-users nav-btn-icon"></i><span class="nav-btn-text">Membres</span></a>
+							<a class="nav-btn" href="#" data-tip="Guidebook"><i class="fa-solid fa-book nav-btn-icon"></i><span class="nav-btn-text">Guidebook</span></a>
+							<div class="nav-chevron" id="pfaScrollBottomBtn" role="button" tabindex="0" aria-label="Bas de page" data-tip="Bas de page">&or;</div>
 						</div>
 						<div class="nav-row" id="pfaNavB">
 							<!-- Ouvre la popup "Liens utiles" (voir #pfaUsefulLinksOverlay plus bas) au
 							     lieu de naviguer directement. -->
-							<a class="nav-btn" href="#" id="pfaUsefulLinksBtn"><i class="fa-solid fa-file-lines nav-btn-icon"></i><span class="nav-btn-text">Liens utiles</span></a>
+							<a class="nav-btn" href="#" id="pfaUsefulLinksBtn" data-tip="Liens utiles"><i class="fa-solid fa-file-lines nav-btn-icon"></i><span class="nav-btn-text">Liens utiles</span></a>
 						</div>
 					</div>
 				</div>

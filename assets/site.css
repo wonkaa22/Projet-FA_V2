@@ -807,3 +807,22 @@
   .pfa-modal-cat h4 { font-size: 12px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; color: var(--ink-muted-dark); margin-bottom: 10px; }
   .pfa-modal-links { display: flex; flex-direction: column; gap: 8px; }
   .pfa-modal-link { background: var(--section); color: var(--ink-body-light); border-radius: 6px; padding: 8px 12px; font-size: 12px; text-decoration: none; }
+
+  /* ---------- INFOBULLE AU SURVOL (toutes les icônes de la sidebar) ----------
+     Générique via l'attribut data-tip="..." plutôt qu'une classe par bouton :
+     évite d'ajouter un <span> dans chaque bouton (notif/messages/déconnexion/
+     connexion/inscription/nav/chevrons/replier/thème). Toujours affichée au
+     survol, y compris sidebar dépliée, pour les boutons qui n'ont pas de
+     libellé texte visible à côté de l'icône (notif/messages/déconnexion).
+     position:relative seulement là où il n'y a pas déjà un positionnement
+     (.side-toggle est déjà en absolute pour se caler sur le bord de la
+     sidebar — un position:relative générique l'aurait cassé). */
+  .btn-ghost, .char-icon-btn, .nav-btn, .edit-pill, .nav-chevron { position: relative; }
+  [data-tip]::after {
+    content: attr(data-tip);
+    position: absolute; left: calc(100% + 10px); top: 50%; transform: translateY(-50%);
+    background: var(--frame1); color: var(--ink-hi-dark); font-size: 10px;
+    white-space: nowrap; padding: 5px 10px; border-radius: 6px;
+    opacity: 0; pointer-events: none; transition: opacity 0.15s ease; z-index: 20;
+  }
+  [data-tip]:hover::after { opacity: 1; }
