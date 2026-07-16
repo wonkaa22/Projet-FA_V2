@@ -118,9 +118,6 @@
   .sidebar-shell.collapsed .nav-block { flex-direction: column; align-items: center; }
   .sidebar-shell.collapsed .nav-rows { align-items: center; }
   .sidebar-shell.collapsed .nav-row { flex-direction: column; gap: 6px; }
-  /* En rail, les 5 boutons restent tous visibles : le repli individuel de
-     ligne (chevron, masqué ici) ne s'applique qu'en mode déplié. */
-  .sidebar-shell.collapsed .nav-row.is-collapsed .nav-btn { display: flex; }
   .sidebar-shell.collapsed .nav-btn {
     flex: none; width: 36px; height: 36px; border-radius: 50%; padding: 0;
     display: flex; align-items: center; justify-content: center; font-size: 15px;
@@ -324,8 +321,8 @@
   /* Icône cachée par défaut (bouton texte) : révélée seulement quand la
      sidebar est repliée (voir .sidebar-shell.collapsed .nav-btn-icon). */
   .nav-btn-icon { display: none; }
+  /* Défilement haut/bas de la page (voir pfaNavScrollButtons dans site.js) */
   .nav-chevron { color: var(--ink-muted-dark); font-size: 12px; width: 16px; text-align: center; cursor: pointer; user-select: none; }
-  .nav-row.is-collapsed .nav-btn { display: none; }
   .plugin-box { height: 110px; border: 1px dashed rgba(224,225,221,0.35); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-muted-dark); font-style: italic; }
   .two-col { display: flex; gap: 10px; }
   .side-card {

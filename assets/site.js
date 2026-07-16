@@ -14,13 +14,25 @@
   });
 })();
 
-(function pfaNavRowCollapse() {
-  document.querySelectorAll('.nav-chevron[data-target]').forEach(function (chevron) {
-    chevron.addEventListener('click', function () {
-      var row = document.getElementById(chevron.getAttribute('data-target'));
-      if (row) { row.classList.toggle('is-collapsed'); }
+/* Chevrons de la nav (à côté de Recherche/Guidebook) : pas un repli de
+   ligne (ancien comportement, masquait Membres/Guidebook/Liens utiles par
+   erreur en pratique), mais un raccourci pour défiler tout en haut/bas de
+   la page — même principe que selHomeScrollTop/selHomeScrollBottom sur
+   Test_Astra. */
+(function pfaNavScrollButtons() {
+  /* getTarget en fonction (pas une valeur figée) : le bas de page peut
+     bouger après le chargement initial (fetch async 48h/nouveau membre). */
+  function bind(id, getTarget) {
+    var el = document.getElementById(id);
+    if (!el) { return; }
+    function go() { window.scrollTo({ top: getTarget(), behavior: 'smooth' }); }
+    el.addEventListener('click', go);
+    el.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); }
     });
-  });
+  }
+  bind('pfaScrollTopBtn', function () { return 0; });
+  bind('pfaScrollBottomBtn', function () { return document.body.scrollHeight; });
 })();
 
 /* Popup "Liens utiles" */

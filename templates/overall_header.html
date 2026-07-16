@@ -100,7 +100,7 @@
 	<link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet"/>
 
 	<!-- CSS Projet-FA_V2 (hébergé sur GitHub Pages, cache-bust via ?v= à incrémenter à chaque édition) -->
-	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=17"/>
+	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=18"/>
 
 	<!-- Thème clair/sombre : appliqué avant le <body> pour éviter un flash du mauvais thème -->
 	<script type="text/javascript">
@@ -319,19 +319,23 @@
 				<!-- Image (ex-bannière du haut) en carré à gauche des boutons de nav,
 				     répartis sur 3 lignes plus serrées pour compenser la place prise.
 				     Icône + libellé dans chaque bouton : seule l'icône reste visible
-				     quand la sidebar est repliée (voir .sidebar-shell.collapsed). -->
+				     quand la sidebar est repliée (voir .sidebar-shell.collapsed).
+				     Les deux chevrons ne replient pas leur ligne (ancien comportement,
+				     qui masquait Membres/Guidebook/Liens utiles par erreur) : ce sont
+				     des raccourcis de défilement de la page, haut/bas (voir
+				     pfaNavScrollButtons dans site.js). -->
 				<div class="nav-block">
 					<a class="nav-square-img ph ph-dark" href="{U_INDEX}">image</a>
 					<div class="nav-rows">
 						<div class="nav-row">
 							<a class="nav-btn" href="{U_INDEX}"><i class="ion-home nav-btn-icon"></i><span class="nav-btn-text">Accueil</span></a>
 							<a class="nav-btn" href="{U_SEARCH}"><i class="ion-ios-search-strong nav-btn-icon"></i><span class="nav-btn-text">Recherche</span></a>
-							<div class="nav-chevron" data-target="pfaNavA">&and;</div>
+							<div class="nav-chevron" id="pfaScrollTopBtn" role="button" tabindex="0" aria-label="Haut de page">&and;</div>
 						</div>
 						<div class="nav-row" id="pfaNavA">
 							<a class="nav-btn" href="{U_MEMBERLIST}"><i class="ion-ios-people nav-btn-icon"></i><span class="nav-btn-text">Membres</span></a>
 							<a class="nav-btn" href="#"><i class="ion-ios-book nav-btn-icon"></i><span class="nav-btn-text">Guidebook</span></a>
-							<div class="nav-chevron" data-target="pfaNavB">&or;</div>
+							<div class="nav-chevron" id="pfaScrollBottomBtn" role="button" tabindex="0" aria-label="Bas de page">&or;</div>
 						</div>
 						<div class="nav-row" id="pfaNavB">
 							<!-- Ouvre la popup "Liens utiles" (voir #pfaUsefulLinksOverlay plus bas) au
