@@ -261,7 +261,8 @@
      la sidebar (voir site.js) plutôt que laissé en position:fixed flottant
      par défaut ; le panneau reste en overlay fixe. */
   #notiffi_button {
-    cursor: pointer; background: var(--section); border-radius: 10px;
+    cursor: pointer; background: var(--section); color: var(--ink-body-light);
+    border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
     width: 36px; height: 36px; position: relative; font-size: 14px; flex-shrink: 0;
   }
