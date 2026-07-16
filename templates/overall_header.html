@@ -101,7 +101,7 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
 
 	<!-- CSS Projet-FA_V2 (hébergé sur GitHub Pages, cache-bust via ?v= à incrémenter à chaque édition) -->
-	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=20"/>
+	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=21"/>
 
 	<!-- Thème clair/sombre : appliqué avant le <body> pour éviter un flash du mauvais thème -->
 	<script type="text/javascript">
@@ -293,10 +293,12 @@
 
 			<aside class="sidebar frame1" id="pfaSidebar">
 
-				<!-- En-tête invité (visible par défaut) -->
+				<!-- En-tête invité (visible par défaut). Icône + texte comme les
+				     boutons de nav : texte caché et bouton mis en rond quand la
+				     sidebar est repliée (voir .sidebar-shell.collapsed .btn-ghost). -->
 				<div class="auth-buttons" id="pfaHeadGuest">
-					<a class="btn-ghost" id="pfaLoginBtn" href="#"><i class="fa-solid fa-right-to-bracket"></i> Connexion</a>
-					<a class="btn-ghost" id="pfaRegisterBtn" href="{U_REGISTER}">Inscription</a>
+					<a class="btn-ghost" id="pfaLoginBtn" href="#"><i class="fa-solid fa-right-to-bracket nav-btn-icon"></i><span class="nav-btn-text">Connexion</span></a>
+					<a class="btn-ghost" id="pfaRegisterBtn" href="{U_REGISTER}"><i class="fa-solid fa-user-plus nav-btn-icon"></i><span class="nav-btn-text">Inscription</span></a>
 				</div>
 
 				<!-- En-tête connecté·e (masqué par défaut, révélé par site.js) -->
