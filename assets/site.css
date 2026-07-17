@@ -106,8 +106,7 @@
      avatar/notif/messages/déconnexion (connecté·e) + les 5 boutons de nav
      (empilés, en rond, icône seule). */
   .sidebar-shell.collapsed .char-header h3,
-  .sidebar-shell.collapsed .char-switch,
-  .sidebar-shell.collapsed .char-quicklinks,
+  .sidebar-shell.collapsed .char-left-col,
   .sidebar-shell.collapsed .pfa-admin-link,
   .sidebar-shell.collapsed .nav-square-img,
   .sidebar-shell.collapsed .nav-chevron,
@@ -176,13 +175,16 @@
   .nav-square-img { display: block; width: 64px; flex-shrink: 0; border-radius: 8px; }
   .nav-rows { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; justify-content: center; }
   .char-switch-wrap { display: flex; flex-direction: column; gap: 10px; }
-  /* Raccourcis profil/sujets (gauche) + notif/messages/déconnexion, empilées
-     (droite) : séparés du nom (.char-header) pour ne pas se retrouver
-     compressés par un nom de personnage long. */
+  /* Colonne de gauche (raccourcis profil/sujets + switcheroo, empilés) +
+     colonne de droite (notif/messages/déconnexion, empilées) : séparées du
+     nom (.char-header) pour ne pas se retrouver compressées par un nom de
+     personnage long. Le switcheroo remonte juste sous les raccourcis
+     plutôt que de laisser un grand vide sous "Voir les nouveaux sujets". */
   .char-quicklinks-row { display: flex; gap: 8px; align-items: flex-start; }
+  .char-left-col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
   /* Contour seul, fond transparent, aplatis (padding vertical réduit),
      2 boutons par ligne (4 au total). */
-  .char-quicklinks { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; gap: 6px; align-content: flex-start; }
+  .char-quicklinks { display: flex; flex-wrap: wrap; gap: 6px; }
   .char-ql-btn {
     flex: 1 1 calc(50% - 3px); min-width: 0;
     background: transparent; border: 1px solid var(--section); color: var(--ink-body-dark);

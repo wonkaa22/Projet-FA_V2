@@ -101,7 +101,7 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
 
 	<!-- CSS Projet-FA_V2 (hébergé sur GitHub Pages, cache-bust via ?v= à incrémenter à chaque édition) -->
-	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=25"/>
+	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=26"/>
 
 	<!-- Thème clair/sombre : appliqué avant le <body> pour éviter un flash du mauvais thème -->
 	<script type="text/javascript">
@@ -309,16 +309,25 @@
 						<h3 id="pfaCharName">Personnage</h3>
 					</div>
 
-					<!-- Raccourcis profil/sujets (contour seul, fond transparent) + colonne
-					     d'icônes (notif/messages/déconnexion, ex-char-header-actions) côte à
-					     côte : sépare ces icônes du nom, qui pouvait les pousser/se retrouver
-					     compressé sur plusieurs lignes avec un nom de personnage long. -->
+					<!-- Raccourcis profil/sujets + switcheroo empilés dans une colonne de
+					     gauche, colonne d'icônes (notif/messages/déconnexion) à droite : le
+					     switcheroo remonte juste sous les raccourcis (plus proche de la
+					     hauteur de la colonne d'icônes en face) au lieu de laisser un grand
+					     vide sous "Voir les nouveaux sujets". -->
 					<div class="char-quicklinks-row">
-						<div class="char-quicklinks">
-							<a class="char-ql-btn" id="pfaProfileViewBtn" href="#">Voir mon profil</a>
-							<a class="char-ql-btn" id="pfaProfileEditBtn" href="#">Éditer mon profil</a>
-							<a class="char-ql-btn" href="/search?search_id=egosearch">Voir mes sujets</a>
-							<a class="char-ql-btn" href="/search?search_id=newposts">Voir les nouveaux sujets</a>
+						<div class="char-left-col">
+							<div class="char-quicklinks">
+								<a class="char-ql-btn" id="pfaProfileViewBtn" href="#">Voir mon profil</a>
+								<a class="char-ql-btn" id="pfaProfileEditBtn" href="#">Éditer mon profil</a>
+								<a class="char-ql-btn" href="/search?search_id=egosearch">Voir mes sujets</a>
+								<a class="char-ql-btn" href="/search?search_id=newposts">Voir les nouveaux sujets</a>
+							</div>
+							<div class="char-switch" id="pfaCharSwitch">
+								<!-- Switcheroo (multi-personnages) : point de montage unique, toujours ici
+								     puisque la sidebar est globale (pas besoin de le déplacer en JS page par page,
+								     contrairement à l'ancienne implémentation Selenujo). -->
+								<nav id="switcheroo" class="switcheroo" direction="horizontal" position="static"></nav>
+							</div>
 						</div>
 						<div class="char-icon-col">
 							<!-- Bouton Notiffi déplacé ici en JS depuis overall_header (voir site.js) -->
@@ -326,13 +335,6 @@
 							<a class="char-icon-btn" id="pfaMessagesBtn" href="#" aria-label="Messages privés" data-tip="Voir mes messages"><i class="fa-solid fa-envelope"></i></a>
 							<a class="char-icon-btn" id="pfaLogoutBtn" href="#" aria-label="Déconnexion" data-tip="Déconnexion"><i class="fa-solid fa-right-from-bracket"></i></a>
 						</div>
-					</div>
-
-					<div class="char-switch" id="pfaCharSwitch">
-						<!-- Switcheroo (multi-personnages) : point de montage unique, toujours ici
-						     puisque la sidebar est globale (pas besoin de le déplacer en JS page par page,
-						     contrairement à l'ancienne implémentation Selenujo). -->
-						<nav id="switcheroo" class="switcheroo" direction="horizontal" position="static"></nav>
 					</div>
 					<!-- Ne rend rien pour les comptes non-admin/modo (masqué par CSS si vide) -->
 					<div class="pfa-admin-link">{ADMIN_LINK}</div>
