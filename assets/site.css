@@ -109,14 +109,20 @@
   .sidebar-shell.collapsed .char-left-col,
   .sidebar-shell.collapsed .pfa-admin-link,
   .sidebar-shell.collapsed .nav-square-img,
-  .sidebar-shell.collapsed .nav-chevron,
   .sidebar-shell.collapsed .nav-btn-text,
   .sidebar-shell.collapsed .plugin-box,
   .sidebar-shell.collapsed .two-col,
-  .sidebar-shell.collapsed .pfa-moon,
-  .sidebar-shell.collapsed .pagination-dots {
+  .sidebar-shell.collapsed .pfa-tabs {
     display: none;
   }
+  /* Pagination (page "nav"/"lune") : en mode rail, la page "nav" reste seule
+     visible quelle que soit la page active avant repli, pour garder les 5
+     boutons de nav en icônes (voir liste ci-dessus, .nav-square-img/.two-col
+     restent masqués dedans). "Lune" (widget lunaire/topsites/bannière) ne
+     tient pas en rail (espace insuffisant) et sa pagination (.pfa-tabs) est
+     elle-même masquée juste au-dessus. */
+  .sidebar-shell.collapsed .pfa-page { display: none !important; }
+  .sidebar-shell.collapsed .pfa-page[data-page="nav"] { display: flex !important; }
   .sidebar-shell.collapsed .auth-buttons { flex-direction: column; align-items: center; }
   .sidebar-shell.collapsed .char-switch-wrap { align-items: center; }
   .sidebar-shell.collapsed .char-header { flex-direction: column; gap: 8px; }
@@ -147,6 +153,10 @@
   }
   .side-toggle.collapse { top: 20px; }
   .side-toggle.theme { top: 64px; font-size: 13px; }
+  /* Défilement haut/bas de la page : même bord que replier/thème (voir
+     pfaNavScrollButtons dans site.js), toujours visibles même repliée. */
+  .side-toggle.scroll-up { bottom: 64px; font-size: 13px; }
+  .side-toggle.scroll-down { bottom: 20px; font-size: 13px; }
   /* Icône = destination du clic, pas le thème actif : soleil en thème sombre
      (clic -> clair), lune en thème clair (clic -> sombre). */
   .theme-icon-moon { display: none; }
@@ -345,8 +355,6 @@
   /* Icône cachée par défaut (bouton texte) : révélée seulement quand la
      sidebar est repliée (voir .sidebar-shell.collapsed .nav-btn-icon). */
   .nav-btn-icon { display: none; }
-  /* Défilement haut/bas de la page (voir pfaNavScrollButtons dans site.js) */
-  .nav-chevron { color: var(--ink-muted-dark); font-size: 12px; width: 16px; text-align: center; cursor: pointer; user-select: none; }
   .plugin-box { height: 110px; border: 1px dashed rgba(224,225,221,0.35); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--ink-muted-dark); font-style: italic; }
 
   /* ---------- WIDGET DES PHASES LUNAIRES ----------
@@ -421,8 +429,35 @@
     content: ""; position: absolute; left: 0; top: 6px;
     width: 4px; height: 4px; border-radius: 50%; background: var(--ink-muted-light);
   }
-  .pagination-dots { display: flex; gap: 8px; }
-  .pdot { width: 24px; height: 24px; border-radius: 50%; background: var(--section); color: var(--ink-body-light); display: flex; align-items: center; justify-content: center; font-size: 11px; }
+  /* Boutons "topsites" (remplacent les anciens 1/2/3, qui n'étaient pas une
+     pagination mais des liens topsites) et bannière large, sur la page
+     "lune" en dessous du widget lunaire — même gabarit visuel que les
+     raccourcis profil (.char-ql-btn). */
+  .topsites-row { display: flex; gap: 6px; }
+  .topsite-btn {
+    flex: 1; background: transparent; border: 1px solid var(--section); color: var(--ink-body-dark);
+    border-radius: 6px; padding: 6px 4px; font-size: 9.5px; text-align: center;
+    letter-spacing: 0.3px; text-decoration: none;
+  }
+  .banner-wide { width: 100%; height: 64px; border-radius: 10px; }
+
+  /* ---------- PAGINATION DE LA SIDEBAR (pages "nav"/"lune") ----------
+     Remplace l'ancien .pagination-dots ("1 2 3", en réalité des liens
+     topsites relogés ci-dessus). Bascule en JS, voir pfaPagesTabs() dans
+     site.js. */
+  .pfa-pages { position: relative; }
+  .pfa-page { display: none; flex-direction: column; gap: 14px; }
+  .pfa-page.active { display: flex; }
+  .pfa-tabs { display: flex; gap: 8px; }
+  .pfa-tab {
+    flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+    background: rgba(0,0,0,0.15); color: var(--ink-muted-dark); border: 1px solid transparent;
+    border-radius: 10px; padding: 8px 6px; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.3px; cursor: pointer; user-select: none;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .pfa-tab.active { background: var(--section); color: var(--ink-body-light); }
+  .pfa-tab i { font-size: 12px; }
 
   /* margin-left compense la sidebar, sortie du flux normal par son
      position:fixed (voir .sidebar-shell) : .main-content n'a donc plus de
@@ -880,7 +915,7 @@
      position:relative seulement là où il n'y a pas déjà un positionnement
      (.side-toggle est déjà en absolute pour se caler sur le bord de la
      sidebar — un position:relative générique l'aurait cassé). */
-  .btn-ghost, .char-icon-btn, .nav-btn, .nav-chevron { position: relative; }
+  .btn-ghost, .char-icon-btn, .nav-btn { position: relative; }
   [data-tip]::after {
     content: attr(data-tip);
     position: absolute; left: calc(100% + 10px); top: 50%; transform: translateY(-50%);

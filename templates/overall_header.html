@@ -101,7 +101,7 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
 
 	<!-- CSS Projet-FA_V2 (hébergé sur GitHub Pages, cache-bust via ?v= à incrémenter à chaque édition) -->
-	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=28"/>
+	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=29"/>
 
 	<!-- Thème clair/sombre : appliqué avant le <body> pour éviter un flash du mauvais thème -->
 	<script type="text/javascript">
@@ -290,6 +290,12 @@
 				<i class="fa-solid fa-sun theme-icon-sun"></i>
 				<i class="fa-solid fa-moon theme-icon-moon"></i>
 			</div>
+			<!-- Défilement haut/bas de la page : déplacés ici depuis la ligne de nav
+			     (ex-chevrons &and;/&or;), même emplacement/apparence que replier/thème,
+			     toujours visibles même sidebar repliée. Voir pfaNavScrollButtons dans
+			     site.js (logique inchangée, ne dépend que de ces ids). -->
+			<div class="side-toggle scroll-up" id="pfaScrollTopBtn" role="button" tabindex="0" aria-label="Haut de page" data-tip="Haut de page">&and;</div>
+			<div class="side-toggle scroll-down" id="pfaScrollBottomBtn" role="button" tabindex="0" aria-label="Bas de page" data-tip="Bas de page">&or;</div>
 
 			<aside class="sidebar frame1" id="pfaSidebar">
 
@@ -340,103 +346,123 @@
 					<div class="pfa-admin-link">{ADMIN_LINK}</div>
 				</div>
 
-				<!-- Image (ex-bannière du haut) en carré à gauche des boutons de nav,
-				     répartis sur 3 lignes plus serrées pour compenser la place prise.
-				     Icône + libellé dans chaque bouton : seule l'icône reste visible
-				     quand la sidebar est repliée (voir .sidebar-shell.collapsed).
-				     Les deux chevrons ne replient pas leur ligne (ancien comportement,
-				     qui masquait Membres/Guidebook/Liens utiles par erreur) : ce sont
-				     des raccourcis de défilement de la page, haut/bas (voir
-				     pfaNavScrollButtons dans site.js). -->
-				<div class="nav-block">
-					<a class="nav-square-img ph ph-dark" href="{U_INDEX}">image</a>
-					<div class="nav-rows">
-						<div class="nav-row">
-							<a class="nav-btn" href="{U_INDEX}" data-tip="Accueil"><i class="fa-solid fa-house nav-btn-icon"></i><span class="nav-btn-text">Accueil</span></a>
-							<a class="nav-btn" href="{U_SEARCH}" data-tip="Recherche"><i class="fa-solid fa-magnifying-glass nav-btn-icon"></i><span class="nav-btn-text">Recherche</span></a>
-							<div class="nav-chevron" id="pfaScrollTopBtn" role="button" tabindex="0" aria-label="Haut de page" data-tip="Haut de page">&and;</div>
+				<!-- Sidebar paginée sur 2 pages (mockup validé avec Noémie) : résout le
+				     manque de place pour le widget lunaire sur petit écran. Page "nav" =
+				     navigation + préliens/recherche RP, page "lune" = widget lunaire +
+				     topsites + bannière. Bascule en JS (voir pfaPagesTabs dans site.js).
+				     En mode rail (repliée), la page "nav" reste seule visible pour garder
+				     les 5 boutons de nav en icônes (voir .sidebar-shell.collapsed .pfa-page
+				     dans site.css) — la pagination elle-même (.pfa-tabs) y est masquée. -->
+				<div class="pfa-pages" id="pfaPages">
+
+					<div class="pfa-page active" data-page="nav">
+						<!-- Image (ex-bannière du haut) en carré à gauche des boutons de nav,
+						     répartis sur 2 lignes. Icône + libellé dans chaque bouton : seule
+						     l'icône reste visible quand la sidebar est repliée (voir
+						     .sidebar-shell.collapsed). -->
+						<div class="nav-block">
+							<a class="nav-square-img ph ph-dark" href="{U_INDEX}">image</a>
+							<div class="nav-rows">
+								<div class="nav-row">
+									<a class="nav-btn" href="{U_INDEX}" data-tip="Accueil"><i class="fa-solid fa-house nav-btn-icon"></i><span class="nav-btn-text">Accueil</span></a>
+									<a class="nav-btn" href="{U_SEARCH}" data-tip="Recherche"><i class="fa-solid fa-magnifying-glass nav-btn-icon"></i><span class="nav-btn-text">Recherche</span></a>
+									<a class="nav-btn" href="{U_MEMBERLIST}" data-tip="Membres"><i class="fa-solid fa-users nav-btn-icon"></i><span class="nav-btn-text">Membres</span></a>
+								</div>
+								<div class="nav-row">
+									<a class="nav-btn" href="#" data-tip="Guidebook"><i class="fa-solid fa-book nav-btn-icon"></i><span class="nav-btn-text">Guidebook</span></a>
+									<!-- Ouvre la popup "Liens utiles" (voir #pfaUsefulLinksOverlay plus bas) au
+									     lieu de naviguer directement. -->
+									<a class="nav-btn" href="#" id="pfaUsefulLinksBtn" data-tip="Liens utiles"><i class="fa-solid fa-file-lines nav-btn-icon"></i><span class="nav-btn-text">Liens utiles</span></a>
+								</div>
+							</div>
 						</div>
-						<div class="nav-row" id="pfaNavA">
-							<a class="nav-btn" href="{U_MEMBERLIST}" data-tip="Membres"><i class="fa-solid fa-users nav-btn-icon"></i><span class="nav-btn-text">Membres</span></a>
-							<a class="nav-btn" href="#" data-tip="Guidebook"><i class="fa-solid fa-book nav-btn-icon"></i><span class="nav-btn-text">Guidebook</span></a>
-							<div class="nav-chevron" id="pfaScrollBottomBtn" role="button" tabindex="0" aria-label="Bas de page" data-tip="Bas de page">&or;</div>
-						</div>
-						<div class="nav-row" id="pfaNavB">
-							<!-- Ouvre la popup "Liens utiles" (voir #pfaUsefulLinksOverlay plus bas) au
-							     lieu de naviguer directement. -->
-							<a class="nav-btn" href="#" id="pfaUsefulLinksBtn" data-tip="Liens utiles"><i class="fa-solid fa-file-lines nav-btn-icon"></i><span class="nav-btn-text">Liens utiles</span></a>
+
+						<!-- Colonne droite FA (modules/plugins assignés par l'admin, ex. météo) :
+						     giefmod_index2, pas giefmod_index1 — la colonne gauche est réservée
+						     au widget "Derniers messages" du cadre d'accueil (voir index_body.html
+						     et docs/module-derniers-messages-forumactif.md), les deux zones sont
+						     indépendantes côté Forumactif mais utilisent la même colonne si on ne
+						     les distingue pas. -->
+						<!-- BEGIN giefmod_index2 -->
+						<div class="plugin-box">{giefmod_index2.MODVAR}</div>
+						<!-- BEGIN saut -->
+						<div style="height:{SPACE_ROW}px"></div>
+						<!-- END saut -->
+						<!-- END giefmod_index2 -->
+
+						<div class="two-col">
+							<!-- Contenu géré à la main (pas de variable Forumactif pour "préliens
+							     attendus"/"recherche RP") — voir README pour comment le modifier. -->
+							<div class="side-card gborder">
+								<span class="label">Préliens attendus</span>
+								<ul class="side-card-list">
+									<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+									<li>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
+									<li>Ut enim ad minim veniam, quis nostrud exercitation ullamco.</li>
+									<li>Duis aute irure dolor in reprehenderit in voluptate velit.</li>
+									<li>Excepteur sint occaecat cupidatat non proident, sunt in culpa.</li>
+								</ul>
+							</div>
+							<div class="side-card gborder side-card--reverse">
+								<ul class="side-card-list">
+									<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+									<li>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
+									<li>Ut enim ad minim veniam, quis nostrud exercitation ullamco.</li>
+								</ul>
+								<span class="label bottom">Recherche RPs</span>
+							</div>
 						</div>
 					</div>
+
+					<div class="pfa-page" data-page="lune">
+						<!-- Widget des phases lunaires : repris de Test_Astra (lune-widget.js),
+						     recoloré à nos tokens, validé sur mockup avec Noémie. Calcul de la
+						     vraie phase lunaire (formule du jour julien) côté client, "face
+						     cachée" = phase +0.5, 6 étapes narratives jour/nuit avec textes
+						     tournants. Voir pfaMoonWidget() dans site.js. -->
+						<div class="pfa-moon" id="pfaMoon">
+							<div class="pfa-moon-glow" id="moonGlow"></div>
+							<div class="pfa-moon-header" id="moonDate">&hellip;</div>
+							<div class="pfa-moon-badge-row">
+								<div class="pfa-moon-badge" id="moonBadge"></div>
+								<a class="pfa-moon-link" href="#">Comprendre les cycles &#8599;</a>
+							</div>
+							<div class="pfa-moon-main">
+								<div class="pfa-moon-icon" id="moonIcon"></div>
+								<div style="flex:1; min-width:0;">
+									<div class="pfa-moon-step-name" id="moonStepName">&hellip;</div>
+									<div class="pfa-moon-step-desc" id="moonStepDesc">&hellip;</div>
+								</div>
+							</div>
+							<div class="pfa-moon-sep"></div>
+							<div class="pfa-moon-track">
+								<div class="pfa-moon-fill" id="moonFill" style="width:0%"></div>
+								<span class="pfa-moon-pct" id="moonPct">0 %</span>
+							</div>
+							<div class="pfa-moon-next">
+								<span>Prochaine étape</span>
+								<span class="pfa-moon-next-info"><span id="moonNextGlyph"></span><span id="moonNextName"></span>&nbsp;<span id="moonNextDays"></span></span>
+							</div>
+						</div>
+
+						<!-- Ex-"pagination-dots" (1/2/3) : c'étaient en réalité des liens
+						     topsites, pas une pagination — relogés ici. La vraie pagination de
+						     la sidebar, c'est .pfa-tabs plus bas. Libellés/liens à remplacer
+						     par les vrais topsites. -->
+						<div class="topsites-row">
+							<a class="topsite-btn" href="#">Topsite 1</a>
+							<a class="topsite-btn" href="#">Topsite 2</a>
+							<a class="topsite-btn" href="#">Topsite 3</a>
+						</div>
+
+						<div class="banner-wide ph ph-dark">image</div>
+					</div>
+
 				</div>
 
-				<!-- Colonne droite FA (modules/plugins assignés par l'admin, ex. météo) :
-				     giefmod_index2, pas giefmod_index1 — la colonne gauche est réservée
-				     au widget "Derniers messages" du cadre d'accueil (voir index_body.html
-				     et docs/module-derniers-messages-forumactif.md), les deux zones sont
-				     indépendantes côté Forumactif mais utilisent la même colonne si on ne
-				     les distingue pas. -->
-				<!-- BEGIN giefmod_index2 -->
-				<div class="plugin-box">{giefmod_index2.MODVAR}</div>
-				<!-- BEGIN saut -->
-				<div style="height:{SPACE_ROW}px"></div>
-				<!-- END saut -->
-				<!-- END giefmod_index2 -->
-
-				<!-- Widget des phases lunaires : repris de Test_Astra (lune-widget.js),
-				     recoloré à nos tokens, validé sur mockup avec Noémie. Calcul de la
-				     vraie phase lunaire (formule du jour julien) côté client, "face
-				     cachée" = phase +0.5, 6 étapes narratives jour/nuit avec textes
-				     tournants. Voir pfaMoonWidget() dans site.js. -->
-				<div class="pfa-moon" id="pfaMoon">
-					<div class="pfa-moon-glow" id="moonGlow"></div>
-					<div class="pfa-moon-header" id="moonDate">&hellip;</div>
-					<div class="pfa-moon-badge-row">
-						<div class="pfa-moon-badge" id="moonBadge"></div>
-						<a class="pfa-moon-link" href="#">Comprendre les cycles &#8599;</a>
-					</div>
-					<div class="pfa-moon-main">
-						<div class="pfa-moon-icon" id="moonIcon"></div>
-						<div style="flex:1; min-width:0;">
-							<div class="pfa-moon-step-name" id="moonStepName">&hellip;</div>
-							<div class="pfa-moon-step-desc" id="moonStepDesc">&hellip;</div>
-						</div>
-					</div>
-					<div class="pfa-moon-sep"></div>
-					<div class="pfa-moon-track">
-						<div class="pfa-moon-fill" id="moonFill" style="width:0%"></div>
-						<span class="pfa-moon-pct" id="moonPct">0 %</span>
-					</div>
-					<div class="pfa-moon-next">
-						<span>Prochaine étape</span>
-						<span class="pfa-moon-next-info"><span id="moonNextGlyph"></span><span id="moonNextName"></span>&nbsp;<span id="moonNextDays"></span></span>
-					</div>
-				</div>
-
-				<div class="two-col">
-					<!-- Contenu géré à la main (pas de variable Forumactif pour "préliens
-					     attendus"/"recherche RP") — voir README pour comment le modifier. -->
-					<div class="side-card gborder">
-						<span class="label">Préliens attendus</span>
-						<ul class="side-card-list">
-							<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-							<li>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
-							<li>Ut enim ad minim veniam, quis nostrud exercitation ullamco.</li>
-							<li>Duis aute irure dolor in reprehenderit in voluptate velit.</li>
-							<li>Excepteur sint occaecat cupidatat non proident, sunt in culpa.</li>
-						</ul>
-					</div>
-					<div class="side-card gborder side-card--reverse">
-						<ul class="side-card-list">
-							<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-							<li>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
-							<li>Ut enim ad minim veniam, quis nostrud exercitation ullamco.</li>
-						</ul>
-						<span class="label bottom">Recherche RPs</span>
-					</div>
-				</div>
-
-				<div class="pagination-dots">
-					<div class="pdot">1</div><div class="pdot">2</div><div class="pdot">3</div>
+				<div class="pfa-tabs" id="pfaTabs">
+					<div class="pfa-tab active" data-goto="nav" role="button" tabindex="0" aria-label="Page navigation"><i class="fa-solid fa-compass"></i> Navigation</div>
+					<div class="pfa-tab" data-goto="lune" role="button" tabindex="0" aria-label="Page lune"><i class="fa-solid fa-moon"></i> Lune</div>
 				</div>
 
 			</aside>

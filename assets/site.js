@@ -14,11 +14,10 @@
   });
 })();
 
-/* Chevrons de la nav (à côté de Recherche/Guidebook) : pas un repli de
-   ligne (ancien comportement, masquait Membres/Guidebook/Liens utiles par
-   erreur en pratique), mais un raccourci pour défiler tout en haut/bas de
-   la page — même principe que selHomeScrollTop/selHomeScrollBottom sur
-   Test_Astra. */
+/* Boutons haut/bas sur le bord de la sidebar (mêmes ids que les anciens
+   chevrons de la ligne de nav, juste déplacés en .side-toggle) : raccourci
+   pour défiler tout en haut/bas de la page — même principe que
+   selHomeScrollTop/selHomeScrollBottom sur Test_Astra. */
 (function pfaNavScrollButtons() {
   /* getTarget en fonction (pas une valeur figée) : le bas de page peut
      bouger après le chargement initial (fetch async 48h/nouveau membre). */
@@ -33,6 +32,27 @@
   }
   bind('pfaScrollTopBtn', function () { return 0; });
   bind('pfaScrollBottomBtn', function () { return document.body.scrollHeight; });
+})();
+
+/* Pagination de la sidebar (bas) : bascule entre la page "nav" (navigation +
+   préliens/recherche RP) et la page "lune" (widget lunaire + topsites +
+   bannière), voir .pfa-pages/.pfa-page/.pfa-tabs dans site.css. Remplace les
+   anciens boutons "1/2/3", qui étaient en réalité des liens topsites (relogés
+   sur la page "lune") et pas une pagination. */
+(function pfaPagesTabs() {
+  var tabs = document.querySelectorAll('#pfaTabs .pfa-tab');
+  var pages = document.querySelectorAll('#pfaPages .pfa-page');
+  if (!tabs.length || !pages.length) { return; }
+  function goTo(target) {
+    tabs.forEach(function (t) { t.classList.toggle('active', t.getAttribute('data-goto') === target); });
+    pages.forEach(function (p) { p.classList.toggle('active', p.getAttribute('data-page') === target); });
+  }
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () { goTo(tab.getAttribute('data-goto')); });
+    tab.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goTo(tab.getAttribute('data-goto')); }
+    });
+  });
 })();
 
 /* Popup "Liens utiles" */
