@@ -101,7 +101,7 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
 
 	<!-- CSS Projet-FA_V2 (hébergé sur GitHub Pages, cache-bust via ?v= à incrémenter à chaque édition) -->
-	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=29"/>
+	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=30"/>
 
 	<!-- Thème clair/sombre : appliqué avant le <body> pour éviter un flash du mauvais thème -->
 	<script type="text/javascript">
@@ -299,6 +299,11 @@
 
 			<aside class="sidebar frame1" id="pfaSidebar">
 
+				<!-- Zone défilante : tout sauf les onglets de pagination (.pfa-tabs),
+				     qui restent fixes en bas de la sidebar (voir .sidebar-scroll dans
+				     site.css). -->
+				<div class="sidebar-scroll" id="pfaSidebarScroll">
+
 				<!-- En-tête invité (visible par défaut). Icône + texte comme les
 				     boutons de nav : texte caché et bouton mis en rond quand la
 				     sidebar est repliée (voir .sidebar-shell.collapsed .btn-ghost). -->
@@ -457,6 +462,8 @@
 
 						<div class="banner-wide ph ph-dark">image</div>
 					</div>
+
+				</div>
 
 				</div>
 
