@@ -30,6 +30,14 @@
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; }
+
+  /* Toolbar par défaut Forumactif : masquée en CSS plutôt que désactivée
+     dans l'admin (Général > Toolbar) — Notiffi et Switcheroo (docs/Notiffi.txt,
+     docs/Switcheroo.txt) ont besoin qu'elle reste activée côté serveur pour
+     fonctionner, on ne veut juste pas l'afficher puisqu'on a nos propres
+     recherche/notifications/switcheroo dans la sidebar. !important nécessaire
+     si elle est configurée en "fixée" (position:fixed) dans l'admin FA. */
+  #fa_toolbar, #fa_toolbar_hidden { display: none !important; }
   body {
     font-family: 'Oswald', sans-serif;
     background: var(--bg-page);
