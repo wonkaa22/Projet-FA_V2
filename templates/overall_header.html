@@ -101,7 +101,7 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
 
 	<!-- CSS Projet-FA_V2 (hébergé sur GitHub Pages, cache-bust via ?v= à incrémenter à chaque édition) -->
-	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=24"/>
+	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=25"/>
 
 	<!-- Thème clair/sombre : appliqué avant le <body> pour éviter un flash du mauvais thème -->
 	<script type="text/javascript">
@@ -307,23 +307,25 @@
 						<!-- Rempli en JS depuis _userdata.avatar (voir site.js) -->
 						<div class="char-avatar-lg" id="pfaCharAvatar"></div>
 						<h3 id="pfaCharName">Personnage</h3>
-						<div class="char-header-actions">
+					</div>
+
+					<!-- Raccourcis profil/sujets (contour seul, fond transparent) + colonne
+					     d'icônes (notif/messages/déconnexion, ex-char-header-actions) côte à
+					     côte : sépare ces icônes du nom, qui pouvait les pousser/se retrouver
+					     compressé sur plusieurs lignes avec un nom de personnage long. -->
+					<div class="char-quicklinks-row">
+						<div class="char-quicklinks">
+							<a class="char-ql-btn" id="pfaProfileViewBtn" href="#">Voir mon profil</a>
+							<a class="char-ql-btn" id="pfaProfileEditBtn" href="#">Éditer mon profil</a>
+							<a class="char-ql-btn" href="/search?search_id=egosearch">Voir mes sujets</a>
+							<a class="char-ql-btn" href="/search?search_id=newposts">Voir les nouveaux sujets</a>
+						</div>
+						<div class="char-icon-col">
 							<!-- Bouton Notiffi déplacé ici en JS depuis overall_header (voir site.js) -->
 							<div class="pfa-notif-slot" id="pfaNotifSlot"></div>
 							<a class="char-icon-btn" id="pfaMessagesBtn" href="#" aria-label="Messages privés" data-tip="Voir mes messages"><i class="fa-solid fa-envelope"></i></a>
 							<a class="char-icon-btn" id="pfaLogoutBtn" href="#" aria-label="Déconnexion" data-tip="Déconnexion"><i class="fa-solid fa-right-from-bracket"></i></a>
-							<a class="edit-pill" id="pfaEditProfileBtn" href="#" aria-label="Éditer le profil" data-tip="Éditer le profil"></a>
 						</div>
-					</div>
-
-					<!-- Raccourcis profil/sujets : contour seul, fond transparent, hrefs
-					     résolus en JS (profil) ou fixes (recherches, motifs d'URL FA
-					     stables) — voir pfaSidebarAuthState dans site.js. -->
-					<div class="char-quicklinks">
-						<a class="char-ql-btn" id="pfaProfileViewBtn" href="#">Voir mon profil</a>
-						<a class="char-ql-btn" id="pfaProfileEditBtn" href="#">Éditer mon profil</a>
-						<a class="char-ql-btn" href="/search?search_id=egosearch">Voir mes sujets</a>
-						<a class="char-ql-btn" href="/search?search_id=newposts">Voir les nouveaux sujets</a>
 					</div>
 
 					<div class="char-switch" id="pfaCharSwitch">

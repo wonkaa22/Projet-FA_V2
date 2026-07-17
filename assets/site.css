@@ -107,7 +107,7 @@
      (empilés, en rond, icône seule). */
   .sidebar-shell.collapsed .char-header h3,
   .sidebar-shell.collapsed .char-switch,
-  .sidebar-shell.collapsed .edit-pill,
+  .sidebar-shell.collapsed .char-quicklinks,
   .sidebar-shell.collapsed .pfa-admin-link,
   .sidebar-shell.collapsed .nav-square-img,
   .sidebar-shell.collapsed .nav-chevron,
@@ -120,7 +120,7 @@
   .sidebar-shell.collapsed .auth-buttons { flex-direction: column; align-items: center; }
   .sidebar-shell.collapsed .char-switch-wrap { align-items: center; }
   .sidebar-shell.collapsed .char-header { flex-direction: column; gap: 8px; }
-  .sidebar-shell.collapsed .char-header-actions { flex-direction: column; }
+  .sidebar-shell.collapsed .char-quicklinks-row { justify-content: center; }
   .sidebar-shell.collapsed .nav-block { flex-direction: column; align-items: center; }
   .sidebar-shell.collapsed .nav-rows { align-items: center; }
   .sidebar-shell.collapsed .nav-row { flex-direction: column; gap: 6px; }
@@ -160,7 +160,6 @@
   .char-avatar-lg { flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; background: var(--section); }
   .char-avatar-lg img { width: 100%; height: 100%; object-fit: cover; }
   .char-avatar-lg:empty { display: none; }
-  .char-header-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
   .pfa-notif-slot:empty { display: none; }
   /* Messages privés + Déconnexion : même gabarit que Notifications
      (#notiffi_button, 36x36/14px) pour une taille et une couleur homogènes
@@ -171,27 +170,26 @@
     display: flex; align-items: center; justify-content: center;
     font-size: 14px; text-decoration: none;
   }
-  .edit-pill {
-    background: var(--section); border-radius: 20px; width: 60px; height: 22px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; color: var(--ink-body-light); text-decoration: none;
-  }
-  .edit-pill::after { content: "\270E"; }
 
   /* Image (ex-bannière) en carré à gauche des boutons de navigation */
   .nav-block { display: flex; gap: 8px; align-items: stretch; }
   .nav-square-img { display: block; width: 64px; flex-shrink: 0; border-radius: 8px; }
   .nav-rows { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; justify-content: center; }
   .char-switch-wrap { display: flex; flex-direction: column; gap: 10px; }
-  /* Contour seul, fond transparent, 2 boutons par ligne (4 au total). */
-  .char-quicklinks { display: flex; flex-wrap: wrap; gap: 6px; }
+  /* Raccourcis profil/sujets (gauche) + notif/messages/déconnexion, empilées
+     (droite) : séparés du nom (.char-header) pour ne pas se retrouver
+     compressés par un nom de personnage long. */
+  .char-quicklinks-row { display: flex; gap: 8px; align-items: flex-start; }
+  /* Contour seul, fond transparent, aplatis (padding vertical réduit),
+     2 boutons par ligne (4 au total). */
+  .char-quicklinks { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; gap: 6px; align-content: flex-start; }
   .char-ql-btn {
     flex: 1 1 calc(50% - 3px); min-width: 0;
     background: transparent; border: 1px solid var(--section); color: var(--ink-body-dark);
-    border-radius: 6px; padding: 6px 4px; font-size: 10px; text-align: center;
+    border-radius: 6px; padding: 4px 4px; font-size: 10px; text-align: center;
     letter-spacing: 0.3px; text-decoration: none;
   }
-  .sidebar-shell.collapsed .char-quicklinks { display: none; }
+  .char-icon-col { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; }
   .char-switch { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .char-avatar { width: 40px; height: 40px; border-radius: 50%; }
   .char-avatar.plus { display:flex; align-items:center; justify-content:center; background: var(--section); color: var(--ink-body-light); font-size: 16px; }
@@ -829,7 +827,7 @@
      position:relative seulement là où il n'y a pas déjà un positionnement
      (.side-toggle est déjà en absolute pour se caler sur le bord de la
      sidebar — un position:relative générique l'aurait cassé). */
-  .btn-ghost, .char-icon-btn, .nav-btn, .edit-pill, .nav-chevron { position: relative; }
+  .btn-ghost, .char-icon-btn, .nav-btn, .nav-chevron { position: relative; }
   [data-tip]::after {
     content: attr(data-tip);
     position: absolute; left: calc(100% + 10px); top: 50%; transform: translateY(-50%);

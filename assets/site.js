@@ -119,7 +119,6 @@
   setHref('pfaLogoutBtn', faHref('logout'));
   setHref('pfaMessagesBtn', faHref('privmsg'));
   var profileHref = faHref('profile');
-  setHref('pfaEditProfileBtn', profileHref);
   setHref('pfaProfileEditBtn', profileHref);
   /* "Voir mon profil" (page publique /uN) n'a pas de lien dédié dans le nav
      caché (seul "Éditer le profil" y figure) : construit depuis
