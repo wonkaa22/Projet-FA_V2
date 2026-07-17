@@ -1,5 +1,26 @@
 /* Projet-FA_V2 — JS global (chargé en fin de page, voir templates/overall_footer_end.html) */
 
+/* Aligne le haut de la sidebar (position:fixed, voir .sidebar-shell dans
+   site.css) sur le vrai haut du cadre principal (.outer-frame), mesuré en
+   JS plutôt que supposé fixe en CSS (30px) : certaines pages Forumactif
+   ajoutent du contenu au-dessus de notre template (breadcrumb, bandeau...)
+   que .main-content subit (flux normal) mais pas la sidebar (fixed, hors
+   flux) — ça décalait les deux hauts l'un par rapport à l'autre. Recalculé
+   au chargement/redimensionnement et une fois après coup (contenu asynchrone
+   qui pourrait changer la hauteur du haut de page). */
+(function pfaSidebarAlign() {
+  var anchor = document.querySelector('.main-content .outer-frame') || document.querySelector('.main-content');
+  if (!anchor) { return; }
+  function sync() {
+    var top = Math.max(16, Math.round(anchor.getBoundingClientRect().top + window.scrollY));
+    document.documentElement.style.setProperty('--sidebar-top', top + 'px');
+  }
+  sync();
+  window.addEventListener('load', sync);
+  window.addEventListener('resize', sync);
+  setTimeout(sync, 500);
+})();
+
 (function pfaSidebarCollapse() {
   var shell = document.getElementById('pfaSidebarShell');
   var btn = document.getElementById('pfaSidebarCollapseBtn');

@@ -12,6 +12,11 @@
     --chip-bg: #0d1b2a;
     --chip-ink: #e0e1dd;
     --frame-grad: linear-gradient(135deg, #415a77, #778da9);
+    /* Repli avant mesure JS (voir pfaSidebarAlign dans site.js) : recalculée
+       pour aligner le haut de la sidebar sur le vrai haut du cadre principal
+       (.outer-frame), quel que soit ce que Forumactif ajoute au-dessus sur
+       une page donnée. */
+    --sidebar-top: 30px;
   }
   html.light {
     --bg-page: #e5989b;
@@ -90,12 +95,21 @@
      centré (max-width 1600px, margin auto) sur les grands écrans, le calc()
      ci-dessous reproduit cette position centrée pour que la colonne fixe
      s'aligne avec le reste de la mise en page ; .main-content compense
-     l'espace laissé par la sidebar sortie du flux (voir plus bas). */
+     l'espace laissé par la sidebar sortie du flux (voir plus bas).
+     34px (au lieu de 16px) : les boutons ronds .side-toggle débordent de
+     18px à gauche de la colonne (left:-18px, voir plus bas) — sans cette
+     marge supplémentaire, ils dépassaient du bord de l'écran sur les
+     largeurs où le calc() est plafonné à son minimum. */
   .sidebar-shell {
     width: 340px; flex-shrink: 0; transition: width 0.25s ease;
-    position: fixed; top: 30px;
-    left: max(16px, calc((100vw - 1600px) / 2 + 16px));
-    height: calc(100vh - 60px);
+    /* top : --sidebar-top, mesurée en JS sur le vrai haut de .outer-frame
+       (pfaSidebarAlign dans site.js) plutôt qu'une valeur fixe — aligne le
+       haut de la sidebar sur celui du cadre principal même si Forumactif
+       ajoute du contenu au-dessus sur certaines pages. 20px de marge basse
+       (contre 30px avant) pour une colonne un peu plus longue. */
+    position: fixed; top: var(--sidebar-top, 30px);
+    left: max(34px, calc((100vw - 1600px) / 2 + 34px));
+    height: calc(100vh - var(--sidebar-top, 30px) - 20px);
     z-index: 10;
   }
   /* Repliée : pas à 0, mais un rail étroit qui garde l'avatar/notif/messages/
@@ -478,12 +492,12 @@
      Le calcul de .sidebar-shell (left) inclut déjà un décalage de 16px par
      rapport au bord réel de .pfa-wrap (même décalage que le +16px de ce
      calc) ; l'oublier ici sous-estimait l'écart de 16px, ce qui laissait un
-     espace quasi invisible (6px) au lieu du gap voulu. Total : 16px
+     espace quasi invisible (6px) au lieu du gap voulu. Total : 34px
      (décalage sidebar) + 340px (largeur sidebar) + 22px (même écart que le
      gap entre cadres dans .outer-frame, pour un espacement cohérent). */
-  .main-content { flex: 1; display: flex; flex-direction: column; gap: 12px; min-width: 0; margin-left: 378px; transition: margin-left 0.25s ease; }
-  /* 16px (décalage sidebar) + 76px (largeur rail replié) + 22px (gap) */
-  .sidebar-shell.collapsed ~ .main-content { margin-left: 114px; }
+  .main-content { flex: 1; display: flex; flex-direction: column; gap: 12px; min-width: 0; margin-left: 396px; transition: margin-left 0.25s ease; }
+  /* 34px (décalage sidebar) + 76px (largeur rail replié) + 22px (gap) */
+  .sidebar-shell.collapsed ~ .main-content { margin-left: 132px; }
   /* color/a en repli : .outer-frame accueille aussi le contenu natif Forumactif
      qu'on n'a pas de template dédié pour habiller (page d'inscription/CGU,
      mot de passe oublié, rapports...). Ce contenu n'a pas de couleur de texte
