@@ -101,7 +101,7 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
 
 	<!-- CSS Projet-FA_V2 (hébergé sur GitHub Pages, cache-bust via ?v= à incrémenter à chaque édition) -->
-	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=23"/>
+	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=24"/>
 
 	<!-- Thème clair/sombre : appliqué avant le <body> pour éviter un flash du mauvais thème -->
 	<script type="text/javascript">
@@ -315,6 +315,17 @@
 							<a class="edit-pill" id="pfaEditProfileBtn" href="#" aria-label="Éditer le profil" data-tip="Éditer le profil"></a>
 						</div>
 					</div>
+
+					<!-- Raccourcis profil/sujets : contour seul, fond transparent, hrefs
+					     résolus en JS (profil) ou fixes (recherches, motifs d'URL FA
+					     stables) — voir pfaSidebarAuthState dans site.js. -->
+					<div class="char-quicklinks">
+						<a class="char-ql-btn" id="pfaProfileViewBtn" href="#">Voir mon profil</a>
+						<a class="char-ql-btn" id="pfaProfileEditBtn" href="#">Éditer mon profil</a>
+						<a class="char-ql-btn" href="/search?search_id=egosearch">Voir mes sujets</a>
+						<a class="char-ql-btn" href="/search?search_id=newposts">Voir les nouveaux sujets</a>
+					</div>
+
 					<div class="char-switch" id="pfaCharSwitch">
 						<!-- Switcheroo (multi-personnages) : point de montage unique, toujours ici
 						     puisque la sidebar est globale (pas besoin de le déplacer en JS page par page,

@@ -120,6 +120,16 @@
   setHref('pfaMessagesBtn', faHref('privmsg'));
   var profileHref = faHref('profile');
   setHref('pfaEditProfileBtn', profileHref);
+  setHref('pfaProfileEditBtn', profileHref);
+  /* "Voir mon profil" (page publique /uN) n'a pas de lien dédié dans le nav
+     caché (seul "Éditer le profil" y figure) : construit depuis
+     _userdata.user_id, même motif d'URL que /u1, /u%(id)d... vu partout
+     ailleurs sur ce forum (mentions, liens auteur, etc.). */
+  try {
+    if (typeof _userdata !== 'undefined' && _userdata && _userdata.user_id && _userdata.user_id > 0) {
+      setHref('pfaProfileViewBtn', '/u' + _userdata.user_id);
+    }
+  } catch (e) { /* ignore */ }
 
   /* Avatar du compte actif : _userdata expose une URL (avatar_link, ou à
      défaut user_avatar/avatar_full/avatar selon la version FA), pas du HTML
