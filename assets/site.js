@@ -634,3 +634,113 @@
   }
   collected.forEach(function (n) { wrap.appendChild(n); });
 })();
+
+/* ── Widget des phases lunaires (sidebar) ─────────────────────────────────
+   Repris de Test_Astra (lune-widget.js) : calcul réel de la phase lunaire
+   (formule du jour julien, cycle synodique), "face cachée" = phase + 0.5,
+   6 étapes narratives réparties jour/nuit avec textes tournants selon
+   l'avancement dans l'étape. Icônes fa-sun/fa-moon (Font Awesome, déjà
+   chargé pour le bouton thème) au lieu du SVG dessiné à la main du widget
+   d'origine — préférence validée sur mockup. Pas de décalage d'année
+   (contrairement à l'original sur Selenujo/AstraLuna, propre à sa propre
+   continuité fictive) : affiche la vraie date du jour. */
+(function pfaMoonWidget() {
+  var root = document.getElementById('pfaMoon');
+  if (!root) { return; }
+
+  var SYNODIC = 29.53058867;
+
+  function julianDay(date) {
+    var y = date.getFullYear(), mo = date.getMonth() + 1, d = date.getDate();
+    var a = Math.floor((14 - mo) / 12);
+    var yr = y + 4800 - a, m = mo + 12 * a - 3;
+    return d + Math.floor((153 * m + 2) / 5) + 365 * yr
+      + Math.floor(yr / 4) - Math.floor(yr / 100) + Math.floor(yr / 400) - 32045 - 0.5;
+  }
+  function moonPhase(date) {
+    var p = ((julianDay(date) - 2451550.1) % SYNODIC) / SYNODIC;
+    if (p < 0) p += 1;
+    return p;
+  }
+  function hiddenPhase(p) { return (p + 0.5) % 1; }
+
+  var STEPS = {
+    jour: [
+      { key: 'aube', minF: 0, maxF: 0.2, season: 'jour', name: "L'Aube",
+        descs: ["La première lueur rase l'horizon, les ombres s'étirent à l'infini.", "La lumière arrive en oblique, froide et aveuglante après l'obscurité.", "Le sol commence à se réchauffer. Les premières heures de clarté."] },
+      { key: 'jour_plein', minF: 0.2, maxF: 0.8, season: 'jour', name: 'Le Jour Plein',
+        descs: ["Le Soleil est haut. Pas d'ombre. La chaleur est sans merci.", "Lumière directe, aveuglante. Aucun abri naturel ne tient.", "Le régolite brûle. La surface est un désert de lumière blanche.", "Midi lunaire : le ciel noir tranche avec la roche éclatante.", "La chaleur atteint son pic. Rester à l'extérieur est dangereux."] },
+      { key: 'declin', minF: 0.8, maxF: 1.0, season: 'jour', name: 'Le Déclin',
+        descs: ["La lumière rougit, les ombres s'allongent à nouveau.", "Le Soleil s'approche de l'horizon. La nuit n'est plus loin.", "Dernières heures de chaleur. Le ciel vire à l'ocre sombre."] }
+    ],
+    nuit: [
+      { key: 'nuit_profonde', minF: 0, maxF: 0.2, season: 'nuit', name: 'La Nuit Profonde',
+        descs: ["Obscurité absolue. Les étoiles sont la seule source de lumière.", "Pas un photon du Soleil. Seul le cosmos lointain éclaire.", "Le froid s'installe rapidement. La nuit vient de tomber."] },
+      { key: 'nuit_stable', minF: 0.2, maxF: 0.8, season: 'nuit', name: 'La Nuit Stable',
+        descs: ["Un tapis d'étoiles sans limites. Rien d'autre.", "Le silence et le froid règnent. La Voie Lactée est nette.", "Nuit profonde et stable. Le froid atteint son minimum.", "Des milliers d'étoiles, immobiles. Pas le moindre frémissement.", "La nuit est à son apogée. Le temps semble suspendu."] },
+      { key: 'nuit_finissante', minF: 0.8, maxF: 1.0, season: 'nuit', name: 'La Nuit Finissante',
+        descs: ["Une lueur rasante pointe à l'horizon. L'aube approche.", "Les étoiles pâlissent à l'est. Le Soleil n'est plus loin.", "La nuit touche à sa fin. Quelques heures encore."] }
+    ]
+  };
+
+  function getStepInfo(hp) {
+    var isJour = hp < 0.5;
+    var season = isJour ? 'jour' : 'nuit';
+    var fracInSeason = isJour ? hp / 0.5 : (hp - 0.5) / 0.5;
+    var steps = STEPS[season];
+    var step = steps[steps.length - 1];
+    for (var i = 0; i < steps.length; i++) {
+      if (fracInSeason >= steps[i].minF && fracInSeason < steps[i].maxF) { step = steps[i]; break; }
+    }
+    var stepRange = step.maxF - step.minF;
+    var fracInStep = Math.min((fracInSeason - step.minF) / stepRange, 0.9999);
+    var descIdx = Math.min(Math.floor(fracInStep * step.descs.length), step.descs.length - 1);
+    var daysRemaining = (1 - fracInStep) * stepRange * (SYNODIC / 2);
+    var stepIdx = steps.indexOf(step);
+    var nextStep = stepIdx < steps.length - 1 ? steps[stepIdx + 1] : STEPS[season === 'jour' ? 'nuit' : 'jour'][0];
+    return { step: step, descIdx: descIdx, daysRemaining: daysRemaining, nextStep: nextStep, globalPct: Math.round(hp * 100) };
+  }
+
+  function render() {
+    var now = new Date();
+    var hp = hiddenPhase(moonPhase(now));
+    var info = getStepInfo(hp);
+    var step = info.step, season = step.season;
+
+    var glowColors = { nuit: 'rgba(122,111,208,0.15)', jour: 'rgba(196,120,48,0.14)' };
+    document.getElementById('moonGlow').style.background =
+      'radial-gradient(circle, ' + glowColors[season] + ' 0%, transparent 68%)';
+
+    var badge = document.getElementById('moonBadge');
+    badge.className = 'pfa-moon-badge ' + season;
+    badge.textContent = season === 'nuit' ? 'La Nuit' : 'Le Grand Jour';
+
+    var icon = document.getElementById('moonIcon');
+    icon.className = 'pfa-moon-icon ' + season;
+    icon.innerHTML = '<i class="fa-solid fa-' + (season === 'nuit' ? 'moon' : 'sun') + '"></i>';
+
+    document.getElementById('moonStepName').textContent = step.name;
+    document.getElementById('moonStepDesc').textContent = step.descs[info.descIdx];
+
+    var fill = document.getElementById('moonFill');
+    fill.style.width = info.globalPct + '%';
+    fill.className = 'pfa-moon-fill ' + season;
+    var pctEl = document.getElementById('moonPct');
+    pctEl.textContent = info.globalPct + ' %';
+    pctEl.className = 'pfa-moon-pct ' + (info.globalPct >= 50 ? 'pos-left' : 'pos-right');
+
+    var glyphMap = { aube: '☀', jour_plein: '☀', declin: '☀', nuit_profonde: '☾', nuit_stable: '✦', nuit_finissante: '☾' };
+    document.getElementById('moonNextGlyph').textContent = glyphMap[info.nextStep.key] || '·';
+    document.getElementById('moonNextName').textContent = info.nextStep.name;
+    var d = Math.floor(info.daysRemaining), h = Math.round((info.daysRemaining - d) * 24);
+    document.getElementById('moonNextDays').textContent = d > 0 ? '(dans ' + d + 'j ' + h + 'h)' : '(dans ' + h + 'h)';
+
+    var jours = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+    var mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+    document.getElementById('moonDate').textContent =
+      jours[now.getDay()] + ' ' + now.getDate() + ' ' + mois[now.getMonth()] + ' ' + now.getFullYear();
+  }
+
+  render();
+  setInterval(render, 30 * 60 * 1000);
+})();

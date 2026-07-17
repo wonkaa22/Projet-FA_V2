@@ -101,7 +101,7 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
 
 	<!-- CSS Projet-FA_V2 (hébergé sur GitHub Pages, cache-bust via ?v= à incrémenter à chaque édition) -->
-	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=26"/>
+	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=27"/>
 
 	<!-- Thème clair/sombre : appliqué avant le <body> pour éviter un flash du mauvais thème -->
 	<script type="text/javascript">
@@ -381,6 +381,36 @@
 				<div style="height:{SPACE_ROW}px"></div>
 				<!-- END saut -->
 				<!-- END giefmod_index2 -->
+
+				<!-- Widget des phases lunaires : repris de Test_Astra (lune-widget.js),
+				     recoloré à nos tokens, validé sur mockup avec Noémie. Calcul de la
+				     vraie phase lunaire (formule du jour julien) côté client, "face
+				     cachée" = phase +0.5, 6 étapes narratives jour/nuit avec textes
+				     tournants. Voir pfaMoonWidget() dans site.js. -->
+				<div class="pfa-moon" id="pfaMoon">
+					<div class="pfa-moon-glow" id="moonGlow"></div>
+					<div class="pfa-moon-header" id="moonDate">&hellip;</div>
+					<div class="pfa-moon-badge-row">
+						<div class="pfa-moon-badge" id="moonBadge"></div>
+						<a class="pfa-moon-link" href="#">Comprendre les cycles &#8599;</a>
+					</div>
+					<div class="pfa-moon-main">
+						<div class="pfa-moon-icon" id="moonIcon"></div>
+						<div style="flex:1; min-width:0;">
+							<div class="pfa-moon-step-name" id="moonStepName">&hellip;</div>
+							<div class="pfa-moon-step-desc" id="moonStepDesc">&hellip;</div>
+						</div>
+					</div>
+					<div class="pfa-moon-sep"></div>
+					<div class="pfa-moon-track">
+						<div class="pfa-moon-fill" id="moonFill" style="width:0%"></div>
+						<span class="pfa-moon-pct" id="moonPct">0 %</span>
+					</div>
+					<div class="pfa-moon-next">
+						<span>Prochaine étape</span>
+						<span class="pfa-moon-next-info"><span id="moonNextGlyph"></span><span id="moonNextName"></span>&nbsp;<span id="moonNextDays"></span></span>
+					</div>
+				</div>
 
 				<div class="two-col">
 					<!-- Contenu géré à la main (pas de variable Forumactif pour "préliens
