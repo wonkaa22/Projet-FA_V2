@@ -113,6 +113,7 @@
   .sidebar-shell.collapsed .nav-btn-text,
   .sidebar-shell.collapsed .plugin-box,
   .sidebar-shell.collapsed .two-col,
+  .sidebar-shell.collapsed .pfa-moon,
   .sidebar-shell.collapsed .pagination-dots {
     display: none;
   }
@@ -354,7 +355,14 @@
      textes en --ink-*-dark, ambre/violet jour/nuit gardés tels quels (sens
      narratif). Logique de calcul (phase lunaire réelle, "face cachée",
      étapes) inchangée, voir pfaMoonWidget() dans site.js. */
-  .pfa-moon { background: var(--frame2); border-radius: 14px; padding: 14px 16px 12px; color: var(--ink-body-dark); position: relative; overflow: hidden; }
+  /* flex-shrink:0 : .pfa-moon a overflow:hidden (pour la lueur en coin), ce
+     qui fait que son min-height effectif en enfant flex devient 0 au lieu
+     de la taille de son contenu (règle CSS sur les items flex avec un
+     overflow non-visible) — sur petit écran, quand tout le contenu de la
+     sidebar dépasse sa hauteur disponible, flexbox le compressait/coupait
+     au lieu de le laisser à sa taille et de faire défiler .sidebar comme
+     prévu. Même famille de bug que .mini-card.tall/.stack-cards plus haut. */
+  .pfa-moon { background: var(--frame2); border-radius: 14px; padding: 14px 16px 12px; color: var(--ink-body-dark); position: relative; overflow: hidden; flex-shrink: 0; }
   .pfa-moon-glow { position: absolute; top: -50px; right: -50px; width: 130px; height: 130px; pointer-events: none; border-radius: 50%; }
   .pfa-moon-header { font-size: 9px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-muted-dark); margin-bottom: 10px; position: relative; }
   .pfa-moon-badge-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 11px; position: relative; }
