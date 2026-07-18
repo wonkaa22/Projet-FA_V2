@@ -728,30 +728,27 @@
 })();
 
 /* {PROTECT_FOOTER} ne rend rien à l'intérieur de .pfa-fa-footer sur cette
-   installation (reste vide) : le vrai contenu obligatoire (Forum gratuit /
-   phpBB / Statistiques / Contact / Signaler un abus / Cookies) est en fait
-   rendu par Forumactif lui-même via son propre gabarit natif
-   (ul.linklist li.rightside, dans un div.navbar/#page-footer — voir le
-   <style> dans overall_header.html qui force ce navbar à rester visible,
-   nécessaire pour garder pagination/fil d'Ariane utilisables ailleurs).
-   Cet élément natif n'a pas de position fixe : il apparaît à un endroit
-   différent selon le type de page (accueil, sujet...), d'où l'effet
-   "qui se balade". On récupère ici son contenu pour l'afficher une seule
-   fois, proprement, dans .pfa-fa-footer (en bas, sous les partenaires), et
-   on masque ses apparitions natives partout où elles se trouvent — sans
-   toucher au reste de ul.linklist (breadcrumb/pagination), ciblé uniquement
-   via .rightside. */
+   installation : Forumactif injecte le vrai contenu obligatoire (Forum
+   gratuit / phpBB / Statistiques / Contact / Signaler un abus / Cookies)
+   tel quel, en enfants directs de <body>, juste AVANT .pfa-fa-footer (donc
+   entre </div><!--/pfa-wrap--> et <div class="pfa-fa-footer">) — confirmé
+   en inspectant le code source réel, plutôt que dans une structure
+   ul.linklist/li.rightside comme supposé à tort dans une version
+   précédente (ce sélecteur ne correspond à rien ici, et a cassé cette
+   relocalisation en ne trouvant jamais rien à déplacer). On récupère ici
+   tout ce qui se trouve entre .pfa-wrap et .pfa-fa-footer pour le déplacer
+   dedans, où il reçoit le style discret (cadre sombre, voir site.css). */
 (function pfaFaFooterRelocate() {
   var wrap = document.querySelector('.pfa-fa-footer');
-  if (!wrap) { return; }
-  var rightsides = document.querySelectorAll('ul.linklist li.rightside');
-  if (!rightsides.length) { return; }
-  if (!wrap.childNodes.length) {
-    wrap.innerHTML = rightsides[rightsides.length - 1].innerHTML;
+  var pfaWrap = document.querySelector('.pfa-wrap');
+  if (!wrap || !pfaWrap || wrap.childNodes.length) { return; }
+  var collected = [];
+  var node = wrap.previousSibling;
+  while (node && node !== pfaWrap) {
+    collected.unshift(node);
+    node = node.previousSibling;
   }
-  rightsides.forEach(function (li) {
-    li.style.setProperty('display', 'none', 'important');
-  });
+  collected.forEach(function (n) { wrap.appendChild(n); });
 })();
 
 /* ── Widget des phases lunaires (sidebar) ─────────────────────────────────

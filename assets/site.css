@@ -911,15 +911,25 @@
 
   /* ---------- LIGNE DE LIENS FORUMACTIF OBLIGATOIRE (overall_footer_end) ----------
      Ne peut pas être retirée (rendue par Forumactif via son propre navbar
-     natif, récupérée en JS — voir pfaFaFooterRelocate dans site.js) :
-     reléguée en arrière-plan visuel plutôt qu'affichée en avant.
+     natif, récupérée en JS — voir pfaFaFooterRelocate dans site.js) : mise
+     dans son propre cadre sombre à coins arrondis (même esprit que
+     .content-frame/.pfa-partners juste au-dessus), plutôt qu'un simple
+     texte discret sans cadre — plus facile à repérer et à vérifier que
+     c'est bien là qu'il atterrit.
      margin-left : .pfa-fa-footer est un frère de .pfa-wrap, pas un enfant de
      .main-content — il n'hérite donc pas du décalage réservé à la sidebar
      fixe et se retrouvait sous elle, décalé par rapport au reste du
      contenu. Même valeur que .main-content pour rester cohérent (pas
      recalculée selon replié/déplié : détail mineur, la légère différence
-     ne se voit pas sur un texte aussi discret). */
-  .pfa-fa-footer { text-align: center; font-size: 10px; color: var(--ink-muted-light); opacity: 0.55; padding: 10px 16px 4px; margin-left: 396px; }
+     ne se voit pas sur un texte aussi discret).
+     margin-bottom : espace visible entre ce cadre et le bas réel de la
+     page (rien d'autre après lui, sinon la page s'arrêtait pile dessus). */
+  .pfa-fa-footer {
+    margin: 14px 0 24px 396px;
+    background: var(--frame2); border-radius: 16px;
+    padding: 12px 20px;
+    text-align: center; font-size: 10px; color: var(--ink-muted-light); opacity: 0.7;
+  }
   .pfa-fa-footer a { color: inherit; }
 
   /* ---------- POPUP "LIENS UTILES" ---------- */
