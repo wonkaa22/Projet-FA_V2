@@ -910,22 +910,19 @@
   .pfa-partners-grid .ph { width: 50px; height: 50px; border-radius: 8px; }
 
   /* ---------- LIGNE DE LIENS FORUMACTIF OBLIGATOIRE (overall_footer_end) ----------
-     Ne peut pas être retirée (rendue par Forumactif via son propre navbar
-     natif, récupérée en JS — voir pfaFaFooterRelocate dans site.js) : mise
-     dans son propre cadre sombre à coins arrondis (même esprit que
-     .content-frame/.pfa-partners juste au-dessus), plutôt qu'un simple
-     texte discret sans cadre — plus facile à repérer et à vérifier que
-     c'est bien là qu'il atterrit.
-     margin-left : .pfa-fa-footer est un frère de .pfa-wrap, pas un enfant de
-     .main-content — il n'hérite donc pas du décalage réservé à la sidebar
-     fixe et se retrouvait sous elle, décalé par rapport au reste du
-     contenu. Même valeur que .main-content pour rester cohérent (pas
-     recalculée selon replié/déplié : détail mineur, la légère différence
-     ne se voit pas sur un texte aussi discret).
+     Ne peut pas être retirée (rendue par Forumactif via son propre gabarit
+     natif, récupérée en JS — voir pfaFaFooterRelocate dans site.js, qui
+     déplace aussi .pfa-fa-footer lui-même dans .main-content, juste après
+     "Nos partenaires") : mise dans son propre cadre sombre à coins arrondis
+     (même esprit que .content-frame/.pfa-partners juste au-dessus), plutôt
+     qu'un simple texte discret sans cadre.
+     Pas de margin-left ici : une fois déplacé dans .main-content (voir
+     site.js), il hérite déjà de son décalage réservé à la sidebar — pas
+     besoin de le dupliquer à la main.
      margin-bottom : espace visible entre ce cadre et le bas réel de la
      page (rien d'autre après lui, sinon la page s'arrêtait pile dessus). */
   .pfa-fa-footer {
-    margin: 14px 0 24px 396px;
+    margin-bottom: 24px;
     background: var(--frame2); border-radius: 16px;
     padding: 12px 20px;
     text-align: center; font-size: 10px; color: var(--ink-muted-light); opacity: 0.7;
@@ -1061,8 +1058,7 @@
     .sidebar-shell.collapsed .sidebar { align-items: stretch; padding: 18px; }
 
     .main-content,
-    .sidebar-shell.collapsed ~ .main-content,
-    .pfa-fa-footer { margin-left: 0; }
+    .sidebar-shell.collapsed ~ .main-content { margin-left: 0; }
 
     /* Identité (avatar+pseudo) seule sur sa ligne, raccourcis/switcheroo/
        icônes en dessous (demande explicite, comparé au mockup) — flex-basis

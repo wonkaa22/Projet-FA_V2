@@ -732,23 +732,37 @@
    gratuit / phpBB / Statistiques / Contact / Signaler un abus / Cookies)
    tel quel, en enfants directs de <body>, juste AVANT .pfa-fa-footer (donc
    entre </div><!--/pfa-wrap--> et <div class="pfa-fa-footer">) — confirmé
-   en inspectant le code source réel, plutôt que dans une structure
-   ul.linklist/li.rightside comme supposé à tort dans une version
-   précédente (ce sélecteur ne correspond à rien ici, et a cassé cette
-   relocalisation en ne trouvant jamais rien à déplacer). On récupère ici
-   tout ce qui se trouve entre .pfa-wrap et .pfa-fa-footer pour le déplacer
-   dedans, où il reçoit le style discret (cadre sombre, voir site.css). */
+   en inspectant le code source réel.
+   Deux étapes : 1) récupérer ce contenu brut (toujours entre .pfa-wrap et
+   .pfa-fa-footer, quelle que soit la page) et le déplacer dans
+   .pfa-fa-footer, qui reçoit le style discret (cadre sombre, voir
+   site.css) ; 2) déplacer .pfa-fa-footer LUI-MÊME dans .main-content
+   (juste après "Nos partenaires"), plutôt que de le laisser en enfant
+   direct de <body>. Repéré sur le terrain : il continuait à apparaître à
+   des endroits différents selon la page même une fois son contenu
+   correctement rempli — au niveau de <body>, il partage son parent avec
+   tout le gabarit natif Forumactif (CSS de base /5-ltr.css, potentiellement
+   flex/grid, hors de notre contrôle) qui peut le repositionner de façon
+   imprévisible, même famille de problème que sticky cassé par un ancêtre
+   FA pour la sidebar. À l'intérieur de .main-content (notre propre
+   flex-column), sa position en flux normal est fiable. */
 (function pfaFaFooterRelocate() {
   var wrap = document.querySelector('.pfa-fa-footer');
   var pfaWrap = document.querySelector('.pfa-wrap');
-  if (!wrap || !pfaWrap || wrap.childNodes.length) { return; }
-  var collected = [];
-  var node = wrap.previousSibling;
-  while (node && node !== pfaWrap) {
-    collected.unshift(node);
-    node = node.previousSibling;
+  var mainContent = document.querySelector('.main-content');
+  if (!wrap || !pfaWrap || !mainContent) { return; }
+  if (!wrap.childNodes.length) {
+    var collected = [];
+    var node = wrap.previousSibling;
+    while (node && node !== pfaWrap) {
+      collected.unshift(node);
+      node = node.previousSibling;
+    }
+    collected.forEach(function (n) { wrap.appendChild(n); });
   }
-  collected.forEach(function (n) { wrap.appendChild(n); });
+  if (wrap.parentNode !== mainContent) {
+    mainContent.appendChild(wrap);
+  }
 })();
 
 /* ── Widget des phases lunaires (sidebar) ─────────────────────────────────
