@@ -101,7 +101,7 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
 
 	<!-- CSS Projet-FA_V2 (hébergé sur GitHub Pages, cache-bust via ?v= à incrémenter à chaque édition) -->
-	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=33"/>
+	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=34"/>
 
 	<!-- Thème clair/sombre : appliqué avant le <body> pour éviter un flash du mauvais thème -->
 	<script type="text/javascript">
@@ -282,7 +282,10 @@
 	<div class="layout">
 
 		<div class="sidebar-shell" id="pfaSidebarShell">
-			<div class="side-toggle collapse" id="pfaSidebarCollapseBtn" role="button" tabindex="0" aria-label="Replier la colonne" data-tip="Replier/déplier la colonne">&#8249;</div>
+			<!-- Réutilisé tel quel en bandeau (petit écran) : repli une seule ligne
+			     compacte au lieu du rail vertical, voir la section "BANDEAU" de
+			     site.css — même bouton, même logique JS (pfaSidebarCollapse). -->
+			<div class="side-toggle collapse" id="pfaSidebarCollapseBtn" role="button" tabindex="0" aria-label="Replier/déplier" data-tip="Replier/déplier">&#8249;</div>
 			<!-- Icône = thème vers lequel le clic bascule (pas le thème actif) :
 			     soleil visible en thème sombre (clic -> clair), lune visible en
 			     thème clair (clic -> sombre), voir .theme-icon-sun/-moon dans site.css. -->
@@ -296,6 +299,14 @@
 			     site.js (logique inchangée, ne dépend que de ces ids). -->
 			<div class="side-toggle scroll-up" id="pfaScrollTopBtn" role="button" tabindex="0" aria-label="Haut de page" data-tip="Haut de page">&and;</div>
 			<div class="side-toggle scroll-down" id="pfaScrollBottomBtn" role="button" tabindex="0" aria-label="Bas de page" data-tip="Bas de page">&or;</div>
+			<!-- Fixe/défile : bouton visible uniquement en bandeau (petit écran, voir
+			     .side-toggle.pin dans site.css) — bascule le bandeau en position
+			     sticky au défilement ou non, au choix, mémorisé comme le thème
+			     (voir pfaPinToggle dans site.js). Masqué en colonne bureau, où la
+			     sidebar reste de toute façon fixe. -->
+			<div class="side-toggle pin" id="pfaPinToggleBtn" role="button" tabindex="0" aria-label="Fixer le bandeau au défilement" data-tip="Fixer le bandeau au défilement">
+				<i class="fa-solid fa-thumbtack"></i>
+			</div>
 
 			<aside class="sidebar frame1" id="pfaSidebar">
 

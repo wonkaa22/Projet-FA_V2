@@ -961,3 +961,106 @@
   .sidebar-shell:not(.collapsed) .btn-ghost:hover::after {
     opacity: 0;
   }
+
+  /* Bouton fixe (punaise) : n'existe qu'en bandeau (voir plus bas), caché en
+     colonne bureau où la sidebar reste de toute façon fixe en permanence. */
+  .side-toggle.pin { display: none; }
+  /* État "actif" générique pour un side-toggle à bascule persistante (fixe
+     pour l'instant) : contour clair plutôt qu'un changement de fond, pour ne
+     pas être confondu avec .pfa-tab.active. */
+  .side-toggle.is-on { border: 1px solid var(--ink-hi-dark); color: var(--ink-hi-dark); background: rgba(224,225,221,0.15); }
+
+  /* ---------- BANDEAU (petit écran) ----------
+     Sous le seuil ci-dessous, la colonne fixe devient un bandeau horizontal
+     en haut de page plutôt qu'une popup : même architecture (avatar/
+     raccourcis/switcheroo puis pagination Navigation/Lune à 2 pages), mêmes
+     boutons dans le même ordre, juste réorientés à l'horizontale. Mockup
+     validé avec Noémie (mockup-sidebar-responsive.html) avant cette
+     implémentation réelle. Seuil (880px) choisi pour couvrir tablette
+     portrait et téléphone — à ajuster une fois testé sur de vrais appareils.
+
+     Choix d'implémentation : on réutilise le DOM existant (mêmes ids/
+     classes) plutôt que de dupliquer le balisage pour petit écran, pour
+     éviter des ids en double (getElementById ne renverrait que le premier,
+     cassant tout le JS qui cible pfaMoon/pfaCharName/etc). Seul le CSS
+     change selon la largeur ; le JS (collapse, pagination, widget lunaire)
+     reste identique dans les deux modes. */
+  @media (max-width: 880px) {
+
+    .layout { flex-direction: column; }
+
+    /* .sidebar-shell devient lui-même un conteneur flex-wrap : les 5 boutons
+       ronds (replier/fixe/thème/haut/bas), en position:static ici (plus
+       d'ancrage au bord gauche d'une colonne verticale), se retrouvent sur
+       leur propre ligne au-dessus de la carte (order:1 vs order:2 pour
+       <aside>, qui occupe toute la largeur via flex-basis:100% et passe donc
+       forcément à la ligne suivante). Évite tout calcul de position absolue
+       façon "colonne" qui aurait pu chevaucher le contenu du bandeau replié. */
+    .sidebar-shell {
+      display: flex; flex-direction: row; flex-wrap: wrap;
+      justify-content: flex-end; align-items: flex-start;
+      gap: 8px;
+      width: 100%; height: auto;
+      position: relative; top: auto; left: auto; z-index: auto;
+    }
+    .sidebar-shell.collapsed { width: 100%; }
+    /* Bouton fixe (punaise) activé : bandeau collé en haut au défilement. */
+    .sidebar-shell.pinned { position: sticky; top: 0; z-index: 50; }
+    .sidebar-shell > .side-toggle { position: static; order: 1; }
+    .sidebar-shell > aside.sidebar { order: 2; flex: 1 1 100%; }
+    .side-toggle.pin { display: flex; }
+
+    .sidebar { height: auto; }
+    /* Plus de défilement interne capé à la hauteur de l'écran (pensé pour
+       une colonne verticale) : le bandeau fait juste la hauteur de son
+       contenu, la page défile normalement autour. */
+    .sidebar-scroll { flex: none; overflow: visible; }
+    .sidebar-shell.collapsed .sidebar { align-items: stretch; padding: 18px; }
+
+    .main-content,
+    .sidebar-shell.collapsed ~ .main-content { margin-left: 0; }
+
+    /* Identité + raccourcis + switcheroo + icônes sur une même bande, qui
+       s'enroule si besoin plutôt que de rester empilée verticalement. */
+    .char-switch-wrap { flex-direction: row; align-items: center; flex-wrap: wrap; gap: 14px; }
+    .char-quicklinks-row { flex: 1; min-width: 0; align-items: center; }
+    .char-left-col { flex-direction: row; align-items: center; flex-wrap: wrap; }
+    .char-quicklinks .char-ql-btn { flex: 0 0 auto; white-space: nowrap; }
+    .char-icon-col { flex-direction: row; margin-left: auto; }
+
+    /* Nav : image + 5 boutons sur une même bande plutôt que 2 lignes empilées. */
+    .nav-rows { flex-direction: row; flex-wrap: wrap; }
+
+    /* Widget lunaire : la description passe en 2 colonnes — icône/nom/
+       description à gauche, barre de progression + prochaine étape à droite
+       (au lieu d'empilées dessous) — pour rester compact en hauteur dans un
+       bandeau. Positions explicites (pas d'auto-placement grid) pour éviter
+       toute ambiguïté d'ordre entre les éléments. */
+    .pfa-moon { display: grid; grid-template-columns: 1.4fr 1fr; column-gap: 20px; }
+    .pfa-moon-header { grid-column: 1 / -1; grid-row: 1; }
+    .pfa-moon-badge-row { grid-column: 1 / -1; grid-row: 2; }
+    .pfa-moon-main { grid-column: 1; grid-row: 3 / span 2; align-self: center; margin-bottom: 0; }
+    .pfa-moon-sep { display: none; }
+    .pfa-moon-track {
+      grid-column: 2; grid-row: 3; align-self: end; margin-bottom: 8px;
+      border-left: 1px solid rgba(224,225,221,0.14); padding-left: 16px;
+    }
+    .pfa-moon-next {
+      grid-column: 2; grid-row: 4; align-self: start;
+      border-left: 1px solid rgba(224,225,221,0.14); padding-left: 16px;
+    }
+
+    /* ---- Mode replié : une seule ligne compacte (avatar/nom, nav en icônes
+       seules, notif/messages/déconnexion), plutôt que le rail vertical du
+       bureau. Les listes de "display:none" du mode rail (bureau, plus haut)
+       restent héritées telles quelles (char-left-col, plugin-box, two-col,
+       pfa-tabs...) : seules les propriétés qui n'ont de sens que pour une
+       colonne étroite (direction empilée, avatar au-dessus du nom...) sont
+       réécrites ici pour une bande large. */
+    .sidebar-shell.collapsed .auth-buttons { flex-direction: row; align-items: center; }
+    .sidebar-shell.collapsed .char-header { flex-direction: row; gap: 8px; }
+    .sidebar-shell.collapsed .char-header h3 { display: block; }
+    .sidebar-shell.collapsed .nav-block { flex-direction: row; align-items: center; }
+    .sidebar-shell.collapsed .nav-rows { flex-direction: row; align-items: center; }
+    .sidebar-shell.collapsed .nav-row { flex-direction: row; gap: 6px; }
+  }

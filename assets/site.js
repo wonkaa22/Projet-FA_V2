@@ -35,6 +35,29 @@
   });
 })();
 
+/* Bouton "fixe" (punaise) : n'a d'effet qu'en bandeau (petit écran, voir le
+   bloc @media dans site.css — .sidebar-shell.pinned y bascule en position
+   sticky) ; sans effet visuel en colonne bureau, où la sidebar reste fixe
+   de toute façon. Choix mémorisé comme le thème (pfaToggleTheme). */
+(function pfaPinToggle() {
+  var shell = document.getElementById('pfaSidebarShell');
+  var btn = document.getElementById('pfaPinToggleBtn');
+  if (!shell || !btn) { return; }
+  var pinned = localStorage.getItem('pfa-upbar-pinned') === '1';
+  shell.classList.toggle('pinned', pinned);
+  btn.classList.toggle('is-on', pinned);
+  function toggle() {
+    var next = !shell.classList.contains('pinned');
+    shell.classList.toggle('pinned', next);
+    btn.classList.toggle('is-on', next);
+    localStorage.setItem('pfa-upbar-pinned', next ? '1' : '0');
+  }
+  btn.addEventListener('click', toggle);
+  btn.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+  });
+})();
+
 /* Boutons haut/bas sur le bord de la sidebar (mêmes ids que les anciens
    chevrons de la ligne de nav, juste déplacés en .side-toggle) : raccourci
    pour défiler tout en haut/bas de la page — même principe que
