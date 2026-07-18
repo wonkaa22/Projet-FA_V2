@@ -994,8 +994,19 @@
       position: relative; top: auto; left: auto; z-index: auto;
     }
     .sidebar-shell.collapsed { width: 100%; }
-    /* Bouton fixe (punaise) activé : bandeau collé en haut au défilement. */
-    .sidebar-shell.pinned { position: sticky; top: 0; z-index: 50; }
+    /* Bouton fixe (punaise) activé : position:fixed (pas sticky) — même
+       raison que la colonne bureau plus haut dans ce fichier ("sticky casse
+       dès qu'un ancêtre a un overflow particulier, fréquent avec le CSS de
+       base Forumactif hors de notre contrôle, fixed s'ancre toujours à la
+       fenêtre"). left/right (pas width:100%) pour respecter le même retrait
+       de 16px que le reste de la page (body). .main-content compense
+       l'espace laissé par le bandeau sorti du flux, avec sa hauteur réelle
+       mesurée en JS (--upbar-height, voir pfaUpbarPinHeight dans site.js —
+       la hauteur varie selon replié/déplié et le contenu). */
+    .sidebar-shell.pinned { position: fixed; top: 0; left: 16px; right: 16px; z-index: 50; }
+    .sidebar-shell.pinned aside.sidebar { box-shadow: 0 10px 24px rgba(0,0,0,0.35); }
+    .sidebar-shell.pinned ~ .main-content { margin-top: var(--upbar-height, 0px); }
+
     /* Les 5 boutons ronds (replier/fixe/thème/haut/bas) rejoignent la ligne
        des onglets Navigation/Lune (#pfaTabs) — relocalisés en JS
        (pfaUpbarToggleRelocate dans site.js, comme le bouton Notiffi ailleurs
@@ -1007,8 +1018,21 @@
        à côté des onglets, qui eux se partagent le reste (flex:1 chacun).
        position:relative (pas static) : reste le point d'ancrage de leur
        propre infobulle ([data-tip]::after), qui sinon se positionnerait
-       par rapport à la fenêtre au lieu du bouton. */
-    .side-toggle { position: relative; top: auto; left: auto; bottom: auto; }
+       par rapport à la fenêtre au lieu du bouton.
+       Sélecteurs répétés avec leur variante (.collapse/.theme/etc), pas
+       juste ".side-toggle" seul : ces variantes portent chacune leur propre
+       top/bottom (ex. .side-toggle.theme{top:64px}) avec une spécificité
+       plus élevée (deux classes) qu'un ".side-toggle" seul — sans ça, ces
+       anciennes valeurs "bord de colonne" restaient prioritaires malgré cette
+       règle, et les boutons se retrouvaient éparpillés à des positions
+       héritées de la colonne bureau au lieu d'être neutralisées. */
+    .side-toggle.collapse,
+    .side-toggle.theme,
+    .side-toggle.scroll-up,
+    .side-toggle.scroll-down,
+    .side-toggle.pin {
+      position: relative; top: auto; bottom: auto; left: auto; right: auto;
+    }
     .side-toggle.pin { display: flex; }
     .pfa-tabs { flex-wrap: wrap; align-items: center; }
 

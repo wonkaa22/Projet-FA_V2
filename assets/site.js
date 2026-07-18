@@ -37,8 +37,10 @@
 
 /* Bouton "fixe" (punaise) : n'a d'effet qu'en bandeau (petit écran, voir le
    bloc @media dans site.css — .sidebar-shell.pinned y bascule en position
-   sticky) ; sans effet visuel en colonne bureau, où la sidebar reste fixe
-   de toute façon. Choix mémorisé comme le thème (pfaToggleTheme). */
+   fixed, pas sticky, même raison que la colonne bureau : sticky casse dès
+   qu'un ancêtre a un overflow particulier, hors de notre contrôle côté
+   Forumactif) ; sans effet visuel en colonne bureau, où la sidebar reste
+   fixe de toute façon. Choix mémorisé comme le thème (pfaToggleTheme). */
 (function pfaPinToggle() {
   var shell = document.getElementById('pfaSidebarShell');
   var btn = document.getElementById('pfaPinToggleBtn');
@@ -56,6 +58,22 @@
   btn.addEventListener('keydown', function (e) {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
   });
+})();
+
+/* Bandeau fixé (punaise) : .sidebar-shell.pinned passe en position:fixed,
+   donc sort du flux — .main-content a besoin d'un margin-top égal à la
+   vraie hauteur du bandeau pour ne pas se retrouver caché dessous. Cette
+   hauteur varie (replié/déplié, contenu, largeur d'écran) : mesurée en
+   continu via ResizeObserver plutôt que recalculée à la main à chaque
+   déclencheur possible. */
+(function pfaUpbarPinHeight() {
+  var shell = document.getElementById('pfaSidebarShell');
+  if (!shell || typeof ResizeObserver === 'undefined') { return; }
+  function sync() {
+    document.documentElement.style.setProperty('--upbar-height', shell.getBoundingClientRect().height + 'px');
+  }
+  new ResizeObserver(sync).observe(shell);
+  sync();
 })();
 
 /* Bandeau (petit écran) : les 5 boutons ronds (replier/fixe/thème/haut/bas)
