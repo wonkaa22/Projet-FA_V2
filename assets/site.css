@@ -105,11 +105,12 @@
     /* top : --sidebar-top, mesurée en JS sur le vrai haut de .outer-frame
        (pfaSidebarAlign dans site.js) plutôt qu'une valeur fixe — aligne le
        haut de la sidebar sur celui du cadre principal même si Forumactif
-       ajoute du contenu au-dessus sur certaines pages. 20px de marge basse
-       (contre 30px avant) pour une colonne un peu plus longue. */
+       ajoute du contenu au-dessus sur certaines pages. Marge basse = marge
+       haute (même --sidebar-top des deux côtés du calc) pour une colonne
+       centrée verticalement. */
     position: fixed; top: var(--sidebar-top, 30px);
     left: max(34px, calc((100vw - 1600px) / 2 + 34px));
-    height: calc(100vh - var(--sidebar-top, 30px) - 20px);
+    height: calc(100vh - (var(--sidebar-top, 30px) * 2));
     z-index: 10;
   }
   /* Repliée : pas à 0, mais un rail étroit qui garde l'avatar/notif/messages/
