@@ -1054,8 +1054,18 @@
     .char-quicklinks .char-ql-btn { flex: 0 0 auto; white-space: nowrap; }
     .char-icon-col { flex-direction: row; margin-left: auto; }
 
-    /* Nav : image + 5 boutons sur une même bande plutôt que 2 lignes empilées. */
-    .nav-rows { flex-direction: row; flex-wrap: wrap; }
+    /* Nav : les 5 boutons deviennent des items individuels d'une même ligne
+       qui s'enroule (autant que la largeur le permet, un ou deux par ligne
+       sinon), plutôt que 2 groupes rigides (Accueil/Recherche/Membres et
+       Guidebook/Liens utiles) qui ne pouvaient chacun s'enrouler qu'en bloc
+       — .nav-row (display:contents) expose directement chaque .nav-btn à
+       .nav-rows, qui les enroule un par un. */
+    .nav-rows { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 6px; }
+    .nav-row { display: contents; }
+    /* min-width réservé au mode déplié (texte visible) : en repli, .nav-btn
+       redevient un rond 36px (règle plus spécifique .sidebar-shell.collapsed
+       .nav-btn plus bas) — un min-width ici l'aurait étiré en ovale. */
+    .sidebar-shell:not(.collapsed) .nav-rows .nav-btn { flex: 0 1 auto; min-width: 84px; white-space: nowrap; }
 
     /* Préliens attendus / Recherche RPs : 2 lignes visibles + défilement
        interne (déjà en place via .side-card-list, overflow-y:auto) plutôt
@@ -1082,24 +1092,50 @@
       border-left: 1px solid rgba(224,225,221,0.14); padding-left: 16px;
     }
 
-    /* ---- Mode replié : une seule ligne compacte (avatar/nom, nav en icônes
-       seules, notif/messages/déconnexion), plutôt que le rail vertical du
-       bureau. Les listes de "display:none" du mode rail (bureau, plus haut)
-       restent héritées telles quelles (char-left-col, plugin-box, two-col...)
-       : seules les propriétés qui n'ont de sens que pour une colonne étroite
-       (direction empilée, avatar au-dessus du nom...) sont réécrites ici
-       pour une bande large. */
+    /* ---- Mode replié : tout (avatar/nom, notif/messages/déconnexion, nav
+       en icônes seules, boutons ronds replier/fixe/thème/haut/bas) devient
+       une même ligne qui s'enroule — un seul groupe wrap plutôt que 3 blocs
+       empilés (avatar+icônes / nav / boutons ronds), pour tenir sur une
+       seule ligne quand la largeur le permet et deux sinon.
+       <aside> lui-même passe en flex-wrap ; tous les conteneurs
+       intermédiaires (.sidebar-scroll, .char-switch-wrap,
+       .char-quicklinks-row, .pfa-pages, .pfa-page "nav", .nav-block,
+       .pfa-tabs) sont rendus "transparents" (display:contents) pour exposer
+       directement leurs enfants visibles à ce flux commun. Seuls
+       .char-header (avatar+nom) et .char-icon-col (notif/messages/
+       déconnexion) restent groupés tels quels : ce sont des unités visuelles
+       qui doivent bouger ensemble, pas des boutons isolés. Les listes de
+       "display:none" du mode rail bureau (char-left-col, plugin-box,
+       two-col, nav-square-img, .pfa-tab...) restent héritées telles
+       quelles : display:contents ne les rend pas visibles, il ne fait que
+       supprimer la boîte d'un conteneur, pas révéler ses enfants masqués. */
+    .sidebar-shell.collapsed aside.sidebar {
+      display: flex; flex-direction: row; flex-wrap: wrap;
+      align-items: center; gap: 10px 12px;
+    }
+    .sidebar-shell.collapsed .sidebar-scroll,
+    .sidebar-shell.collapsed .char-switch-wrap,
+    .sidebar-shell.collapsed .char-quicklinks-row,
+    .sidebar-shell.collapsed .pfa-pages,
+    .sidebar-shell.collapsed .nav-block,
+    .sidebar-shell.collapsed .pfa-tabs {
+      display: contents;
+    }
+    .sidebar-shell.collapsed .pfa-page[data-page="nav"] { display: contents !important; }
+    /* .pfa-tabs devenu transparent (contents) ci-dessus : ses enfants visibles
+       sont directement les 5 boutons ronds relocalisés (voir
+       pfaUpbarToggleRelocate). Les deux onglets Navigation/Lune eux-mêmes
+       restent masqués (n'ont pas de sens tant que le contenu paginé est
+       replié) — display:contents sur le parent ne les rend pas visibles,
+       mais ils gardent leur propre display:none explicite d'ici. */
+    .sidebar-shell.collapsed .pfa-tabs .pfa-tab { display: none; }
     .sidebar-shell.collapsed .auth-buttons { flex-direction: row; align-items: center; }
     .sidebar-shell.collapsed .char-header { flex-direction: row; gap: 8px; }
     .sidebar-shell.collapsed .char-header h3 { display: block; }
-    .sidebar-shell.collapsed .nav-block { flex-direction: row; align-items: center; }
-    .sidebar-shell.collapsed .nav-rows { flex-direction: row; align-items: center; }
-    .sidebar-shell.collapsed .nav-row { flex-direction: row; gap: 6px; }
-    /* #pfaTabs héberge aussi les 5 boutons ronds en bandeau (relocalisés en
-       JS, voir pfaUpbarToggleRelocate) : on ne peut plus le masquer entier
-       replié (règle du mode rail bureau, héritée) sous peine de faire
-       disparaître le bouton "replier" lui-même. On masque donc seulement les
-       deux onglets Navigation/Lune, pas leur conteneur. */
-    .sidebar-shell.collapsed .pfa-tabs { display: flex; }
-    .sidebar-shell.collapsed .pfa-tabs .pfa-tab { display: none; }
+    /* margin-left:auto (mode déplié, pousse les icônes à droite dans
+       .char-quicklinks-row) n'a plus de sens une fois .char-icon-col item
+       direct du flux commun d'<aside> : annulé pour qu'il s'enchaîne
+       naturellement après l'avatar plutôt que de créer un grand vide avant
+       de forcer un retour à la ligne prématuré. */
+    .sidebar-shell.collapsed .char-icon-col { margin-left: 0; }
   }
