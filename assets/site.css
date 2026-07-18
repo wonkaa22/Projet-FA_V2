@@ -1046,26 +1046,53 @@
     .main-content,
     .sidebar-shell.collapsed ~ .main-content { margin-left: 0; }
 
-    /* Identité + raccourcis + switcheroo + icônes sur une même bande, qui
-       s'enroule si besoin plutôt que de rester empilée verticalement. */
-    .char-switch-wrap { flex-direction: row; align-items: center; flex-wrap: wrap; gap: 14px; }
-    .char-quicklinks-row { flex: 1; min-width: 0; align-items: center; }
+    /* Identité (avatar+pseudo) seule sur sa ligne, raccourcis/switcheroo/
+       icônes en dessous (demande explicite, comparé au mockup) — flex-basis
+       100% force le retour à la ligne du reste, quelle que soit la largeur
+       disponible (même technique que <aside> plus haut pour la ligne des
+       boutons ronds). */
+    .char-switch-wrap { flex-direction: row; align-items: center; flex-wrap: wrap; gap: 10px 14px; }
+    /* Scopé :not(.collapsed) : replié, .char-header devient un item direct
+       du flux commun d'<aside> (char-switch-wrap est flatten, voir plus
+       bas) — lui forcer 100% l'isolerait sur sa propre ligne, à l'inverse
+       du but recherché (tout regroupé sur le moins de lignes possible). */
+    .sidebar-shell:not(.collapsed) .char-header { flex: 1 1 100%; }
+    .char-quicklinks-row { flex: 1 1 100%; min-width: 0; align-items: center; }
     .char-left-col { flex-direction: row; align-items: center; flex-wrap: wrap; }
     .char-quicklinks .char-ql-btn { flex: 0 0 auto; white-space: nowrap; }
     .char-icon-col { flex-direction: row; margin-left: auto; }
 
-    /* Nav : les 5 boutons deviennent des items individuels d'une même ligne
-       qui s'enroule (autant que la largeur le permet, un ou deux par ligne
-       sinon), plutôt que 2 groupes rigides (Accueil/Recherche/Membres et
-       Guidebook/Liens utiles) qui ne pouvaient chacun s'enrouler qu'en bloc
-       — .nav-row (display:contents) expose directement chaque .nav-btn à
-       .nav-rows, qui les enroule un par un. */
-    .nav-rows { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 6px; }
+    /* Nav (déplié) : grille 2 colonnes propre (Accueil/Recherche,
+       Membres/Guidebook), Liens utiles seul en pleine largeur — plutôt que
+       du flex-wrap libre, qui donnait des boutons de tailles irrégulières
+       (largeur dépendante du texte de chacun) et un rendu "sans structure".
+       .nav-row (display:contents, général aux deux états) expose chaque
+       .nav-btn directement à .nav-rows, qui les place dans la grille. */
     .nav-row { display: contents; }
-    /* min-width réservé au mode déplié (texte visible) : en repli, .nav-btn
-       redevient un rond 36px (règle plus spécifique .sidebar-shell.collapsed
-       .nav-btn plus bas) — un min-width ici l'aurait étiré en ovale. */
-    .sidebar-shell:not(.collapsed) .nav-rows .nav-btn { flex: 0 1 auto; min-width: 84px; white-space: nowrap; }
+    .sidebar-shell:not(.collapsed) .nav-rows {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+      align-items: stretch;
+    }
+    .sidebar-shell:not(.collapsed) #pfaUsefulLinksBtn { grid-column: 1 / -1; }
+    /* Ellipsis en dernier recours plutôt qu'un retour à la ligne du texte
+       dans le bouton (déjà rencontré, peu lisible) si une colonne devient
+       trop étroite sur un très petit écran. */
+    .sidebar-shell:not(.collapsed) .nav-rows .nav-btn {
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    /* Nav (replié) : chaque bouton (icône seule) devient un item direct du
+       flux commun d'<aside> (display:contents en cascade, voir plus bas) —
+       PAS un sous-groupe flex-wrap imbriqué : un tel sous-groupe, une fois
+       compressé à une largeur trop étroite par le flux extérieur, s'enroule
+       lui-même à la verticale (icônes empilées en colonne) au lieu de
+       passer proprement à la ligne suivante dans le flux global. */
+    .sidebar-shell.collapsed .nav-rows { display: contents; }
+
+    /* Image de nav : largeur adaptative (dans une fourchette raisonnable)
+       plutôt que 64px fixe, pour rester proportionnée à la grille 2 colonnes
+       (déplié) qui est maintenant bien plus large qu'en colonne bureau. */
+    .sidebar-shell:not(.collapsed) .nav-square-img { width: clamp(56px, 18%, 88px); }
 
     /* Préliens attendus / Recherche RPs : 2 lignes visibles + défilement
        interne (déjà en place via .side-card-list, overflow-y:auto) plutôt
