@@ -58,6 +58,35 @@
   });
 })();
 
+/* Bandeau (petit écran) : les 5 boutons ronds (replier/fixe/thème/haut/bas)
+   rejoignent la ligne des onglets Navigation/Lune (#pfaTabs) plutôt que de
+   rester ancrés au bord de la colonne verticale, qui n'existe plus en
+   bandeau (repris du mockup validé). Relocalisation en JS — comme le bouton
+   Notiffi plus haut dans ce fichier — plutôt qu'en CSS seul, car ce sont de
+   vrais éléments à déplacer dans le DOM, pas juste à repositionner
+   visuellement. Restaurés à leur emplacement bureau (#pfaSideToggleAnchor,
+   bord de la colonne) au-dessus du seuil. */
+(function pfaUpbarToggleRelocate() {
+  var shell = document.getElementById('pfaSidebarShell');
+  var anchor = document.getElementById('pfaSideToggleAnchor');
+  var tabs = document.getElementById('pfaTabs');
+  if (!shell || !anchor || !tabs) { return; }
+  var toggles = Array.prototype.slice.call(shell.querySelectorAll(':scope > .side-toggle'));
+  if (!toggles.length) { return; }
+  var mq = window.matchMedia('(max-width: 880px)');
+  function apply(isCompact) {
+    var frag = document.createDocumentFragment();
+    toggles.forEach(function (t) { frag.appendChild(t); });
+    if (isCompact) {
+      tabs.appendChild(frag);
+    } else {
+      shell.insertBefore(frag, anchor.nextSibling);
+    }
+  }
+  apply(mq.matches);
+  mq.addEventListener('change', function (e) { apply(e.matches); });
+})();
+
 /* Boutons haut/bas sur le bord de la sidebar (mêmes ids que les anciens
    chevrons de la ligne de nav, juste déplacés en .side-toggle) : raccourci
    pour défiler tout en haut/bas de la page — même principe que

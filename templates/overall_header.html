@@ -101,7 +101,7 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
 
 	<!-- CSS Projet-FA_V2 (hébergé sur GitHub Pages, cache-bust via ?v= à incrémenter à chaque édition) -->
-	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=34"/>
+	<link rel="stylesheet" href="https://wonkaa22.github.io/Projet-FA_V2/assets/site.css?v=35"/>
 
 	<!-- Thème clair/sombre : appliqué avant le <body> pour éviter un flash du mauvais thème -->
 	<script type="text/javascript">
@@ -282,6 +282,12 @@
 	<div class="layout">
 
 		<div class="sidebar-shell" id="pfaSidebarShell">
+			<!-- Repère (vide) marquant l'emplacement bureau des boutons ronds
+			     ci-dessous : en bandeau (petit écran), pfaUpbarToggleRelocate
+			     (site.js) les déplace dans #pfaTabs pour qu'ils partagent la ligne
+			     des onglets Navigation/Lune (comme sur le mockup validé), puis les
+			     replace ici au retour au-dessus du seuil. -->
+			<span id="pfaSideToggleAnchor" style="display:none;" aria-hidden="true"></span>
 			<!-- Réutilisé tel quel en bandeau (petit écran) : repli une seule ligne
 			     compacte au lieu du rail vertical, voir la section "BANDEAU" de
 			     site.css — même bouton, même logique JS (pfaSidebarCollapse). -->

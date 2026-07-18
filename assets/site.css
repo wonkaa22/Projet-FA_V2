@@ -989,26 +989,28 @@
 
     .layout { flex-direction: column; }
 
-    /* .sidebar-shell devient lui-même un conteneur flex-wrap : les 5 boutons
-       ronds (replier/fixe/thème/haut/bas), en position:static ici (plus
-       d'ancrage au bord gauche d'une colonne verticale), se retrouvent sur
-       leur propre ligne au-dessus de la carte (order:1 vs order:2 pour
-       <aside>, qui occupe toute la largeur via flex-basis:100% et passe donc
-       forcément à la ligne suivante). Évite tout calcul de position absolue
-       façon "colonne" qui aurait pu chevaucher le contenu du bandeau replié. */
     .sidebar-shell {
-      display: flex; flex-direction: row; flex-wrap: wrap;
-      justify-content: flex-end; align-items: flex-start;
-      gap: 8px;
       width: 100%; height: auto;
       position: relative; top: auto; left: auto; z-index: auto;
     }
     .sidebar-shell.collapsed { width: 100%; }
     /* Bouton fixe (punaise) activé : bandeau collé en haut au défilement. */
     .sidebar-shell.pinned { position: sticky; top: 0; z-index: 50; }
-    .sidebar-shell > .side-toggle { position: static; order: 1; }
-    .sidebar-shell > aside.sidebar { order: 2; flex: 1 1 100%; }
+    /* Les 5 boutons ronds (replier/fixe/thème/haut/bas) rejoignent la ligne
+       des onglets Navigation/Lune (#pfaTabs) — relocalisés en JS
+       (pfaUpbarToggleRelocate dans site.js, comme le bouton Notiffi ailleurs
+       dans ce fichier), pas en CSS seul : ce sont de vrais éléments DOM
+       déplacés, pas juste repositionnés visuellement. Ici on ne fait
+       qu'annuler leur position:absolute "bord de colonne" (plus de colonne
+       verticale à laquelle s'accrocher) : une fois dans #pfaTabs (flex),
+       ils gardent leur taille ronde (36px) et prennent leur place naturelle
+       à côté des onglets, qui eux se partagent le reste (flex:1 chacun).
+       position:relative (pas static) : reste le point d'ancrage de leur
+       propre infobulle ([data-tip]::after), qui sinon se positionnerait
+       par rapport à la fenêtre au lieu du bouton. */
+    .side-toggle { position: relative; top: auto; left: auto; bottom: auto; }
     .side-toggle.pin { display: flex; }
+    .pfa-tabs { flex-wrap: wrap; align-items: center; }
 
     .sidebar { height: auto; }
     /* Plus de défilement interne capé à la hauteur de l'écran (pensé pour
@@ -1030,6 +1032,12 @@
 
     /* Nav : image + 5 boutons sur une même bande plutôt que 2 lignes empilées. */
     .nav-rows { flex-direction: row; flex-wrap: wrap; }
+
+    /* Préliens attendus / Recherche RPs : 2 lignes visibles + défilement
+       interne (déjà en place via .side-card-list, overflow-y:auto) plutôt
+       que la hauteur fixe de 150px pensée pour la colonne bureau — un
+       bandeau doit rester compact en hauteur. */
+    .two-col .side-card { height: 72px; }
 
     /* Widget lunaire : la description passe en 2 colonnes — icône/nom/
        description à gauche, barre de progression + prochaine étape à droite
@@ -1053,14 +1061,21 @@
     /* ---- Mode replié : une seule ligne compacte (avatar/nom, nav en icônes
        seules, notif/messages/déconnexion), plutôt que le rail vertical du
        bureau. Les listes de "display:none" du mode rail (bureau, plus haut)
-       restent héritées telles quelles (char-left-col, plugin-box, two-col,
-       pfa-tabs...) : seules les propriétés qui n'ont de sens que pour une
-       colonne étroite (direction empilée, avatar au-dessus du nom...) sont
-       réécrites ici pour une bande large. */
+       restent héritées telles quelles (char-left-col, plugin-box, two-col...)
+       : seules les propriétés qui n'ont de sens que pour une colonne étroite
+       (direction empilée, avatar au-dessus du nom...) sont réécrites ici
+       pour une bande large. */
     .sidebar-shell.collapsed .auth-buttons { flex-direction: row; align-items: center; }
     .sidebar-shell.collapsed .char-header { flex-direction: row; gap: 8px; }
     .sidebar-shell.collapsed .char-header h3 { display: block; }
     .sidebar-shell.collapsed .nav-block { flex-direction: row; align-items: center; }
     .sidebar-shell.collapsed .nav-rows { flex-direction: row; align-items: center; }
     .sidebar-shell.collapsed .nav-row { flex-direction: row; gap: 6px; }
+    /* #pfaTabs héberge aussi les 5 boutons ronds en bandeau (relocalisés en
+       JS, voir pfaUpbarToggleRelocate) : on ne peut plus le masquer entier
+       replié (règle du mode rail bureau, héritée) sous peine de faire
+       disparaître le bouton "replier" lui-même. On masque donc seulement les
+       deux onglets Navigation/Lune, pas leur conteneur. */
+    .sidebar-shell.collapsed .pfa-tabs { display: flex; }
+    .sidebar-shell.collapsed .pfa-tabs .pfa-tab { display: none; }
   }
