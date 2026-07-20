@@ -1,17 +1,25 @@
 :root {
-    --bg-page: #e0e1dd;
-    --frame1: #0d1b2a;
-    --frame2: #415a77;
-    --section: #778da9;
-    --ink-hi-dark: #e0e1dd;
-    --ink-body-dark: #c3cdd9;
-    --ink-muted-dark: #92a3b6;
-    --ink-hi-light: #0d1b2a;
-    --ink-body-light: #22384a;
-    --ink-muted-light: #3d5468;
-    --chip-bg: #0d1b2a;
-    --chip-ink: #e0e1dd;
-    --frame-grad: linear-gradient(135deg, #415a77, #778da9);
+    --bg-page: #140E17;
+    --frame1: #28202B;
+    --frame2: #4B3946;
+    --section: #28202B;
+    --ink-hi-dark: #BFC3BA;
+    --ink-body-dark: #BFC3BA;
+    --ink-muted-dark: #BFC3BA;
+    --ink-hi-light: #BFC3BA;
+    --ink-body-light: #BFC3BA;
+    --ink-muted-light: #BFC3BA;
+    /* --chip-bg conservé sombre (pas #F0F0F0 comme testé) : chip-bg est un
+       FOND (bulle du switcheroo au survol notamment) et chip-ink son TEXTE
+       — les mettre à la même valeur presque blanche aurait rendu ce texte
+       invisible (blanc sur blanc). */
+    --chip-bg: #28202B;
+    --chip-ink: #F0F0F0;
+    /* --frame-grad n'était pas dans les valeurs données : mis à jour pour
+       rester cohérent avec la nouvelle palette (utilisé sur le lien du
+       panneau d'administration et les lignes "sujets récents"), à ajuster
+       si besoin. */
+    --frame-grad: linear-gradient(135deg, #60495A, #FF6F91);
     /* Repli avant mesure JS (voir pfaSidebarAlign dans site.js) : recalculée
        pour aligner le haut de la sidebar sur le vrai haut du cadre principal
        (.outer-frame), quel que soit ce que Forumactif ajoute au-dessus sur
@@ -34,7 +42,13 @@
     --frame-grad: linear-gradient(135deg, #6d6875, #ffcdb2);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { height: 100%; }
+  /* min-height (pas height) : avec height:100%, la boîte de body reste
+     limitée à un écran pile — sur une page plus longue (la quasi-totalité
+     des pages réelles), le fond (couleur/texture) s'arrêtait net à cette
+     hauteur au lieu de couvrir tout le contenu qui déborde en dessous
+     (visible mais sans fond derrière). Corrige le bug "tache de couleur en
+     haut, rien en dessous au scroll". */
+  html, body { min-height: 100%; }
 
   /* Toolbar par défaut Forumactif : masquée en CSS plutôt que désactivée
      dans l'admin (Général > Toolbar) — Notiffi et Switcheroo (docs/Notiffi.txt,
@@ -46,6 +60,7 @@
   body {
     font-family: 'Oswald', sans-serif;
     background: var(--bg-page);
+    background-attachment: fixed;
     color: var(--ink-body-light);
     padding: 30px 16px;
   }
@@ -1180,3 +1195,106 @@
        de forcer un retour à la ligne prématuré. */
     .sidebar-shell.collapsed .char-icon-col { margin-left: 0; }
   }
+
+  /* ---------- THÈME SOMBRE — palette personnalisée (Noémie) ----------
+     Testée dans Stylebot puis reprise ici pour de vrai. Tout est scopé
+     html:not(.light) : le thème clair n'est pas touché (variables déjà mis
+     à jour plus haut dans :root, mais ces overrides ponctuels par
+     composant restent propres au thème sombre tant que le clair n'a pas
+     sa propre passe). Deux couleurs reviennent souvent en dehors des
+     variables : #FF6F91 (rose vif, l'accent) et #60495A (mauve sourd,
+     le "sombre" du dégradé) — pas remontées en variable pour rester au
+     plus près de ce qui a été testé, comme le reste de la feuille de style
+     mélange déjà tokens et couleurs ponctuelles (ex. les teintes jour/nuit
+     du widget lunaire). */
+
+  html:not(.light) body {
+    background-image: url("https://transparenttextures.com/patterns/asfalt-light.png");
+    background-repeat: repeat;
+  }
+
+  /* Boutons de navigation (Accueil, Recherche, Membres...) */
+  html:not(.light) .nav-btn { background: linear-gradient(135deg, #FF6F91 0%, #60495A 100%); }
+  html:not(.light) .nav-btn-text { color: #F0F0F0; }
+
+  /* Icônes rondes (notifications, messages, déconnexion) : fond rose,
+     icône foncée pour le contraste (le rose est assez clair pour que
+     l'icône dans la couleur de texte habituelle se voie mal dessus). */
+  html:not(.light) .char-icon-btn { background: #FF6F91; }
+  html:not(.light) a.char-icon-btn { color: #28202B; }
+  html:not(.light) #notiffi_button { background: #FF6F91; }
+  html:not(.light) #notiffi_button i.fa-solid.fa-bell { color: #28202B; }
+
+  /* Icônes rondes du bord (replier, thème, haut/bas, fixe) */
+  html:not(.light) .side-toggle { background: #60495A; }
+  html:not(.light) .side-toggle.collapse { background: #28202B; }
+  html:not(.light) .side-toggle.theme { background: #28202B; }
+  html:not(.light) .side-toggle.scroll-up { background: #28202B; border: 1px solid #60495A; }
+  html:not(.light) .side-toggle.scroll-down { background: #28202B; border: 1px solid #60495A; }
+
+  /* Cercles du switcheroo (avatars de personnages) */
+  html:not(.light) .switcheroo__squircle { background-color: #60495A; }
+
+  /* Cadres "Préliens attendus" / "Recherche RPs" */
+  html:not(.light) .side-card { background: #60495A; }
+
+  /* Contour des petits boutons (Voir mon profil, topsites...) — même
+     traitement pour les deux, comme groupés dans les tests d'origine. */
+  html:not(.light) .char-ql-btn,
+  html:not(.light) .topsite-btn {
+    background: transparent;
+    border: 1px solid #60495A;
+    color: #F0F0F0;
+  }
+
+  /* Pilules (sous-forums, tags...) */
+  html:not(.light) .pill-link { background: linear-gradient(135deg, #FF6F91 0%, #60495A 100%); }
+
+  /* Onglet actif de la pagination sidebar (Navigation/Lune) : ton "creux",
+     couleur du fond de page pour un effet enfoncé dans le cadre. */
+  html:not(.light) .pfa-tab.active { background: #140E17; }
+
+  /* Widget des phases lunaires : dégradé du cadre + bande de progression,
+     badge et icône jour/nuit repris dans la même famille de couleurs
+     (rose/mauve) plutôt que l'ambre/violet d'origine, pour rester cohérent
+     avec le reste du thème. */
+  html:not(.light) .pfa-moon { background: linear-gradient(225deg, #60495A 67%, #FF6F91 100%); }
+  html:not(.light) .pfa-moon-header { color: #F0F0F0; }
+  html:not(.light) .pfa-moon-link { color: #F0F0F0; }
+  html:not(.light) .pfa-moon-badge.nuit { background: #775A6F; border-color: rgba(240,240,240,0.25); color: #F0F0F0; }
+  html:not(.light) .pfa-moon-badge.jour { background: #FF6F91; border-color: rgba(240,240,240,0.25); color: #F0F0F0; }
+  html:not(.light) .pfa-moon-icon.nuit { color: #775A6F; }
+  html:not(.light) .pfa-moon-icon.jour { color: #FF6F91; }
+  html:not(.light) .pfa-moon-icon i.fa-solid.fa-moon { color: #140E17; }
+  /* Barre de progression : demandé explicitement ("cohérent avec le thème") —
+     même logique de dégradé que le cadre du widget, décliné nuit (mauve
+     sourd) / jour (mauve vers rose vif). */
+  html:not(.light) .pfa-moon-fill.nuit { background: linear-gradient(90deg, #4B3946, #775A6F); }
+  html:not(.light) .pfa-moon-fill.jour { background: linear-gradient(90deg, #60495A, #FF6F91); }
+  html:not(.light) .pfa-moon-pct { background: rgba(20,14,23,0.55); }
+
+  /* Cadre "Bienvenue" : contour rose, réservé à cette seule carte (choix
+     volontaire, pas étendu à "Staff du forum"/"Derniers messages"). */
+  html:not(.light) .pfa-welcome-panel.gborder { border: 1px solid #FF6F91; }
+
+  /* "Derniers messages" (sujets récents) */
+  html:not(.light) .sel-recent-inner { background: #28202B; border: 1px solid #4B3946; }
+  html:not(.light) .last-msg { background: #775A6F; color: #F0F0F0; }
+
+  /* Personnages prédéfinis (survol) */
+  html:not(.light) .predef-overlay { color: #F0F0F0; }
+
+  /* Carte évènement : eyebrow/titre/flèches/puces utilisaient tous
+     var(--bg-page) comme couleur de TEXTE (blanc quand --bg-page était
+     clair) — devenu illisible (texte sombre sur photo) maintenant que
+     --bg-page est sombre. Même souci trouvé sur .staff-name et .zone-name
+     (nom de personnage du staff / nom de forum en survol d'image), pas
+     dans la liste de départ mais cassés par le même changement de
+     variable — corrigés au passage. */
+  html:not(.light) .eyebrow { color: #F0F0F0; }
+  html:not(.light) .event-title { color: #F0F0F0; }
+  html:not(.light) .event-arrow { color: #F0F0F0; }
+  html:not(.light) .event-dots span { background: #F0F0F0; }
+  html:not(.light) .event-dots span.active { background: #FF6F91; }
+  html:not(.light) .staff-name { color: #F0F0F0; }
+  html:not(.light) .zone-name { color: #F0F0F0; }
