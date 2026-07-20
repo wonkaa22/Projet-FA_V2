@@ -55,12 +55,39 @@
      docs/Switcheroo.txt) ont besoin qu'elle reste activée côté serveur pour
      fonctionner, on ne veut juste pas l'afficher puisqu'on a nos propres
      recherche/notifications/switcheroo dans la sidebar. !important nécessaire
-     si elle est configurée en "fixée" (position:fixed) dans l'admin FA. */
+     si elle est configurée en "fixée" (position:fixed) dans l'admin FA.
+     Son script (Toolbar.init) réserve quand même l'espace qu'elle aurait
+     occupé via un margin-top en style inline sur <body> (ex. 42px), même
+     toolbar masquée — d'où la bande blanche en haut (le canevas par
+     défaut du navigateur, visible dans cette marge qui est hors de la
+     boîte de body). !important nécessaire pour l'emporter sur ce style
+     inline injecté après coup. */
   #fa_toolbar, #fa_toolbar_hidden { display: none !important; }
+  body { margin: 0 !important; }
+  /* Fond de page en pseudo-élément fixe plutôt que sur body/html directement :
+     un script Forumactif (probablement lié au calcul de --vh pour la
+     Toolbar mobile, repéré via DevTools) limite la hauteur réelle de la
+     boîte de html/body bien en dessous de la hauteur du document — le fond
+     posé sur body s'arrêtait donc net à cette hauteur au lieu de couvrir
+     tout le contenu qui déborde en dessous (visible mais sans fond
+     derrière au scroll). position:fixed + inset:0 rend ce pseudo-élément
+     totalement indépendant de cette hauteur cassée : il colle toujours
+     exactement au viewport, quel que soit le scroll. z-index:-1 le garde
+     derrière tout le contenu réel (aucun élément du site n'utilise de
+     z-index négatif). */
+  html::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-color: var(--bg-page);
+  }
+  html:not(.light)::before {
+    background-image: url("https://transparenttextures.com/patterns/asfalt-light.png");
+    background-repeat: repeat;
+  }
   body {
     font-family: 'Oswald', sans-serif;
-    background: var(--bg-page);
-    background-attachment: fixed;
     color: var(--ink-body-light);
     padding: 30px 16px;
   }
@@ -1208,10 +1235,8 @@
      mélange déjà tokens et couleurs ponctuelles (ex. les teintes jour/nuit
      du widget lunaire). */
 
-  html:not(.light) body {
-    background-image: url("https://transparenttextures.com/patterns/asfalt-light.png");
-    background-repeat: repeat;
-  }
+  /* Texture de fond : déplacée sur html::before, voir plus haut (juste après
+     la règle #fa_toolbar) — indépendante de la hauteur de body/html. */
 
   /* Boutons de navigation (Accueil, Recherche, Membres...) */
   html:not(.light) .nav-btn { background: linear-gradient(135deg, #FF6F91 0%, #60495A 100%); }
