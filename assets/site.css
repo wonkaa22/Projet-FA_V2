@@ -63,6 +63,11 @@
      boîte de body). !important nécessaire pour l'emporter sur ce style
      inline injecté après coup. */
   #fa_toolbar, #fa_toolbar_hidden { display: none !important; }
+  /* margin:0 annule uniquement le margin-top imprévu injecté par le script
+     Toolbar (voir plus haut) — l'espace voulu en haut de page est repris
+     à la main juste en dessous, via le padding-top de body (70px, contre
+     30px avant : compense la marge Toolbar qu'on vient de retirer, plutôt
+     que de se retrouver sans aucune respiration en haut). */
   body { margin: 0 !important; }
   /* Fond de page en pseudo-élément fixe plutôt que sur body/html directement :
      un script Forumactif (probablement lié au calcul de --vh pour la
@@ -74,22 +79,27 @@
      totalement indépendant de cette hauteur cassée : il colle toujours
      exactement au viewport, quel que soit le scroll. z-index:-1 le garde
      derrière tout le contenu réel (aucun élément du site n'utilise de
-     z-index négatif). */
-  html::before {
+     z-index négatif).
+     Sur body plutôt que html : essai précédent sur html::before invisible
+     au premier affichage (n'apparaissait qu'après un scroll, symptôme
+     d'un souci de peinture initiale propre à ::before sur l'élément
+     racine) — body::before est la version la plus classique/éprouvée de
+     cette technique, potentiellement plus fiable ici. */
+  body::before {
     content: "";
     position: fixed;
     inset: 0;
     z-index: -1;
     background-color: var(--bg-page);
   }
-  html:not(.light)::before {
+  html:not(.light) body::before {
     background-image: url("https://transparenttextures.com/patterns/asfalt-light.png");
     background-repeat: repeat;
   }
   body {
     font-family: 'Oswald', sans-serif;
     color: var(--ink-body-light);
-    padding: 30px 16px;
+    padding: 70px 16px 30px;
   }
   /* Dans le mockup demo, .mockup-wrap avait une hauteur clampée à la fenêtre avec
      scroll interne (page à cadre unique, jamais plus grande que l'écran). Sur le
