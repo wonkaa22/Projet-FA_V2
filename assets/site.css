@@ -1434,7 +1434,7 @@
   .vt-banner-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
   .vt-banner-name { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; font-size: 20px; color: var(--ink-hi-light); }
   /* Ratio demandé : 260x85 */
-  .vt-banner-img { flex-shrink: 0; width: 150px; aspect-ratio: 260 / 85; border-radius: 8px; overflow: hidden; border: 1px solid rgba(224,225,221,0.25); }
+  .vt-banner-img { flex-shrink: 0; width: 220px; aspect-ratio: 260 / 85; border-radius: 8px; overflow: hidden; border: 1px solid rgba(224,225,221,0.25); }
   .vt-banner-img:empty { display: none; }
   .vt-banner-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
@@ -1443,9 +1443,14 @@
   /* Ratio demandé : 200x320px */
   .vt-avatar { width: 100%; aspect-ratio: 200 / 320; border-radius: 10px; overflow: hidden; }
   .vt-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .vt-online { display: block; font-size: 10px; }
-  .vt-online::before { content: "\25CF Hors ligne"; color: var(--ink-muted-light); }
-  .vt-post.online .vt-online::before { content: "\25CF En ligne"; color: #4ade80; }
+  /* Icône seule (pas de texte "En ligne"/"Hors ligne", pas de puce) : lune/
+     soleil plutôt qu'un point de couleur générique, cohérent avec le reste du
+     thème (widget lunaire, bouton clair/sombre) — voir title="" pour le texte,
+     gardé en infobulle. */
+  .vt-online { display: flex; justify-content: flex-end; width: 100%; font-size: 12px; color: var(--ink-muted-light); }
+  .vt-online-on { display: none; }
+  .vt-post.online .vt-online-off { display: none; }
+  .vt-post.online .vt-online-on { display: inline-block; color: #f5b942; }
   /* Rang masqué s'il n'y en a pas : voir pfaViewtopicPosts() dans site.js
      (test JS sur le contenu réel, :empty seul ne suffit pas — un vide "visuel"
      côté FA n'est pas forcément un vide DOM, piège déjà rencontré sur
@@ -1515,16 +1520,11 @@
   .vt-signature:empty { display: none; }
 
   .vt-likes { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding-top: 8px; border-top: 1px solid rgba(224,225,221,0.15); }
-  /* Fond uni plat, sans icône ni couleur de statut (j'aime/pas j'aime) —
-     seule différence : un dégradé au clic/déjà-voté (.on), le natif FA ne
-     nous donne pas de nom de classe fiable pour cet état, à affiner une fois
-     visible en vrai. */
-  .vt-like-btn { background: var(--section) !important; color: var(--ink-body-light) !important; border: none !important; border-radius: 8px; padding: 6px 14px; font-size: 11px; cursor: pointer; }
-  /* Etat "déjà voté" persistant (pas un survol/appui passager) : classe posée
-     en JS d'après data-href-rm (voir pfaViewtopicLikeState dans site.js),
-     seule donnée fiable pour "cette réaction est déjà la vôtre" — pas de nom
-     de classe FA connu à l'avance pour ça. */
-  .vt-like-btn.is-voted { background: var(--frame-grad) !important; color: var(--chip-ink) !important; }
+  /* data-href-rm est en fait toujours rempli par FA (pas seulement quand un
+     vote existe déjà) : impossible de distinguer "déjà voté" de façon fiable
+     avec ce qu'on a — dégradé gardé tel quel en fond uni sur les deux
+     boutons, comme un simple relief plutôt qu'un indicateur d'état. */
+  .vt-like-btn { background: var(--frame-grad) !important; color: var(--chip-ink) !important; border: none !important; border-radius: 8px; padding: 6px 14px; font-size: 11px; cursor: pointer; }
   /* Liste "X aime ce message" (D_LIKE_LIST/D_DISLIKE_LIST) : markup natif FA
      inconnu à l'avance (séparateur "|", liens...) — reset générique sur tout
      ce qu'il contient plutôt qu'une reprise classe par classe, pour que ça
@@ -1540,19 +1540,63 @@
   .vt-rule-msg { font-size: 12px; line-height: 1.6; color: var(--ink-body-light); }
 
   /* Formulaire de réponse rapide natif FA ({QUICK_REPLY_FORM}) : on ne connaît
-     pas à l'avance son HTML exact (sceditor, boutons...), donc reset générique
-     par type d'élément plutôt qu'une reprise classe par classe — à affiner
-     une fois visible en vrai sur le site (comme .outer-frame a plus haut dans
-     ce fichier pour le contenu natif non habillé). */
-  .vt-quickreply { color: var(--ink-body-light); }
+     pas à l'avance tout son HTML (sceditor, boutons...), donc reset générique
+     par type d'élément plutôt qu'une reprise classe par classe pour la base —
+     à affiner une fois visible en vrai sur le site (comme .outer-frame a plus
+     haut dans ce fichier pour le contenu natif non habillé). Avatar/compteur
+     de mots/pliage de la barre d'outils : mêmes classes et même technique que
+     Selenujo (voir pfaViewtopicQuickReply dans site.js), notamment
+     _userdata['avatar_link'] pour l'avatar du membre connecté et les vraies
+     classes de boutons SCEditor (.sceditor-button-bold, etc., confirmées via
+     selenujo.css) pour la liste des "bases" toujours visibles. */
+  .vt-quickreply { position: relative; background: var(--section) !important; color: var(--ink-body-light); padding-top: 54px; }
   .vt-quickreply textarea,
-  .vt-quickreply input[type="text"] { width: 100%; background: var(--section); color: var(--ink-body-light); border: 1px solid rgba(224,225,221,0.15); border-radius: 8px; padding: 10px; font-size: 13px; }
+  .vt-quickreply input[type="text"] { width: 100%; background: var(--frame1); color: var(--ink-body-light); border: 1px solid rgba(224,225,221,0.15); border-radius: 8px; padding: 10px; font-size: 13px; }
   .vt-quickreply input[type="submit"],
   .vt-quickreply .button1,
   .vt-quickreply .button2 { background: var(--frame-grad); color: var(--chip-ink); border: none; border-radius: 8px; padding: 8px 18px; font-size: 12px; cursor: pointer; }
 
-  .vt-jumpbox-form, .vt-quickmod-form { margin-top: 4px; }
-  .vt-jumpbox, .vt-quickmod { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--ink-muted-light); flex-wrap: wrap; }
+  /* Avatar du membre connecté, coin supérieur gauche (voir pfaViewtopicQuickReply) */
+  .vt-qr-avatar { position: absolute; top: 14px; left: 16px; width: 40px; height: 40px; border-radius: 10px; overflow: hidden; z-index: 3; }
+  .vt-qr-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* Compteur de mots, coin inférieur droit */
+  .vt-word-counter { position: absolute; right: 16px; bottom: 14px; font-size: 10px; color: var(--ink-muted-light); background: rgba(0,0,0,0.2); padding: 3px 9px; border-radius: 6px; z-index: 3; }
+
+  /* Barre d'outils SCEditor : petit cadre replié en haut à droite, avec
+     seulement les bases + une icône pour déplier le reste. .sceditor-group
+     en display:contents (comme sur Selenujo) : les groupes FA n'imposent plus
+     leur propre mise en page, chaque bouton devient un enfant direct de
+     .sceditor-toolbar, qu'on peut alors filtrer un par un par sa vraie classe
+     de commande. */
+  .vt-quickreply .sceditor-toolbar {
+    position: absolute; top: 8px; right: 8px; z-index: 4;
+    max-width: 200px;
+    background: var(--frame1); border: 1px solid rgba(224,225,221,0.15); border-radius: 10px;
+    padding: 4px 5px !important; display: flex !important; flex-wrap: wrap; gap: 2px; align-items: center;
+  }
+  .vt-quickreply .sceditor-toolbar .sceditor-group { display: contents !important; }
+  .vt-quickreply .sceditor-toolbar .sceditor-button { display: none !important; }
+  .vt-quickreply .sceditor-toolbar .sceditor-button-bold,
+  .vt-quickreply .sceditor-toolbar .sceditor-button-italic,
+  .vt-quickreply .sceditor-toolbar .sceditor-button-underline,
+  .vt-quickreply .sceditor-toolbar .sceditor-button-strike,
+  .vt-quickreply .sceditor-toolbar .sceditor-button-mention,
+  .vt-quickreply .sceditor-toolbar .sceditor-button-member,
+  .vt-quickreply .sceditor-toolbar .sceditor-button-image,
+  .vt-quickreply .sceditor-toolbar .sceditor-button-emoticon,
+  .vt-quickreply .sceditor-toolbar .vt-sc-toggle {
+    display: inline-flex !important; align-items: center; justify-content: center;
+    width: 24px; height: 24px; border-radius: 6px; color: var(--ink-body-light); cursor: pointer;
+  }
+  .vt-quickreply .sceditor-toolbar .sceditor-button:hover { background: rgba(255,255,255,0.08); }
+  .vt-quickreply .sceditor-toolbar.vt-sc-expanded .sceditor-button { display: inline-flex !important; }
+  .vt-sc-toggle { border: 1px dashed rgba(224,225,221,0.25); }
+
+  /* "Sauter vers" (jumpbox) : masqué, demandé explicitement. */
+  .vt-jumpbox-form { display: none; }
+  .vt-quickmod-form { margin-top: 4px; }
+  .vt-quickmod { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--ink-muted-light); flex-wrap: wrap; }
   .vt-topic-admin { text-align: right; font-size: 11px; color: var(--ink-muted-light); }
 
   /* Responsive : sous 880px (seuil bandeau), la colonne fiche (220px) devient

@@ -956,27 +956,6 @@
   });
 })();
 
-/* ---------- VIEWTOPIC_BODY : état "déjà voté" persistant des boutons j'aime/pas ----------
-   Forumactif ne donne pas de nom de classe connu à l'avance pour "vous avez
-   déjà réagi ainsi" — data-href-rm (lien pour RETIRER le vote) est en revanche
-   un signal fiable : il n'est rempli que si un vote existe déjà. On pose la
-   classe .is-voted en conséquence au chargement, et on la resynchronise via
-   MutationObserver plutôt qu'un délai arbitraire après clic : le vote se fait
-   en AJAX sans recharger la page, et Forumactif échange lui-même data-href/
-   data-href-rm sur le bouton une fois le vote pris en compte (bascule j'aime
-   <-> retirer) — l'observer réagit dès que ça arrive, quel que soit le délai
-   réel de sa propre requête. */
-(function pfaViewtopicLikeState() {
-  document.querySelectorAll('.vt-like-btn').forEach(function (btn) {
-    function sync() {
-      var rm = btn.getAttribute('data-href-rm');
-      btn.classList.toggle('is-voted', !!(rm && rm.trim()));
-    }
-    sync();
-    new MutationObserver(sync).observe(btn, { attributes: true, attributeFilter: ['data-href-rm'] });
-  });
-})();
-
 /* ---------- VIEWTOPIC_BODY : fil d'ariane, "::" -> flèche ----------
    NAV_CAT_DESC arrive de Forumactif déjà formaté en texte brut avec ses
    propres "::" entre catégories : impossible à remplacer proprement dans le
@@ -986,4 +965,81 @@
   var el = document.querySelector('.vt-breadcrumb-pill');
   if (!el) { return; }
   el.innerHTML = el.innerHTML.replace(/\s*::\s*/g, ' <i class="fa-solid fa-chevron-right vt-crumb-sep"></i> ');
+})();
+
+/* ---------- VIEWTOPIC_BODY : réponse rapide (avatar, compteur de mots, barre d'outils repliable) ----------
+   Technique reprise quasi telle quelle de Selenujo (selenujo.js, fonction
+   selViewtopicTransform) : _userdata['avatar_link'] est la variable JS
+   globale que Forumactif fournit pour l'avatar du membre connecté, disponible
+   sur toute page (pas besoin de la recalculer/extraire nous-mêmes). Le
+   compteur de mots relit le contenu de l'éditeur en boucle plutôt que sur un
+   seul événement "input" : SCEditor remplace le <textarea> d'origine par sa
+   propre iframe WYSIWYG la plupart du temps, qui n'émet pas cet événement sur
+   l'élément d'origine. */
+(function pfaViewtopicQuickReply() {
+  var qr = document.getElementById('quick_reply');
+  if (!qr) { return; }
+
+  if (typeof _userdata !== 'undefined' && _userdata['session_logged_in'] && _userdata['avatar_link'] && !qr.querySelector('.vt-qr-avatar')) {
+    var sceditorBox = qr.querySelector('.sceditor-container') || qr.querySelector('textarea');
+    if (sceditorBox) {
+      var avatarBox = document.createElement('div');
+      avatarBox.className = 'vt-qr-avatar';
+      var avatarImg = document.createElement('img');
+      avatarImg.src = _userdata['avatar_link'];
+      avatarImg.alt = '';
+      avatarImg.loading = 'lazy';
+      avatarBox.appendChild(avatarImg);
+      sceditorBox.parentNode.insertBefore(avatarBox, sceditorBox);
+    }
+  }
+
+  var textarea = qr.querySelector('textarea[name="message"]') || qr.querySelector('textarea');
+  if (textarea && !qr.querySelector('.vt-word-counter')) {
+    var counter = document.createElement('div');
+    counter.className = 'vt-word-counter';
+    counter.textContent = '0 mot';
+    qr.appendChild(counter);
+
+    var setCount = function (text) {
+      var t = (text || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+      var nb = t ? t.split(' ').length : 0;
+      counter.textContent = nb + ' mot' + (nb === 1 ? '' : 's');
+    };
+
+    var getText = function () {
+      if (window.jQuery) {
+        var inst = window.jQuery(textarea).data('sceditor');
+        if (inst && typeof inst.val === 'function') {
+          var tmp = document.createElement('div');
+          tmp.innerHTML = inst.val() || '';
+          return tmp.textContent || tmp.innerText || '';
+        }
+      }
+      var scFrame = qr.querySelector('.sceditor-container iframe');
+      if (scFrame) {
+        var doc = scFrame.contentDocument || (scFrame.contentWindow && scFrame.contentWindow.document);
+        if (doc && doc.body) { return doc.body.innerText || doc.body.textContent || ''; }
+      }
+      return textarea.value || '';
+    };
+
+    textarea.addEventListener('input', function () { setCount(textarea.value); });
+    setInterval(function () { setCount(getText()); }, 300);
+  }
+
+  /* Bases (gras/italique/souligné/barré/@/image/emoji) toujours visibles via
+     leur vraie classe SCEditor (voir .vt-quickreply .sceditor-toolbar dans
+     site.css) ; tout le reste replié derrière ce bouton "...". */
+  var toolbar = qr.querySelector('.sceditor-toolbar');
+  if (toolbar && !toolbar.querySelector('.vt-sc-toggle')) {
+    var toggle = document.createElement('div');
+    toggle.className = 'sceditor-button vt-sc-toggle';
+    toggle.title = 'Plus d\'options';
+    toggle.innerHTML = '<i class="fa-solid fa-ellipsis"></i>';
+    toggle.addEventListener('click', function () {
+      toolbar.classList.toggle('vt-sc-expanded');
+    });
+    toolbar.appendChild(toggle);
+  }
 })();

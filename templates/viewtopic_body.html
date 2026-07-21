@@ -78,7 +78,10 @@
 			<div class="vt-avatar ph" data-id="{postrow.displayed.POSTER_ID}">
 				{postrow.displayed.POSTER_AVATAR}
 			</div>
-			<span class="vt-online"></span>
+			<span class="vt-online" title="Statut de connexion">
+				<i class="fa-solid fa-moon vt-online-off"></i>
+				<i class="fa-solid fa-sun vt-online-on"></i>
+			</span>
 			<div class="vt-stats">
 				<!-- BEGIN profile_field -->
 				<div class="vt-stat"><span class="vt-stat-label">{postrow.displayed.profile_field.LABEL}</span><span class="vt-stat-val">{postrow.displayed.profile_field.CONTENT}</span></div>
