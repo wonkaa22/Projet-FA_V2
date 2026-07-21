@@ -601,6 +601,9 @@
   @media (max-width: 1300px) {
     .welcome-grid { grid-template-columns: 1fr 1fr; }
     .welcome-grid > .stack-cards.row-layout { grid-column: 1 / -1; }
+    /* Sur sa propre ligne pleine largeur, "Date" peut grandir au-delà de
+       160px (flex-grow:1) au lieu de rester coincée à sa largeur de base. */
+    .stack-cards.row-layout .event-card { flex: 1 1 220px; }
   }
   /* .pfa-welcome-panel (pas juste .panel) : Forumactif utilise nativement une
      classe .panel/.inner + spans .corners-top/.corners-bottom pour son propre
@@ -627,10 +630,19 @@
   .stack-cards { display: flex; flex-direction: column; gap: 10px; height: 250px; min-height: 0; min-width: 0; }
   .mini-card { padding: 10px 12px; font-size: 11px; position: relative; }
   .mini-card .label { display: block; margin-bottom: 8px; color: var(--ink-muted-light); }
-  .staff-card { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-  .staff-card .label { margin-bottom: 0; flex-shrink: 0; }
-  .staff-card .avatar-row { justify-content: flex-end; }
-  .staff-avatar { width: 42px; height: 68px; border-radius: 6px; position: relative; overflow: hidden; flex-shrink: 0; }
+  /* Refonte : l'ancienne rangée de portraits à largeur fixe (42px, flex-shrink:0)
+     débordait du cadre dès que la fenêtre devenait étroite (rien ne pouvait
+     rétrécir). Repris sur le même principe que .avatar-grid/.predef-item
+     (grille responsive, cases qui rétrécissent/s'empilent), mais en rectangles
+     horizontaux plutôt qu'en portraits, avec le libellé aligné en haut à droite. */
+  .staff-card { display: flex; flex-direction: column; gap: 8px; }
+  .staff-card .label { margin-bottom: 0; text-align: right; }
+  .staff-card .avatar-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 6px;
+  }
+  .staff-avatar { width: 100%; height: 44px; border-radius: 6px; position: relative; overflow: hidden; }
   .staff-name {
     position: absolute; left: 0; right: 0; bottom: 0;
     padding: 4px 2px 3px;
@@ -693,7 +705,12 @@
   .sel-recent-author a { color: inherit; text-decoration: none; }
   .stack-cards.row-layout { flex-direction: row; }
   .stack-cards.row-layout .mini-card { flex: 1; height: 100%; min-height: 0; min-width: 0; }
-  .stack-cards.row-layout .event-card { width: 160px; flex-shrink: 0; height: 100%; }
+  /* flex (pas width fixe) : sur une seule ligne (grille 3 colonnes, largeur
+     serrée), 160px reste la largeur de base voulue ; mais une fois cette
+     rangée passée sur toute la largeur (voir le point de rupture 1300px
+     plus bas), on veut que "Date" profite de l'espace libéré plutôt que de
+     rester coincée à 160px quand son titre passe sur deux lignes. */
+  .stack-cards.row-layout .event-card { flex: 0 1 160px; height: 100%; }
   .event-card { position: relative; border-radius: 14px; overflow: hidden; }
   .event-card .event-img { position: absolute; inset: 0; border-radius: 0; }
   .event-overlay-top {
