@@ -1548,17 +1548,29 @@
      Selenujo (voir pfaViewtopicQuickReply dans site.js), notamment
      _userdata['avatar_link'] pour l'avatar du membre connecté et les vraies
      classes de boutons SCEditor (.sceditor-button-bold, etc., confirmées via
-     selenujo.css) pour la liste des "bases" toujours visibles. */
-  .vt-quickreply { position: relative; background: var(--section) !important; color: var(--ink-body-light); padding-top: 54px; }
+     selenujo.css) pour la liste des "bases" toujours visibles.
+     Cadre (fond/bordure) inchangé (content-frame, --frame2) — seule la
+     surface d'écriture (textarea/iframe SCEditor) prend le fond d'un post
+     (--section), voir plus bas + pfaViewtopicQuickReply pour l'iframe.
+     border-color en !important sur tout le bloc : neutralise les bordures/
+     traits bleus par défaut du HTML natif FA non habillé (même famille de
+     correctif que .vt-like-list plus haut). */
+  .vt-quickreply, .vt-quickreply * { border-color: rgba(224,225,221,0.15) !important; }
+  .vt-quickreply { position: relative; color: var(--ink-body-light); padding-bottom: 34px; }
   .vt-quickreply textarea,
-  .vt-quickreply input[type="text"] { width: 100%; background: var(--frame1); color: var(--ink-body-light); border: 1px solid rgba(224,225,221,0.15); border-radius: 8px; padding: 10px; font-size: 13px; }
+  .vt-quickreply input[type="text"] { width: 100%; background: var(--section); color: var(--ink-body-light); border: 1px solid rgba(224,225,221,0.15); border-radius: 8px; padding: 10px; font-size: 13px; }
   .vt-quickreply input[type="submit"],
   .vt-quickreply .button1,
   .vt-quickreply .button2 { background: var(--frame-grad); color: var(--chip-ink); border: none; border-radius: 8px; padding: 8px 18px; font-size: 12px; cursor: pointer; }
 
-  /* Avatar du membre connecté, coin supérieur gauche (voir pfaViewtopicQuickReply) */
-  .vt-qr-avatar { position: absolute; top: 14px; left: 16px; width: 40px; height: 40px; border-radius: 10px; overflow: hidden; z-index: 3; }
+  /* Avatar du membre connecté, à gauche de la zone d'écriture (pas en overlay
+     dessus) : .vt-qr-row est le vrai conteneur flex créé en JS autour de
+     l'avatar + de l'éditeur (voir pfaViewtopicQuickReply). */
+  .vt-qr-row { display: flex; gap: 12px; align-items: flex-start; }
+  .vt-qr-avatar { flex-shrink: 0; width: 44px; height: 44px; border-radius: 10px; overflow: hidden; }
   .vt-qr-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .vt-qr-row .sceditor-container,
+  .vt-qr-row > textarea { flex: 1; min-width: 0; }
 
   /* Compteur de mots, coin inférieur droit */
   .vt-word-counter { position: absolute; right: 16px; bottom: 14px; font-size: 10px; color: var(--ink-muted-light); background: rgba(0,0,0,0.2); padding: 3px 9px; border-radius: 6px; z-index: 3; }

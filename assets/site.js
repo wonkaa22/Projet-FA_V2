@@ -971,75 +971,122 @@
    Technique reprise quasi telle quelle de Selenujo (selenujo.js, fonction
    selViewtopicTransform) : _userdata['avatar_link'] est la variable JS
    globale que Forumactif fournit pour l'avatar du membre connecté, disponible
-   sur toute page (pas besoin de la recalculer/extraire nous-mêmes). Le
-   compteur de mots relit le contenu de l'éditeur en boucle plutôt que sur un
-   seul événement "input" : SCEditor remplace le <textarea> d'origine par sa
-   propre iframe WYSIWYG la plupart du temps, qui n'émet pas cet événement sur
-   l'élément d'origine. */
+   sur toute page (pas besoin de la recalculer/extraire nous-mêmes).
+
+   Tout est fait via un polling (comme le compteur de mots de Selenujo),
+   plutôt qu'une seule passe au chargement : SCEditor s'initialise lui-même
+   de façon asynchrone (son propre script remplace le <textarea> par son
+   iframe après coup), donc .sceditor-container/.sceditor-toolbar/l'iframe
+   peuvent ne pas encore exister au moment où ce script tourne — d'où le
+   bouton "..." qui n'apparaissait pas au premier essai. Chaque tâche est
+   protégée par son propre indicateur "done" pour ne s'exécuter qu'une fois
+   une fois la condition réunie. */
 (function pfaViewtopicQuickReply() {
   var qr = document.getElementById('quick_reply');
   if (!qr) { return; }
 
-  if (typeof _userdata !== 'undefined' && _userdata['session_logged_in'] && _userdata['avatar_link'] && !qr.querySelector('.vt-qr-avatar')) {
+  var avatarDone = false;
+  var toggleDone = false;
+  var iframeStyled = false;
+  var counterEl = null;
+
+  function ensureAvatarRow() {
+    if (avatarDone) { return; }
+    if (typeof _userdata === 'undefined' || !_userdata['session_logged_in'] || !_userdata['avatar_link']) { avatarDone = true; return; }
     var sceditorBox = qr.querySelector('.sceditor-container') || qr.querySelector('textarea');
-    if (sceditorBox) {
-      var avatarBox = document.createElement('div');
-      avatarBox.className = 'vt-qr-avatar';
-      var avatarImg = document.createElement('img');
-      avatarImg.src = _userdata['avatar_link'];
-      avatarImg.alt = '';
-      avatarImg.loading = 'lazy';
-      avatarBox.appendChild(avatarImg);
-      sceditorBox.parentNode.insertBefore(avatarBox, sceditorBox);
-    }
+    if (!sceditorBox) { return; }
+    avatarDone = true;
+
+    /* Avatar à gauche de la zone d'écriture (pas en survol dessus) : les deux
+       deviennent enfants d'une même rangée flex (.vt-qr-row), même principe
+       que Selenujo (sel-qr-row). */
+    var row = document.createElement('div');
+    row.className = 'vt-qr-row';
+    var avatarBox = document.createElement('div');
+    avatarBox.className = 'vt-qr-avatar';
+    var avatarImg = document.createElement('img');
+    avatarImg.src = _userdata['avatar_link'];
+    avatarImg.alt = '';
+    avatarImg.loading = 'lazy';
+    avatarBox.appendChild(avatarImg);
+    sceditorBox.parentNode.insertBefore(row, sceditorBox);
+    row.appendChild(avatarBox);
+    row.appendChild(sceditorBox);
   }
 
-  var textarea = qr.querySelector('textarea[name="message"]') || qr.querySelector('textarea');
-  if (textarea && !qr.querySelector('.vt-word-counter')) {
-    var counter = document.createElement('div');
-    counter.className = 'vt-word-counter';
-    counter.textContent = '0 mot';
-    qr.appendChild(counter);
-
-    var setCount = function (text) {
-      var t = (text || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
-      var nb = t ? t.split(' ').length : 0;
-      counter.textContent = nb + ' mot' + (nb === 1 ? '' : 's');
-    };
-
-    var getText = function () {
-      if (window.jQuery) {
-        var inst = window.jQuery(textarea).data('sceditor');
-        if (inst && typeof inst.val === 'function') {
-          var tmp = document.createElement('div');
-          tmp.innerHTML = inst.val() || '';
-          return tmp.textContent || tmp.innerText || '';
-        }
-      }
-      var scFrame = qr.querySelector('.sceditor-container iframe');
-      if (scFrame) {
-        var doc = scFrame.contentDocument || (scFrame.contentWindow && scFrame.contentWindow.document);
-        if (doc && doc.body) { return doc.body.innerText || doc.body.textContent || ''; }
-      }
-      return textarea.value || '';
-    };
-
-    textarea.addEventListener('input', function () { setCount(textarea.value); });
-    setInterval(function () { setCount(getText()); }, 300);
-  }
-
-  /* Bases (gras/italique/souligné/barré/@/image/emoji) toujours visibles via
-     leur vraie classe SCEditor (voir .vt-quickreply .sceditor-toolbar dans
-     site.css) ; tout le reste replié derrière ce bouton "...". */
-  var toolbar = qr.querySelector('.sceditor-toolbar');
-  if (toolbar && !toolbar.querySelector('.vt-sc-toggle')) {
+  function ensureToggle() {
+    if (toggleDone) { return; }
+    var toolbar = qr.querySelector('.sceditor-toolbar');
+    if (!toolbar) { return; }
+    toggleDone = true;
     var toggle = document.createElement('div');
     toggle.className = 'sceditor-button vt-sc-toggle';
-    toggle.title = 'Plus d\'options';
+    toggle.title = "Plus d'options";
     toggle.innerHTML = '<i class="fa-solid fa-ellipsis"></i>';
-    toggle.addEventListener('click', function () {
-      toolbar.classList.toggle('vt-sc-expanded');
-    });
+    toggle.addEventListener('click', function () { toolbar.classList.toggle('vt-sc-expanded'); });
     toolbar.appendChild(toggle);
   }
+
+  function ensureIframeStyle() {
+    if (iframeStyled) { return; }
+    var scFrame = qr.querySelector('.sceditor-container iframe');
+    if (!scFrame) { return; }
+    var doc = scFrame.contentDocument || (scFrame.contentWindow && scFrame.contentWindow.document);
+    if (!doc || !doc.head || !doc.body) { return; }
+    iframeStyled = true;
+    /* L'iframe SCEditor a son propre document, indépendant de notre feuille
+       de style : on lit nos variables CSS (résolues sur la page hôte) et on
+       les réinjecte en dur dans un <style> ajouté à ce document, pour que le
+       fond "sur lequel on écrit" corresponde à celui d'un post (--section). */
+    var sectionColor = getComputedStyle(document.documentElement).getPropertyValue('--section').trim();
+    var textColor = getComputedStyle(document.documentElement).getPropertyValue('--ink-body-light').trim();
+    var st = doc.createElement('style');
+    st.textContent = 'html,body{background:' + sectionColor + ' !important;color:' + textColor + ' !important;}';
+    doc.head.appendChild(st);
+  }
+
+  function ensureCounter() {
+    if (counterEl) { return; }
+    var textarea = qr.querySelector('textarea[name="message"]') || qr.querySelector('textarea');
+    if (!textarea) { return; }
+    counterEl = document.createElement('div');
+    counterEl.className = 'vt-word-counter';
+    counterEl.textContent = '0 mot';
+    qr.appendChild(counterEl);
+    textarea.addEventListener('input', function () { setCount(textarea.value); });
+  }
+
+  function getText() {
+    var textarea = qr.querySelector('textarea[name="message"]') || qr.querySelector('textarea');
+    if (!textarea) { return ''; }
+    if (window.jQuery) {
+      var inst = window.jQuery(textarea).data('sceditor');
+      if (inst && typeof inst.val === 'function') {
+        var tmp = document.createElement('div');
+        tmp.innerHTML = inst.val() || '';
+        return tmp.textContent || tmp.innerText || '';
+      }
+    }
+    var scFrame = qr.querySelector('.sceditor-container iframe');
+    if (scFrame) {
+      var doc = scFrame.contentDocument || (scFrame.contentWindow && scFrame.contentWindow.document);
+      if (doc && doc.body) { return doc.body.innerText || doc.body.textContent || ''; }
+    }
+    return textarea.value || '';
+  }
+
+  function setCount(text) {
+    if (!counterEl) { return; }
+    var t = (text || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+    var nb = t ? t.split(' ').length : 0;
+    counterEl.textContent = nb + ' mot' + (nb === 1 ? '' : 's');
+  }
+
+  setInterval(function () {
+    ensureAvatarRow();
+    ensureToggle();
+    ensureIframeStyle();
+    ensureCounter();
+    setCount(getText());
+  }, 300);
 })();
