@@ -96,6 +96,16 @@
     background-image: url("https://transparenttextures.com/patterns/asfalt-light.png");
     background-repeat: repeat;
   }
+  /* body a son propre fond natif Forumactif (gris clair + une image "empty.gif",
+     hérité de 5-ltr.css), repéré via DevTools : "background-color: rgb(233, 235, 237)".
+     Comme body ne crée pas son propre contexte d'empilement, ce fond natif (peint
+     comme contenu normal du document) se peint PAR-DESSUS notre body::before en
+     z-index:-1 — un classique piège du z-index négatif. On neutralise directement
+     ce fond natif plutôt que de jouer avec le z-index. */
+  body {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
   body {
     font-family: 'Oswald', sans-serif;
     color: var(--ink-body-light);
