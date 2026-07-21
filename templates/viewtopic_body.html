@@ -21,12 +21,20 @@
        etc.) viennent de la boucle native profile_field : rien à coder de plus
        ici, la liste suit automatiquement les champs de profil personnalisés
        cochés "afficher dans les messages" dans l'ACP.
-     - PROFILE_IMG (fiche) / PM_IMG (message privé) sont les icônes natives FA :
-       on les laisse tels quels (juste habillés en petit bouton rond), FA les
-       rend déjà vides si le membre n'accepte pas les MP par exemple.
+     - PM_IMG (message privé) est un lien+icône natif FA : on ne l'affiche pas
+       tel quel, on récupère juste son href en JS (pfaViewtopicPosts) pour en
+       faire un bouton "MP" à notre gabarit — "Fiche"/"Relations" viennent des
+       champs de profil personnalisés "URL Fiche"/"URL Relations" (repérés par
+       leur libellé dans la boucle profile_field, même mécanisme).
+     - Le fil d'ariane (NAV_CAT_DESC) arrive de FA avec ses propres "::" en
+       texte brut : remplacés par une flèche en JS (pfaViewtopicBreadcrumb),
+       impossible à faire proprement dans le template seul.
    ============================================================ -->
 
 <div class="content-frame vt-head">
+	<div class="vt-breadcrumb-pill">
+		<a href="{U_INDEX}">{L_INDEX}</a>{NAV_CAT_DESC}
+	</div>
 	<div class="vt-head-row">
 		<h1 class="vt-title"><a href="{TOPIC_URL}">{TOPIC_TITLE}</a></h1>
 		<!-- BEGIN switch_user_authreply -->
@@ -35,9 +43,6 @@
 		<!-- BEGIN switch_user_authnoreply -->
 		<a href="{U_LOGIN_REPLY_TOPIC}" title="{T_LOGIN_REPLY_TOPIC}" class="pfa-btn vt-reply-btn">{L_LOGIN_REPLY_TOPIC}</a>
 		<!-- END switch_user_authnoreply -->
-	</div>
-	<div class="vt-breadcrumb">
-		<a href="{U_INDEX}">{L_INDEX}</a>{NAV_CAT_DESC}
 	</div>
 	<!-- BEGIN topicpagination -->
 	<div class="vt-pagination">{PAGINATION}</div>
@@ -57,23 +62,29 @@
 	<div id="p{postrow.displayed.U_POST_ID}" class="content-frame vt-post {postrow.displayed.ROW_COUNT}{postrow.displayed.ONLINE_IMG_NEW} post--{postrow.displayed.U_POST_ID} {postrow.displayed.GROUP}"{postrow.displayed.THANK_BGCOLOR} style="{postrow.displayed.DISPLAYABLE_STATE}">
 		<div style="position:relative; top:-30px; width:1px;" id="{postrow.displayed.U_POST_ID}"></div>
 
+		<!-- Bandeau plein-largeur : nom + groupe/rang sur une image décorative -->
+		<div class="vt-post-banner ph ph-dark">
+			<div class="vt-banner-overlay">
+				<span class="vt-banner-name">{postrow.displayed.POSTER_NAME}</span>
+				<span class="vt-rank">{postrow.displayed.POSTER_RANK_NEW}{postrow.displayed.RANK_IMAGE}</span>
+			</div>
+		</div>
+
 		<!-- Colonne gauche : fiche express du personnage -->
 		<div class="vt-profile gborder" id="profile{postrow.displayed.U_POST_ID}">
 			<div class="vt-avatar ph" data-id="{postrow.displayed.POSTER_ID}">
 				{postrow.displayed.POSTER_AVATAR}
 			</div>
-			<div class="vt-name">{postrow.displayed.POSTER_NAME}</div>
 			<span class="vt-online"></span>
-			<div class="vt-rank">{postrow.displayed.POSTER_RANK_NEW}{postrow.displayed.RANK_IMAGE}</div>
 			<div class="vt-stats">
 				<!-- BEGIN profile_field -->
 				<div class="vt-stat"><span class="vt-stat-label">{postrow.displayed.profile_field.LABEL}</span><span class="vt-stat-val">{postrow.displayed.profile_field.CONTENT}</span></div>
 				<!-- END profile_field -->
 			</div>
-			<div class="vt-profile-actions">
-				{postrow.displayed.PROFILE_IMG}
-				{postrow.displayed.PM_IMG}
-			</div>
+			<!-- Rempli en JS (pfaViewtopicPosts) : MP extrait de PM_IMG (masqué juste
+			     en dessous), Fiche/Relations repérés parmi les champs de profil. -->
+			<div class="vt-profile-actions"></div>
+			<span class="vt-pm-holder" aria-hidden="true">{postrow.displayed.PM_IMG}</span>
 		</div>
 
 		<!-- Colonne droite : le message lui-même -->
@@ -133,12 +144,12 @@
 				<!-- END switch_signature -->
 			</div>
 			<!-- BEGIN switch_likes_active -->
-			<div class="vt-likes">
-				<button class="vt-like-btn {postrow.displayed.switch_likes_active.C_VOTE_LIKE}" data-href="{postrow.displayed.switch_likes_active.U_VOTE_LIKE}" data-href-rm="{postrow.displayed.switch_likes_active.U_VOTE_RM_LIKE}">
+			<div class="vt-likes fa_like_div">
+				<button class="vt-like-btn rep-button {postrow.displayed.switch_likes_active.C_VOTE_LIKE}" data-href="{postrow.displayed.switch_likes_active.U_VOTE_LIKE}" data-href-rm="{postrow.displayed.switch_likes_active.U_VOTE_RM_LIKE}">
 					<i class="fa-solid fa-thumbs-up"></i> {postrow.displayed.switch_likes_active.L_LIKE} {postrow.displayed.switch_likes_active.COUNT_VOTE_LIKE}
 				</button>
 				<!-- BEGIN switch_dislike_button -->
-				<button class="vt-like-btn {postrow.displayed.switch_likes_active.switch_dislike_button.C_VOTE_DISLIKE}" data-href="{postrow.displayed.switch_likes_active.switch_dislike_button.U_VOTE_DISLIKE}" data-href-rm="{postrow.displayed.switch_likes_active.switch_dislike_button.U_VOTE_RM_LIKE}">
+				<button class="vt-like-btn rep-button {postrow.displayed.switch_likes_active.switch_dislike_button.C_VOTE_DISLIKE}" data-href="{postrow.displayed.switch_likes_active.switch_dislike_button.U_VOTE_DISLIKE}" data-href-rm="{postrow.displayed.switch_likes_active.switch_dislike_button.U_VOTE_RM_LIKE}">
 					<i class="fa-solid fa-thumbs-down"></i> {postrow.displayed.switch_likes_active.switch_dislike_button.L_DISLIKE} {postrow.displayed.switch_likes_active.switch_dislike_button.COUNT_VOTE_DISLIKE}
 				</button>
 				<!-- END switch_dislike_button -->

@@ -1393,9 +1393,18 @@
   .vt-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; font-size: 26px; color: var(--ink-hi-light); }
   .vt-title a { color: inherit; text-decoration: none; }
   .vt-reply-btn { text-decoration: none; white-space: nowrap; }
-  .vt-breadcrumb { font-size: 11px; color: var(--ink-muted-light); margin-top: 6px; }
-  .vt-breadcrumb a { color: inherit; text-decoration: none; }
-  .vt-breadcrumb a:hover { color: var(--ink-hi-light); }
+  /* Fil d'ariane : pilule au-dessus du titre (couleur distincte), pas un
+     simple texte en dessous — les "::" natifs FA sont convertis en flèche
+     via pfaViewtopicBreadcrumb() dans site.js (impossible proprement dans
+     le template seul, NAV_CAT_DESC arrive déjà formaté en texte). */
+  .vt-breadcrumb-pill {
+    display: inline-flex; align-items: center; flex-wrap: wrap; gap: 2px;
+    background: var(--section); color: var(--ink-muted-light);
+    border-radius: 99px; padding: 6px 14px; font-size: 10.5px; margin-bottom: 10px;
+  }
+  .vt-breadcrumb-pill a { color: var(--ink-hi-light); text-decoration: none; }
+  .vt-breadcrumb-pill a:hover { text-decoration: underline; }
+  .vt-crumb-sep { margin: 0 4px; font-size: 9px; opacity: 0.7; }
   .vt-pagination { margin-top: 10px; font-size: 11px; color: var(--ink-muted-light); }
   .vt-pagination a { color: var(--ink-hi-light); }
   .vt-bottom { text-align: center; }
@@ -1410,35 +1419,55 @@
      du flux de grille pour ne pas occuper de cellule (même piège/solution que
      sur Selenujo). */
   .vt-post > div[id]:not([class]) { position: absolute !important; width: 0 !important; height: 0 !important; overflow: hidden; }
+  /* Le poster actuellement connecté peut porter une classe "online" native FA
+     (voir plus bas, .vt-post.online) — le thème de base Forumactif dessine
+     parfois un badge (rond coloré) sur cette classe via un pseudo-élément :
+     neutralisé ici plutôt que de toucher au sélecteur qui sert par ailleurs
+     à afficher "En ligne"/"Hors ligne" (.vt-online ci-dessous, qui lui reste
+     voulu). */
+  .vt-post.online::before, .vt-post.online::after { content: none !important; }
+
+  /* Bandeau plein-largeur (nom + groupe/rang) au-dessus des 2 colonnes */
+  .vt-post-banner { grid-column: 1 / -1; position: relative; height: 64px; border-radius: 12px; overflow: hidden; }
+  .vt-banner-overlay {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: space-between;
+    gap: 10px; padding: 0 16px;
+    background: linear-gradient(90deg, rgba(13,27,42,0.55), rgba(13,27,42,0.1));
+  }
+  .vt-banner-name { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; font-size: 20px; color: var(--bg-page); }
 
   /* Colonne gauche : fiche express du personnage */
   .vt-profile { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; padding: 16px 14px; }
-  .vt-avatar { width: 100%; aspect-ratio: 3 / 4; border-radius: 10px; overflow: hidden; }
+  /* Ratio demandé : 200x320px */
+  .vt-avatar { width: 100%; aspect-ratio: 200 / 320; border-radius: 10px; overflow: hidden; }
   .vt-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .vt-name { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; font-size: 17px; color: var(--ink-hi-light); }
-  .vt-name a { color: inherit; text-decoration: none; }
   .vt-online { display: block; font-size: 10px; }
   .vt-online::before { content: "\25CF Hors ligne"; color: var(--ink-muted-light); }
   .vt-post.online .vt-online::before { content: "\25CF En ligne"; color: #4ade80; }
   /* Rang masqué s'il n'y en a pas : voir pfaViewtopicPosts() dans site.js
      (test JS sur le contenu réel, :empty seul ne suffit pas — un vide "visuel"
      côté FA n'est pas forcément un vide DOM, piège déjà rencontré sur
-     Selenujo). Le :empty ci-dessous reste une sécurité pour le cas simple. */
-  .vt-rank { font-size: 11px; font-style: italic; color: var(--ink-hi-light); background: var(--section); border-radius: 8px; padding: 4px 10px; width: 100%; }
+     Selenujo). Le :empty ci-dessous reste une sécurité pour le cas simple.
+     Utilisé ici dans le bandeau (.vt-post-banner), pas dans la colonne fiche. */
+  .vt-rank { font-size: 11px; font-style: italic; color: var(--bg-page); background: rgba(13,27,42,0.45); border-radius: 8px; padding: 4px 10px; white-space: nowrap; }
   .vt-rank:empty { display: none; }
   .vt-stats { width: 100%; background: rgba(0,0,0,0.12); border-radius: 10px; padding: 8px 10px; font-size: 11px; line-height: 1.6; text-align: left; }
   .vt-stat { display: flex; gap: 4px; }
   .vt-stat-label { color: var(--ink-muted-light); font-weight: 600; flex-shrink: 0; }
   .vt-stat-label::after { content: ':'; }
   .vt-stat-val { color: var(--ink-body-light); word-break: break-word; }
-  /* PROFILE_IMG (fiche)/PM_IMG (message privé) sont déjà des liens+icônes
-     natifs FA (vides si le membre n'accepte pas les MP, etc.) : on ne les
-     remplace pas, juste habillés en petit bouton rond (même gabarit que
-     .char-icon-btn dans la sidebar) plutôt que l'icône brute FA. */
-  .vt-profile-actions { display: flex; gap: 8px; margin-top: 2px; }
+  /* MP/Fiche/Relations : boutons texte construits en JS (pfaViewtopicPosts),
+     pas les icônes brutes FA — voir le commentaire en tête de template. */
+  .vt-profile-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; justify-content: center; }
   .vt-profile-actions:empty { display: none; }
-  .vt-profile-actions a { width: 30px; height: 30px; border-radius: 8px; background: var(--section); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .vt-profile-actions img { width: 14px; height: 14px; object-fit: contain; }
+  .vt-profile-btn {
+    background: transparent; border: 1px solid var(--section); color: var(--ink-body-light);
+    border-radius: 6px; padding: 5px 10px; font-size: 10.5px; text-align: center;
+    letter-spacing: 0.3px; text-decoration: none;
+  }
+  .vt-profile-btn:hover { background: var(--section); }
+  /* PM_IMG natif FA, gardé hors champ juste pour en extraire l'URL en JS. */
+  .vt-pm-holder { display: none; }
 
   /* Colonne droite : le message lui-même */
   .vt-postcard { display: flex; flex-direction: column; padding: 14px 16px; gap: 10px; min-width: 0; }
@@ -1502,9 +1531,9 @@
   @media (max-width: 880px) {
     .vt-post { grid-template-columns: 1fr; }
     .vt-profile { flex-direction: row; flex-wrap: wrap; text-align: left; align-items: center; }
-    .vt-avatar { width: 64px; aspect-ratio: 1 / 1; flex-shrink: 0; }
-    .vt-name, .vt-online { flex: 1; min-width: 120px; }
-    .vt-rank, .vt-stats, .vt-profile-actions { flex: 1 1 100%; }
+    .vt-avatar { width: 64px; aspect-ratio: 200 / 320; flex-shrink: 0; }
+    .vt-online { flex: 1; min-width: 120px; }
+    .vt-stats, .vt-profile-actions { flex: 1 1 100%; }
   }
 
   /* Thème sombre : rang/fiche/stats en fond --section (déjà sombre par

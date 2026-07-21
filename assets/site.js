@@ -875,15 +875,32 @@
   setInterval(render, 30 * 60 * 1000);
 })();
 
-/* ---------- VIEWTOPIC_BODY : numérotation des messages + masquage du rang vide ----------
-   Même technique que sur Selenujo (FA_viewtopic_body.html) : Forumactif ne
-   fournit pas nativement de "#1, #2..." par message, et le bloc de rang peut
-   rester "visuellement vide" (espace/texte invisible) même sans rang assigné —
-   d'où un vrai test JS (textContent + présence d'une image), un simple :empty
-   en CSS ne suffisant pas dans ce cas. */
+/* ---------- VIEWTOPIC_BODY : numérotation, rang vide, boutons MP/Fiche/Relations ----------
+   Même technique que sur Selenujo (FA_viewtopic_body.html) pour la numérotation
+   et le rang : Forumactif ne fournit pas nativement de "#1, #2..." par message,
+   et le bloc de rang peut rester "visuellement vide" (espace/texte invisible)
+   même sans rang assigné — d'où un vrai test JS (textContent + présence d'une
+   image), un simple :empty en CSS ne suffisant pas dans ce cas.
+
+   MP/Fiche/Relations : "URL Fiche" et "URL Relations" sont deux champs de
+   profil personnalisés parmi d'autres (boucle profile_field, voir le
+   template) — repérés ici par leur libellé, retirés de la liste générique de
+   stats, et transformés en vrais boutons texte. "MP" est extrait du lien
+   natif PM_IMG (masqué dans .vt-pm-holder) plutôt que d'afficher l'icône
+   brute FA — même famille de technique que pfaOnlineNamesOnly()/pfaNewMember()
+   plus haut dans ce fichier (extraire le vrai contenu FA, puis reconstruire
+   notre propre habillage). */
 (function pfaViewtopicPosts() {
   var posts = document.querySelectorAll('.vt-post');
   if (!posts.length) { return; }
+
+  function makeProfileBtn(label, href) {
+    var a = document.createElement('a');
+    a.href = href;
+    a.className = 'vt-profile-btn';
+    a.textContent = label;
+    return a;
+  }
 
   posts.forEach(function (post, i) {
     var numEl = post.querySelector('.vt-post-num');
@@ -893,5 +910,41 @@
     if (rankEl && !rankEl.textContent.trim() && !rankEl.querySelector('img')) {
       rankEl.style.display = 'none';
     }
+
+    var actions = post.querySelector('.vt-profile-actions');
+    if (!actions) { return; }
+
+    var pmHolder = post.querySelector('.vt-pm-holder');
+    var pmLink = pmHolder ? pmHolder.querySelector('a[href]') : null;
+    if (pmLink && pmLink.getAttribute('href')) {
+      actions.appendChild(makeProfileBtn('MP', pmLink.getAttribute('href')));
+    }
+
+    post.querySelectorAll('.vt-stat').forEach(function (stat) {
+      var labelEl = stat.querySelector('.vt-stat-label');
+      var valEl = stat.querySelector('.vt-stat-val');
+      if (!labelEl || !valEl) { return; }
+
+      var label = labelEl.textContent.trim().toLowerCase();
+      if (label !== 'url fiche' && label !== 'url relations') { return; }
+
+      var link = valEl.querySelector('a[href]');
+      var href = link ? link.getAttribute('href') : valEl.textContent.trim();
+      if (href) {
+        actions.appendChild(makeProfileBtn(label === 'url fiche' ? 'Fiche' : 'Relations', href));
+      }
+      stat.style.display = 'none';
+    });
   });
+})();
+
+/* ---------- VIEWTOPIC_BODY : fil d'ariane, "::" -> flèche ----------
+   NAV_CAT_DESC arrive de Forumactif déjà formaté en texte brut avec ses
+   propres "::" entre catégories : impossible à remplacer proprement dans le
+   template (pas de variable séparée par catégorie), donc un remplacement
+   texte ici, une fois la page chargée. */
+(function pfaViewtopicBreadcrumb() {
+  var el = document.querySelector('.vt-breadcrumb-pill');
+  if (!el) { return; }
+  el.innerHTML = el.innerHTML.replace(/\s*::\s*/g, ' <i class="fa-solid fa-chevron-right vt-crumb-sep"></i> ');
 })();
