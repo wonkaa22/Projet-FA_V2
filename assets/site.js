@@ -987,7 +987,6 @@
 
   var avatarDone = false;
   var toggleDone = false;
-  var iframeStyled = false;
   var counterEl = null;
 
   function ensureAvatarRow() {
@@ -1021,19 +1020,31 @@
     toggleDone = true;
     var toggle = document.createElement('div');
     toggle.className = 'sceditor-button vt-sc-toggle';
-    toggle.title = "Plus d'options";
-    toggle.innerHTML = '<i class="fa-solid fa-ellipsis"></i>';
+    toggle.title = 'Afficher plus d\'options de mise en forme';
+    /* Texte brut ("⋯"), pas une icône FA : B/I/U/S de ce même SCEditor
+       s'affichent déjà en texte stylé (pas en glyphe d'icône) dans ce
+       contexte précis — un <i class="fa-solid ..."> y restait invisible pour
+       une raison qu'on n'a pas pu identifier (le HTML réel de la barre
+       d'outils est généré côté serveur par FA, {SCEDITOR} est une variable
+       opaque). */
+    toggle.textContent = '⋯';
     toggle.addEventListener('click', function () { toolbar.classList.toggle('vt-sc-expanded'); });
     toolbar.appendChild(toggle);
   }
 
   function ensureIframeStyle() {
-    if (iframeStyled) { return; }
     var scFrame = qr.querySelector('.sceditor-container iframe');
     if (!scFrame) { return; }
     var doc = scFrame.contentDocument || (scFrame.contentWindow && scFrame.contentWindow.document);
     if (!doc || !doc.head || !doc.body) { return; }
-    iframeStyled = true;
+    /* Pas de drapeau "déjà fait" : on revérifie à chaque tick plutôt qu'une
+       seule fois. Le fond restait blanc malgré l'injection initiale — signe
+       probable que SCEditor recharge/remplace le document de son iframe
+       après notre premier passage (son propre script d'initialisation tourne
+       de façon asynchrone), ce qui effaçait le <style> déjà posé. Rejouer
+       l'injection tant que la marque n'est plus là corrige ça sans savoir
+       exactement quand SCEditor la reconstruit. */
+    if (doc.getElementById('vtQrFrameStyle')) { return; }
     /* L'iframe SCEditor a son propre document, indépendant de notre feuille
        de style : on lit nos variables CSS (résolues sur la page hôte) et on
        les réinjecte en dur dans un <style> ajouté à ce document, pour que le
@@ -1041,6 +1052,7 @@
     var sectionColor = getComputedStyle(document.documentElement).getPropertyValue('--section').trim();
     var textColor = getComputedStyle(document.documentElement).getPropertyValue('--ink-body-light').trim();
     var st = doc.createElement('style');
+    st.id = 'vtQrFrameStyle';
     st.textContent = 'html,body{background:' + sectionColor + ' !important;color:' + textColor + ' !important;}';
     doc.head.appendChild(st);
   }

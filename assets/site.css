@@ -1407,7 +1407,20 @@
   .vt-crumb-sep { margin: 0 4px; font-size: 9px; opacity: 0.7; }
   .vt-pagination { margin-top: 10px; font-size: 11px; color: var(--ink-muted-light); }
   .vt-pagination a { color: var(--ink-hi-light); }
-  .vt-bottom { text-align: center; }
+  .vt-bottom { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px; }
+  .vt-bottom .vt-pagination { margin-top: 0; }
+  /* Bouton "surveiller ce sujet" natif FA (S_WATCH_TOPIC, déjà "arrêter de
+     surveiller" une fois suivi — le libellé change tout seul côté FA) :
+     poussé à droite même sans pagination à côté (margin-left:auto plutôt que
+     justify-content:space-between, qui n'aurait rien à "pousser contre" si
+     la pagination est absente). */
+  .vt-watch { margin-left: auto; }
+  .vt-watch a {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--section); color: var(--ink-body-light);
+    border-radius: 8px; padding: 6px 14px; font-size: 11px; text-decoration: none;
+  }
+  .vt-watch a:hover { background: var(--frame-grad); color: var(--chip-ink); }
 
   .vt-posts { display: flex; flex-direction: column; gap: 14px; }
   /* Séparateur natif FA entre 1er message et réponses : pas utile, nos posts
@@ -1562,6 +1575,11 @@
   .vt-quickreply input[type="submit"],
   .vt-quickreply .button1,
   .vt-quickreply .button2 { background: var(--frame-grad); color: var(--chip-ink); border: none; border-radius: 8px; padding: 8px 18px; font-size: 12px; cursor: pointer; }
+  /* Prévisualisation/Envoyer alignés à droite : on ne connaît pas la classe
+     de leur conteneur natif FA (pas visible dans reference/templates-source,
+     {QUICK_REPLY_FORM} est une variable opaque), :has() cible n'importe quel
+     élément qui contient directement ces boutons sans avoir à deviner son nom. */
+  .vt-quickreply *:has(> input[type="submit"]) { display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
 
   /* Avatar du membre connecté, à gauche de la zone d'écriture (pas en overlay
      dessus) : .vt-qr-row est le vrai conteneur flex créé en JS autour de
@@ -1571,6 +1589,10 @@
   .vt-qr-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .vt-qr-row .sceditor-container,
   .vt-qr-row > textarea { flex: 1; min-width: 0; }
+  /* Bordure blanche par défaut du navigateur sur l'iframe SCEditor (pas une
+     bordure à nous qu'on puisse recolorer, un <iframe> a son propre style par
+     défaut tant qu'il n'est pas explicitement annulé). */
+  .vt-quickreply iframe { border: none !important; }
 
   /* Compteur de mots, coin inférieur droit */
   .vt-word-counter { position: absolute; right: 16px; bottom: 14px; font-size: 10px; color: var(--ink-muted-light); background: rgba(0,0,0,0.2); padding: 3px 9px; border-radius: 6px; z-index: 3; }
@@ -1603,7 +1625,16 @@
   }
   .vt-quickreply .sceditor-toolbar .sceditor-button:hover { background: rgba(255,255,255,0.08); }
   .vt-quickreply .sceditor-toolbar.vt-sc-expanded .sceditor-button { display: inline-flex !important; }
-  .vt-sc-toggle { border: 1px dashed rgba(224,225,221,0.25); }
+  /* Texte brut ("⋯"), pas une icône Font Awesome : B/I/U/S dans ce même
+     SCEditor s'affichent déjà comme du texte stylé plutôt que des glyphes
+     d'icône — {SCEDITOR} étant une variable opaque (rien vu dans
+     reference/templates-source à ce sujet), on ne sait pas pourquoi un <i>
+     FA restait invisible ici, donc on reprend la même approche déjà connue
+     pour marcher dans ce contexte précis. */
+  .vt-sc-toggle {
+    border: 1px dashed rgba(224,225,221,0.35);
+    font-size: 16px; font-weight: 700; line-height: 1;
+  }
 
   /* "Sauter vers" (jumpbox) : masqué, demandé explicitement. */
   .vt-jumpbox-form { display: none; }
