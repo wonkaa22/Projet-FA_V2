@@ -874,3 +874,24 @@
   render();
   setInterval(render, 30 * 60 * 1000);
 })();
+
+/* ---------- VIEWTOPIC_BODY : numérotation des messages + masquage du rang vide ----------
+   Même technique que sur Selenujo (FA_viewtopic_body.html) : Forumactif ne
+   fournit pas nativement de "#1, #2..." par message, et le bloc de rang peut
+   rester "visuellement vide" (espace/texte invisible) même sans rang assigné —
+   d'où un vrai test JS (textContent + présence d'une image), un simple :empty
+   en CSS ne suffisant pas dans ce cas. */
+(function pfaViewtopicPosts() {
+  var posts = document.querySelectorAll('.vt-post');
+  if (!posts.length) { return; }
+
+  posts.forEach(function (post, i) {
+    var numEl = post.querySelector('.vt-post-num');
+    if (numEl) { numEl.textContent = '#' + (i + 1); }
+
+    var rankEl = post.querySelector('.vt-rank');
+    if (rankEl && !rankEl.textContent.trim() && !rankEl.querySelector('img')) {
+      rankEl.style.display = 'none';
+    }
+  });
+})();

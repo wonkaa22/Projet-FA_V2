@@ -1,0 +1,214 @@
+{JAVASCRIPT}
+
+<!-- ============================================================
+     VIEWTOPIC_BODY — Affichage d'un sujet (RP)
+
+     Variables Forumactif reprises de reference/templates-source/viewtopic_body.html
+     (le vrai template de ce thème), mise en page/CSS pensées à partir de ce qui a
+     déjà été validé sur Selenujo/Test_Astra pour ce type de page (voir
+     /home/user/Test_Astra/FA_viewtopic_body.html + selenujo.css) :
+
+     - EDIT_URL/DELETE_URL sont déjà calculés côté serveur par Forumactif : vides
+       si l'auteur n'a pas le droit d'éditer, et DELETE_URL vide aussi dès qu'il y
+       a eu une réponse (même pour l'auteur du dernier message). On masque juste
+       le lien en CSS quand son href est vide (voir .vt-action dans site.css) —
+       aucune logique de permission à réécrire ici.
+     - Le rang ({POSTER_RANK_NEW}{RANK_IMAGE}) peut rester "visuellement vide"
+       (espace/texte invisible) même sans rang assigné : masqué via un vrai test
+       JS (textContent + présence d'une image), pas juste un :empty CSS — voir
+       pfaViewtopicPosts() dans site.js.
+     - Les champs de la fiche (Pronoms/Âge/Langues/Résidence/Occupation/Triggers,
+       etc.) viennent de la boucle native profile_field : rien à coder de plus
+       ici, la liste suit automatiquement les champs de profil personnalisés
+       cochés "afficher dans les messages" dans l'ACP.
+     - PROFILE_IMG (fiche) / PM_IMG (message privé) sont les icônes natives FA :
+       on les laisse tels quels (juste habillés en petit bouton rond), FA les
+       rend déjà vides si le membre n'accepte pas les MP par exemple.
+   ============================================================ -->
+
+<div class="content-frame vt-head">
+	<div class="vt-head-row">
+		<h1 class="vt-title"><a href="{TOPIC_URL}">{TOPIC_TITLE}</a></h1>
+		<!-- BEGIN switch_user_authreply -->
+		<a href="{U_POST_REPLY_TOPIC}" {S_POST_REPLY_TOPIC} title="{T_POST_REPLY_TOPIC}" class="pfa-btn vt-reply-btn">Répondre</a>
+		<!-- END switch_user_authreply -->
+		<!-- BEGIN switch_user_authnoreply -->
+		<a href="{U_LOGIN_REPLY_TOPIC}" title="{T_LOGIN_REPLY_TOPIC}" class="pfa-btn vt-reply-btn">{L_LOGIN_REPLY_TOPIC}</a>
+		<!-- END switch_user_authnoreply -->
+	</div>
+	<div class="vt-breadcrumb">
+		<a href="{U_INDEX}">{L_INDEX}</a>{NAV_CAT_DESC}
+	</div>
+	<!-- BEGIN topicpagination -->
+	<div class="vt-pagination">{PAGINATION}</div>
+	<!-- END topicpagination -->
+</div>
+
+{POLL_DISPLAY}
+
+<div class="vt-posts">
+<!-- BEGIN postrow -->
+	<!-- BEGIN hidden -->
+	<div class="content-frame vt-hidden-msg">
+		<p>{postrow.hidden.MESSAGE}</p>
+	</div>
+	<!-- END hidden -->
+	<!-- BEGIN displayed -->
+	<div id="p{postrow.displayed.U_POST_ID}" class="content-frame vt-post {postrow.displayed.ROW_COUNT}{postrow.displayed.ONLINE_IMG_NEW} post--{postrow.displayed.U_POST_ID} {postrow.displayed.GROUP}"{postrow.displayed.THANK_BGCOLOR} style="{postrow.displayed.DISPLAYABLE_STATE}">
+		<div style="position:relative; top:-30px; width:1px;" id="{postrow.displayed.U_POST_ID}"></div>
+
+		<!-- Colonne gauche : fiche express du personnage -->
+		<div class="vt-profile gborder" id="profile{postrow.displayed.U_POST_ID}">
+			<div class="vt-avatar ph" data-id="{postrow.displayed.POSTER_ID}">
+				{postrow.displayed.POSTER_AVATAR}
+			</div>
+			<div class="vt-name">{postrow.displayed.POSTER_NAME}</div>
+			<span class="vt-online"></span>
+			<div class="vt-rank">{postrow.displayed.POSTER_RANK_NEW}{postrow.displayed.RANK_IMAGE}</div>
+			<div class="vt-stats">
+				<!-- BEGIN profile_field -->
+				<div class="vt-stat"><span class="vt-stat-label">{postrow.displayed.profile_field.LABEL}</span><span class="vt-stat-val">{postrow.displayed.profile_field.CONTENT}</span></div>
+				<!-- END profile_field -->
+			</div>
+			<div class="vt-profile-actions">
+				{postrow.displayed.PROFILE_IMG}
+				{postrow.displayed.PM_IMG}
+			</div>
+		</div>
+
+		<!-- Colonne droite : le message lui-même -->
+		<div class="vt-postcard gborder">
+			<div class="vt-post-head">
+				<span class="vt-post-num"></span>
+				<span class="vt-post-date">{postrow.displayed.POST_DATE_NEW}</span>
+				<!-- BEGIN switch_vote_active -->
+				<span class="vt-vote">
+					<!-- BEGIN switch_vote -->
+					<a href="{postrow.displayed.switch_vote_active.switch_vote.U_VOTE_PLUS}" class="vt-vote-btn" title="+"><i class="fa-solid fa-circle-plus"></i></a>
+					<!-- END switch_vote -->
+					<!-- BEGIN switch_vote -->
+					<a href="{postrow.displayed.switch_vote_active.switch_vote.U_VOTE_MINUS}" class="vt-vote-btn" title="-"><i class="fa-solid fa-circle-minus"></i></a>
+					<!-- END switch_vote -->
+				</span>
+				<!-- END switch_vote_active -->
+				<span class="vt-post-actions">
+					<a href="{postrow.displayed.QUOTE_URL}" class="vt-action" title="Citer"><i class="fa-solid fa-quote-left"></i></a>
+					<a href="{postrow.displayed.EDIT_URL}" class="vt-action" title="Modifier"><i class="fa-solid fa-pen"></i></a>
+					<a href="{postrow.displayed.DELETE_URL}" class="vt-action" title="Supprimer"><i class="fa-solid fa-trash"></i></a>
+				</span>
+			</div>
+			<h2 class="vt-post-subject">{postrow.displayed.ICON} <a href="{postrow.displayed.POST_URL}">{postrow.displayed.POST_SUBJECT}</a></h2>
+			<div class="vt-post-body">
+				<div>{postrow.displayed.MESSAGE}</div>
+				<!-- BEGIN switch_attachments -->
+					<dl class="attachbox">
+						<dt>{postrow.displayed.switch_attachments.L_ATTACHMENTS}</dt>
+						<dd class="attachments">
+							<!-- BEGIN switch_post_attachments -->
+							<dl class="file">
+								<dt><img src="{postrow.displayed.switch_attachments.switch_post_attachments.U_IMG}" alt=""/></dt>
+								<dd>
+									<!-- BEGIN switch_dl_att -->
+									<span><a class="postlink" href="{postrow.displayed.switch_attachments.switch_post_attachments.switch_dl_att.U_ATTACHMENT}">{postrow.displayed.switch_attachments.switch_post_attachments.switch_dl_att.ATTACHMENT}</a> {postrow.displayed.switch_attachments.switch_post_attachments.switch_dl_att.ATTACHMENT_DEL}</span>
+									<!-- END switch_dl_att -->
+									<!-- BEGIN switch_no_dl_att -->
+									<span>{postrow.displayed.switch_attachments.switch_post_attachments.switch_no_dl_att.ATTACHMENT} {postrow.displayed.switch_attachments.switch_post_attachments.switch_no_dl_att.ATTACHMENT_DEL}</span>
+									<!-- END switch_no_dl_att -->
+									<!-- BEGIN switch_no_comment -->
+									<span>{postrow.displayed.switch_attachments.switch_post_attachments.switch_no_comment.ATTACHMENT_COMMENT}</span>
+									<!-- END switch_no_comment -->
+									<!-- BEGIN switch_no_dl_att -->
+									<span><strong>{postrow.displayed.switch_attachments.switch_post_attachments.switch_no_dl_att.TEXT_NO_DL}</strong></span>
+									<!-- END switch_no_dl_att -->
+									<span>({postrow.displayed.switch_attachments.switch_post_attachments.FILE_SIZE}) {postrow.displayed.switch_attachments.switch_post_attachments.NB_DL}</span>
+								</dd>
+							</dl>
+							<!-- END switch_post_attachments -->
+						</dd>
+					</dl>
+				<!-- END switch_attachments -->
+				<div class="vt-edited">{postrow.displayed.EDITED_MESSAGE}</div>
+				<!-- BEGIN switch_signature -->
+				<div class="vt-signature" id="sig{postrow.displayed.U_POST_ID}">{postrow.displayed.SIGNATURE_NEW}</div>
+				<!-- END switch_signature -->
+			</div>
+			<!-- BEGIN switch_likes_active -->
+			<div class="vt-likes">
+				<button class="vt-like-btn {postrow.displayed.switch_likes_active.C_VOTE_LIKE}" data-href="{postrow.displayed.switch_likes_active.U_VOTE_LIKE}" data-href-rm="{postrow.displayed.switch_likes_active.U_VOTE_RM_LIKE}">
+					<i class="fa-solid fa-thumbs-up"></i> {postrow.displayed.switch_likes_active.L_LIKE} {postrow.displayed.switch_likes_active.COUNT_VOTE_LIKE}
+				</button>
+				<!-- BEGIN switch_dislike_button -->
+				<button class="vt-like-btn {postrow.displayed.switch_likes_active.switch_dislike_button.C_VOTE_DISLIKE}" data-href="{postrow.displayed.switch_likes_active.switch_dislike_button.U_VOTE_DISLIKE}" data-href-rm="{postrow.displayed.switch_likes_active.switch_dislike_button.U_VOTE_RM_LIKE}">
+					<i class="fa-solid fa-thumbs-down"></i> {postrow.displayed.switch_likes_active.switch_dislike_button.L_DISLIKE} {postrow.displayed.switch_likes_active.switch_dislike_button.COUNT_VOTE_DISLIKE}
+				</button>
+				<!-- END switch_dislike_button -->
+				<!-- BEGIN switch_like_list -->
+				{postrow.displayed.switch_likes_active.switch_like_list.D_LIKE_LIST}
+				<!-- END switch_like_list -->
+				<!-- BEGIN switch_dislike_list -->
+				{postrow.displayed.switch_likes_active.switch_dislike_list.D_DISLIKE_LIST}
+				<!-- END switch_dislike_list -->
+			</div>
+			<!-- END switch_likes_active -->
+		</div>
+	</div>
+	<!-- BEGIN first_post_br -->
+	<hr class="vt-first-post-br" />
+	<!-- END first_post_br -->
+	<!-- END displayed -->
+<!-- END postrow -->
+</div>
+
+<a name="bottomtitle"></a>
+
+<div class="content-frame vt-bottom">
+	<!-- BEGIN topicpagination -->
+	<div class="vt-pagination">{PAGINATION}</div>
+	<!-- END topicpagination -->
+</div>
+
+<!-- BEGIN switch_forum_rules -->
+<div class="content-frame vt-forum-rules" id="forum_rules">
+	<h3>{L_FORUM_RULES}</h3>
+	<!-- BEGIN switch_forum_rule_image -->
+	<img src="{RULE_IMG_URL}" alt="" class="vt-rule-img" />
+	<!-- END switch_forum_rule_image -->
+	<div class="vt-rule-msg">{RULE_MSG}</div>
+</div>
+<!-- END switch_forum_rules -->
+
+<!-- BEGIN switch_user_logged_in -->
+<a name="quickreply"></a>
+<div class="content-frame vt-quickreply" id="sel-quickreply">
+	{QUICK_REPLY_FORM}
+</div>
+<!-- END switch_user_logged_in -->
+
+<form action="{S_JUMPBOX_ACTION}" method="get" onsubmit="if(document.jumpbox.f.value == -1){return false;}" class="vt-jumpbox-form">
+	<fieldset class="vt-jumpbox">
+		<label>{L_JUMP_TO}:</label>
+		{S_JUMPBOX_SELECT}
+		<input class="pfa-btn" type="submit" value="{L_GO}" />
+	</fieldset>
+</form>
+
+<!-- BEGIN viewtopic_bottom -->
+<form method="get" action="{S_FORM_MOD_ACTION}" class="vt-quickmod-form">
+	<fieldset class="vt-quickmod">
+		<input type="hidden" name="t" value="{TOPIC_ID}" />
+		<input type="hidden" name="{SECURE_ID_NAME}" value="{SECURE_ID_VALUE}" />
+		<label>{L_MOD_TOOLS}:</label>
+		{S_SELECT_MOD}
+		<input class="pfa-btn" type="submit" value="{L_GO}" />
+	</fieldset>
+</form>
+<p class="vt-topic-admin">{S_TOPIC_ADMIN}</p>
+<!-- END viewtopic_bottom -->
+
+<!-- BEGIN switch_image_resize -->
+<script type="text/javascript">
+//<![CDATA[
+$(resize_images({ 'selector' : '.vt-post-body', 'max_width' : {switch_image_resize.IMG_RESIZE_WIDTH}, 'max_height' : {switch_image_resize.IMG_RESIZE_HEIGHT} }));
+//]]>
+</script>
+<!-- END switch_image_resize -->

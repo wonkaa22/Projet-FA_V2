@@ -1384,3 +1384,128 @@
   html:not(.light) .event-dots span.active { background: #FF6F91; }
   html:not(.light) .staff-name { color: #F0F0F0; }
   html:not(.light) .zone-name { color: #F0F0F0; }
+
+  /* ---------- VIEWTOPIC_BODY (affichage d'un sujet) ----------
+     Grille à 2 colonnes déjà validée sur Selenujo (200px fiche / 1fr message),
+     habillée avec nos propres tokens (.gborder/.content-frame, police
+     Cormorant sur les titres) plutôt que le rendu sombre d'origine. */
+  .vt-head-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .vt-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; font-size: 26px; color: var(--ink-hi-light); }
+  .vt-title a { color: inherit; text-decoration: none; }
+  .vt-reply-btn { text-decoration: none; white-space: nowrap; }
+  .vt-breadcrumb { font-size: 11px; color: var(--ink-muted-light); margin-top: 6px; }
+  .vt-breadcrumb a { color: inherit; text-decoration: none; }
+  .vt-breadcrumb a:hover { color: var(--ink-hi-light); }
+  .vt-pagination { margin-top: 10px; font-size: 11px; color: var(--ink-muted-light); }
+  .vt-pagination a { color: var(--ink-hi-light); }
+  .vt-bottom { text-align: center; }
+
+  .vt-posts { display: flex; flex-direction: column; gap: 14px; }
+  /* Séparateur natif FA entre 1er message et réponses : pas utile, nos posts
+     sont déjà des cartes espacées individuellement (.vt-posts gap). */
+  .vt-first-post-br { display: none; }
+
+  .vt-post { display: grid; grid-template-columns: 220px 1fr; gap: 14px; align-items: stretch; position: relative; }
+  /* Ancre FA (div#N sans classe, pour les liens directs vers un message) sortie
+     du flux de grille pour ne pas occuper de cellule (même piège/solution que
+     sur Selenujo). */
+  .vt-post > div[id]:not([class]) { position: absolute !important; width: 0 !important; height: 0 !important; overflow: hidden; }
+
+  /* Colonne gauche : fiche express du personnage */
+  .vt-profile { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; padding: 16px 14px; }
+  .vt-avatar { width: 100%; aspect-ratio: 3 / 4; border-radius: 10px; overflow: hidden; }
+  .vt-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .vt-name { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; font-size: 17px; color: var(--ink-hi-light); }
+  .vt-name a { color: inherit; text-decoration: none; }
+  .vt-online { display: block; font-size: 10px; }
+  .vt-online::before { content: "\25CF Hors ligne"; color: var(--ink-muted-light); }
+  .vt-post.online .vt-online::before { content: "\25CF En ligne"; color: #4ade80; }
+  /* Rang masqué s'il n'y en a pas : voir pfaViewtopicPosts() dans site.js
+     (test JS sur le contenu réel, :empty seul ne suffit pas — un vide "visuel"
+     côté FA n'est pas forcément un vide DOM, piège déjà rencontré sur
+     Selenujo). Le :empty ci-dessous reste une sécurité pour le cas simple. */
+  .vt-rank { font-size: 11px; font-style: italic; color: var(--ink-hi-light); background: var(--section); border-radius: 8px; padding: 4px 10px; width: 100%; }
+  .vt-rank:empty { display: none; }
+  .vt-stats { width: 100%; background: rgba(0,0,0,0.12); border-radius: 10px; padding: 8px 10px; font-size: 11px; line-height: 1.6; text-align: left; }
+  .vt-stat { display: flex; gap: 4px; }
+  .vt-stat-label { color: var(--ink-muted-light); font-weight: 600; flex-shrink: 0; }
+  .vt-stat-label::after { content: ':'; }
+  .vt-stat-val { color: var(--ink-body-light); word-break: break-word; }
+  /* PROFILE_IMG (fiche)/PM_IMG (message privé) sont déjà des liens+icônes
+     natifs FA (vides si le membre n'accepte pas les MP, etc.) : on ne les
+     remplace pas, juste habillés en petit bouton rond (même gabarit que
+     .char-icon-btn dans la sidebar) plutôt que l'icône brute FA. */
+  .vt-profile-actions { display: flex; gap: 8px; margin-top: 2px; }
+  .vt-profile-actions:empty { display: none; }
+  .vt-profile-actions a { width: 30px; height: 30px; border-radius: 8px; background: var(--section); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .vt-profile-actions img { width: 14px; height: 14px; object-fit: contain; }
+
+  /* Colonne droite : le message lui-même */
+  .vt-postcard { display: flex; flex-direction: column; padding: 14px 16px; gap: 10px; min-width: 0; }
+  .vt-post-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding-bottom: 8px; border-bottom: 1px solid rgba(224,225,221,0.12); font-size: 11px; color: var(--ink-muted-light); }
+  .vt-post-num { color: var(--ink-hi-light); font-weight: 600; }
+  .vt-post-date { flex: 1; min-width: 0; }
+  .vt-vote { display: inline-flex; gap: 2px; }
+  .vt-vote-btn { color: var(--ink-muted-light); font-size: 13px; }
+  .vt-post-actions { display: inline-flex; gap: 4px; }
+  .vt-action { width: 26px; height: 26px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--ink-body-light); text-decoration: none; font-size: 11px; transition: background 0.15s ease, color 0.15s ease; }
+  .vt-action:hover { background: var(--section); color: var(--ink-hi-light); }
+  /* EDIT_URL/DELETE_URL sont vides côté serveur FA quand l'action n'est pas
+     permise (auteur seul pour éditer ; pour supprimer, en plus, seulement le
+     dernier message tant qu'il n'y a pas eu de réponse) : masquer le lien
+     quand son href est vide suffit, la permission est déjà tranchée par FA. */
+  .vt-action[href=""], .vt-action:not([href]) { display: none !important; }
+
+  .vt-post-subject { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px; color: var(--ink-hi-light); }
+  .vt-post-subject img { display: none; }
+  .vt-post-subject a { color: inherit; text-decoration: none; }
+  /* Le titre du sujet est déjà affiché en haut de page (.vt-title) : pas la
+     peine de le répéter sur chaque message (même choix que sur Selenujo). */
+  .vt-post:not(:first-of-type) .vt-post-subject { display: none; }
+
+  .vt-post-body { font-size: 13.5px; line-height: 1.7; color: var(--ink-body-light); }
+  .vt-post-body img { max-width: 100%; }
+  .vt-edited { font-size: 10.5px; font-style: italic; color: var(--ink-muted-light); }
+  .vt-edited:empty { display: none; }
+  .vt-signature { margin-top: 8px; padding-top: 8px; border-top: 1px dashed rgba(224,225,221,0.15); font-size: 11px; color: var(--ink-muted-light); }
+  .vt-signature:empty { display: none; }
+
+  .vt-likes { display: flex; gap: 8px; padding-top: 8px; border-top: 1px solid rgba(224,225,221,0.12); }
+  .vt-like-btn { display: inline-flex; align-items: center; gap: 6px; background: var(--section); color: var(--ink-body-light); border: none; border-radius: 8px; padding: 6px 12px; font-size: 11px; cursor: pointer; }
+  .vt-like-btn.on { background: var(--frame-grad); color: var(--chip-ink); }
+
+  .vt-hidden-msg { text-align: center; font-style: italic; color: var(--ink-muted-light); }
+
+  .vt-forum-rules h3 { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px; color: var(--ink-hi-light); margin-bottom: 8px; }
+  .vt-rule-img { max-width: 120px; border-radius: 8px; margin-bottom: 8px; }
+  .vt-rule-msg { font-size: 12px; line-height: 1.6; color: var(--ink-body-light); }
+
+  /* Formulaire de réponse rapide natif FA ({QUICK_REPLY_FORM}) : on ne connaît
+     pas à l'avance son HTML exact (sceditor, boutons...), donc reset générique
+     par type d'élément plutôt qu'une reprise classe par classe — à affiner
+     une fois visible en vrai sur le site (comme .outer-frame a plus haut dans
+     ce fichier pour le contenu natif non habillé). */
+  .vt-quickreply { color: var(--ink-body-light); }
+  .vt-quickreply textarea,
+  .vt-quickreply input[type="text"] { width: 100%; background: var(--section); color: var(--ink-body-light); border: 1px solid rgba(224,225,221,0.15); border-radius: 8px; padding: 10px; font-size: 13px; }
+  .vt-quickreply input[type="submit"],
+  .vt-quickreply .button1,
+  .vt-quickreply .button2 { background: var(--frame-grad); color: var(--chip-ink); border: none; border-radius: 8px; padding: 8px 18px; font-size: 12px; cursor: pointer; }
+
+  .vt-jumpbox-form, .vt-quickmod-form { margin-top: 4px; }
+  .vt-jumpbox, .vt-quickmod { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--ink-muted-light); flex-wrap: wrap; }
+  .vt-topic-admin { text-align: right; font-size: 11px; color: var(--ink-muted-light); }
+
+  /* Responsive : sous 880px (seuil bandeau), la colonne fiche (220px) devient
+     trop étroite à côté du message qui doit rester lisible — passe en pile
+     verticale, fiche en haut, message en dessous. */
+  @media (max-width: 880px) {
+    .vt-post { grid-template-columns: 1fr; }
+    .vt-profile { flex-direction: row; flex-wrap: wrap; text-align: left; align-items: center; }
+    .vt-avatar { width: 64px; aspect-ratio: 1 / 1; flex-shrink: 0; }
+    .vt-name, .vt-online { flex: 1; min-width: 120px; }
+    .vt-rank, .vt-stats, .vt-profile-actions { flex: 1 1 100%; }
+  }
+
+  /* Thème sombre : rang/fiche/stats en fond --section (déjà sombre par
+     défaut), pas d'override supplémentaire nécessaire pour l'instant. */
