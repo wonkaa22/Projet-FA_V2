@@ -1569,7 +1569,7 @@
      traits bleus par défaut du HTML natif FA non habillé (même famille de
      correctif que .vt-like-list plus haut). */
   .vt-quickreply, .vt-quickreply * { border-color: rgba(224,225,221,0.15) !important; }
-  .vt-quickreply { position: relative; color: var(--ink-body-light); padding-bottom: 34px; }
+  .vt-quickreply { position: relative; color: var(--ink-body-light); padding-bottom: 46px; }
   .vt-quickreply textarea,
   .vt-quickreply input[type="text"] { width: 100%; background: var(--section); color: var(--ink-body-light); border: 1px solid rgba(224,225,221,0.15); border-radius: 8px; padding: 10px; font-size: 13px; }
   .vt-quickreply input[type="submit"],
@@ -1578,8 +1578,18 @@
   /* Prévisualisation/Envoyer alignés à droite : on ne connaît pas la classe
      de leur conteneur natif FA (pas visible dans reference/templates-source,
      {QUICK_REPLY_FORM} est une variable opaque), :has() cible n'importe quel
-     élément qui contient directement ces boutons sans avoir à deviner son nom. */
-  .vt-quickreply *:has(> input[type="submit"]) { display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
+     élément qui contient directement ces boutons sans avoir à deviner son nom.
+     font-size:0 sur le conteneur + reset sur les boutons eux-mêmes : le
+     template natif FA (confirmé dans reference/templates-source/posting_body,
+     même famille de formulaire) sépare ses boutons par un "&nbsp;" en texte
+     brut, qui garde sa propre largeur même en flex — flex:gap seul ne les
+     rapprochait donc pas vraiment. margin-bottom : les remonte légèrement
+     pour ne plus chevaucher le compteur de mots en dessous. */
+  .vt-quickreply *:has(> input[type="submit"]) {
+    display: flex; justify-content: flex-end; align-items: center;
+    gap: 6px; flex-wrap: wrap; font-size: 0; margin-bottom: 6px;
+  }
+  .vt-quickreply *:has(> input[type="submit"]) input[type="submit"] { font-size: 12px; }
 
   /* Avatar du membre connecté, à gauche de la zone d'écriture (pas en overlay
      dessus) : .vt-qr-row est le vrai conteneur flex créé en JS autour de

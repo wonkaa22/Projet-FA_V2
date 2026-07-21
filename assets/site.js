@@ -986,7 +986,6 @@
   if (!qr) { return; }
 
   var avatarDone = false;
-  var toggleDone = false;
   var counterEl = null;
 
   function ensureAvatarRow() {
@@ -1014,10 +1013,14 @@
   }
 
   function ensureToggle() {
-    if (toggleDone) { return; }
     var toolbar = qr.querySelector('.sceditor-toolbar');
     if (!toolbar) { return; }
-    toggleDone = true;
+    /* Pas de drapeau "déjà fait" (même correctif que ensureIframeStyle) :
+       SCEditor semble recréer sa barre d'outils après notre premier passage
+       (son propre script d'init est asynchrone), ce qui supprimait notre
+       bouton posé sur l'ancienne instance sans jamais le reposer sur la
+       nouvelle — d'où le bouton "toujours absent" malgré le fix précédent. */
+    if (toolbar.querySelector('.vt-sc-toggle')) { return; }
     var toggle = document.createElement('div');
     toggle.className = 'sceditor-button vt-sc-toggle';
     toggle.title = 'Afficher plus d\'options de mise en forme';
