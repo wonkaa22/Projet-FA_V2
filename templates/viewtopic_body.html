@@ -62,12 +62,15 @@
 	<div id="p{postrow.displayed.U_POST_ID}" class="content-frame vt-post {postrow.displayed.ROW_COUNT}{postrow.displayed.ONLINE_IMG_NEW} post--{postrow.displayed.U_POST_ID} {postrow.displayed.GROUP}"{postrow.displayed.THANK_BGCOLOR} style="{postrow.displayed.DISPLAYABLE_STATE}">
 		<div style="position:relative; top:-30px; width:1px;" id="{postrow.displayed.U_POST_ID}"></div>
 
-		<!-- Bandeau plein-largeur : nom + groupe/rang sur une image décorative -->
-		<div class="vt-post-banner ph ph-dark">
-			<div class="vt-banner-overlay">
+		<!-- Bandeau plein-largeur : fond uni, nom + groupe/rang à gauche, petite
+		     image décorative (champ de profil "Image de déco", extraite en JS
+		     depuis .vt-stats plus bas — voir pfaViewtopicPosts) bordée à droite. -->
+		<div class="vt-post-banner">
+			<div class="vt-banner-text">
 				<span class="vt-banner-name">{postrow.displayed.POSTER_NAME}</span>
 				<span class="vt-rank">{postrow.displayed.POSTER_RANK_NEW}{postrow.displayed.RANK_IMAGE}</span>
 			</div>
+			<div class="vt-banner-img"></div>
 		</div>
 
 		<!-- Colonne gauche : fiche express du personnage -->
@@ -146,18 +149,18 @@
 			<!-- BEGIN switch_likes_active -->
 			<div class="vt-likes fa_like_div">
 				<button class="vt-like-btn rep-button {postrow.displayed.switch_likes_active.C_VOTE_LIKE}" data-href="{postrow.displayed.switch_likes_active.U_VOTE_LIKE}" data-href-rm="{postrow.displayed.switch_likes_active.U_VOTE_RM_LIKE}">
-					<i class="fa-solid fa-thumbs-up"></i> {postrow.displayed.switch_likes_active.L_LIKE} {postrow.displayed.switch_likes_active.COUNT_VOTE_LIKE}
+					{postrow.displayed.switch_likes_active.L_LIKE} {postrow.displayed.switch_likes_active.COUNT_VOTE_LIKE}
 				</button>
 				<!-- BEGIN switch_dislike_button -->
 				<button class="vt-like-btn rep-button {postrow.displayed.switch_likes_active.switch_dislike_button.C_VOTE_DISLIKE}" data-href="{postrow.displayed.switch_likes_active.switch_dislike_button.U_VOTE_DISLIKE}" data-href-rm="{postrow.displayed.switch_likes_active.switch_dislike_button.U_VOTE_RM_LIKE}">
-					<i class="fa-solid fa-thumbs-down"></i> {postrow.displayed.switch_likes_active.switch_dislike_button.L_DISLIKE} {postrow.displayed.switch_likes_active.switch_dislike_button.COUNT_VOTE_DISLIKE}
+					{postrow.displayed.switch_likes_active.switch_dislike_button.L_DISLIKE} {postrow.displayed.switch_likes_active.switch_dislike_button.COUNT_VOTE_DISLIKE}
 				</button>
 				<!-- END switch_dislike_button -->
 				<!-- BEGIN switch_like_list -->
-				{postrow.displayed.switch_likes_active.switch_like_list.D_LIKE_LIST}
+				<span class="vt-like-list">{postrow.displayed.switch_likes_active.switch_like_list.D_LIKE_LIST}</span>
 				<!-- END switch_like_list -->
 				<!-- BEGIN switch_dislike_list -->
-				{postrow.displayed.switch_likes_active.switch_dislike_list.D_DISLIKE_LIST}
+				<span class="vt-like-list">{postrow.displayed.switch_likes_active.switch_dislike_list.D_DISLIKE_LIST}</span>
 				<!-- END switch_dislike_list -->
 			</div>
 			<!-- END switch_likes_active -->

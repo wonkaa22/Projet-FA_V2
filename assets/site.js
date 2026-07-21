@@ -875,18 +875,22 @@
   setInterval(render, 30 * 60 * 1000);
 })();
 
-/* ---------- VIEWTOPIC_BODY : numérotation, rang vide, boutons MP/Fiche/Relations ----------
+/* ---------- VIEWTOPIC_BODY : numérotation, rang vide, boutons MP/Fiche/Relations, image de déco ----------
    Même technique que sur Selenujo (FA_viewtopic_body.html) pour la numérotation
    et le rang : Forumactif ne fournit pas nativement de "#1, #2..." par message,
    et le bloc de rang peut rester "visuellement vide" (espace/texte invisible)
    même sans rang assigné — d'où un vrai test JS (textContent + présence d'une
    image), un simple :empty en CSS ne suffisant pas dans ce cas.
 
-   MP/Fiche/Relations : "URL Fiche" et "URL Relations" sont deux champs de
-   profil personnalisés parmi d'autres (boucle profile_field, voir le
-   template) — repérés ici par leur libellé, retirés de la liste générique de
-   stats, et transformés en vrais boutons texte. "MP" est extrait du lien
-   natif PM_IMG (masqué dans .vt-pm-holder) plutôt que d'afficher l'icône
+   MP/Fiche/Relations/Image de déco : ce sont des champs de profil personnalisés
+   parmi d'autres (boucle profile_field, voir le template) — repérés ici par
+   leur libellé, retirés de la liste générique de stats, et transformés en
+   vrais boutons texte (Fiche/Relations) ou déplacés dans le bandeau (Image de
+   déco). Important : {LABEL} arrive déjà de FA avec son propre " : " à la fin
+   (ex. "URL Fiche : ", repéré via l'inspecteur) — on l'enlève avant de comparer,
+   sinon la comparaison ne matche jamais (bug initial : les boutons Fiche/
+   Relations n'apparaissaient jamais, même champs remplis). "MP" est extrait du
+   lien natif PM_IMG (masqué dans .vt-pm-holder) plutôt que d'afficher l'icône
    brute FA — même famille de technique que pfaOnlineNamesOnly()/pfaNewMember()
    plus haut dans ce fichier (extraire le vrai contenu FA, puis reconstruire
    notre propre habillage). */
@@ -902,6 +906,10 @@
     return a;
   }
 
+  function normalizeLabel(labelEl) {
+    return labelEl.textContent.trim().toLowerCase().replace(/\s*:\s*$/, '');
+  }
+
   posts.forEach(function (post, i) {
     var numEl = post.querySelector('.vt-post-num');
     if (numEl) { numEl.textContent = '#' + (i + 1); }
@@ -912,11 +920,11 @@
     }
 
     var actions = post.querySelector('.vt-profile-actions');
-    if (!actions) { return; }
+    var bannerImg = post.querySelector('.vt-banner-img');
 
     var pmHolder = post.querySelector('.vt-pm-holder');
     var pmLink = pmHolder ? pmHolder.querySelector('a[href]') : null;
-    if (pmLink && pmLink.getAttribute('href')) {
+    if (actions && pmLink && pmLink.getAttribute('href')) {
       actions.appendChild(makeProfileBtn('MP', pmLink.getAttribute('href')));
     }
 
@@ -925,15 +933,25 @@
       var valEl = stat.querySelector('.vt-stat-val');
       if (!labelEl || !valEl) { return; }
 
-      var label = labelEl.textContent.trim().toLowerCase();
-      if (label !== 'url fiche' && label !== 'url relations') { return; }
+      var label = normalizeLabel(labelEl);
 
-      var link = valEl.querySelector('a[href]');
-      var href = link ? link.getAttribute('href') : valEl.textContent.trim();
-      if (href) {
-        actions.appendChild(makeProfileBtn(label === 'url fiche' ? 'Fiche' : 'Relations', href));
+      if (actions && (label === 'url fiche' || label === 'url relations')) {
+        var link = valEl.querySelector('a[href]');
+        var href = link ? link.getAttribute('href') : valEl.textContent.trim();
+        if (href) {
+          actions.appendChild(makeProfileBtn(label === 'url fiche' ? 'Fiche' : 'Relations', href));
+        }
+        stat.style.display = 'none';
+        return;
       }
-      stat.style.display = 'none';
+
+      if (bannerImg && (label === 'image de déco' || label === 'image de deco')) {
+        var img = valEl.querySelector('img');
+        if (img) {
+          bannerImg.appendChild(img.cloneNode(true));
+        }
+        stat.style.display = 'none';
+      }
     });
   });
 })();

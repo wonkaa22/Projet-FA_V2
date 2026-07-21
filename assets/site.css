@@ -1427,14 +1427,16 @@
      voulu). */
   .vt-post.online::before, .vt-post.online::after { content: none !important; }
 
-  /* Bandeau plein-largeur (nom + groupe/rang) au-dessus des 2 colonnes */
-  .vt-post-banner { grid-column: 1 / -1; position: relative; height: 64px; border-radius: 12px; overflow: hidden; }
-  .vt-banner-overlay {
-    position: absolute; inset: 0; display: flex; align-items: center; justify-content: space-between;
-    gap: 10px; padding: 0 16px;
-    background: linear-gradient(90deg, rgba(13,27,42,0.55), rgba(13,27,42,0.1));
-  }
-  .vt-banner-name { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; font-size: 20px; color: var(--bg-page); }
+  /* Bandeau plein-largeur (nom + groupe/rang) au-dessus des 2 colonnes : fond
+     uni, l'image décorative (champ de profil "Image de déco", extraite en JS
+     depuis .vt-stats — voir pfaViewtopicPosts) ne prend qu'un coin, bordée. */
+  .vt-post-banner { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; border-radius: 12px; background: var(--section); }
+  .vt-banner-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .vt-banner-name { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; font-size: 20px; color: var(--ink-hi-light); }
+  /* Ratio demandé : 260x85 */
+  .vt-banner-img { flex-shrink: 0; width: 150px; aspect-ratio: 260 / 85; border-radius: 8px; overflow: hidden; border: 1px solid rgba(224,225,221,0.25); }
+  .vt-banner-img:empty { display: none; }
+  .vt-banner-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
   /* Colonne gauche : fiche express du personnage */
   .vt-profile { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; padding: 16px 14px; }
@@ -1448,20 +1450,27 @@
      (test JS sur le contenu réel, :empty seul ne suffit pas — un vide "visuel"
      côté FA n'est pas forcément un vide DOM, piège déjà rencontré sur
      Selenujo). Le :empty ci-dessous reste une sécurité pour le cas simple.
-     Utilisé ici dans le bandeau (.vt-post-banner), pas dans la colonne fiche. */
-  .vt-rank { font-size: 11px; font-style: italic; color: var(--bg-page); background: rgba(13,27,42,0.45); border-radius: 8px; padding: 4px 10px; white-space: nowrap; }
+     Utilisé dans le bandeau (.vt-post-banner), en dessous du pseudo. */
+  .vt-rank { font-size: 11px; font-style: italic; color: var(--ink-muted-light); }
   .vt-rank:empty { display: none; }
   .vt-stats { width: 100%; background: rgba(0,0,0,0.12); border-radius: 10px; padding: 8px 10px; font-size: 11px; line-height: 1.6; text-align: left; }
   .vt-stat { display: flex; gap: 4px; }
-  .vt-stat-label { color: var(--ink-muted-light); font-weight: 600; flex-shrink: 0; }
-  .vt-stat-label::after { content: ':'; }
+  /* {LABEL} arrive déjà de FA avec son propre " : " et sa propre couleur en
+     style inline (repéré via l'inspecteur : <span class="label"><span
+     style="color:#444444;">Pronoms</span> : </span>) — pas de ':' ajouté ici
+     (ça faisait un "::" en double), et la couleur inline est neutralisée sur
+     tous les enfants pour garder nos tokens plutôt que le gris fixe de FA. */
+  .vt-stat-label, .vt-stat-label * { color: var(--ink-muted-light) !important; font-weight: 600; }
+  .vt-stat-label { flex-shrink: 0; }
   .vt-stat-val { color: var(--ink-body-light); word-break: break-word; }
   /* MP/Fiche/Relations : boutons texte construits en JS (pfaViewtopicPosts),
-     pas les icônes brutes FA — voir le commentaire en tête de template. */
+     pas les icônes brutes FA — voir le commentaire en tête de template.
+     Bordure en ink-muted (pas --section) : la carte fiche (.gborder) a déjà
+     un fond --section, une bordure de la même couleur y devenait invisible. */
   .vt-profile-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; justify-content: center; }
   .vt-profile-actions:empty { display: none; }
   .vt-profile-btn {
-    background: transparent; border: 1px solid var(--section); color: var(--ink-body-light);
+    background: transparent; border: 1px solid var(--ink-muted-light); color: var(--ink-body-light);
     border-radius: 6px; padding: 5px 10px; font-size: 10.5px; text-align: center;
     letter-spacing: 0.3px; text-decoration: none;
   }
@@ -1469,7 +1478,10 @@
   /* PM_IMG natif FA, gardé hors champ juste pour en extraire l'URL en JS. */
   .vt-pm-holder { display: none; }
 
-  /* Colonne droite : le message lui-même */
+  /* Colonne droite : le message lui-même. flex-direction column + le corps
+     du message en flex:1 (voir .vt-post-body) : les boutons/likes tout en bas
+     restent ancrés au bas du cadre même si le message est court, plutôt que
+     de suivre directement la fin du texte. */
   .vt-postcard { display: flex; flex-direction: column; padding: 14px 16px; gap: 10px; min-width: 0; }
   .vt-post-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding-bottom: 8px; border-bottom: 1px solid rgba(224,225,221,0.12); font-size: 11px; color: var(--ink-muted-light); }
   .vt-post-num { color: var(--ink-hi-light); font-weight: 600; }
@@ -1492,16 +1504,30 @@
      peine de le répéter sur chaque message (même choix que sur Selenujo). */
   .vt-post:not(:first-of-type) .vt-post-subject { display: none; }
 
-  .vt-post-body { font-size: 13.5px; line-height: 1.7; color: var(--ink-body-light); }
+  /* flex:1 : absorbe tout l'espace vertical disponible dans .vt-postcard,
+     ce qui pousse .vt-likes tout en bas du cadre quel que soit la longueur
+     du message (demande explicite : rester "fixe" en bas). */
+  .vt-post-body { flex: 1; font-size: 13.5px; line-height: 1.7; color: var(--ink-body-light); }
   .vt-post-body img { max-width: 100%; }
   .vt-edited { font-size: 10.5px; font-style: italic; color: var(--ink-muted-light); }
   .vt-edited:empty { display: none; }
   .vt-signature { margin-top: 8px; padding-top: 8px; border-top: 1px dashed rgba(224,225,221,0.15); font-size: 11px; color: var(--ink-muted-light); }
   .vt-signature:empty { display: none; }
 
-  .vt-likes { display: flex; gap: 8px; padding-top: 8px; border-top: 1px solid rgba(224,225,221,0.12); }
-  .vt-like-btn { display: inline-flex; align-items: center; gap: 6px; background: var(--section); color: var(--ink-body-light); border: none; border-radius: 8px; padding: 6px 12px; font-size: 11px; cursor: pointer; }
-  .vt-like-btn.on { background: var(--frame-grad); color: var(--chip-ink); }
+  .vt-likes { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding-top: 8px; border-top: 1px solid rgba(224,225,221,0.15); }
+  /* Fond uni plat, sans icône ni couleur de statut (j'aime/pas j'aime) —
+     seule différence : un dégradé au clic/déjà-voté (.on), le natif FA ne
+     nous donne pas de nom de classe fiable pour cet état, à affiner une fois
+     visible en vrai. */
+  .vt-like-btn { background: var(--section) !important; color: var(--ink-body-light) !important; border: none !important; border-radius: 8px; padding: 6px 14px; font-size: 11px; cursor: pointer; }
+  .vt-like-btn:active, .vt-like-btn.on { background: var(--frame-grad) !important; color: var(--chip-ink) !important; }
+  /* Liste "X aime ce message" (D_LIKE_LIST/D_DISLIKE_LIST) : markup natif FA
+     inconnu à l'avance (séparateur "|", liens...) — reset générique sur tout
+     ce qu'il contient plutôt qu'une reprise classe par classe, pour que ça
+     suive nos tokens au lieu du bleu/bordure par défaut de FA. */
+  .vt-like-list { font-size: 10px; color: var(--ink-muted-light); }
+  .vt-like-list, .vt-like-list * { border-color: rgba(224,225,221,0.15) !important; color: inherit !important; }
+  .vt-like-list a { color: var(--ink-hi-light) !important; }
 
   .vt-hidden-msg { text-align: center; font-style: italic; color: var(--ink-muted-light); }
 
