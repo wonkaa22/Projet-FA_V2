@@ -116,7 +116,11 @@
      vrai site, les pages ont une hauteur variable : on passe donc à min-height +
      sidebar collante (voir .sidebar-shell) pour garder le même rendu visuel
      (colonne fixe, contenu qui défile) sur une page qui peut dépasser l'écran. */
-  .pfa-wrap { max-width: 1600px; min-height: calc(100vh - 60px); margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+  /* margin-top plutôt que de compter sur le padding-top de body : Forumactif
+     injecte un "body { padding: 0 !important; }" ailleurs sur la page qui
+     l'écrase silencieusement (repéré via DevTools) — 24px choisi pour
+     correspondre au margin-bottom de .pfa-fa-footer (même souffle haut/bas). */
+  .pfa-wrap { max-width: 1600px; min-height: calc(100vh - 60px); margin: 24px auto 0; display: flex; flex-direction: column; gap: 14px; }
 
   .layout { display: flex; gap: 14px; align-items: flex-start; flex: 1; min-height: 0; }
 
