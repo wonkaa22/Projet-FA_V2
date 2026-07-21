@@ -601,9 +601,6 @@
   @media (max-width: 1300px) {
     .welcome-grid { grid-template-columns: 1fr 1fr; }
     .welcome-grid > .stack-cards.row-layout { grid-column: 1 / -1; }
-    /* Sur sa propre ligne pleine largeur, "Date" peut grandir au-delà de
-       160px (flex-grow:1) au lieu de rester coincée à sa largeur de base. */
-    .stack-cards.row-layout .event-card { flex: 1 1 220px; }
   }
   /* .pfa-welcome-panel (pas juste .panel) : Forumactif utilise nativement une
      classe .panel/.inner + spans .corners-top/.corners-bottom pour son propre
@@ -711,6 +708,16 @@
      plus bas), on veut que "Date" profite de l'espace libéré plutôt que de
      rester coincée à 160px quand son titre passe sur deux lignes. */
   .stack-cards.row-layout .event-card { flex: 0 1 160px; height: 100%; }
+  /* Placé APRÈS la règle de base ci-dessus (et non avec les autres media
+     queries plus haut dans le fichier) : à spécificité égale, c'est l'ordre
+     dans le fichier qui tranche, pas la présence d'une condition media —
+     un override mis avant la règle de base se ferait donc écraser par elle
+     (piège déjà rencontré avec .side-toggle). Même flex:1 que .mini-card
+     juste au-dessus pour un partage à peu près égal ("un peu équivalent aux
+     derniers messages"), demandé une fois que le bloc a toute la largeur. */
+  @media (max-width: 1300px) {
+    .stack-cards.row-layout .event-card { flex: 1; }
+  }
   .event-card { position: relative; border-radius: 14px; overflow: hidden; }
   .event-card .event-img { position: absolute; inset: 0; border-radius: 0; }
   .event-overlay-top {
