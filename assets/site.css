@@ -592,6 +592,16 @@
   .admin-frame { background: var(--frame2); border-radius: 20px; padding: 6px; }
   .hero-banner { height: 220px; border-radius: 14px; }
   .welcome-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.05fr) minmax(0, 1.35fr); gap: 12px; }
+  /* En dessous de 1300px, la 3e colonne (Derniers messages + Date, largeur
+     fixe 160px) devient trop étroite : "Derniers messages" (flex:1) absorbe
+     toute la perte de largeur et son texte finit par revenir à la ligne
+     lettre par lettre (repéré via DevTools à 1138px). Repli en 2 colonnes,
+     avec ce bloc sur sa propre ligne pleine largeur pour lui laisser la
+     place dont il a besoin, jusqu'au seuil du bandeau (880px). */
+  @media (max-width: 1300px) {
+    .welcome-grid { grid-template-columns: 1fr 1fr; }
+    .welcome-grid > .stack-cards.row-layout { grid-column: 1 / -1; }
+  }
   /* .pfa-welcome-panel (pas juste .panel) : Forumactif utilise nativement une
      classe .panel/.inner + spans .corners-top/.corners-bottom pour son propre
      composant de boîte arrondie sur de nombreuses pages natives (inscription/
