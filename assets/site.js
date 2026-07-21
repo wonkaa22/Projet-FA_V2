@@ -956,6 +956,27 @@
   });
 })();
 
+/* ---------- VIEWTOPIC_BODY : état "déjà voté" persistant des boutons j'aime/pas ----------
+   Forumactif ne donne pas de nom de classe connu à l'avance pour "vous avez
+   déjà réagi ainsi" — data-href-rm (lien pour RETIRER le vote) est en revanche
+   un signal fiable : il n'est rempli que si un vote existe déjà. On pose la
+   classe .is-voted en conséquence au chargement, et on la resynchronise via
+   MutationObserver plutôt qu'un délai arbitraire après clic : le vote se fait
+   en AJAX sans recharger la page, et Forumactif échange lui-même data-href/
+   data-href-rm sur le bouton une fois le vote pris en compte (bascule j'aime
+   <-> retirer) — l'observer réagit dès que ça arrive, quel que soit le délai
+   réel de sa propre requête. */
+(function pfaViewtopicLikeState() {
+  document.querySelectorAll('.vt-like-btn').forEach(function (btn) {
+    function sync() {
+      var rm = btn.getAttribute('data-href-rm');
+      btn.classList.toggle('is-voted', !!(rm && rm.trim()));
+    }
+    sync();
+    new MutationObserver(sync).observe(btn, { attributes: true, attributeFilter: ['data-href-rm'] });
+  });
+})();
+
 /* ---------- VIEWTOPIC_BODY : fil d'ariane, "::" -> flèche ----------
    NAV_CAT_DESC arrive de Forumactif déjà formaté en texte brut avec ses
    propres "::" entre catégories : impossible à remplacer proprement dans le

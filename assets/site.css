@@ -1520,7 +1520,11 @@
      nous donne pas de nom de classe fiable pour cet état, à affiner une fois
      visible en vrai. */
   .vt-like-btn { background: var(--section) !important; color: var(--ink-body-light) !important; border: none !important; border-radius: 8px; padding: 6px 14px; font-size: 11px; cursor: pointer; }
-  .vt-like-btn:active, .vt-like-btn.on { background: var(--frame-grad) !important; color: var(--chip-ink) !important; }
+  /* Etat "déjà voté" persistant (pas un survol/appui passager) : classe posée
+     en JS d'après data-href-rm (voir pfaViewtopicLikeState dans site.js),
+     seule donnée fiable pour "cette réaction est déjà la vôtre" — pas de nom
+     de classe FA connu à l'avance pour ça. */
+  .vt-like-btn.is-voted { background: var(--frame-grad) !important; color: var(--chip-ink) !important; }
   /* Liste "X aime ce message" (D_LIKE_LIST/D_DISLIKE_LIST) : markup natif FA
      inconnu à l'avance (séparateur "|", liens...) — reset générique sur tout
      ce qu'il contient plutôt qu'une reprise classe par classe, pour que ça
