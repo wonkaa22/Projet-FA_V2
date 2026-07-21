@@ -162,8 +162,8 @@
      ci-dessous reproduit cette position centrée pour que la colonne fixe
      s'aligne avec le reste de la mise en page ; .main-content compense
      l'espace laissé par la sidebar sortie du flux (voir plus bas).
-     34px (au lieu de 16px) : les boutons ronds .side-toggle débordent de
-     18px à gauche de la colonne (left:-18px, voir plus bas) — sans cette
+     42px (au lieu de 16px) : les boutons ronds .side-toggle débordent de
+     26px à gauche de la colonne (left:-26px, voir plus bas) — sans cette
      marge supplémentaire, ils dépassaient du bord de l'écran sur les
      largeurs où le calc() est plafonné à son minimum. */
   .sidebar-shell {
@@ -175,7 +175,7 @@
        haute (même --sidebar-top des deux côtés du calc) pour une colonne
        centrée verticalement. */
     position: fixed; top: var(--sidebar-top, 30px);
-    left: max(34px, calc((100vw - 1600px) / 2 + 34px));
+    left: max(42px, calc((100vw - 1600px) / 2 + 42px));
     height: calc(100vh - (var(--sidebar-top, 30px) * 2));
     z-index: 10;
   }
@@ -232,7 +232,10 @@
   .sidebar.frame1 { background: var(--frame1); }
   .side-toggle {
     position: absolute;
-    left: -18px;
+    /* -26px (au lieu de -18px) : décale les boutons un peu plus loin du bord
+       de la sidebar pour ne plus toucher le contenu intérieur (nav, avatar
+       du membre connecté) qui démarre juste après le padding de .sidebar. */
+    left: -26px;
     width: 36px; height: 36px;
     border-radius: 50%;
     background: var(--section);
