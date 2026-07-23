@@ -1194,3 +1194,16 @@
     });
   });
 })();
+
+/* ---------- POSTING_BODY : bouton pour afficher/masquer les smileys ----------
+   Le panneau smileys natif FA (#smiley-box) réduisait en permanence la
+   largeur réelle de la zone d'écriture — replié par défaut (voir .pb-smiley-box
+   dans site.css), révélé par ce petit bouton plutôt que d'être toujours là. */
+(function pfaPostingEmojiToggle() {
+  var toggle = document.querySelector('.pb-emoji-toggle');
+  var box = document.querySelector('.pb-smiley-box');
+  if (!toggle || !box) { return; }
+  toggle.addEventListener('click', function () {
+    box.classList.toggle('pb-open');
+  });
+})();

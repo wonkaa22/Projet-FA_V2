@@ -1456,7 +1456,16 @@
   .vt-profile { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; padding: 16px 14px; }
   /* Ratio demandé : 200x320px */
   .vt-avatar { width: 100%; aspect-ratio: 200 / 320; border-radius: 10px; overflow: hidden; }
-  .vt-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  /* !important sur les 4 : {POSTER_AVATAR} rend un <img> avec son propre
+     style en ligne (style="max-width:200px;max-height:320px", confirmé via
+     reference/Inspecteurs et codes sources forum fonctionnel/
+     code-source_previewpost.txt) — un style en ligne bat n'importe quelle
+     règle externe qui n'a pas elle-même !important, donc notre width:100%
+     perdait face à ce max-width:200px fixe. C'est très probablement la
+     vraie cause de "l'avatar toujours trop grand/mal positionné" dans
+     posting_topic_review (conteneur réduit à 52px, mais l'image elle-même
+     restait bloquée à 200px par son propre style, débordant de son cadre). */
+  .vt-avatar img { width: 100% !important; height: 100% !important; max-width: 100% !important; max-height: 100% !important; object-fit: cover; display: block; }
   /* Icône seule (pas de texte "En ligne"/"Hors ligne", pas de puce) : lune/
      soleil plutôt qu'un point de couleur générique, cohérent avec le reste du
      thème (widget lunaire, bouton clair/sombre) — voir title="" pour le texte,
@@ -1730,6 +1739,13 @@
      aucune règle dupliquée ici pour ces classes. */
   .pb-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; font-size: 26px; color: var(--ink-hi-light); }
   .pb-form, .pb-rules, .pb-review-head, .pb-warning-box { color: var(--ink-body-light); }
+  /* Dégradé discret (pas le rose vif de --frame-grad, juste une touche dans
+     les mêmes tons) sur les deux cadres-titres demandés — une fine teinte
+     superposée au fond --frame2 habituel des .content-frame plutôt qu'un
+     dégradé plein, pour rester "pas criard". */
+  .pb-head, .pb-review-head {
+    background: linear-gradient(135deg, rgba(96,73,90,0.35), rgba(255,111,145,0.12)), var(--frame2);
+  }
   /* form[name="post"] : pas un .content-frame lui-même, juste le conteneur
      qui regroupe plusieurs .content-frame (fiche, options, dés...) — sans ce
      flex/gap, .outer-frame (display:flex, direct children only) ne peut plus
@@ -1762,12 +1778,21 @@
   .pb-icon-row { display: flex; flex-wrap: wrap; gap: 6px; }
   .pb-icon-opt { display: inline-flex; align-items: center; cursor: pointer; }
 
-  /* Emoji natif FA à droite de la zone d'écriture (position native FA,
-     perdue dans une 1re version qui empilait tout verticalement) — même
-     piège de fond blanc que la réponse rapide sur le cadre lui-même. */
-  .pb-message-row { display: flex; gap: 12px; align-items: flex-start; margin-top: 10px; }
+  /* Emoji natif FA repliés par défaut (pfaPostingEmojiToggle dans site.js) :
+     visibles en permanence, ils réduisaient la largeur réelle de la zone
+     d'écriture — masqués tant que .pb-smiley-box n'a pas .pb-open, révélés
+     par le petit bouton rond .pb-emoji-toggle à côté du texte plutôt que de
+     pousser en permanence sur la largeur du textarea. */
+  .pb-message-row { display: flex; gap: 8px; align-items: flex-start; margin-top: 10px; }
   .pb-message-box { flex: 1; min-width: 0; margin-top: 0; position: relative; }
-  .pb-smiley-box { flex-shrink: 0; width: 170px; background: var(--section) !important; border-radius: 8px; padding: 10px; }
+  .pb-emoji-toggle {
+    flex-shrink: 0; width: 34px; height: 34px; border-radius: 8px;
+    background: var(--section); color: var(--ink-body-light); border: none;
+    display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px;
+  }
+  .pb-emoji-toggle:hover { background: var(--frame-grad); color: var(--chip-ink); }
+  .pb-smiley-box { display: none; flex-shrink: 0; width: 170px; background: var(--section) !important; border-radius: 8px; padding: 10px; }
+  .pb-smiley-box.pb-open { display: block; }
   .pb-smiley-box, .pb-smiley-box * { border-color: rgba(224,225,221,0.15) !important; }
   .pb-helpline { font-size: 11px; color: var(--ink-muted-light); }
 
@@ -1810,6 +1835,10 @@
   .pb-form.is-open .pb-collapse-arrow { transform: rotate(180deg); }
   .pb-collapse-body { display: none; margin-top: 10px; }
   .pb-form.is-open .pb-collapse-body { display: block; }
+  /* Cadre plus compact tant que replié (dés/pièces jointes/options/
+     calendrier/SEO) : moins de padding vertical qu'un .content-frame normal,
+     l'essentiel de la hauteur normale ne sert qu'au contenu masqué. */
+  .pb-form:has(.pb-collapsible):not(.is-open) { padding-top: 12px; padding-bottom: 12px; }
 
   /* Prévisualisation : avatar/nom remplis en JS depuis _userdata
      (pfaPostingPreview dans site.js) — pas de variable FA "auteur" fournie

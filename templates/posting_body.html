@@ -34,7 +34,13 @@
 
 	<div class="content-frame pb-form" id="postingbox">
 		<!-- BEGIN switch_post_a -->
-		<div class="h3">{L_POST_A}</div>
+		<!-- Texte en dur ("Réponse", pas {L_POST_A}) : la variable FA répète le
+		     même texte que le titre H1 tout en haut de page ("Poster une
+		     réponse" deux fois) — raccourci ici pour ne pas le dupliquer,
+		     demandé explicitement. Si ce template sert aussi à créer un nouveau
+		     sujet (pas juste répondre), ce texte fixe perdrait alors sa justesse
+		     — à surveiller. -->
+		<div class="h3">Réponse</div>
 		<!-- END switch_post_a -->
 
 		<div class="pb-fields">
@@ -120,9 +126,10 @@
 			</div>
 			<!-- END switch_description -->
 
-			<!-- Emoji natif FA gardés (le sélecteur visuel) à droite de la zone
-			     d'écriture (position native FA, perdue dans une 1re version en
-			     pile verticale) ; les 3 lignes de statut (HTML/BBCode/smileys
+			<!-- Emoji natif FA gardés (le sélecteur visuel), repliés par défaut
+			     derrière un bouton latéral (pfaPostingEmojiToggle dans site.js) :
+			     visibles en permanence, ils réduisaient la largeur réelle de la
+			     zone d'écriture. Les 3 lignes de statut (HTML/BBCode/smileys
 			     activés) volontairement omises — demandé explicitement, ce ne
 			     sont que des rappels de configuration admin. -->
 			<div class="pb-message-row">
@@ -132,6 +139,7 @@
 						<textarea id="text_editor_textarea" name="message">{MESSAGE}</textarea>
 					</div>
 				</div>
+				<button type="button" class="pb-emoji-toggle" title="Afficher/masquer les smileys"><i class="fa-solid fa-face-smile"></i></button>
 				<div id="smiley-box" class="pb-smiley-box">
 					<div id="smileyContainer">{L_SMILIES_PREVIEW_NEW}</div>
 				</div>
@@ -150,13 +158,13 @@
 			{S_HIDDEN_FORM_FIELDS}
 			<input type="hidden" name="lt" value="{LAST_TOPIC_ID}" />
 			<!-- BEGIN switch_preview -->
-			<input class="pb-btn pb-btn-ghost" type="submit" name="preview" value="{L_PREVIEW}" tabindex="5" />
+			<input class="pb-btn" type="submit" name="preview" value="{L_PREVIEW}" tabindex="5" />
 			<!-- END switch_preview -->
 			<!-- BEGIN switch_draft -->
-			<input class="pb-btn pb-btn-ghost {BTN_DRAFT_CLASS}" type="submit" name="draft" value="{L_DRAFT}" title="{L_DRAFT_TITLE}" tabindex="7" accesskey="d" {switch_draft.DISABLED_DRAFT} />
+			<input class="pb-btn {BTN_DRAFT_CLASS}" type="submit" name="draft" value="{L_DRAFT}" title="{L_DRAFT_TITLE}" tabindex="7" accesskey="d" {switch_draft.DISABLED_DRAFT} />
 			<!-- END switch_draft -->
 			<!-- BEGIN switch_publish -->
-			<input class="pb-btn pb-btn-ghost" type="submit" name="publish" value="{L_PUBLISH}" tabindex="8" accesskey="p" />
+			<input class="pb-btn" type="submit" name="publish" value="{L_PUBLISH}" tabindex="8" accesskey="p" />
 			<!-- END switch_publish -->
 			<input class="pb-btn pb-btn-primary" type="submit" name="post" value="{L_SUBMIT}" title="{L_SUBMIT_TITLE}" tabindex="6" accesskey="s" {DISABLED_SUBMIT} />
 			<!-- BEGIN switch_signature -->
