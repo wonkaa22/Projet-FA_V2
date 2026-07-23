@@ -967,6 +967,20 @@
   el.innerHTML = el.innerHTML.replace(/\s*::\s*/g, ' <i class="fa-solid fa-chevron-right vt-crumb-sep"></i> ');
 })();
 
+/* ---------- VIEWTOPIC_BODY : bouton "Répondre" dans la pilule du bas ----------
+   Cloné depuis le bouton du haut (.vt-head-row) plutôt que redemandé à FA via
+   un second switch_user_authreply/authnoreply dans le template : Forumactif
+   semble mal gérer un même nom de bloc répété deux fois dans un seul
+   template (constaté en direct — bouton absent, mise en page de son
+   conteneur cassée). Cloner le bouton déjà rendu évite complètement le
+   problème. */
+(function pfaViewtopicBottomReply() {
+  var topBtn = document.querySelector('.vt-head-row .vt-reply-btn');
+  var bottomActions = document.querySelector('.vt-bottom-actions');
+  if (!topBtn || !bottomActions) { return; }
+  bottomActions.insertBefore(topBtn.cloneNode(true), bottomActions.firstChild);
+})();
+
 /* ---------- VIEWTOPIC_BODY : réponse rapide (avatar, compteur de mots, barre d'outils repliable) ----------
    Technique reprise quasi telle quelle de Selenujo (selenujo.js, fonction
    selViewtopicTransform) : _userdata['avatar_link'] est la variable JS

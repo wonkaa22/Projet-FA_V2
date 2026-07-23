@@ -1580,8 +1580,17 @@
     font-weight: 700 !important;
     border-bottom: none !important;
   }
+  /* !important nécessaire : confirmé via l'inspecteur (Noémie) que
+     fa.default.min.css pose ".sceditor-container iframe, .sceditor-container
+     textarea { background-color: rgb(255,255,255); }" — même spécificité que
+     la règle ci-dessous (1 classe + 1 tag des deux côtés), et cette feuille
+     de style est chargée par le script d'init de SCEditor, donc après la
+     nôtre : à spécificité égale, c'est elle qui gagnait par ordre d'arrivée.
+     Nos tentatives précédentes (style injecté dans l'iframe, puis en ligne
+     avec priorité) ciblaient en fait la mauvaise piste : ce n'était pas un
+     souci d'iframe vs. textarea, juste un !important manquant ici. */
   .vt-quickreply textarea,
-  .vt-quickreply input[type="text"] { width: 100%; background: var(--section); color: var(--ink-body-light); border: 1px solid rgba(224,225,221,0.15); border-radius: 8px; padding: 10px; font-size: 13px; }
+  .vt-quickreply input[type="text"] { width: 100%; background: var(--section) !important; color: var(--ink-body-light) !important; border: 1px solid rgba(224,225,221,0.15); border-radius: 8px; padding: 10px; font-size: 13px; }
   .vt-quickreply input[type="submit"],
   .vt-quickreply .button1,
   .vt-quickreply .button2 { background: var(--frame-grad); color: var(--chip-ink); border: none; border-radius: 8px; padding: 8px 18px; font-size: 12px; cursor: pointer; }
