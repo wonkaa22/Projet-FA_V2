@@ -1,0 +1,705 @@
+<!DOCTYPE HTML><html lang="fr"><head><meta charset="utf-8" /><meta http-equiv="X-UA-Compatible" content="IE=edge" /><meta name="viewport" content="width=device-width, initial-scale=1" /><script>const pref = window.matchMedia("(prefers-color-scheme: dark)").matches;let mode = localStorage.getItem('mode');let sidebaretat = localStorage.getItem('etatsidebar');let animetat = localStorage.getItem('anims');if ((!mode && pref) || mode == 'dark') {document.documentElement.classList.add('dark');}else {document.documentElement.classList.add('light');}if (sidebaretat == 'fermee') {document.documentElement.classList.add('sidebarfermee');} else {document.documentElement.classList.add('sidebarouverte');}if (animetat == 'paused') {document.documentElement.classList.add('paused');}</script><script>if (screen.width < 481) {var viewport = document.querySelector("meta[name=viewport]");viewport.parentNode.removeChild(viewport);var newViewport = document.createElement("meta");newViewport.setAttribute("name", "viewport");newViewport.setAttribute("content", "initial-scale=0.7, width=480");document.head.appendChild(newViewport);}</script><meta http-equiv="content-type" content="text/html; charset=utf-8" /><link rel="shortcut icon" type="image/x-icon" href="https://i.servimg.com/u/f31/20/60/24/53/vexqvz10.png" /><link rel="apple-touch-icon" sizes="57x57" href="/images/icons-57.png">
+<link rel="apple-touch-icon" href="/images/icons-180.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/images/icons-60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/images/icons-72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/images/icons-76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/images/icons-114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/images/icons-120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/images/icons-144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/images/icons-152.png">
+<link rel="apple-touch-icon" sizes="167x167" href="/images/icons-167.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/icons-180.png">
+<meta name="apple-mobile-web-app-title" content="peekaboo-rpg"><link rel="manifest" href="/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/images/icons-144.png"><title>Poster une réponse</title><link rel="preconnect" href="https://illipro.net" /><link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" /><link rel="stylesheet" href="/21-ltr.css" type="text/css" />
+<link rel="stylesheet" href="/css-1-17.css" type="text/css" /><link rel="search" type="application/opensearchdescription+xml" href="/improvedsearch.xml" title="Peek a Boo!" /><link rel="search" type="application/opensearchdescription+xml" href="https://www.annuairedeforums.com/search/improvedsearch.xml" title="Rechercher des forums" /><script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script><script src="https://illipro.net/rs3/18/frm/lang/fr.js" type="text/javascript"></script><script type="application/ld+json">{"@context":"https:\/\/schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https:\/\/peekaboo-rpg.forumactif.com\/","name":"Peek a Boo!"}},{"@type":"ListItem","position":2,"item":{"@id":"https:\/\/peekaboo-rpg.forumactif.com\/c8-%E6%88%AF%E3%82%8C-flood","name":"\u622f\u308c Flood"}},{"@type":"ListItem","position":3,"item":{"@id":"https:\/\/peekaboo-rpg.forumactif.com\/f109-espace-detente","name":"Espace d\u00e9tente"}},{"@type":"ListItem","position":4,"item":{"@id":"https:\/\/peekaboo-rpg.forumactif.com\/f120-jeux","name":"Jeux"}},{"@type":"ListItem","position":5,"item":{"@id":"https:\/\/peekaboo-rpg.forumactif.com\/t8320-notification-inutile","name":"Notification inutile"}}]}</script>
+<script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=UA-144388882-1" ></script>
+<script type="text/javascript" src="https://illipro.net/rs3/18/frm/jquery/cookie/jquery.cookie.js" ></script>
+<script type="text/javascript" src="https://illipro.net/rs3/18/frm/mentions/tooltipster.js" ></script>
+<script type="text/javascript" src="https://illipro.net/rs3/18/frm/mentions/init.js" ></script>
+<script type="text/javascript" src="https://illipro.net/rs3/18/frm/embed/FA_Embed.js" ></script>
+<script type="text/javascript" src="https://illipro.net/rs3/18/frm/jquery/toolbar/FAToolbar.js" ></script>
+<script type="text/javascript" src="https://illipro.net/rs3/18/frm/json/json2.js" ></script>
+<script type="text/javascript" src="https://illipro.net/rs3/18/frm/jquery/printf/printf.js" ></script>
+<script type="text/javascript" src="https://illipro.net/rs3/18/frm/jquery/dotdotdot/jquery.dotdotdot-1.5.6.js" ></script>
+<script type="text/javascript" src="https://illipro.net/rs3/18/frm/jquery/notif/FA.js" ></script><script type="text/javascript">
+//<![CDATA[
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-144388882-1');
+
+	var setScreen = function() {
+		if (typeof document.documentElement !== "undefined"){
+			var w = document.documentElement.clientWidth;
+			var h = document.documentElement.clientHeight;
+			$.cookie("_fa-screen", '{"w":' + w + ',"h":' + h + '}', { expires: 15, domain: 'peekaboo-rpg.forumactif.com' });
+		}
+	};
+	setScreen();
+
+	document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll("input[type='password']").forEach(function(passwordField) {
+        const container = document.createElement("div");
+        container.classList.add("password-container");
+
+        passwordField.parentNode.insertBefore(container, passwordField);
+        container.appendChild(passwordField);
+
+        const eyeIcon = document.createElement("i");
+        eyeIcon.classList.add("material-symbols-outlined");
+        eyeIcon.textContent = "visibility";
+
+        eyeIcon.addEventListener("click", function() {
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                eyeIcon.textContent = "visibility_off";
+            } else {
+                passwordField.type = "password";
+                eyeIcon.textContent = "visibility";
+            }
+        });
+
+        container.appendChild(eyeIcon);
+    });
+});
+	
+
+        var _userdata = new Object();
+        _userdata["tpl_used"] = "awesomebb";
+        _userdata["tpl_mobile"] = "mobi_modern";
+        _userdata["session_logged_in"] = 1;
+        _userdata["chatbox_activate"] = 1;
+        _userdata["chat_level"] = 0;
+        _userdata["publication_activate"] = 0;
+        _userdata["event_activate"] = 0;
+        _userdata["page_publi"] = "/publi";
+        _userdata["page_events"] = "/events";
+        _userdata["page_chatbox"] = "/chatbox";
+        _userdata["page_imagelist"] = "/images";
+        _userdata["page_donate"] = "/buy-credits";
+        _userdata["page_edit_profile"] = "/profile?mode=editprofile";
+        _userdata["page_login"] = "/login";
+        _userdata["page_logout"] = "/login?logout=1&tid=5f6729799583ae2fed4ce69e7d506654&key=4a8b95";
+        _userdata["page_home"] = "/";
+        _userdata["page_search"] = "";
+        _userdata["darkmode_exist"] = 1;
+        _userdata["donate"] = 0;
+        _userdata["imagelist_active"] = 0;        
+		_userdata["discover_active"] = 1;
+
+        var _board = new Object();
+        _board["tpl_version"] = "awesomebb";
+    
+        var _lang = new Object();
+        _lang["Desktop"] = "Version web";
+        _lang["Publications"] = "Publications en ligne";
+        _lang["Donate_points"] = "Achat de crédits";
+        _lang["Events"] = "Évènements";
+        _lang["Home"] = "Accueil";
+        _lang["ChatBox"] = "ChatBox";
+        _lang["Darkmode"] = "Mode Sombre";
+        _lang["Display_cmp"] = "Cookies";
+        _lang["menu_images"] = "Dernières images";
+        _lang["DIRECTION"] = "ltr";
+        _lang["Lightmode"] = "";
+        _lang["Login"] = "Connexion";
+        _lang["Logout"] = "Déconnexion";
+		_lang["Header_navmenu"] = "Barre de navigation";
+_userdata["register"] = "/register";
+
+            _userdata["notifications_page"] = "/profile?mode=editprofile&amp;page_profil=notifications";
+            _lang["Register"] = "S'enregistrer";
+            _lang["Notifications_page"] = "Notifications";
+var toggleServimgPopup = function() {
+    $("#popupServimg").toggleClass("close");
+    var n = $(document).height();
+    if (!$("#popupServimg").hasClass("close")) {
+        $("#wrap").css("padding-bottom", "50vh");
+        $('html, body').animate({scrollTop: (n + 50) + "vh"},'50');
+        $('#iframe_popup_servimg')[0].contentWindow.focus();
+    } else {
+        $("#wrap").css("padding-bottom", "0");
+    }
+}
+var launchPopupServimgMobile = function()
+{
+    if(!$("#popupServimg").length) {
+       var modal = "<div id='popupServimg' class='close'><div class='popupContainer  popupAwesomebb'><div id='popupServimgBtnClose' onclick='toggleServimgPopup();'><i class='material-symbols-outlined'>clear</i></div><div class='popupContainerIframe'><iframe id='iframe_popup_servimg' src='https://servimg.com/multiupload.php?mode=fae&account=noemie.du.73@hotmail.fr&id=30252cc5eb7b29ebb42c6a912a03f5e3&f=11640325' frameborder='0' scrolling='yes'></iframe></div></div></div>";
+       $("body").append(modal);
+        window.addEventListener("message",function(event) {
+        if(event.origin !== "https://' . SERVIMG_DOMAIN . '" && !event.data.data) return;
+            var textarea = $("textarea[name=\'message\']");
+            var current = textarea.val() + event.data.data;
+            textarea.val(current);
+        },false);
+    }
+    toggleServimgPopup();
+
+}
+            var _navbar = {"home":{"label":"Accueil","url":"\/"},"members":{"label":"Membres","url":"\/memberlist"},"groups":{"label":"Groupes","url":"\/groups"},"search":{"label":"Rechercher","url":"\/search"},"discover":{"label":"Activit\u00e9s","url":"\/discover"},"logout":{"label":"D\u00e9connexion","url":"\/login?logout=1&tid=5f6729799583ae2fed4ce69e7d506654&key=4a8b95"},"profile":{"label":"Profil","url":"\/profile?mode=editprofile"},"private_msg":{"label":"Messagerie","url":"\/privmsg?folder=inbox"},"notification":{"label":"Notifications","url":"\/profile?mode=editprofile&amp;page_profil=notifications"},"portal":{"label":"Portail","url":"\/portal"}};
+
+                if(typeof(_userdata) == "undefined")
+					var _userdata = new Object();
+                _userdata["session_logged_in"] = 1;
+                _userdata["username"] = "Misato Takamoto";
+                _userdata["user_id"] = 1178;
+                _userdata["tpl_used"] = "awesomebb";                
+                _userdata["user_level"] = 0;
+                _userdata["user_lang"] = "fr";
+                _userdata["activate_toolbar"] = 1;
+                _userdata["fix_toolbar"] = 0;
+                _userdata["notifications"] = 1;
+                _userdata["avatar"] = "<img loading=\"lazy\" src=\"https://sig.grumpybumpers.com/host/misatotakamoto.gif\"  alt=\"Misato Takamoto\" style=\"max-width: 200px; max-height: 320px\"  />";
+                _userdata["avatar_link"] = "https://sig.grumpybumpers.com/host/misatotakamoto.gif";
+                _userdata["user_posts"] = 793;
+                _userdata["user_nb_privmsg"] = 70;
+                _userdata["groupcolor"] = "DA6CBB";
+                _userdata["user_points"] = 8277;
+                
+
+				if(typeof(_lang) == "undefined")
+					var _lang = new Object();
+                _lang["Share"] = "Partagez";
+                _lang["Login"] = "Connexion";
+                _lang["Register"] = "S'enregistrer";
+                _lang["Welcome"] = "Bienvenue";
+                _lang["Notifications"] = "Notifications";
+                _lang["See_my_profile"] = "Voir mon profil";
+                _lang["Edit_profile"] = "Editer mon profil";
+                _lang["All_Topics"] = "Mes sujets";
+                _lang["All_Messages"] = "Mes messages";
+                _lang["js_topics_followed"] = "Mes sujets suivis";
+                _lang["Admin_panel"] = "Panneau d'administration";
+                _lang["Logout"] = "Déconnexion";
+                _lang["Follow"] = "Suivre";
+                _lang["Unfollow"] = "Ne plus suivre";
+
+                _lang["Notif_see_all"] = "Voir toutes les notifications";
+				_lang["Notif_no_notifications"] = "Aucune nouvelle notification";
+                _lang["All_PMs"] = "Mes messages privés";
+                _lang["rank_title"] = "";
+                _lang["No_assigned_rank"] ="Aucun rang spécial assigné";
+                _lang["Posts"] = "Messages";
+                _lang["PMs"] = "MPs";
+                _lang["Reputation"] ="Réputation";
+                _lang["Twitter"] ="forumactif";
+                _lang["copied_id"] ="Valeur copiée";
+            _lang["Notif_friend_req"] = "Vous avez reçu une <a href=\"/profile?mode=editprofile&amp;nid=%(nid)s&amp;page_profil=friendsfoes\">demande d'ami</a> de la part de <a href=\"/u%(id)d\">%(name)s</a>";
+_lang["Notif_priv_msg"] = "Vous avez reçu un <a href=\"/privmsg?folder=inbox&amp;nid=%(nid)s\">message privé</a> de la part de <a href=\"/u%(id)d\">%(name)s</a>";
+_lang["Notif_wall_msg"] = "<a href=\"/u%(id)d\">%(name)s</a> a écrit un message sur <a href=\"/u%(self)dwall?nid=%(nid)s\">votre mur</a>";
+_lang["Notif_topic_watch2"] = "<a href=\"/u%(id)d\">%(name)s</a> a écrit un message dans <a href=\"/t%(topic_id)d-%(topic_name)s?nid=%(nid)s#%(post_id)d\">%(topic_title)s</a>";
+			_lang["Notif_topic_watch_p2"] = "<a href=\"/u%(id)d\">%(name)s</a> a écrit un message dans <a href=\"/t%(topic_id)dp%(start)d-%(topic_name)s?nid=%(nid)s#%(post_id)d\">%(topic_title)s</a>";
+			_lang["Notif_topic_watch_guest2"] = "Un invité a écrit un message dans <a href=\"/t%(topic_id)d-%(topic_name)s?nid=%(nid)s#%(post_id)d\">%(topic_title)s</a>";
+			_lang["Notif_topic_watch_p_guest2"] = "Un invité a écrit un message dans <a href=\"/t%(topic_id)dp%(start)d-%(topic_name)s?nid=%(nid)s#%(post_id)d\">%(topic_title)s</a>";                
+			_lang["Notif_topic_watch"] = "<a href=\"/u%(id)d\">%(name)s</a> a écrit un message dans <a href=\"/t%(topic_id)d-%(topic_name)s?nid=%(nid)s#%(post_id)d\">un sujet que vous suivez</a>";
+			_lang["Notif_topic_watch_p"] = "<a href=\"/u%(id)d\">%(name)s</a> a écrit un message dans <a href=\"/t%(topic_id)dp%(start)d-%(topic_name)s?nid=%(nid)s#%(post_id)d\">un sujet que vous suivez</a>";
+			_lang["Notif_topic_watch_guest"] = "Un invité a écrit un message dans <a href=\"/t%(topic_id)d-%(topic_name)s?nid=%(nid)s#%(post_id)d\">un sujet que vous suivez</a>";
+			_lang["Notif_topic_watch_p_guest"] = "Un invité a écrit un message dans <a href=\"/t%(topic_id)dp%(start)d-%(topic_name)s?nid=%(nid)s#%(post_id)d\">un sujet que vous suivez</a>";
+_lang["Notif_forum_watch"] = "%(name)s a publié <a href=\"/t%(topic_id)d-%(topic_name)s?nid=%(nid)s\">%(topic_title)s</a> dans le forum <a href=\"/f%(forum_id)d-%(forum_name)s?nid=%(nid)s\">%(forum_title)s</a>";
+_lang["Notif_followers_new_topic"] = "Le membre suivi <a href=\"/u%(id)d\">%(name)s</a> a publié <a href=\"/t%(topic_id)d-%(topic_name)s?nid=%(nid)s\">%(topic_title)s</a>";
+_lang["Notif_followers_new_post2"] = "Le membre suivi <a href=\"/u%(id)d\">%(name)s</a> a répondu au sujet <a href=\"/t%(topic_id)d-%(topic_name)s?nid=%(nid)s#%(post_id)d\">%(topic_title)s</a>";
+			_lang["Notif_followers_new_post_p2"] = "Le membre suivi <a href=\"/u%(id)d\">%(name)s</a> a répondu au sujet <a href=\"/t%(topic_id)dp%(start)d-%(topic_name)s?nid=%(nid)s#%(post_id)d\">%(topic_title)s</a>";     
+			_lang["Notif_followers_new_post"] = "Le membre suivi <a href=\"/u%(id)d\">%(name)s</a> a publié un message <a href=\"/t%(topic_id)d-%(topic_name)s?nid=%(nid)s#%(post_id)d\">dans un sujet</a>";
+			_lang["Notif_followers_new_post_p"] = "Le membre suivi <a href=\"/u%(id)d\">%(name)s</a> a publié un message <a href=\"/t%(topic_id)dp%(start)d-%(topic_name)s?nid=%(nid)s#%(post_id)d\">dans un sujet</a>";
+_lang["Notif_group_req"] = "<a href=\"/u%(id)d\">%(name)s</a> a effectué une demande d'adhésion au groupe <a href=\"/g%(group_id)d-%(group_url_name)s?nid=%(nid)s\">%(group_name)s</a>";
+_lang["Notif_abuse"] = "<a href=\"/admin/?mode=active&amp;nid=%(nid)s&amp;part=misc&amp;sub=support&amp;tid=5f6729799583ae2fed4ce69e7d506654&amp;_tc=1784806441\">Un abus</a> a été signalé";
+_lang["Notif_report"] = "<a href=\"/u%(id)d\">%(name)s</a> a créé un <a href=\"/report?nid=%(nid)s\">rapport de message</a>";
+_lang["Notif_friend_con"] = "<a href=\"/u%(id)d\">%(name)s</a> vient de se connecter au forum";
+_lang["Notif_award"] = "<div class=\"notif_award\" style=\"--award-image:url('%(award_image)s')\"></div><div class=\"notif_award_text\">%(award_notif)s</div>";
+_lang["Notif_donation"] = "<a href=\"/u%(id)d\">%(name)s</a> a réalisé un achat participatif de %(amount)s crédits pour le forum";
+_lang["Notif_mention"] = "<a href=\"/u%(id)d\">%(name)s</a> vous a tagué dans <a href=\"/t%(topic_id)dp%(start)d-%(topic_name)s?nid=%(nid)s#%(post_id)d\">%(topic_title)s</a>"
+_lang["Notif_like"] = " <a href=\"/u%(id)d\">%(name)s</a> aime votre message dans <a href=\"/t%(topic_id)dp%(start)d-%(topic_name)s?nid=%(nid)s#%(post_id)d\">%(topic_display_name)s</a>";
+_lang["Notif_dislike"] = " <a href=\"/u%(id)d\">%(name)s</a> a pleurniché devant votre message dans <a href=\"/t%(topic_id)dp%(start)d-%(topic_name)s?nid=%(nid)s#%(post_id)d\">%(topic_display_name)s</a>";
+_lang["Notif_hashtag"] = "Le mot-clé <a href=\"/tags/%(tag)s\">#%(tag)s</a> a été taggué dans <a href=\"/t%(topic_id)dp%(start)d-%(topic_name)s?nid=%(nid)s#%(post_id)d\">un sujet</a>";
+_lang["Notif_advert_validate"] = "Votre annonce \"%(ad_title)s\" a été validée. <a href=\"/d%(ad_id)d-%(ad_url)s?nid=%(nid)s\">Voir l'annonce</a>";
+			_lang["Notif_advert_delete"] = "Votre annonce \"%(ad_title)s\" a été suprimée.";
+			_lang["Notif_advert_refuse"] = "Votre annonce \"%(ad_title)s\" a été  refusée. <a href=\"/post?d=%(ad_id)d&amp;f=%(forum_id)d&amp;nid=%(nid)s\">Voir l'annonce</a>";
+			_lang["Notif_advert_expired"] = "Votre annonce \"\" est arrivée au terme de sa diffusion. Vous pouvez la remettre en ligne en <a href=\"/post?d=%(ad_id)d&amp;f=%(forum_id)d&amp;nid=%(nid)s\">cliquant ici</a>";
+
+
+                    if(typeof(_board) == "undefined")
+                        var _board = new Object();	
+                    _board["reputation_active"] = 0;
+                    _board["Forumotion"] = "Forumactif";
+                    _board["toolbar_title_url"] = "https://www.forumactif.com";
+                    _board["toolbar_logo"] = "https://2img.net/i/fa/i/toolbar/pa0.png";
+                
+$(document).ready(function(){Toolbar.init({"tbHeight":42,"tbTemplate":"awesomebb"})});
+$(function() {});
+//]]>
+</script>
+
+<link rel="stylesheet" type="text/css" href="https://illipro.net/rs3/18/frm/mentions/tooltipster.css" /><style type="text/css">
+body {}#265a9a {}div.sdf7b6c8 {}
+body { margin: 0; padding: 0 !important; }
+</style>
+<!--[if lte IE 6]>
+<style type="text/css">
+/* http://msdn.microsoft.com/en-us/library/ms537634.aspx#Implement */
+.fa_toolbar_XL_Sized { width: expression(document.documentElement.clientWidth ? (document.documentElement.clientWidth < 980 ? "980px": "100%") : (document.body.clientWidth < 980 ? "980px": "100%")); }
+.fa_toolbar_L_Sized { width: expression(document.documentElement.clientWidth ? (document.documentElement.clientWidth < 774 ? "774px": "auto") : (document.body.clientWidth < 774 ? "774px": "auto")); }
+.fa_toolbar_M_Sized { width: expression(document.documentElement.clientWidth ? (document.documentElement.clientWidth < 519 ? "519px": "auto") : (document.body.clientWidth < 519 ? "519px": "auto")); }
+#fa_toolbar #fa_magnifier, #fa_toolbar #fa_fb, #fa_toolbar #fa_twitter, #fa_toolbar #fa_gp, #fa_toolbar #fa_mail, #fa_toolbar #fa_rss, #fa_toolbar #fa_hide, #fa_toolbar_hidden #fa_show { background-image: url('https://2img.net/i/fa/i/toolbar/toolbar.gif'); width: 30px; height: 30px; cursor: pointer; }
+span.fa_tbMainElement, span.fa_tbMainElement a, #fa_show { zoom: 1; display: inline-block !important; line-height:30px; height: 30px; }
+div.fa_tbMainElement, div.fa_tbMainElement a { zoom: 1; display: inline !important; line-height:30px; height: 30px; }
+#fa_search #fa_textarea { margin-top: 1px; }
+#fa_show { z-index:20002; }
+#fa_menu { display: inline !important; height:30px; line-height:30px; }
+#fa_menulist { width:175px; margin-top:30px; }
+#fa_menulist li.fa_separator { font-size:1px; }
+#fa_menu:hover :visited, #fa_right.notification #fa_notifications { color: #333333; background-color: #FFFFFF; }
+#notif_list { margin-top:30px !important; }
+.fa_fix { position:absolute !important; top: expression(0+((e=document.documentElement.scrollTop)?e:document.body.scrollTop)+"px") !important; z-index:10002; }
+#fa_toolbar #live_notif { width: 330px; position: absolute; margin-top:30px; }
+#fa_toolbar #fa_right #notif_list li { width:32em; }
+</style>
+<![endif]-->
+<!--[if IE 7]>
+<style type="text/css">
+.fa_tbMainElement, .fa_tbMainElement a, #fa_toolbar_hidden > #fa_show { zoom: 1; display: inline !important; }
+#fa_search #fa_textarea { margin-top: 1px; }
+#fa_right > div { zoom: 1; display: inline !important; }
+#fa_menulist { width:175px !important; margin-top: 30px !important; margin-left: 1px !important; }
+#fa_menulist li a { white-space: nowrap; }
+#fa_menulist li.fa_separator { font-size: 1px; line-height: 1px; }
+#fa_toolbar #fa_right #notif_list { margin-top: 30px !important; }
+#fa_toolbar #live_notif { width: 330px; position: absolute; margin-top:30px; }
+#fa_toolbar #fa_right #notif_list li { width:30em; }
+#fa_toolbar #fa_right #notif_list li .contentText { height: 2.6em; }
+</style>
+<![endif]-->
+<script>
+						const publicKey='BF5QeMEK59Qcwp2e4rgbe8kv3zd-pL3oyJCJokN8qiKgVttIT45a8KhlK2XaVn05x8MzcT653qFV4CK8HOmz2Bc';
+					
+						let isSubscribed = false;
+						let swRegistration = null;
+		
+						function urlB64ToUint8Array(base64String) {
+							  const padding = '='.repeat((4 - base64String.length % 4) % 4);
+							  const base64 = (base64String + padding)
+									.replace(/\-/g, '+')
+									.replace(/_/g, '/');
+							
+							  const rawData = window.atob(base64);
+							  const outputArray = new Uint8Array(rawData.length);
+							
+							  for (let i = 0; i < rawData.length; ++i) {
+									outputArray[i] = rawData.charCodeAt(i);
+							  }
+							  return outputArray;
+						}
+						
+						function updateSubscriptionOnServer(subscription) {
+							  
+							  if(subscription !=null){
+								  const key = subscription.getKey('p256dh');
+								  const token = subscription.getKey('auth');
+								  const contentEncoding = (PushManager.supportedContentEncodings || ['aesgcm'])[0];
+								  
+								  if('fetch' in window){
+									  return fetch('ajax/webpush_register.php', {
+										method: 'POST',
+										body: JSON.stringify({
+											endpoint: subscription.endpoint,
+											publicKey: key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null,
+											authToken: token ? btoa(String.fromCharCode.apply(null, new Uint8Array(token))) : null,
+											contentEncoding,
+										}),
+									  }).then(() => subscription);
+								  }else{
+									  
+										var http = new XMLHttpRequest();
+										var url = 'ajax/webpush_register.php';
+										http.open('POST', url, true);
+										
+										//Send the proper header information along with the request
+										http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+										
+										http.onreadystatechange = function() {//Call a function when the state changes.
+											if(http.readyState == 4 && http.status == 200) {
+												alert(http.responseText);
+											}
+										}
+										
+										http.send(JSON.stringify({
+											endpoint: subscription.endpoint,
+											publicKey: key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null,
+											authToken: token ? btoa(String.fromCharCode.apply(null, new Uint8Array(token))) : null,
+											contentEncoding: contentEncoding,
+										}));
+									  
+								  }
+							  }else{
+								  if('fetch' in window){
+								  
+									  return fetch('ajax/webpush_register.php', {
+										method: 'POST',
+										body: JSON.stringify({
+											endpoint: null
+										}),
+									  }).then(() => subscription);
+								  }else{
+									  var http = new XMLHttpRequest();
+										var url = 'ajax/webpush_register.php';
+										http.open('POST', url, true);
+										
+										//Send the proper header information along with the request
+										http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+										
+										http.onreadystatechange = function() {//Call a function when the state changes.
+											if(http.readyState == 4 && http.status == 200) {
+												alert(http.responseText);
+											}
+										}
+										
+										http.send(JSON.stringify({
+											endpoint: subscription.endpoint,
+											publicKey: key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null,
+											authToken: token ? btoa(String.fromCharCode.apply(null, new Uint8Array(token))) : null,
+											contentEncoding,
+										}));
+								  }
+							  }
+						}
+						
+						function subscribeUser() {
+							
+							  const applicationServerKey = urlB64ToUint8Array(publicKey);
+							  swRegistration.pushManager.subscribe({
+									userVisibleOnly: true,
+									applicationServerKey: applicationServerKey
+							  })
+							  .then(function(subscription) {
+								
+									updateSubscriptionOnServer(subscription);
+								
+									isSubscribed = true;
+							  })
+							  .catch(function(err) {
+									console.log('Failed to subscribe the user: ', err.message);
+									unsubscribeUser();
+							  });
+						}
+						
+						function unsubscribeUser() {
+						  swRegistration.pushManager.getSubscription()
+						  .then(function(subscription) {
+							if (subscription) {
+							  return subscription.unsubscribe();
+							}
+						  })
+						  .catch(function(error) {
+							console.log('Error unsubscribing', error);
+						  })
+						  .then(function() {
+							updateSubscriptionOnServer(null);
+							isSubscribed = false;
+						  });
+						}if ('serviceWorker' in navigator && 'PushManager' in window) {
+                            navigator.serviceWorker.register('/serviceworker.js')
+                                .then(function(swReg) {
+                                
+                                  swRegistration = swReg;
+                                  
+                                  
+                                })
+                        }
+                        
+                     </script><script type="text/javascript">
+    $(function(){
+        $("#web_redirect").on("click", function(){
+            var d = new Date();
+            var cookie_string = "_mobile_version=0";
+            d.setTime(d.getTime()+(365*24*60*60*1000));
+            var expires = d.toUTCString();
+            cookie_string += "; path=/";
+            cookie_string += "; domain=" + window.location.hostname;
+            cookie_string += "; expires=" + expires;
+            document.cookie = cookie_string;
+            location.reload();
+        });
+    }) ;
+</script><script type="text/javascript">
+    $(function(){
+        $("#mobi_redirect").on("click", function(){
+            var d = new Date();
+            var cookie_string = "_mobile_version=1";
+            d.setTime(d.getTime()+(365*24*60*60*1000));
+            var expires = d.toUTCString();
+            cookie_string += "; domain=" + window.location.hostname;
+            cookie_string += "; expires=" + expires;
+            document.cookie = cookie_string;
+            location.reload();
+        });
+    }) ;
+</script><script src="/99959.js" type="text/javascript"></script><script type="text/javascript" src="https://illipro.net/rs3/18/frm/twemoji/twemoji.min.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-131155950-1"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-131155950-1', {'anonymize_ip': true, 'store_gac': false, 'cookie_expires': 13 * 30 * 24 * 60 * 60});</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Kaisei+HarunoUmi&display=swap" rel="stylesheet"><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" rel="stylesheet"><link href="https://peekaboorpg.github.io/fonts_v45.css" rel="stylesheet"></head><body id="top"><div class="pab pab_barreshow"><div class="pab_barremobile"><a href="/" class="pab_no_bg"><span class="pab_deg">Peek a Boo&nbsp;!</span> v.4.5</a><div class="pab_barremob_grow"><div class="pab_mob_anims"><input type="checkbox" id="pab_pause_mob"/><label for="pab_pause_mob"><svg id="anim_mob_icpause" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 158.71 229.33"><rect x="4.54" y="31.2" width="60.35" height="166.93" rx="29.74"/><rect x="93.82" y="31.2" width="60.35" height="166.93" rx="29.74"/></svg><svg id="anim_mob_icplay" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 158.7 229.3"><path d="M141.6,147.3l-87.8,72.5c-13.7,11.3-30.5,7.8-40.8-4.5c-5.8-6.9-9.5-16.5-9.5-27.8V42.5c0-31.4,29-49.9,50.4-32.3L87.4,38l54.2,44.8C160.3,98.3,160.3,131.8,141.6,147.3z"/></svg><div class="pab_pause_mob_label">Mettre en pause les animations</div></label></div></div><div class="pab_mode pab_mode_mob"><input type="checkbox" id="pab_mode_mob"/><label for="pab_mode_mob"><span class="pab_mode_label">Mode</span><span class="pab_mode_rond"></span><span class="pab_mode_lueurs"></span><span class="pab_mode_svgs"><svg id="pab_mode_sparkles_mob" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 904 619"><path d="M889.46,414.92,786.13,376.67,747.54,250.21a11.61,11.61,0,0,0-22.2,0L686.76,376.67,583.42,414.92a11.61,11.61,0,0,0,0,21.79L686.7,475l38.6,130.32a11.61,11.61,0,0,0,22.27,0l38.6-130.33,103.3-38.23a11.59,11.59,0,0,0,0-21.78Z"/><path d="M319,180.65,215.68,142.4,177.09,15.93a11.61,11.61,0,0,0-22.2,0L116.31,142.4,13,180.65a11.61,11.61,0,0,0,0,21.78l103.28,38.24L154.85,371a11.61,11.61,0,0,0,22.27,0l38.6-130.32L319,202.42a11.58,11.58,0,0,0,0-21.77Z"/></svg><svg id="pab_mode_nuages_mob" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1447 619"><path d="M695,333c-67.74,13.34-142.94,5.81-210.83,10.54-125.4-1.71-398.12,2.87-409.12,4C-30.32,357.9-8.29,253.9,87.72,259.07c-19.71-54.91,21.75-103.4,77.7-100.66C191.44,66.35,377.15,0,426,137.94c20.49-23.69,144.64-22.84,144.48,67.4C616.54,167,705.83,207.8,723.64,258,731.34,282.63,729.25,326.22,695,333Z"/><path d="M876.09,543.39c55.53,13.33,117.16,5.8,172.81,10.54,102.78-1.71,326.31,2.86,335.33,4,86.4,10.46,68.34-93.54-10.35-88.37,16.15-54.91-17.83-103.41-63.69-100.67-21.33-92.06-173.54-158.4-213.56-20.46-16.79-23.69-118.55-22.84-118.42,67.4-37.77-38.37-111,2.45-125.56,52.68C846.34,493.07,848.06,536.65,876.09,543.39Z"/></svg></span></label></div></div><header class="pab_header"><a href="/" class="pab_no_bg"><div class="pab_titreforum"><div class="pab_deg pab_titrefo_princ">Peek a Boo!</div><div class="pab_hidden">Retour à l'accueil du forum</div><div class="pab_titrefo_princ_ombre"></div><div class="pab_deg pab_titrefo_deux"></div><div class="pab_titrefo_deux_ombre"></div></div><div class="pab_flaque"></div><div class="pab_bellablobs"><div class="pab_version">V.4.5</div><div class="pab_belladonne"></div><div class="pab_blob pab_blobelio"></div><div class="pab_hdtxt"><div class="pab_headtext pab_hdtxt2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32.55 116.64"><rect width="11.15" height="91.13" rx="5.57"/><rect x="21.17" width="11.15" height="52.01" rx="5.57"/><rect x="21.4" y="61.36" width="11.15" height="55.28" rx="5.57"/></svg></div><div class="pab_headkanji pab_prov pab_prov2">諸行無常</div></div><div class="pab_sparkle pab_sprkpaul"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 535"><path d="M190.21,531c8.7,0,15.06-6.36,16.74-15.4C230.72,332.09,225,302,369,284.38c9.38-1,15.74-8,15.74-16.74s-6.36-15.4-15.74-16.74C224,236,230.72,202.85,207,19.37c-1.68-9-8-15.07-16.74-15.07s-15.07,6-16.41,15.07C150,202.85,160,237,21,250.9c-9.71,1.34-16.07,8-16.07,16.74S11.29,283.37,21,284.38C154,304,148.69,332.43,173.8,515.57,175.14,524.61,181.5,531,190.21,531Z"/></svg></div>                </div><div class="pab_blobschpkj1"><div class="pab_headkanji pab_deg pab_poison pab_psn1">ポイズン</div><div class="pab_blobschampis1"><div class="pab_head_champi1"></div><div class="pab_blob pab_blobvlad"></div><div class="pab_blob pab_blobjam"></div><div class="pab_sparkle pab_sprkelio"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 535"><path d="M190.21,531c8.7,0,15.06-6.36,16.74-15.4C230.72,332.09,225,302,369,284.38c9.38-1,15.74-8,15.74-16.74s-6.36-15.4-15.74-16.74C224,236,230.72,202.85,207,19.37c-1.68-9-8-15.07-16.74-15.07s-15.07,6-16.41,15.07C150,202.85,160,237,21,250.9c-9.71,1.34-16.07,8-16.07,16.74S11.29,283.37,21,284.38C154,304,148.69,332.43,173.8,515.57,175.14,524.61,181.5,531,190.21,531Z"/></svg></div></div></div><div class="pab_blobskanjis1"><div class="pab_headkanji pab_prov pab_prov1">森羅万象</div><div class="pab_headtext pab_hdtxt1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 53.95 207.02"><rect width="11.15" height="161.1" rx="5.57"/><rect x="21.17" width="11.15" height="115.37" rx="5.57"/><rect x="21.17" y="124.44" width="11.15" height="21.35" rx="5.57"/><rect x="21.17" y="154.87" width="11.15" height="52.16" rx="5.57"/><rect x="42.8" width="11.15" height="76.06" rx="5.57"/><rect x="42.8" y="85.04" width="11.15" height="52.25" rx="5.57"/></svg></div><div class="pab_blob pab_blobpaul"></div><div class="pab_blob pab_blobkrik"></div></div><div class="pab_blobschampis2"><div class="pab_spkltoxic"><div class="pab_sparkle pab_sprkjam"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 535"><path d="M190.21,531c8.7,0,15.06-6.36,16.74-15.4C230.72,332.09,225,302,369,284.38c9.38-1,15.74-8,15.74-16.74s-6.36-15.4-15.74-16.74C224,236,230.72,202.85,207,19.37c-1.68-9-8-15.07-16.74-15.07s-15.07,6-16.41,15.07C150,202.85,160,237,21,250.9c-9.71,1.34-16.07,8-16.07,16.74S11.29,283.37,21,284.38C154,304,148.69,332.43,173.8,515.57,175.14,524.61,181.5,531,190.21,531Z"/></svg></div><div class="pab_toxic"></div></div><div class="pab_chpblob"><div class="pab_head_champi2"></div><div class="pab_blob pab_blobvince"></div></div><div class="pab_spklpsn"><div class="pab_sparkle pab_sprkvlad"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 535"><path d="M190.21,531c8.7,0,15.06-6.36,16.74-15.4C230.72,332.09,225,302,369,284.38c9.38-1,15.74-8,15.74-16.74s-6.36-15.4-15.74-16.74C224,236,230.72,202.85,207,19.37c-1.68-9-8-15.07-16.74-15.07s-15.07,6-16.41,15.07C150,202.85,160,237,21,250.9c-9.71,1.34-16.07,8-16.07,16.74S11.29,283.37,21,284.38C154,304,148.69,332.43,173.8,515.57,175.14,524.61,181.5,531,190.21,531Z"/></svg></div><div class="pab_headkanji pab_deg pab_poison pab_psn2">毒</div></div></div></a></header><div class="pab_paddings"><nav class="pab_fleches" aria-label="Contrôle de la barre latérale et liens haut et bas"><button class="pab_bouton_lat"><i aria-hidden="true" class="fa-solid fa-angle-left"></i><div class="pab_hidden">Fermer la barre latérale</div></button><script>let fermeraside = document.querySelector('.pab_bouton_lat');let className = "sidebarfermee";let classNameouv = "sidebarouverte";if (document.documentElement.classList.contains(className)) {fermeraside.classList.add('ouvrirsidebar');fermeraside.setAttribute('title', 'Ouvrir la barre latérale');fermeraside.querySelector('.pab_hidden').innerText = "Ouvrir la barre latérale";}fermeraside.addEventListener("click", function () {this.classList.toggle('ouvrirsidebar');document.documentElement.classList.toggle(className);if (document.documentElement.classList.contains(className)) {localStorage.setItem("etatsidebar", "fermee");document.documentElement.classList.remove(classNameouv);fermeraside.setAttribute('title', 'Ouvrir la barre latérale');fermeraside.querySelector('.pab_hidden').innerText = 'Ouvrir la barre latérale';}else {localStorage.removeItem("etatsidebar");document.documentElement.classList.add(classNameouv);fermeraside.setAttribute('title', 'Fermer la barre latérale');fermeraside.querySelector('.pab_hidden').innerText = 'Fermer la barre latérale';}});</script><div class="pab_flech_grow"><div class="pab_butt_anims"><input type="checkbox" id="pab_pause"/><label for="pab_pause"><svg id="anim_butt_icpause" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 158.71 229.33"><rect x="4.54" y="31.2" width="60.35" height="166.93" rx="29.74"/><rect x="93.82" y="31.2" width="60.35" height="166.93" rx="29.74"/></svg><svg id="anim_butt_icplay" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 158.7 229.3"><path d="M141.6,147.3l-87.8,72.5c-13.7,11.3-30.5,7.8-40.8-4.5c-5.8-6.9-9.5-16.5-9.5-27.8V42.5c0-31.4,29-49.9,50.4-32.3L87.4,38l54.2,44.8C160.3,98.3,160.3,131.8,141.6,147.3z"/></svg><div class="pab_pause_label">Mettre en pause les animations</div></label></div></div><div class="pab_boutons_hb"><a href="#top" class="pab_no_bg"><i aria-hidden="true" class="fa-solid fa-angle-up"></i><div class="pab_hidden">Naviguer vers le haut du forum</div></a><a href="#bottom" class="pab_no_bg"><i aria-hidden="true" class="fa-solid fa-angle-down"></i><div class="pab_hidden">Naviguer vers le bas du forum</div></a></div></nav><nav class="pab_onglets_lat" aria-label="Onglets affichant les différents menus"><div class="pab_ongl_sticky"><a href="/" class="pab_home"><i aria-hidden="true" class="fa-regular fa-house"></i><div class="pab_hidden">Revenir à l'accueil du forum</div></a><div class="pab_mode"><input type="checkbox" id="pab_mode"/><label for="pab_mode"><span class="pab_mode_label">Mode</span><span class="pab_mode_rond"></span><span class="pab_mode_lueurs"></span><span class="pab_mode_svgs"><svg id="pab_mode_sparkles" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 904 619"><path d="M889.46,414.92,786.13,376.67,747.54,250.21a11.61,11.61,0,0,0-22.2,0L686.76,376.67,583.42,414.92a11.61,11.61,0,0,0,0,21.79L686.7,475l38.6,130.32a11.61,11.61,0,0,0,22.27,0l38.6-130.33,103.3-38.23a11.59,11.59,0,0,0,0-21.78Z"/><path d="M319,180.65,215.68,142.4,177.09,15.93a11.61,11.61,0,0,0-22.2,0L116.31,142.4,13,180.65a11.61,11.61,0,0,0,0,21.78l103.28,38.24L154.85,371a11.61,11.61,0,0,0,22.27,0l38.6-130.32L319,202.42a11.58,11.58,0,0,0,0-21.77Z"/></svg><svg id="pab_mode_nuages" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1447 619"><path d="M695,333c-67.74,13.34-142.94,5.81-210.83,10.54-125.4-1.71-398.12,2.87-409.12,4C-30.32,357.9-8.29,253.9,87.72,259.07c-19.71-54.91,21.75-103.4,77.7-100.66C191.44,66.35,377.15,0,426,137.94c20.49-23.69,144.64-22.84,144.48,67.4C616.54,167,705.83,207.8,723.64,258,731.34,282.63,729.25,326.22,695,333Z"/><path d="M876.09,543.39c55.53,13.33,117.16,5.8,172.81,10.54,102.78-1.71,326.31,2.86,335.33,4,86.4,10.46,68.34-93.54-10.35-88.37,16.15-54.91-17.83-103.41-63.69-100.67-21.33-92.06-173.54-158.4-213.56-20.46-16.79-23.69-118.55-22.84-118.42,67.4-37.77-38.37-111,2.45-125.56,52.68C846.34,493.07,848.06,536.65,876.09,543.39Z"/></svg></span></label></div><a href="/privmsg?folder=inbox" class="pab_mps"><i aria-hidden="true" class="fa-solid fa-envelope"></i><div class="pab_hidden">Voir les messages privés</div><div class="unread_count"></div></a><button class="pab_notifs" id="notiffi_button"><i aria-hidden="true" class="fa-solid fa-bell"></i><div class="pab_hidden">Afficher les notifications</div><template class="unread_count" type="template/potion" data-name="unread_notifs">[count]</template></button><button class="pab_user pab_onglet_active"><i aria-hidden="true" class="fa-solid fa-user"></i><div class="pab_hidden">Afficher l'onglet utilisateur</div></button><button class="pab_todo"><i aria-hidden="true" class="fa-solid fa-clipboard-list"></i><div class="pab_hidden">Afficher la to-do list</div></button>          <button class="pab_ann"><i aria-hidden="true" class="fa-solid fa-thumbtack"></i><div class="pab_hidden">Afficher les annonces</div></button><button class="pab_menulat"><i aria-hidden="true" class="fa-solid fa-bars-staggered"></i><div class="pab_hidden">Afficher les liens utiles</div></button><button class="pab_search"><i aria-hidden="true" class="fa-solid fa-magnifying-glass"></i><div class="pab_hidden">Afficher la recherche</div></button></div></nav><template type="template/potion" data-name="alert_notif"><div class="notification alert [alert.type]"><div class="notif_details"><div class="notif_avatar">[alert.avatar]</div></div><div class="notif_content"><div class="notif_text">[alert.text]</div></div><button id="alert_dismiss" class="alert_close"><i class="bi bi-x"></i></button></div></template><div class="pab_forum"><aside class="pab_barrelat" aria-label="Informations de compte et liens de navigation"><div class="pab_barrelat_sticky"><div class="pab_barrelat_notifs"><h2 class="pab_barrelat_titre"><span class="pab_deg">Notifications</span></h2><div id="notiffi_panel"><template class="all_notifications" type="template/potion" data-name="all_notifs" tabindex="-1">[isEmpty]<div class="pab_no_notif">[text]</div>[/isEmpty][notifs]<div class="pab_notif [type] [read]" data-notif-id="[id]"><div class="pab_notif_inner"><div class="pab_notif_details"><div class="pab_notif_avatar">[avatar]</div><div class="pab_notif_icon">[icon]</div></div><div class="pab_notif_content"><div class="pab_notif_time"><div class="pab_notif_past"></div> [time]</div><div class="pab_notif_text">[text]</div>                                            </div><button @click="deleteNotif" class="pab_notif_close" tabindex="-1"><i class="fa-solid fa-xmark" aria-hidden="true"></i><div class="pab_hidden">Supprimer</div></button></div></div>[/notifs]</template><div class="pab_notif_manage"><a class="pab_notif_see_all" href="/profile?mode=editprofile&page_profil=notifications">Voir toutes les notifications</a><div class="pab_notif_actions"><button id="notiffi_mark_as_read" tabindex="-1">Marquer comme lu</button><button id="notiffi_delete_all" tabindex="-1">Tout supprimer</button></div></div></div></div><div class="pab_barrelat_profil pab_lat_active"><div class="pab_bl_titre pab_texture"><div class="pab_bl_profil"></div><script>if (_userdata['avatar'] != undefined && _userdata['username'] != undefined) {if(_userdata['username'] == 'Anonymous'){document.querySelector('.pab_bl_profil').innerHTML = _userdata['avatar'] + '<h2 class="pab_bl_user"><span class="pab_deg">Invité</span></h2>';}else{document.querySelector('.pab_bl_profil').innerHTML = _userdata['avatar'] + '<h2 class="pab_bl_user"><span class="pab_deg">' + _userdata['username'] + '</span></h2>';}}</script><div style="display:none"><a class="mainmenu" href="/login?logout=1&amp;tid=5f6729799583ae2fed4ce69e7d506654&amp;key=4a8b95" rel="nofollow" id="logout" ><img id="i_icon_mini_logout" src="https://2img.net/i/fa/empty.gif" border="0"  hspace="2" alt="Déconnexion [ Misato Takamoto ]" title="Déconnexion [ Misato Takamoto ]" />Déconnexion [ Misato Takamoto ]</a> &nbsp;</li><li><a class="mainmenu" href="/"><img id="i_icon_mini_index" src="https://2img.net/i/fa/empty.gif" border="0"  hspace="2" alt="Accueil" title="Accueil" />Accueil</a> &nbsp;</li><li><a class="mainmenu" href="/portal"><img id="i_icon_mini_portal" src="https://2img.net/i/fa/empty.gif" border="0"  hspace="2" alt="Portail" title="Portail" />Portail</a> &nbsp;</li><li><a class="mainmenu" href="/discover"><img id="i_icon_mini_discover" src="https://2img.net/i/fa/empty.gif" border="0"  hspace="2" alt="Activités" title="Activités" />Activités</a> &nbsp;</li><li><a class="mainmenu" href="/search" onclick="showhide(document.getElementById('search_menu')); return false;"><img id="i_icon_mini_search" src="https://2img.net/i/fa/empty.gif" border="0"  hspace="2" alt="Rechercher" title="Rechercher" />Rechercher</a> &nbsp;<span></span></li><li><a class="mainmenu" href="/memberlist"><img id="i_icon_mini_members" src="https://2img.net/i/fa/empty.gif" border="0"  hspace="2" alt="Membres" title="Membres" />Membres</a> &nbsp;</li><li><a class="mainmenu" href="/groups"><img id="i_icon_mini_groups" src="https://2img.net/i/fa/empty.gif" border="0"  hspace="2" alt="Groupes" title="Groupes" />Groupes</a> &nbsp;</li><li><a class="mainmenu" href="/profile?mode=editprofile"><img id="i_icon_mini_profile" src="https://2img.net/i/fa/empty.gif" border="0"  hspace="2" alt="Profil" title="Profil" />Profil</a> &nbsp;</li><li><a class="mainmenu" href="/privmsg?folder=inbox" rel="nofollow"><img id="i_icon_mini_message" src="https://2img.net/i/fa/empty.gif" border="0"  hspace="2" alt="Messagerie" title="Messagerie" />Messagerie</a> &nbsp;</div><div class="pab_switcheroo"><h3 class="pab_switch_titre"><span class="pab_deg">Multicomptes</span> <i aria-hidden="true" class="fa-solid fa-angle-down"></i></h3><div id="switcheroo" class="switcheroo"></div><script src="https://sd-g1.archive-host.com/membres/up/20c75818e16b168db14cae3fcfbae78b8a51378b/CSS/PaB/monomer.js"></script><script src="https://sd-g1.archive-host.com/membres/up/20c75818e16b168db14cae3fcfbae78b8a51378b/CSS/PaB/switcheroo.js"></script><script>(function () {new Switcheroo('#switcheroo', {enableReorder: true, /* activer le drag&drop pour l'ordre des comptes (true/false) */updateAvatar: true, /* activer le clique droit pour charger un nouvel avatar (true/false) */confirm: false, /* demande une confirmation avant le changement de compte */deleteIcon: '×', /* accepte html, icone pour supprimer un compte lié */addIcon: '<i class="fa-solid fa-plus"></i>', /* accepte html, icone qui ouvre le formulaire de connexion et d'association */errorMsg: 'Une erreur est survenue lors du switcheroo.'});})();</script></div></div><nav class="pab_bl_menu_user" aria-label="Menu utilisateur"><ul class="pab_no_ul"><li><a id="pab_mnprof">Voir mon profil <i aria-hidden="true" class="fa-solid fa-angle-right"></i></a></li><li><a href="/profile?mode=editprofile">Éditer mon profil <i aria-hidden="true" class="fa-solid fa-angle-right"></i></a></li><li><a href="/privmsg?folder=inbox">Voir mes mps <i aria-hidden="true" class="fa-solid fa-angle-right"></i></a></li><li><a href="/search?search_id=egosearch">Voir mes sujets <i aria-hidden="true" class="fa-solid fa-angle-right"></i></a></li><li><a href="/search?search_id=newposts">Voir les nouveaux sujets <i aria-hidden="true" class="fa-solid fa-angle-right"></i></a></li><li><a href="/login?logout">Déconnexion <i aria-hidden="true" class="fa-solid fa-angle-right"></i></a></li></ul><script>if (_userdata['user_id'] != undefined) {$('#pab_mnprof').attr('href', '/u' + _userdata['user_id']);}</script></nav></div><div class="pab_barrelat_todo"><h2 class="pab_barrelat_titre"><span class="pab_deg">To-do list</span><div class="pab_todo_attrib">de <span id="pab_todo_nom"></span></div></h2><script>if (_userdata['username'] != undefined) {document.querySelector('#pab_todo_nom').innerHTML = _userdata['username'];}</script><div id="pab_gestiorp"><div class="pab_gest_st"><div id="pab_addrp_statutmb"></div></div><ul id="pab_addrp_liste" class="pab_addrp_wait pab_no_ul"><li class="pab_addrp_chargement"><div class="loader"></div></li></ul><div class="pab_gest_bt"><button id="pab_add_rp" tabindex="-1"><i class="fa-solid fa-plus"></i><span>Ajouter un RP</span></button><button id="pab_addrp_save" tabindex="-1"><i class="fa-solid fa-floppy-disk"></i><span>Sauvegarder</span></button></div></div></div><div class="pab_barrelat_annonces"><div class="pab_barrelat_col"><h2 class="pab_barrelat_titre"><span class="pab_deg">Petites annonces</span></h2><ul class="pab_barrelat_annliste pab_no_ul"></ul></div><div class="pab_barrelat_col2"><h2 class="pab_barrelat_titre"><span class="pab_deg">Top-sites</span></h2><ul class="pab_liste_ts pab_no_ul"><li><a class="pab_champi1" href="http://www.root-top.com/topsite/justmarried/in.php?ID=1098" target="_blank">Top-site 1</a><span></span></li><li><a class="pab_champi1" href="http://www.root-top.com/topsite/melu/in.php?ID=5132" target="_blank">Top-site 2</a><span></span></li><li><a class="pab_champi1" href="http://www.root-top.com/topsite/virtu4ldreaiviz/in.php?ID=5733" target="_blank">Top-site 3</a><span></span></li><li><a class="pab_champi1" href="http://www.root-top.com/topsite/virtu4lgames/in.php?ID=6679" target="_blank">Top-site 4</a><span></span></li><li><a class="pab_champi1" href="http://www.root-top.com/topsite/gilgamesh/in.php?ID=8537" target="_blank">Top-site 5</a><span></span></li><li><a class="pab_champi1" href="https://www.forumrpg.fr/vote/peek-a-boo-9oda4e" target="_blank">Top-site 6</a><span></span></li></ul><div class="pab_scores"><div class="pab_score teamun"></div><div class="pab_score teamdeux"></div></div></div></div><div class="pab_barrelat_menu"><h2 class="pab_barrelat_titre" id="pab_liensutiles"><span class="pab_deg">Liens utiles</span></h2><nav aria-describedby="pab_liensutiles"><ul class="pab_barrelat_liensutiles pab_no_ul"><li><a href="/h4-guidebook"><i aria-hidden="true" class="fa-solid fa-book"></i><span>Guidebook</span><i aria-hidden="true" class="fa-solid fa-angle-right"></i></a></li><li><a href="/h4-guidebook#faq"><i aria-hidden="true" class="fa-solid fa-circle-question"></i><span>FAQ</span><i aria-hidden="true" class="fa-solid fa-angle-right"></i></a></li><li><a href="/memberlist"><i aria-hidden="true" class="fa-solid fa-ghost"></i><span>Fantômes</span><i aria-hidden="true" class="fa-solid fa-angle-right"></i></a></li><li><a href="/t17-boutique-acquerir-des-objets"><i aria-hidden="true" class="fa-solid fa-basket-shopping"></i><span>Boutique</span><i aria-hidden="true" class="fa-solid fa-angle-right"></i></a></li><li><a href="/t287-demander-ses-points-d-amusement"><i aria-hidden="true" class="fa-solid fa-coins"></i><span>Demander ses PA</span><i aria-hidden="true" class="fa-solid fa-angle-right"></i></a></li><li><a href="/h4-guidebook#encyclopedie"><i aria-hidden="true" class="fa-solid fa-vial"></i><span>Encyclopédie</span><i aria-hidden="true" class="fa-solid fa-angle-right"></i></a></li><li><a href="/h4-guidebook#orgas"><i aria-hidden="true" class="fa-solid fa-skull"></i><span>Organisations</span><i aria-hidden="true" class="fa-solid fa-angle-right"></i></a></li></ul></nav></div><div class="pab_barrelat_search"><h2 class="pab_barrelat_titre"><span class="pab_deg">Recherche</span></h2><form method="get" action="/search?search_where=11" id="search-main"><label for="search_keywords" class="pab_hidden">Rechercher</label><div class="pab_rechcadre"><input type="text" name="search_keywords" maxlength="128" placeholder="Rechercher" /><button aria-label="Envoyer" id="pab_rechsubmit" type="submit"><i class="fa-solid fa-magnifying-glass pab_deg"></i></button></div></form></div></div><script>document.querySelectorAll('.pab_barrelat_sticky a').forEach(lien => {lien.setAttribute('tabindex', '-1');});document.querySelectorAll('.pab_barrelat_sticky input').forEach(input => {input.setAttribute('tabindex', '-1');});document.querySelectorAll('.pab_barrelat_sticky button').forEach(button => {button.setAttribute('tabindex', '-1');});document.querySelector('.all_notifications').setAttribute('tabindex', '-1');document.querySelectorAll('.pab_lat_active a').forEach(lien => {lien.setAttribute('tabindex', '0');});document.querySelectorAll('.pab_lat_active input').forEach(input => {input.setAttribute('tabindex', '0');});document.querySelectorAll('.pab_lat_active button').forEach(button => {button.setAttribute('tabindex', '0');});function pabOnglets(bouton, onglet) {document.querySelector('.pab_onglet_active').classList.remove('pab_onglet_active');document.querySelectorAll('.pab_barrelat_sticky a').forEach(lien => {lien.setAttribute('tabindex', '-1');});document.querySelectorAll('.pab_barrelat_sticky button').forEach(button => {button.setAttribute('tabindex', '-1');});document.querySelectorAll('.pab_barrelat_sticky input').forEach(input => {input.setAttribute('tabindex', '-1');});document.querySelector('.all_notifications').setAttribute('tabindex', '-1');bouton.classList.add('pab_onglet_active');if (!document.querySelector('.' + onglet).classList.contains('pab_lat_active')) {document.querySelector('.pab_lat_active').classList.add('pab_lat_was');document.querySelector('.pab_lat_active').classList.remove('pab_lat_active');document.querySelector('.' + onglet).classList.add('pab_lat_active');document.querySelectorAll('.' + onglet + ' a').forEach(lien => {lien.setAttribute('tabindex', '0');});document.querySelectorAll('.' + onglet + ' button').forEach(button => {button.setAttribute('tabindex', '0');});document.querySelectorAll('.' + onglet + ' input').forEach(input => {input.setAttribute('tabindex', '0');});if (onglet == 'pab_notifs'){document.querySelector('.' + onglet + ' .all_notifications').setAttribute('tabindex', '0');}setTimeout(function () {document.querySelector('.pab_lat_was').classList.remove('pab_lat_was');}, 400);}};if(document.querySelector('.pab_notifs') != undefined){document.querySelector('.pab_notifs').addEventListener("click", (e) => { pabOnglets(e.currentTarget, 'pab_barrelat_notifs') });}document.querySelector('.pab_user').addEventListener("click", (e) => { pabOnglets(e.currentTarget,'pab_barrelat_profil') });if(document.querySelector('.pab_todo') != undefined){document.querySelector('.pab_todo').addEventListener("click", (e) => { pabOnglets(e.currentTarget, 'pab_barrelat_todo') });}                  document.querySelector('.pab_ann').addEventListener("click", (e) => { pabOnglets(e.currentTarget,'pab_barrelat_annonces') });document.querySelector('.pab_menulat').addEventListener("click", (e) => { pabOnglets(e.currentTarget,'pab_barrelat_menu') });document.querySelector('.pab_search').addEventListener("click", (e) => { pabOnglets(e.currentTarget,'pab_barrelat_search') });</script></aside><div class="pab_corps"><script src="https://sd-g1.archive-host.com/membres/up/20c75818e16b168db14cae3fcfbae78b8a51378b/CSS/PaB/V45/Tooltipster.js"></script><script src="https://illipro.net/rs3/18/frm/extendedview.js" type="text/javascript"></script><div class="pab_topic_head"><div class="pab_topic_titres"><div class="pab_topic_ariane"><a href="/">Peek a Boo!</a>&nbsp;::&nbsp;<a href="/c8-%E6%88%AF%E3%82%8C-flood" class="nav"><span><span>戯れ</span> Flood</span></a>&nbsp;::&nbsp;<a href="/f109-espace-detente" class="nav"><span>Espace détente</span></a>&nbsp;::&nbsp;<a href="/f120-jeux" class="nav"><span>Jeux</span></a>&nbsp;::&nbsp;<a href="/t8320-notification-inutile" class="nav"><span>Notification inutile</span></a></div><h1>Poster une réponse</h1></div></div><div class="pab_postedit"><script>let dernierlien = document.querySelector('.pab_topic_ariane a:last-child').getAttribute('href');let deuxlien = document.querySelector('.pab_topic_ariane a:nth-of-type(3)').getAttribute('href');let pageurl = document.location.href;if ( (dernierlien.startsWith( '/f143-')) || ( deuxlien.startsWith( '/f143-')) ) {document.querySelector('.pab_postedit').classList.add('pab_tel');}</script><form action="/post" method="post" name="post" enctype="multipart/form-data"><div id="preview" class="pabpedit_cadre"><h2>Prévisualisation</h2><div class="pabpedit_previsu"><div class="pab_topic_post"><div class="pab_topic_header"><div class="pab_topic_headav"><span class="pab_previ_avatar"></span></div><div class="pab_topic_grpicon"></div><div class="pab_topic_nomrang"><div class="pab_topic_nom"><span class="pab_topic_vrainom"><span class="group-"><strong><span class="pab_previ_pseudo"></span></strong></span></span><span class="pab_topic_ombrenom" aria-hidden="true"><span class="group-"><strong><span class="pab_previ_pseudo"></span></strong></span></span></div><div class="pab_topic_rang">Rang</div></div><div class="pab_topic_bann"><div class="pab_topic_bannimg"></div></div></div><div class="pab_topic_corps"><div class="pab_topic_profil"><div class="pab_topic_profil_int"><div class="pab_topic_grpnom"></div><div class="pab_avatar pab_topic_avatar"><span class="pab_previ_avatar"></span></div><div class="pab_topic_presence"><div class="pab_topic_preschp"><div class="pab_topic_preschp_content pab_deg">Présence</div></div><div class="pab_topic_online online"><i class="fa-solid fa-signal"></i></div></div><div class="pab_topic_champs"><div class="pab_topic_profil_inputs"><input type="radio" name="tab1" id="pab_topic_prof-infos1" class="pab_topic_prof-infos" checked><label for="pab_topic_prof-infos1"><span>Infos</span></label><input type="radio" name="tab1" id="pab_topic_prof-evo1" class="pab_topic_prof-evo"><label for="pab_topic_prof-evo1"><span>Evolution</span></label></div><div class="pab_topic_profil_contents"><div class="pab_topic_prof_content pab_topic_prof_content-infos">Ici s'affichera le contenu du profil</div><div class="pab_topic_prof_content pab_topic_prof_content-evo"><div class="pab_topic_evo">Ici s'affichera le contenu de l'évolution</div></div></div></div></div></div><div class="pab_topic_postcadre"><div class="pab_topic_postmess"><div class="pab_tel_autws"><div class="pab_tel_auteur"><span class="pab_previ_pseudo"></span></div><script>document.querySelectorAll('.pab_previ_pseudo').forEach(pseudo =>{pseudo.innerHTML = _userdata['username']});document.querySelectorAll('.pab_previ_avatar').forEach(pseudo =>{pseudo.innerHTML = _userdata['avatar']});function coul(groupe, couleur, nombre){if(groupe == couleur){document.querySelector('.pabpedit_previsu .pab_topic_post').classList.add('post-group-'+nombre);}}let coulgroupe = _userdata['groupcolor'];coul('BB8929', coulgroupe, 8);coul('AA73F0', coulgroupe, 3);coul('AA73F9', coulgroupe, 15);coul('E29B64', coulgroupe, 106);coul('6BA8E3', coulgroupe, 105);coul('91B763', coulgroupe, 104);coul('91B764', coulgroupe, 103);coul('E36D6B', coulgroupe, 102);coul('DA6CBC', coulgroupe, 101);coul('E29B65', coulgroupe, 100);coul('91B762', coulgroupe, 16);coul('DA6CBF', coulgroupe, 19);coul('E29B69', coulgroupe, 20);coul('E36D6E', coulgroupe, 21);coul('6BA8E2', coulgroupe, 79);coul('91B760', coulgroupe, 96);coul('E36D6C', coulgroupe, 95);coul('91B769', coulgroupe, 97);coul('DA6CBA', coulgroupe, 94);coul('E29B66', coulgroupe, 99);coul('E29B67', coulgroupe, 93);coul('6BA8E0', coulgroupe, 98);coul('91B761', coulgroupe, 4);coul('E29B68', coulgroupe, 5);coul('E36D6D', coulgroupe, 7);coul('DA6CBB', coulgroupe, 6);coul('6BA8E1', coulgroupe, 78);</script><div class="pab_tel_tws"><div class="showtw"></div></div></div><div class="pab_topic_infos"><div class="pab_topic_count"><a class="pab_no_bg pab_topic_id"><span>#</span>00</a></div><div class="pab_topic_icondate"><div class="pab_topic_date">Date du post</div></div><div class="pab_topic_tws"><div class="showtw"></div></div></div><div class="pab_topic_postboutons"><ul class="pab_no_ul"><li class="pab_topic_delete"><a></a></li><li class="pab_topic_edit"><a></a></li><li class="pab_topic_quote"><a></a></li></ul></div><div class="pab_topic_postmessage"><div class="pab_topic_postbody">Test de prévisualisation !</div><div class="pab_tel_balises"><div class="pab_tel_bdate"></div><div class="pab_tel_bnd"></div></div></div><svg class="pab_tel_dial" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="hole2"><circle fill="white" cx="15" r="18" cy="5"></circle><circle fill="black" r="24" cx="36" cy="4"></circle></mask><rect width="100%" height="100%" mask="url(#hole2)"></rect></svg></div></div></div><div class="pab_topic_footer"><div class="pab_tel_infos"><div class="pab_tel_count"><a class="pab_no_bg pab_topic_id"><span>#</span>00</a></div><div class="pab_tel_date">Date du post</div></div><div class="pab_topic_icone"></div><div class="pab_topic_contact"><a class="profile-icon"><img src="https://2img.net/i/fa/awesomebb/icon_contact_pm.png" class="i_icon_pm"></a><a><img src="https://2img.net/i.imgur.com/hFaZJ7N.png"></a><a><img src="https://2img.net/i.imgur.com/wwPkcO4.png"></a><a><img src="https://2img.net/i.imgur.com/pi1ZuZH.png"></a></div><div class="pab_topic_reacs_btns"><button class="rep-button fa_like"><i class="fa-solid fa-heart"></i></button><button class="rep-button fa-dislike"><i class="fa-solid fa-droplet"></i></button></div></div></div></div></div><div class="pabpedit_cadre"><h2>Message</h2><div class="pabpedit_infos"><label><span>Titre du message</span><input type="text" name="subject" value="" maxlength="255" title="La longueur du titre de ce sujet doit être comprise entre 1 et 255 caractères" placeholder="Titre du message" onkeypress="if (event.keyCode==13){return false}" /></label></div><div class="pabpedit_message"><div id="pab_opensmiles"><i class="fa-regular fa-face-smile pab_deg"></i><div class="pab_hidden">Ouvrir le panneau des emotes</div></div><div id="smiley-box"><div id="smileyContainer"><script type="text/javascript">function addSmileyPane() { $("#smileyContainer").html('<iframe name="smilies" src="/smilies?mode=smilies_frame&amp;t=1784806441" frameborder="0" scrolling="auto" marginwidth="0" marginheight="0" height="350" width="220" class="row1"></iframe>'); }</script></div></div><script>document.querySelector('#pab_opensmiles').addEventListener('click', function(){document.querySelector('#smiley-box').classList.toggle('smiley-box-opened');});</script><div class="pabpedit_editor"><div id="textarea_content"><textarea id="text_editor_textarea" name="message">Test de prévisualisation !</textarea></div>        <link rel="stylesheet" href="https://illipro.net/rs3/18/frm/SCEditor/src/themes/fa.default.min.css" type="text/css" media="all" />
+        <style type="text/css">
+            .sceditor-button-flash div      { background-position: 0 -628px; }
+            .sceditor-button-servimg div    { background-position: 0 -644px; }
+            .sceditor-button-dailymotion div{ background-position: 0 -660px; }
+            .sceditor-button-faspoiler div  { background-position: 0 -676px; }
+            .sceditor-button-fahide div     { background-position: 0 -692px; }
+            .sceditor-button-fascroll div   { background-position: 0 -708px; }
+            .sceditor-button-faupdown div   { background-position: 0 -724px; }
+            .sceditor-button-farand div     { background-position: 0 -756px; }
+            .sceditor-button-faroll div     { background-position: 0 -772px; }
+            .sceditor-button-more div       { background-position: 0 -788px; }
+            .sceditor-button-emoticon div   { background-position: 0 -804px; }
+            .sceditor-button-embed div      { background-image: url("https://2img.net/i//fa/icon_embed.png") }
+            .sceditor-button-headers div    { background-position: 0 -820px; }
+            .sceditor-button-twemojifa div 	{ background: url("https://2img.net/i/fa/icon_twemoji.png") !important; }
+            .sceditor-twemojifa             {width:220px;height:250px;overflow-y:auto;}.sceditor-twemojifa img{cursor:pointer;padding:3px;}.sceditor-twemojifa img:hover{opacity:.7;}
+            .sceditor-button-mention div    { background: url("https://2img.net/i//fa/icon_at.png") !important; } 
+            #sceditor-mention-div			{ max-height: 200px; overflow: auto; }
+            .sceditor-mention-user			{ padding: 0 3px; border-radius: 3px; height: 25px; line-height: 25px; margin: 0 0 8px 0; background-color: #fbfbfb; border: 1px solid #f3f3f3; max-width: 300px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; } 
+            .sceditor-mention-user img		{ height: 23px; margin: 0 4px; vertical-align: top; width: 23px; border-radius: 5px; background-color: #f5f5f5; border: 1px solid #ececec; overflow: hidden; object-fit:cover; } 
+            .sceditor-mention-user:hover 	{ background:#3793ff22;color: #000;cursor:pointer; }
+            .sceditor-button-giphy div      { background-image: url("https://2img.net/i//fa/icon_gif.png") }
+            .sceditor-color-picker-modern * {box-sizing: content-box !important; }       
+            .sceditor-color-picker-modern { padding:10px; background:#fff; min-width:220px; max-width:100%; box-sizing:unset !important; font-size:0; }
+			.sceditor-color-native-section { margin-bottom:8px; }
+			.sceditor-color-native-wrapper { display:inline-flex; align-items:center; gap:8px; margin:0; padding:6px 10px; background:#f5f5f5; border-radius:3px 3px 0 0; cursor:pointer; transition:all 0.2s; }
+			.sceditor-color-native-wrapper:hover { background:#eeeeee; }
+			.sceditor-color-native-input { width:0; height:0; opacity:0; position:absolute; }
+			.sceditor-color-native-label { font-size:12px; color:#555; user-select:none; }
+			.sceditor-color-grid { display:flex; flex-direction:column; }
+			.sceditor-palette-row { display:flex; flex-direction:row; flex-wrap:wrap; }
+			.sceditor-palette { display:flex; flex-direction:column; }
+			.sceditor-color-row { display:flex; flex-direction:row; flex-wrap:wrap; }
+			.sceditor-color-row.sceditor-color-history { padding:1px 0 2px 0; }
+			.sceditor-color-option { display:block; width:12px; height:12px; border:1px solid #ddd; border-radius:3px; cursor:pointer; transition:all 0.2s; }
+			.sceditor-color-option:hover { transform:scale(1.15); border-color:#666; box-shadow:0 2px 4px rgba(0,0,0,0.2); z-index:1; position:relative; }
+			.sceditor-color-pipette { text-align:center; }
+			.sceditor-color-pipette svg { width:20px; height:20px;background:#fff; border-radius:50%; padding:5px; border:1px solid #ccc; }
+			.sceditor-color-history .sceditor-color-option { width:21px; height:21px; }
+        </style>
+
+        <script type="text/javascript" src="https://illipro.net/rs3/18/frm/jquery/cookie/jquery.cookie.js"></script>        <script type="text/javascript" src="https://illipro.net/rs3/18/frm/SCEditor/src/jquery.sceditor.js"></script>
+        <script type="text/javascript" src="https://illipro.net/rs3/18/frm/SCEditor/src/plugins/bbcode.js"></script>
+        <script type="text/javascript" src="https://illipro.net/rs3/18/frm/SCEditor/src/sceditor-commands.js"></script>
+        <script type="text/javascript" src="https://illipro.net/rs3/18/frm/SCEditor/src/sceditor-commands-bbcode.js"></script><script type="text/javascript" src="https://illipro.net/rs3/18/frm/SCEditor/src/sceditor-custom-bbcode.js"></script>            <script type="text/javascript" charset="UTF-8">
+                (function ($) {
+                    'use strict';
+                    
+
+
+                    $.sceditor.locale["fr"] = {
+                        "Bold"                       : "Gras",
+                        "Italic"                     : "Ital.",
+                        "Underline"                  : "Soulig.",
+                        "Strikethrough"              : "Barré",
+
+                        "Align left"                 : "Aligné à gauche",
+                        "Center"                     : "Centré",
+                        "Align right"                : "Aligné à droite",
+                        "Justify"                    : "Justifié",
+
+                        "Bullet list"                : "-Liste",
+                        "Numbered list"              : "Liste ordonnée",
+                        "Insert a horizontal rule"   : "Insérer une ligne",
+
+                        "Insert a Quote"             : "'Citer'",
+                        "Code"                       : "Code",
+                        "Spoiler"                    : "Spoiler",
+                        "Hidden"                     : "Caché",
+                        "Insert a table"             : "Insérer un tableau",
+
+                        "Host an image"              : "Héberger une image",
+                        "Insert an image"            : "Insérer une image",
+                        "Insert a GIF"               : "Choisir un GIF",
+                        "Insert an email"            : "Insérer un e-mail",
+                        "Insert a link"              : "Insérer un lien",
+                        "Unlink"                     : "Supprimer un lien",
+                        "Insert a YouTube video"     : "Insérer une vidéo Youtube",
+                        "Insert a Dailymotion Video" : "Insérer une Vidéo Dailymotion",
+                        "Flash"                      : "Flash",
+
+                        "Format Headers"             : "Format des titres",
+                        "Font Size"                  : "Taille Police",
+                        "Font Color"                 : "Couleur",
+                        "Font Name"                  : "Police",
+                        "Remove Formatting"          : "Supprimer le formatage du texte",
+                        
+                        "Mention a user"             : "Mentionner un membre",
+                        "Embed a link"               : "Enrichir un lien Imgur, X …",
+
+                        "Subscript"                  : "Indice",
+                        "Superscript"                : "Exposant",
+
+                        "Horizontal scrolling"       : "Défilement horizontal",
+                        "Vertical scrolling"         : "Défilement vertical",
+                        "Random"                     : "Aléatoire",
+                        "Dices roll"                 : "Lancer de dés",
+
+                        "Insert an emoticon"         : "Smileys",
+                        "Insert current date"        : "Date actuelle",
+                        "Insert current time"        : "Heure actuelle",
+                        "Paste Text"                 : "Insérer du texte sans formatage",
+                        "Switch Editor Mode"         : "Basculer le mode d'édition",
+
+                        "color_dark_red"    : "Rouge foncé",
+                        "color_red"         : "Rouge",
+                        "color_orange"      : "Orange",
+                        "color_brown"       : "Marron",
+                        "color_yellow"      : "Jaune",
+                        "color_green"       : "Vert",
+                        "color_olive"       : "Olive",
+                        "color_cyan"        : "Cyan",
+                        "color_blue"        : "Bleu",
+                        "color_dark_blue"   : "Bleu foncé",
+                        "color_indigo"      : "Indigo",
+                        "color_violet"      : "Violet",
+                        "color_grey"        : "Gris",
+                        "color_white"       : "Blanc",
+                        "color_black"       : "Noir",
+
+                        "More"                       : "Plus/Moins de boutons",
+                        "Search"                                    : "Rechercher",
+                        "Insert"                                    : "Insérer",
+                        "URL:"                                      : "URL",
+                        "Invalid YouTube video"                     : "Vidéo invalide",
+                        "Author (optional)"                         : "Auteur (Optionnel)",
+                        "Title (optional)"                          : "Titre (Optionnel)",
+                        "Cols:"                                     : "Colonnes",
+                        "Rows:"                                     : "Lignes",
+                        "Width (optional):"                         : "Largeur (optionnelle)",
+                        "Height (optional):"                        : "Hauteur (optionnelle)",
+                        "Description (optional):"                   : "Description (Optionnelle)",
+                        "Paste your text inside the following box:" : "Collez votre texte à l'intérieur de ce bloc",
+                        "Border"                                    : "Bordure (px)",
+
+                        "dateFormat": "day.month.year"
+                    };
+                })(jQuery);
+</script>        <script type="text/javascript">
+            var servImgAccount = 'noemie.du.73@hotmail.fr';
+            var servImgId = '30252cc5eb7b29ebb42c6a912a03f5e3';
+            var servImgF = '11640325';
+            var servImgTB = '';
+            var servImgSL = '';
+            var servImgMode = 'fae';
+            var plugins = '';
+            var palette = 1;
+            var illiweb = 'https://illipro.net/';
+            var locale = 'fr';
+            var height = '450';
+            var plugin = 'bbcode';
+            var toolbar = 'bold,italic,underline,strike|left,center,right,justify|bulletlist,orderedlist,horizontalrule|quote,code,faspoiler,fahide,table|servimg,image,giphy,link,embed,youtube|headers,size,color,font,removeformat|more|subscript,superscript|fascroll,faupdown,farand|mention,twemojifa,date,time,pastetext,source';
+            var cssFile = 'https://illipro.net/rs3/18/frm/SCEditor/minified/jquery.sceditor.default.min.css';
+            var isRtl = 0;
+            var dice = new Array();
+            var bSourceMode = true;
+            var emoticonsEnabled = 1;
+            var smileys =  {":blush:": "https://2img.net/u/3411/18/74/50/smiles/3953884647.png",":innocent:": "https://2img.net/u/3411/18/74/50/smiles/2960999066.gif",":&lt;": "https://2img.net/u/3411/18/74/50/smiles/3105163137.gif",":glit2:": "https://2img.net/u/3411/18/74/50/smiles/2492877313.gif",":ccr:": "https://2img.net/u/3411/18/74/50/smiles/2929307098.gif",":think:": "https://2img.net/u/3411/18/74/50/smiles/2999596516.gif",":ac:": "https://2img.net/u/3411/18/74/50/smiles/787491677.gif",":calin:": "https://2img.net/u/3411/18/74/50/smiles/1642416958.gif",":scared:": "https://2img.net/u/3411/18/74/50/smiles/4271482974.gif",":hug:": "https://2img.net/u/3411/18/74/50/smiles/1860870119.gif",":stare:": "https://2img.net/u/3411/18/74/50/smiles/2935886327.gif",":adri:": "https://2img.net/u/3411/18/74/50/smiles/621800295.png",":out:": "https://2img.net/u/3411/18/74/50/smiles/760437515.gif",":ghost:": "https://2img.net/u/3411/18/74/50/smiles/2096760066.gif",":popc:": "https://2img.net/u/3411/18/74/50/smiles/2412517677.gif",":bigstare:": "https://2img.net/u/3411/18/74/50/smiles/3167612780.png",":brit:": "https://2img.net/u/3411/18/74/50/smiles/2312021079.gif",":ono:": "https://2img.net/u/3411/18/74/50/smiles/1302590589.png",":tululu:": "https://2img.net/u/3411/18/74/50/smiles/518565766.gif",":145:": "https://2img.net/u/3411/18/74/50/smiles/2985912174.gif",":celine:": "https://2img.net/u/3411/18/74/50/smiles/2559731262.gif",":couto:": "https://2img.net/u/3411/18/74/50/smiles/2814186351.png",":glasses:": "https://2img.net/u/3411/18/74/50/smiles/2000389108.jpg",":tea:": "https://2img.net/u/3411/18/74/50/smiles/4031404645.gif",":T_T:": "https://2img.net/u/3411/18/74/50/smiles/817468983.png",":note:": "https://2img.net/u/3411/18/74/50/smiles/3968224355.png",":madman:": "https://2img.net/u/3411/18/74/50/smiles/751064149.png",":smile:": "https://2img.net/u/3411/18/74/50/smiles/4068712617.png",":sad:": "https://2img.net/u/3411/18/74/50/smiles/3589721141.png",":hearts:": "https://2img.net/u/3411/18/74/50/smiles/2689828845.png",":drama:": "https://2img.net/u/3411/18/74/50/smiles/3215846673.gif",":fire:": "https://2img.net/u/3411/18/74/50/smiles/3686482427.gif",":sus2:": "https://2img.net/u/3411/18/74/50/smiles/2316605831.gif",":P": "https://2img.net/u/3411/18/74/50/smiles/4201294245.png",":joshcry:": "https://2img.net/u/3411/18/74/50/smiles/1012345552.png",":josh:": "https://2img.net/u/3411/18/74/50/smiles/3946617890.gif",";)": "https://2img.net/u/3411/18/74/50/smiles/613379691.gif",":kwa:": "https://2img.net/u/3411/18/74/50/smiles/3607237617.gif",":@": "https://2img.net/u/3411/18/74/50/smiles/1908334861.png",":brkn:": "https://2img.net/u/3411/18/74/50/smiles/3823355582.png",":ptdr:": "https://2img.net/u/3411/18/74/50/smiles/3108186044.gif",":hee:": "https://2img.net/u/3411/18/74/50/smiles/715636015.png",":catdance:": "https://2img.net/u/3411/18/74/50/smiles/851180927.gif",":ok:": "https://2img.net/u/3411/18/74/50/smiles/3110107594.png",":S": "https://2img.net/u/3411/18/74/50/smiles/1310397324.png",":pat:": "https://2img.net/u/3411/18/74/50/smiles/19223929.gif",":0u0:": "https://2img.net/u/3411/18/74/50/smiles/2182772510.png",":wizz:": "https://2img.net/u/3411/18/74/50/smiles/2759139104.gif",":klv:": "https://2img.net/u/3411/18/74/50/smiles/2544410271.gif",":plsno:": "https://2img.net/u/3411/18/74/50/smiles/3858681603.gif",":muh:": "https://2img.net/u/3411/18/74/50/smiles/1035043368.gif",":wizz2:": "https://2img.net/u/3411/18/74/50/smiles/2983727753.gif",":no:": "https://2img.net/u/3411/18/74/50/smiles/66125246.gif",":lizar:": "https://2img.net/u/3411/18/74/50/smiles/3028251119.gif",":mark:": "https://2img.net/u/3411/18/74/50/smiles/1327837918.gif",":demon:": "https://2img.net/u/3411/18/74/50/smiles/3537913189.gif",":*w*:": "https://2img.net/u/3411/18/74/50/smiles/3117243060.gif",":&gt;": "https://2img.net/u/3411/18/74/50/smiles/3166822915.gif",":sam:": "https://2img.net/u/3411/18/74/50/smiles/1156553190.gif",":shoo:": "https://2img.net/u/3411/18/74/50/smiles/380679885.gif",":plor:": "https://2img.net/u/3411/18/74/50/smiles/4258059967.png",":denis:": "https://2img.net/u/3411/18/74/50/smiles/1038555180.png",":faim:": "https://2img.net/u/3411/18/74/50/smiles/2768516396.gif",":sip:": "https://2img.net/u/3411/18/74/50/smiles/2951851294.png",":wooo:": "https://2img.net/u/3411/18/74/50/smiles/1175393300.gif",":sparkles:": "https://2img.net/u/3411/18/74/50/smiles/3759598416.png",":swip:": "https://2img.net/u/3411/18/74/50/smiles/2999842419.gif",":lapin:": "https://2img.net/u/3411/18/74/50/smiles/1569769290.gif",":court:": "https://2img.net/u/3411/18/74/50/smiles/2023859603.gif",":pleu:": "https://2img.net/u/3411/18/74/50/smiles/320146027.gif",":hero:": "https://2img.net/u/3411/18/74/50/smiles/517091029.gif",":totoro:": "https://2img.net/u/3411/18/74/50/smiles/251635495.gif",":smile2:": "https://2img.net/u/3411/18/74/50/smiles/1731738588.gif",":miu:": "https://2img.net/u/3411/18/74/50/smiles/1296415464.gif",":coeur:": "https://2img.net/u/3411/18/74/50/smiles/798748180.gif",":noar:": "https://2img.net/u/3411/18/74/50/smiles/1759227294.gif",":ursu:": "https://2img.net/u/3411/18/74/50/smiles/4139049447.gif",":r": "https://2img.net/u/3411/18/74/50/smiles/4126420999.png",":gwah:": "https://2img.net/u/3411/18/74/50/smiles/799831993.png",":nah:": "https://2img.net/u/3411/18/74/50/smiles/2241182522.png",":uh:": "https://2img.net/u/3411/18/74/50/smiles/2125727644.gif",":uuuh:": "https://2img.net/u/3411/18/74/50/smiles/3334275834.png",":hinh:": "https://2img.net/u/3411/18/74/50/smiles/2815383975.png",":eeh:": "https://2img.net/u/3411/18/74/50/smiles/2571962221.png",":wut:": "https://2img.net/u/3411/18/74/50/smiles/3302542585.gif",":daron:": "https://2img.net/u/3411/18/74/50/smiles/660770459.gif",":stach:": "https://2img.net/u/3411/18/74/50/smiles/1575138509.png",":nabilla:": "https://2img.net/u/3411/18/74/50/smiles/113155474.gif",":maths:": "https://2img.net/u/3411/18/74/50/smiles/1472618566.gif",":nose:": "https://2img.net/u/3411/18/74/50/smiles/4151510438.png",":blink:": "https://2img.net/u/3411/18/74/50/smiles/76440934.gif",":gnih:": "https://2img.net/u/3411/18/74/50/smiles/3610710542.gif",":sli:": "https://2img.net/u/3411/18/74/50/smiles/950574160.gif",":cass2:": "https://2img.net/u/3411/18/74/50/smiles/3454236741.png",":boop:": "https://2img.net/u/3411/18/74/50/smiles/1336473857.gif",":shake:": "https://2img.net/u/3411/18/74/50/smiles/2977075418.gif",":staff:": "https://2img.net/u/3411/18/74/50/smiles/3712621728.gif",":lokaw:": "https://2img.net/u/3411/18/74/50/smiles/98400110.gif",":fangirl:": "https://2img.net/u/3411/18/74/50/smiles/1479253400.gif",":ciao:": "https://2img.net/u/3411/18/74/50/smiles/1167886630.gif",":ih:": "https://2img.net/u/3411/18/74/50/smiles/3422994975.gif",":bret:": "https://2img.net/u/3411/18/74/50/smiles/1904741994.gif",":scream2:": "https://2img.net/u/3411/18/74/50/smiles/464022062.png",":angery:": "https://2img.net/u/3411/18/74/50/smiles/1868927609.gif",":cass:": "https://2img.net/u/3411/18/74/50/smiles/3135767810.png",":rp:": "https://2img.net/u/3411/18/74/50/smiles/1344042255.gif",":minette:": "https://2img.net/u/3411/18/74/50/smiles/498883882.jpg",":nerd:": "https://2img.net/u/3411/18/74/50/smiles/3680043825.png",":duck:": "https://2img.net/u/3411/18/74/50/smiles/1164152427.png",":lolly:": "https://2img.net/u/3411/18/74/50/smiles/2757391756.png",":pika:": "https://2img.net/u/3411/18/74/50/smiles/1832452316.gif",":velo:": "https://2img.net/u/3411/18/74/50/smiles/1428523890.gif",":gron:": "https://2img.net/u/3411/18/74/50/smiles/745368219.png",":screen:": "https://2img.net/u/3411/18/74/50/smiles/4263171536.png",":adm:": "https://2img.net/u/3411/18/74/50/smiles/2617892688.png",":vnr:": "https://2img.net/u/3411/18/74/50/smiles/3788216065.png",":sus:": "https://2img.net/u/3411/18/74/50/smiles/542257483.gif",":stitch:": "https://2img.net/u/3411/18/74/50/smiles/511846423.gif",":dean:": "https://2img.net/u/3411/18/74/50/smiles/2336342009.gif",":cringe:": "https://2img.net/u/3411/18/74/50/smiles/1379090153.png",":poutou:": "https://2img.net/u/3411/18/74/50/smiles/2888919240.gif",":judy:": "https://2img.net/u/3411/18/74/50/smiles/654745455.png",":gasp:": "https://2img.net/u/3411/18/74/50/smiles/1283816955.gif",":love:": "https://2img.net/u/3411/18/74/50/smiles/2780774972.png",":blep:": "https://2img.net/u/3411/18/74/50/smiles/1777996370.gif",":catjam:": "https://2img.net/u/3411/18/74/50/smiles/3179340034.gif",":aah:": "https://2img.net/u/3411/18/74/50/smiles/1857627906.png",":mimi:": "https://2img.net/u/3411/18/74/50/smiles/1011115160.gif",":hehe:": "https://2img.net/u/3411/18/74/50/smiles/649099835.gif",":sips:": "https://2img.net/u/3411/18/74/50/smiles/2590689723.gif",":paix:": "https://2img.net/u/3411/18/74/50/smiles/1850164538.gif",":peek:": "https://2img.net/u/3411/18/74/50/smiles/1438191616.png",":mdr:": "https://2img.net/u/3411/18/74/50/smiles/516193773.png",":dor:": "https://2img.net/u/3411/18/74/50/smiles/4126741921.png",":perf:": "https://2img.net/u/3411/18/74/50/smiles/2998768518.gif",":cafe:": "https://2img.net/u/3411/18/74/50/smiles/2049659096.png",":tired:": "https://2img.net/u/3411/18/74/50/smiles/959375136.png",":bis:": "https://2img.net/u/3411/18/74/50/smiles/2447895273.gif",":bye:": "https://2img.net/u/3411/18/74/50/smiles/362718065.gif",":baille:": "https://2img.net/u/3411/18/74/50/smiles/67664834.gif",":salut:": "https://2img.net/u/3411/18/74/50/smiles/2425747525.png",":eyes:": "https://2img.net/u/3411/18/74/50/smiles/204795090.png",":lgbt:": "https://2img.net/u/3411/18/74/50/smiles/2091873854.png",":lesb:": "https://2img.net/u/3411/18/74/50/smiles/3404553887.png",":eh:": "https://2img.net/u/3411/18/74/50/smiles/255359952.gif",":cris:": "https://2img.net/u/3411/18/74/50/smiles/204697570.gif",":cris2:": "https://2img.net/u/3411/18/74/50/smiles/3965502052.gif",":gay:": "https://2img.net/u/3411/18/74/50/smiles/188108429.png",":trans:": "https://2img.net/u/3411/18/74/50/smiles/2524624177.png",":doge:": "https://2img.net/u/3411/18/74/50/smiles/3539227844.png",":bi:": "https://2img.net/u/3411/18/74/50/smiles/2444276119.png",":pan:": "https://2img.net/u/3411/18/74/50/smiles/2053911835.png",":ace:": "https://2img.net/u/3411/18/74/50/smiles/1139653542.png",":walt:": "https://2img.net/u/3411/18/74/50/smiles/3397436841.gif",":aro:": "https://2img.net/u/3411/18/74/50/smiles/2589496774.png",":enby:": "https://2img.net/u/3411/18/74/50/smiles/3916075023.png",":gf:": "https://2img.net/u/3411/18/74/50/smiles/3884180743.png",":nails:": "https://2img.net/u/3411/18/74/50/smiles/1606374170.png",":slay:": "https://2img.net/u/3411/18/74/50/smiles/836622030.gif",":rire:": "https://2img.net/u/3411/18/74/50/smiles/1511016663.png",":stand:": "https://2img.net/u/3411/18/74/50/smiles/579327148.png",":cafe2:": "https://2img.net/u/3411/18/74/50/smiles/3648739155.gif",":smooch:": "https://2img.net/u/3411/18/74/50/smiles/976622030.gif",":vnr2:": "https://2img.net/u/3411/18/74/50/smiles/35285830.png",":deg:": "https://2img.net/u/3411/18/74/50/smiles/1382527030.png",":nasty:": "https://2img.net/u/3411/18/74/50/smiles/584944249.png",":cronch:": "https://2img.net/u/3411/18/74/50/smiles/730079980.gif",":nom:": "https://2img.net/u/3411/18/74/50/smiles/2413100292.gif",":cri:": "https://2img.net/u/3411/18/74/50/smiles/1989882405.png",":plaid:": "https://2img.net/u/3411/18/74/50/smiles/3541614295.jpg","^^": "https://2img.net/u/3411/18/74/50/smiles/226239635.gif",":lave:": "https://2img.net/u/3411/18/74/50/smiles/3304969635.gif",":dilf:": "https://2img.net/u/3411/18/74/50/smiles/373927598.gif",":milf:": "https://2img.net/u/3411/18/74/50/smiles/3629929855.gif",":point:": "https://2img.net/u/3411/18/74/50/smiles/769488408.png",":wait:": "https://2img.net/u/3411/18/74/50/smiles/238529894.gif",":eye:": "https://2img.net/u/3411/18/74/50/smiles/734002026.png",":cho:": "https://2img.net/u/3411/18/74/50/smiles/518502347.gif"};
+            var iframeSrc = '/smilies?mode=smilies_frame&t=1784806442';
+            var SCE_TopicID = '';
+            var illiwebDomain = 'https://illipro.net/';
+            var servimgDomain = 'servimg.com';
+            var INTRANET = 0;
+            var quick_reply = '';
+        </script>        <script type="text/javascript" src="https://illipro.net/rs3/18/frm/SCEditor/src/instance-sceditor.js"></script>				<style>
+					.sceditor-dropdown.sceditor-giphy{
+						padding: 0;
+					}	
+					#fa_gif_picker {
+						height: 350px;
+						width: 250px;
+						background-color: #111;
+						overflow: auto;
+						-ms-overflow-style: none;  /* Internet Explorer 10+ */
+						scrollbar-width: none;  /* Firefox */
+						font-family: Helvetica Neue, sans-serif;
+					}
+					#fa_gif_picker::-webkit-scrollbar { 
+						display: none;  /* Safari and Chrome */
+					}		
+					#fa_gif_picker.no_result {
+						background-position: center;
+						background-repeat: no-repeat;
+						background-size: auto;
+						background-image: url("https://illipro.net/fa/broken_img.svg");
+					}		
+					#gif_search {
+					  cursor:auto;
+					  background: rgb(0,0,0);
+					  color: #00caff;
+					  border: 1px solid #111;						  
+					  font: 1.5em Helvetica Neue, sans-serif;
+					  font-weight: 300;						
+					  height: 47px;
+					  width: 70%;  					  
+					  outline: 0;					  
+					  padding: 0px 55px 0 15px;
+					  position: absolute;
+					  left:0;
+					}			
+					#fa_gif_switch {
+						position: absolute;
+						right: 0;
+						width: 20%;
+					}			
+					#fa_gif_switch .gif_switch_btn {
+						color: #fff;
+						background-color: #333;
+						text-align: center;
+						height: 25px;
+						line-height: 25px;
+						font-weight: bold;
+						cursor: pointer;
+						font-size: 11px;
+					}				
+					#fa_gif_switch .gif_switch_btn.selected {
+						color: #333;
+						background-color: #00caff;
+						cursor: default;
+					}			
+					#gif_grid {
+						padding: 50px 0;
+						background-color: #111;
+					}			
+					.gif_page {
+					   line-height: 0;
+					   
+					   -webkit-column-count: 2;
+					   -webkit-column-gap:   0px;
+					   -moz-column-count:    2;
+					   -moz-column-gap:      0px;
+					   column-count:         2;
+					   column-gap:           0px;
+					}		
+					.gif_page img {
+					  width: 100% !important;
+					  height: auto !important;
+					  cursor: pointer;
+					}			
+					#fa_gif_picker footer {
+						display: flex;
+						justify-content: center;
+						position: absolute;
+						width: 100%;
+						bottom: 0;
+						z-index: 1;
+						padding: .4rem 0;
+						background-color: #000;
+					}		
+				</style></div><fieldset class="form-buttons"><input type="hidden" name="auth[]" value="4d1bfc25d45d23fec77ccbe0a2e97434" /><input type="hidden" name="auth[]" value="0bd464375f1f885175aa9ac973636fa5" /><input type="hidden" name="mode" value="reply" /><input type="hidden" name="t" value="8320" /><input type="hidden" name="lt" value="244997" /><button class="pabpedit_envoi" type="submit" name="post" value="Envoyer" title="Envoyer" tabindex="6" accesskey="s" ><i class="fa-solid fa-paper-plane"></i></button><button type="submit" name="draft" title="Brouillon" tabindex="7" accesskey="d" ><i class="fa-solid fa-floppy-disk"></i></button><input class="pabpedit_previbutt" type="submit" name="preview" value="Prévisualiser" tabindex="5" /></fieldset></div></div><div class="pabpedit_cadre"><h2>Options</h2><div class="opt-hideable"><div class="pabpedit_optitre"><h3>Informations du sujet</h3><i class="fa-solid fa-angle-up"></i></div><div class="pabpedit_infos"><div class="pabpedit_opts"><label><input type="checkbox" name="disable_html" /><span>Désactiver le HTML dans ce message</span></label><label><input type="checkbox" name="disable_bbcode" /><span>Désactiver le BBCode dans ce message</span></label><label><input type="checkbox" name="disable_smilies" /><span>Désactiver les smileys dans ce message</span></label><label><input type="checkbox" name="notify" /><span>M'avertir lorsqu'une réponse est postée</span></label></div></div></div><div class="opt-hideable opt-hidden"><div class="pabpedit_optitre"><h3>laisser faire le hasard</h3><i class="fa-solid fa-angle-up"></i></div><div class="pabpedit_infos"><script type="text/javascript">function add_dice(dice_number,dice,number) {var content = document.getElementById('post_dice').innerHTML;document.getElementById('dice_to_del').innerHTML = '';document.getElementById('dice_to_del').id = '';var new_div = document.createElement('div');new_div.className = 'single-roll';new_div.innerHTML = '<span class="label"><span>Laisser faire le hasard #' + (dice_number + 1) + ':</span><div class="select"><select class="input-subtle" name="post_dice_' + dice_number + '" id="post_dice_' + dice_number + '" value="' + dice + '">' + content + '</select></div></span><label><span>Nombre de lancers:</span><input class="input-subtle" type="text" size="2" maxlength="3" name="nb_rolls_' + dice_number + '" id="nb_rolls" value="' + number + '" /></label><span id="dice_to_del"><a href="javascript:add_dice(' + (dice_number + 1) + ',\'\',1)"><i class="fa-solid fa-plus"></i></a></span>';document.getElementById('list_dice').appendChild(new_div);var select_dice = document.getElementById('post_dice_' + dice_number);if ( dice == '' ) {select_dice.selectedIndex=0;}for ( var i = 1; select_dice.options[i]; i++ ) {select_dice.options[i].selected = ( select_dice.options[i].value == dice );}}</script><div id="list_dice"><div class="single-roll"><span class="label"><span>Laisser faire le hasard #1:</span><select name="post_dice_0" id="post_dice" class="input-subtle"><option value="">-</option><option value="1">TOUT PEUT ARRIVER</option><option value="2">PILE OU FACE</option><option value="3">4 FACES</option><option value="4">6 FACES</option><option value="5">POTION ALÉATOIRE</option><option value="6">ASCENSEUR DEMONIAQUE</option><option value="7">Ghostbusters !</option><option value="8">[TS] teams</option></select></span><label><span>Nombre de lancers:</span><input type="text" class="input-subtle" size="2" maxlength="3" name="nb_rolls_0" id="nb_rolls" value="1" /></label><span id="dice_to_del"><a href="javascript:add_dice(1,'',1)"><i class="fa-solid fa-plus"></i></a></span></div></div><script type="text/javascript"></script></div></div></div></form><div class="pabpedit_revuecadre"><div class="pab_topic_head"><h2>Revue du sujet</h2></div><div class="pab_topic_revue"><div class="pab_top_rev_avatar pab_avatar"><img loading="lazy" src="https://sig.grumpybumpers.com/host/KaySchneider.gif"  alt="Kay Schneider" style="max-width: 200px; max-height: 320px"  /></div><div class="pab_top_rev_content"><div class="pab_top_rev_infos"><div class="pab_top_rev_namedate"><span class="group-78 usr_grp_clr" style="color:#6BA8E1"><strong>Kay Schneider</strong></span> · 17.07.26 22:51</div><div class="pab_top_rev_tws"><div class="showtw"></div></div></div><div class="pab_top_rev_postbody pab_topic_postbody">Oh les petits chats d'amour jpp merci beaucoup <img src="/users/3411/18/74/50/smiles/3953884647.png" alt=":blush:" longdesc="1" /> <br /><br />je vous cronch <br /><img src="/users/3411/18/74/50/smiles/730079980.gif" alt="cronch" longdesc="200" />  <a  href='/u1346' rel='nofollow' data-id='1346' class='mentiontag' title='Voir le profil : Sisi'>@Sisi</a> <br /><img src="/users/3411/18/74/50/smiles/730079980.gif" alt="cronch" longdesc="200" /> <a  href='/u1313' rel='nofollow' data-id='1313' class='mentiontag' title='Voir le profil : Ellie Jordan'>@Ellie Jordan</a> <br /><img src="/users/3411/18/74/50/smiles/730079980.gif" alt="cronch" longdesc="200" /> <a  href='/u1241' rel='nofollow' data-id='1241' class='mentiontag' title='Voir le profil : Dalisay Almendras'>@Dalisay Almendras</a> <br /><img src="/users/3411/18/74/50/smiles/730079980.gif" alt="cronch" longdesc="200" /> <a  href='/u975' rel='nofollow' data-id='975' class='mentiontag' title='Voir le profil : Mary Thompson'>@Mary Thompson</a>  <br /><img src="/users/3411/18/74/50/smiles/730079980.gif" alt="cronch" longdesc="200" /> <a  href='/u1319' rel='nofollow' data-id='1319' class='mentiontag' title='Voir le profil : Gabrielle E. Wang'>@Gabrielle E. Wang</a> <br /><img src="/users/3411/18/74/50/smiles/730079980.gif" alt="cronch" longdesc="200" /> <a  href='/u712' rel='nofollow' data-id='712' class='mentiontag' title='Voir le profil : Lizzie Hamilton'>@Lizzie Hamilton</a></div></div></div><div class="pab_topic_revue"><div class="pab_top_rev_avatar pab_avatar"><img loading="lazy" src="https://xkufaboebxeibpdfkuoh.supabase.co/functions/v1/a/e526e594-bacf-4239-b580-a916946f0292.gif"  alt="Lizzie Hamilton" style="max-width: 200px; max-height: 320px"  /></div><div class="pab_top_rev_content"><div class="pab_top_rev_infos"><div class="pab_top_rev_namedate"><span class="group-4 usr_grp_clr" style="color:#91B761"><strong>Lizzie Hamilton</strong></span> · 16.07.26 12:35</div><div class="pab_top_rev_tws"><div class="showtw"></div></div></div><div class="pab_top_rev_postbody pab_topic_postbody">JOYEUX ANNIVERSAIRE  <a  href='/u1302' rel='nofollow' data-id='1302' class='mentiontag' title='Voir le profil : Kay Schneider'>@Kay Schneider</a> !! <img src="/users/3411/18/74/50/smiles/2447895273.gif" alt="bis" longdesc="164" /></div></div></div><div class="pab_topic_revue"><div class="pab_top_rev_avatar pab_avatar"><img loading="lazy" src="https://sig.grumpybumpers.com/host/likho2.gif"  alt="Gabrielle E. Wang" style="max-width: 200px; max-height: 320px"  /></div><div class="pab_top_rev_content"><div class="pab_top_rev_infos"><div class="pab_top_rev_namedate"><span class="group-7 usr_grp_clr" style="color:#E36D6D"><strong>Gabrielle E. Wang</strong></span> · 16.07.26 12:23</div><div class="pab_top_rev_tws"><div class="showtw"></div></div></div><div class="pab_top_rev_postbody pab_topic_postbody">joyeux anniversaire  <a  href='/u1302' rel='nofollow' data-id='1302' class='mentiontag' title='Voir le profil : Kay Schneider'>@Kay Schneider</a> !!!! <img src="/users/3411/18/74/50/smiles/787491677.gif" alt="Poster une réponse 787491677" longdesc="7" /></div></div></div><div class="pab_topic_revue"><div class="pab_top_rev_avatar pab_avatar"><img loading="lazy" src="https://xkufaboebxeibpdfkuoh.supabase.co/functions/v1/a/58441341-492e-4217-8446-8a037644f2b0.gif"  alt="Mary Thompson" style="max-width: 200px; max-height: 320px"  /></div><div class="pab_top_rev_content"><div class="pab_top_rev_infos"><div class="pab_top_rev_namedate"><span class="group-94 usr_grp_clr" style="color:#DA6CBA"><strong>Mary Thompson</strong></span> · 16.07.26 9:34</div><div class="pab_top_rev_tws"><div class="showtw"></div></div></div><div class="pab_top_rev_postbody pab_topic_postbody">OMG bon anniv  <a  href='/u1302' rel='nofollow' data-id='1302' class='mentiontag' title='Voir le profil : Kay Schneider'>@Kay Schneider</a> !!! <img src="/users/3411/18/74/50/smiles/3028251119.gif" alt=":lizar:" longdesc="54" /> <img src="/users/3411/18/74/50/smiles/2447895273.gif" alt="bis" longdesc="164" /></div></div></div><div class="pab_topic_revue"><div class="pab_top_rev_avatar pab_avatar"><img loading="lazy" src="https://sig.grumpybumpers.com/host/Stern.gif"  alt="Dalisay Almendras" style="max-width: 200px; max-height: 320px"  /></div><div class="pab_top_rev_content"><div class="pab_top_rev_infos"><div class="pab_top_rev_namedate"><span class="group-4 usr_grp_clr" style="color:#91B761"><strong>Dalisay Almendras</strong></span> · 16.07.26 9:01</div><div class="pab_top_rev_tws"><div class="showtw"></div></div></div><div class="pab_top_rev_postbody pab_topic_postbody">joyeux anniversaire  <a  href='/u1302' rel='nofollow' data-id='1302' class='mentiontag' title='Voir le profil : Kay Schneider'>@Kay Schneider</a> !!! <img src="/users/3411/18/74/50/smiles/1642416958.gif" alt=":calin:" longdesc="8" /></div></div></div></div><script>const cacheTime = 1*60*60*1000, /*-temps de cache, 1h par défaut-*/           mentions = document.querySelectorAll('.mentiontag'), /*-class des liens à checker-*/date = +new Date(),parser = new DOMParser();let groupe = '';/*-Fonction qui teste si la couleur de groupe est égale à celle de chaque groupe et si oui stocke la class correspondante dans groupe-*/function mtnGroup(colGroup, color, classname){if (color == colGroup){groupe = classname;}}/*-Pour chaque lien qui a mentiontag comme class-*/mentions.forEach(mtn => {let id = mtn.getAttribute("href").replace(/.*?\/u/, ''); /*-Récupérer l'id du membre sur le lien mentiontag-*//*-S'il existe un avatar pour cet id dans le localStorage et que la date de stockage est inférieure à 1h, alors-*/if ( (localStorage.getItem('mentionGroup_' + id) !== null) && (localStorage.getItem('mentionGroup_' + id + '_exp') > date - cacheTime) ) {/*-Stocker la class du groupe dans une variable-*/groupe = localStorage.getItem('mentionGroup_' + id);/*-Appliquer la class du groupe au lien mentiontag-*/mtn.classList.add(groupe);} else {fetch('/ajax/index.php?f=m&user_id=' + id).then((response) => {if (!response.ok) {throw new Error(`HTTP error $`);}/*-Retourner le résultat sous forme de texte-*/return response.text();}).then((data) => {/*-Transformer le texte en HTML-*/const doc = parser.parseFromString(data, "text/html");/*-Récupérer la couleur de groupe dans une variable-*/let couleur = doc.querySelector('.tooltip-title span').getAttribute('style').slice(-7);/*-On joue la fonction pour chaque couleur de groupe-*/mtnGroup('#AA73F0', couleur, 'grp_lem');mtnGroup('#AA73F9', couleur, 'grp_lem');mtnGroup('#91B761', couleur, 'grp_necr');mtnGroup('#91B762', couleur, 'grp_necr');mtnGroup('#E29B68', couleur, 'grp_zomb');mtnGroup('#E29B69', couleur, 'grp_zomb');mtnGroup('#DA6CBB', couleur, 'grp_chim');mtnGroup('#DA6CBF', couleur, 'grp_chim');mtnGroup('#E36D6D', couleur, 'grp_vamp');mtnGroup('#E36D6E', couleur, 'grp_vamp');mtnGroup('#6BA8E1', couleur, 'grp_polt');mtnGroup('#6BA8E2', couleur, 'grp_polt');mtnGroup('#BB8929', couleur, 'grp_fauch');mtnGroup('#E29B67', couleur, 'grp_zombchim');mtnGroup('#DA6CBA', couleur, 'grp_chimzomb');mtnGroup('#E36D6C', couleur, 'grp_vampchim');mtnGroup('#91B760', couleur, 'grp_necrochim');mtnGroup('#91B769', couleur, 'grp_necrozomb');mtnGroup('#6BA8E0', couleur, 'grp_poltzomb');mtnGroup('#E29B66', couleur, 'grp_zombpolt');mtnGroup('#E29B65', couleur, 'grp_zombchim');mtnGroup('#DA6CBC', couleur, 'grp_chimzomb');mtnGroup('#E36D6B', couleur, 'grp_vampchim');mtnGroup('#91B764', couleur, 'grp_necrochim');mtnGroup('#91B763', couleur, 'grp_necrozomb');mtnGroup('#6BA8E3', couleur, 'grp_poltzomb');  mtnGroup('#E29B64', couleur, 'grp_zombpolt');mtnGroup('#6367A2', couleur, 'grp_nonval');mtnGroup('#6367A1', couleur, 'grp_nonval');/*-S'il y a une class de groupe-*/if (groupe != 'grp_nonval') {/*-Ajouter la class du groupe sur le lien mentiontag-*/mtn.classList.add(groupe);/*-Stocker la class de groupe dans le localStorage ainsi que l'heure du stockage-*/localStorage.setItem('mentionGroup_' + id + '_exp', date);localStorage.setItem('mentionGroup_' + id, groupe);}}).catch((error) => {/*-Gérer les erreurs-*/console.log(error);});}});let showTWs = document.querySelectorAll('.showtw');showTWs.forEach(showTW => {showTW.addEventListener("click", function () {showTW.classList.toggle("hidetw");if(showTW.parentElement.classList.contains('pab_topic_tws') || showTW.parentElement.classList.contains('pab_tel_tws')){showTW.parentElement.parentElement.parentElement.querySelector('.pab_topic_postmessage').classList.toggle("twvis");}else{showTW.parentElement.parentElement.parentElement.querySelector('.pab_top_rev_postbody').classList.toggle("twvis");}});});let message = document.querySelector('.pab_topic_postbody');let bouton;if (message.querySelector('.tw')) {boutons = message.parentElement.parentElement.querySelectorAll('.showtw');boutons.forEach(bouton =>{bouton.classList.add('showboutontw');});}let messagesList = document.querySelectorAll('.pab_top_rev_postbody');messagesList.forEach(message => {if (message.querySelector('.tw')) {message.parentElement.querySelector('.showtw').classList.add('showboutontw');}});</script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/go.min.js"></script><script>$(document).ready(function () {$('pre, code').each(function (i, block) {hljs.highlightBlock(block);});});</script></div><script type="text/javascript">//<![CDATA[
+$(function(){});$('.pabpedit_optitre').on('click', function () {$(this).parent('.opt-hideable').toggleClass('opt-hidden');});//]]></script></div><div class="pab_footer pab_texture_flipped"><div class="pab_partos"><h2>Partenariats</h2><div class="pab_partos_liste"><div id="footer_widgets"><div id="f_widgets_col_0" style="width: 100%;" class="column"><div class="widget"><div class="box"><div class="box-body"><div class="partenaires">
+	                                                                                                                                                                                                           
+	<div class="ultratop">
+		                    <a href="https://deliquescence.actifforum.com" target="_blank"><img src="https://2img.net/i.imgur.com/uOrnlvG.jpeg" title="Déliquescence" /></a><a target="_blank" href="https://shiverstone.forumactif.com/"><img title="Shiverstone" src="https://2img.net/i.imgur.com/jfJ7Hpf.png" /></a> <a target="_blank" href="https://ainsi-tomba-thedas.forumactif.com/"> <img title="Ainsi tomba Thédas" src="https://2img.net/i.imgur.com/bMDnVfS.png" /></a> <a target="_blank" href="https://mmori.forumactif.com/"><img title="Memento Mori" src="https://i.postimg.cc/4dT4hH50/Bouton-250-x-60.jpg" /></a> <a target="_blank" href="https://arsin-rpg.forumactif.com/"><img title="Arsin" src="https://2img.net/i.imgur.com/nWAfr3C.png" /></a>                                                                                                  
+	</div>
+	                                                                                                                                                                                                           
+	<div class="partos">
+		                                                                                                           <a target="_blank" href="https://www.esquisse-rp.com/"><img src="https://2img.net/i.imgur.com/bFej892.png" title="Esquisse" /></a> <a target="_blank" href="https://master-poke.forumactif.fr"><img src="https://2img.net/i.imgur.com/xWrQTsW.png" title="Master Poké" /></a> <a target="_blank" href=" https://just-married.variousforum.com/"><img src="https://i.servimg.com/u/f90/19/77/04/51/bouton16.jpg" title="Just Married" /></a> <a target="_blank" href="https://www.onepiece-requiem.net"> <img title="One Piece Requiem" src="https://2img.net/i.imgur.com/KxgCuHB.png" /> </a> <a target="_blank" href="https://hakumei.forumactif.org/"><img title="Hakumei" src="https://2img.net/i.imgur.com/BBB85nf.png" /> </a>  <a target="_blank" href="https://astrebrume.forumactif.com"> <img title="Astrebrume" src="https://2img.net/i.imgur.com/My6Oyxm.png" />        </a> <a target="_blank" href="https://dea-kademeia.forumactif.com/"> <img title="Dea Kademeia" src="https://i.ibb.co/hNh0Ydy/Bouton-50x50.png" /> </a> <a target="_blank" href="https://elysionearth.forumgratuit.org/"> <img title="Elysion" src="https://2img.net/i.imgur.com/nCSC6KE.png" /> </a> <a target="_blank" href="https://terresdyggdrasil.forumactif.com/"> <img title="Terres d'Yggdrasil" src="https://zupimages.net/up/24/22/lgv1.png" /> </a> <a target="_blank" href="https://7goldenrings.forumactif.com/"> <img title="7 Golden Rings" src="https://2img.net/i.imgur.com/IBVj23O.png" /> </a><a target="_blank" href="https://ile-safari-rpg.forumactif.com/"> <img title="L'Île Safari" src="https://www.zupimages.net/up/25/24/pah8.png" /> </a> <a target="_blank" href="https://shorefield.forumactif.com/"> <img title="Shorefield" src="https://2img.net/i.imgur.com/CFLFx9X.png" />        </a> <a href="https://aurore-tamisee.forumactif.com/" target="_blank"><img title="Aurore Tamisée" src="https://www.aht.li/3919237/boutonATV2_copie.png" /></a> <a href="https://fairy-dystopia.forumactif.com/" target="_blank"><img title="Fairy Dystopia" src="https://2img.net/i.imgur.com/7Zz91Xq.png" /></a> <a href="https://fmadimension.forumactif.com/" target="_blank"><img title="FMA Dimension" src="https://2img.net/i.imgur.com/kljJ9g9.png" /></a>        <a href="https://tsuminosensou.forumactif.com" target="_blank"><img title="Tsumi no Sensou" src="https://2img.net/i.imgur.com/mAv3IRF.png" /></a>  <a href="https://roncepourpre.forumactif.com/" target="_blank"><img title="Roncepourpre" src="https://2img.net/i.imgur.com/VE55WGL.png" /></a><a href="https://nitescence.forumactif.com/" target="_blank"><img title="Nitescence" src="https://2img.net/i.imgur.com/fjLcGgu.png" /></a> <a target="_blank" href="https://lucidaliahunters.forumactif.com"><img title="Lucidalia Hunters" src="https://2img.net/i.imgur.com/MvMyhs3.png" /></a> <a href="https://syrvael.forumactif.com/" target="_blank"><img src="https://2img.net/i.imgur.com/WUiur5w.jpeg" title="Syrvaël" /></a><a target="_blank" href="https://gaia.forumactif.com/"><img title="Gaïa" src="https://2img.net/i.imgur.com/Qnw7HIt.png" /></a> <a target="_blank" href="https://burningincrisis.forumactif.com"><img title="Burning in Crisis" src="https://i.goopics.net/odzsu8.png" /></a> <a target="_blank" href="https://pokemonechoes.forumactif.com/"><img title="Pokemon Echoes" src="https://i.servimg.com/u/f18/19/39/96/94/echoes11.png" /></a><a href="https://amara.forumactif.com/" target="_blank"><img src="https://i.servimg.com/u/f43/17/55/77/75/0pim10.png" title="Amara" /></a><a href="https://theriserpg.forumactif.com/" target="_blank"><img src="https://i.postimg.cc/WzrX0dgM/therise-bout2.png" title="The Rise" /></a><a href="https://www.shinobiretsuden.com/" target="_blank"><img title="Shinobi Retsuden" src="https://2img.net/i.imgur.com/2NOmtp6.png" /></a><a href="https://neverland-zero.forumactif.com/" target="_blank"><img src="https://i.servimg.com/u/f67/16/34/47/29/50_50_10.jpg" title="Neverland Zero" /></a><a target="_blank" href="https://everwilde.forumactif.com/"><img src="https://2img.net/i.imgur.com/eSEBU7M.png" title="Everwilde" /></a> <a href="https://chaosenlozere.forumactif.com"><img src="https://i.postimg.cc/Wb76RK7K/50.png" title="Chaos" /></a> <a target="_blank" href="https://lumbrileto.forumactif.com/"><img title="Lumbrileto" src="https://2img.net/i.imgur.com/NtLTiOs.jpeg" /></a> <a target="_blank" href="https://fosse-soyeuse.forumsrpg.com/"><img src="https://zupimages.net/up/23/21/tfzn.png" title="Fosse Soyeuse" /></a><a target="_blank" href="https://contraste.forumactif.com/"><img title="Contraste" src="https://zupimages.net/up/26/25/984p.png" /></a><a target="_blank" href="https://stellacinis.jcink.net/index.php"><img title="Stella Cinis" src="https://www.zupimages.net/up/26/14/wk89.png" /></a> <a target="_blank" href="https://aetherion-pokemon.forumactif.com"><img title="Aetherion Pokemon" src="https://images2.imgbox.com/da/fc/Y6rlOWve_o.png" /></a><a class="noparto" href="/"></a><a class="noparto" href="/"></a><a class="noparto" href="/"></a><a class="noparto" href="/"></a><a class="noparto" href="/"></a><a class="noparto" href="/"></a><a class="noparto" href="/"></a><a class="noparto" href="/"></a><a class="noparto" href="/"></a><a class="noparto" href="/"></a><a class="noparto" href="/"></a>        
+	</div>
+</div></div></div></div></div></div></div></div><div class="pab_credits"><div class="pab_branche"></div><div class="pabcred_bloc"><i class="fa-regular fa-copyright"></i><div class="pabcred_kj">ピカブ</div><div class="pabcred_pab pab_deg">Peek a Boo&nbsp;!</div><p>Forum de jeu de rôle créé en 2014, <strong>rouvert en 2023</strong>. Administré par <strong>Joshua Rokuro, Lolly Hopkins et Constantine B. Carter</strong>.</p><div class="pabcred_credits"><div>Design par <strong>Joshua Rokuro</strong></div><a href="/h4-guidebook#credits" class="pab_deg">Crédits</a></div></div></div></div></div></div></div><div id="pabfoot_liens"><ul class="pab_no_ul"><li><strong><a href="https://www.forumactif.com/forum-gratuit" target="_blank">Forum gratuit</a></strong>&nbsp;|&nbsp;<span class="gensmall">&copy;</span><a href="https://www.forumactif.com/phpbb" target="_blank">phpBB</a>&nbsp;|&nbsp;<a name="bottom" href="https://forum.forumactif.com/" target="_blank">Forum gratuit d'entraide</a>&nbsp;|&nbsp;<a name="bottom" href="/statistics" rel="nofollow">Statistiques</a>&nbsp;|&nbsp;<a href="/abuse" rel="nofollow">Signaler un abus</a>&nbsp;|&nbsp;<a href="javascript:window.Sddan.cmp.displayUI();">Cookies</a></li></ul></div><div class="pab_adminlink"></div></div><div id="pab_addrp_dialog"><form id="pab_addrp_form"><fieldset><legend>Ajouter un rp</legend><p><label id="pab_addrp_lien">Lien du rp :</label><input type="text" name="pab_addrp_lien" placeholder="https://" required></p><p><label id="pab_addrp_titre">Titre du rp :</label><input type="text" name="pab_addrp_titre" placeholder="Titre" required></p></fieldset><button type="submit">Ajouter</button><div id="pab_addrp_iferror"></div></form></div><div id="dimmer" class="hidden"></div><div style="display: none;"><div id="fa_hide"></div><div id="fa_show"></div></div><script type="text/javascript">//<![CDATA[
+fa_endpage();//]]></script><script type="text/javascript">//<![CDATA[
+//]]></script><script>let timer = 0;window.addEventListener('resize', function () {if (timer) {clearTimeout(timer);timer = null;}else {document.body.classList.add('sanstransi');}timer = setTimeout(() => {document.body.classList.remove('sanstransi');timer = null;}, 100);});</script><script src="https://cdn.jsdelivr.net/gh/malihu/jquery-style-my-tooltips/jquery.style-my-tooltips.js"></script><script>(function ($) {$(document).ready(function () {$("[title!=''][title]:not(.pab_topic_newrep a[title*='verrouill'])").style_my_tooltips({tip_follows_cursor: true,tip_delay_time: 0,tip_fade_speed: 300});});})(jQuery);</script><!--
+ NOTIFFIN PLUGIN --><script src="https://sd-g1.archive-host.com/membres/up/20c75818e16b168db14cae3fcfbae78b8a51378b/CSS/PaB/V45/Notiffi.js"></script><!--
+ Initialisation de Notiffi --><script>Notiffi.init({icons: {0: '<i class="fa-solid fa-envelope" aria-hidden="true"></i>',1: '<i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>',2: '<i class="fa-solid fa-user-plus" aria-hidden="true"></i>',3: '<i class="fa-solid fa-people-group" aria-hidden="true"></i>',4: '<i class="fa-solid fa-comment" aria-hidden="true"></i>',5: '<i class="fa-solid fa-comment" aria-hidden="true"></i>',6: '<i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>',7: '<i class="fa-solid fa-message" aria-hidden="true"></i>',8: '<i class="fa-solid fa-at" aria-hidden="true"></i>',9: '<i class="fa-solid fa-hashtag" aria-hidden="true"></i>',10: '<i class="fa-solid fa-bell" aria-hidden="true"></i>',11: '<i class="fa-solid fa-heart" aria-hidden="true"></i>',12: '<i class="fa-solid fa-droplet" aria-hidden="true"></i>',13: '<i class="fa-solid fa-folder-open" aria-hidden="true"></i>',14: '<i class="fa-solid fa-crown" aria-hidden="true"></i>',15: '<i class="fa-solid fa-user" aria-hidden="true"></i>',16: '<i class="fa-solid fa-user" aria-hidden="true"></i>'}})</script><script type="text/javascript" src="https://illipro.net/rs3/18/frm/awesome/main.js"></script></body></html>
