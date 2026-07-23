@@ -1156,3 +1156,26 @@
     setCount(getText());
   }, 300);
 })();
+
+/* ---------- POSTING_BODY : avatar/nom du bloc "Prévisualisation" ----------
+   posting_preview.html ne fournit que le message ({MESSAGE_NEW}), pas de
+   variable "auteur" côté FA — une prévisualisation est forcément celle du
+   membre connecté, donc _userdata (même technique que l'avatar de la réponse
+   rapide un peu plus haut dans ce fichier). _userdata['avatar'] est ici du
+   HTML tout fait (un <img> complet), pas juste une URL — confirmé via
+   reference/Inspecteurs et codes sources forum fonctionnel/
+   code-source_previewpost.txt. */
+(function pfaPostingPreview() {
+  var box = document.querySelector('.pb-preview');
+  if (!box || typeof _userdata === 'undefined') { return; }
+
+  var avatarEl = box.querySelector('.pb-preview-avatar');
+  if (avatarEl && _userdata['avatar']) {
+    avatarEl.innerHTML = _userdata['avatar'];
+  }
+
+  var nameEl = box.querySelector('.pb-preview-name');
+  if (nameEl && _userdata['username']) {
+    nameEl.textContent = _userdata['username'];
+  }
+})();

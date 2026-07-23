@@ -1,0 +1,46 @@
+<!-- ============================================================
+     POSTING_TOPIC_REVIEW — "Revue du sujet" (derniers messages du sujet,
+     rappelés sous le formulaire de réponse), généré par {TOPIC_REVIEW_BOX}
+     dans posting_body.html.
+
+     Variables de base confirmées via reference/templates-source/
+     posting_topic_review (POST_ID/POST_SUBJECT_NEW/L_TOPIC_BY/POSTER_NAME/
+     L_TOPIC_ON/POST_DATE/MESSAGE) — MINI_POST_IMG (icône, pas un avatar) a
+     été remplacé par POSTER_AVATAR, la même variable "vrai avatar du membre"
+     que viewtopic_body.html : pas confirmée dans ce sous-template précis par
+     un fichier de référence FA, mais un forum tiers fonctionnel (Peek a Boo,
+     voir reference/Inspecteurs et codes sources forum fonctionnel/
+     code-source_previewpost.txt) affiche bien un vrai avatar ici à la même
+     taille qu'un message normal (200x320) dans sa propre version personnalisée
+     de ce même sous-template — à vérifier une fois collé en vrai.
+
+     Réutilise les classes de viewtopic_body (.vt-post/.vt-profile/
+     .vt-postcard/.vt-avatar) pour un rendu identique à un vrai message, sans
+     les champs de profil/rang/icône (demandé explicitement). -->
+<!-- BEGIN switch_inline_mode -->
+<div class="content-frame pb-review-head">
+	<div class="h3">{L_TOPIC_REVIEW}</div>
+</div>
+<!-- END switch_inline_mode -->
+
+<!-- BEGIN postrow -->
+	<!-- BEGIN displayed -->
+	<div class="content-frame vt-post pb-review-post">
+		<a name="{postrow.displayed.POST_ID}"></a>
+		<div class="vt-profile gborder">
+			<div class="vt-avatar ph">{postrow.displayed.POSTER_AVATAR}</div>
+		</div>
+		<div class="vt-postcard gborder">
+			<div class="vt-post-head">
+				<span class="vt-post-date">{postrow.displayed.L_TOPIC_BY} {postrow.displayed.POSTER_NAME} {postrow.displayed.L_TOPIC_ON} {postrow.displayed.POST_DATE}</span>
+			</div>
+			<div class="vt-post-body">{postrow.displayed.MESSAGE}</div>
+		</div>
+	</div>
+	<!-- END displayed -->
+	<!-- BEGIN hidden -->
+	<div class="content-frame vt-hidden-msg">
+		<p>{postrow.hidden.MESSAGE}</p>
+	</div>
+	<!-- END hidden -->
+<!-- END postrow -->

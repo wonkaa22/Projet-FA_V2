@@ -40,3 +40,8 @@ du thème "Selenujo" existant. Point de départ : mockup HTML/CSS validé
   template.
 - Images réelles à fournir par l'utilisateur (actuellement tous des
   placeholders hachurés).
+- `templates/posting_topic_review.html` utilise `{postrow.displayed.POSTER_AVATAR}`
+  pour l'avatar de chaque message dans "Revue du sujet" — pas confirmé par un
+  fichier de référence FA pour ce sous-template précis (seulement vu dans
+  `reference/templates-source/viewtopic_body.html`), à vérifier une fois collé
+  en vrai sur le forum.

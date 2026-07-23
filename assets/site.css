@@ -1722,3 +1722,81 @@
 
   /* Thème sombre : rang/fiche/stats en fond --section (déjà sombre par
      défaut), pas d'override supplémentaire nécessaire pour l'instant. */
+
+  /* ---------- POSTING_BODY (poster un sujet/une réponse en page dédiée) ----------
+     .pb-preview/.pb-review-post réutilisent directement .vt-post/.vt-profile/
+     .vt-postcard/.vt-avatar de viewtopic_body ci-dessus (même feuille de
+     style, "la même mise en forme qu'un vrai post" demandée explicitement) —
+     aucune règle dupliquée ici pour ces classes. */
+  .pb-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; font-size: 26px; color: var(--ink-hi-light); }
+  .pb-form, .pb-rules, .pb-review-head, .pb-warning-box { color: var(--ink-body-light); }
+  /* form[name="post"] : pas un .content-frame lui-même, juste le conteneur
+     qui regroupe plusieurs .content-frame (fiche, options, dés...) — sans ce
+     flex/gap, .outer-frame (display:flex, direct children only) ne peut plus
+     espacer ces cartes puisque le <form> s'intercale entre les deux. */
+  form[name="post"] { display: flex; flex-direction: column; gap: 22px; }
+
+  /* Titres de section natifs FA (Poster une réponse, Lancer de dés, Options,
+     Revue du sujet...) : même correctif que .vt-quickreply .h3 plus haut
+     (bordure bleue par défaut FA retirée, couleur claire). */
+  .pb-head .h3, .pb-form .h3, .pb-review-head .h3, .pb-rules .h3 {
+    color: var(--ink-hi-light) !important;
+    font-weight: 700 !important;
+    border-bottom: none !important;
+    font-size: 16px;
+  }
+
+  .pb-fields { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
+  .pb-field { display: flex; flex-direction: column; gap: 4px; font-size: 12px; }
+  .pb-field label { color: var(--ink-muted-light); font-weight: 600; }
+  .pb-input, .pb-select {
+    background: var(--section); color: var(--ink-body-light);
+    border: 1px solid rgba(224,225,221,0.15); border-radius: 8px;
+    padding: 8px 10px; font-size: 13px;
+  }
+  .pb-input-tiny { width: 50px; display: inline-block; }
+  .pb-check { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-body-light); margin-bottom: 6px; }
+  .pb-check input { accent-color: var(--frame1); }
+  .pb-hint { font-size: 10px; color: var(--ink-muted-light); }
+  .pb-sep { border: none; border-top: 1px solid rgba(224,225,221,0.15); margin: 10px 0; }
+  .pb-icon-row { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pb-icon-opt { display: inline-flex; align-items: center; cursor: pointer; }
+
+  /* Emoji natif FA : même piège de fond blanc que la réponse rapide. */
+  .pb-smiley-box { background: var(--section) !important; border-radius: 8px; padding: 10px; margin-top: 4px; }
+  .pb-smiley-box, .pb-smiley-box * { border-color: rgba(224,225,221,0.15) !important; }
+
+  .pb-message-box { margin-top: 10px; position: relative; }
+  .pb-helpline { font-size: 11px; color: var(--ink-muted-light); }
+
+  /* Zone d'écriture (textarea + SCEditor) : même technique que la réponse
+     rapide (voir .vt-quickreply plus haut dans ce fichier) — !important
+     nécessaire face à fa.default.min.css, chargé après notre feuille de
+     style (égalité de spécificité déjà rencontrée et diagnosée là-bas). */
+  .pb-form textarea,
+  .pb-form input[type="text"],
+  .pb-form input[type="url"] { background: var(--section) !important; color: var(--ink-body-light) !important; }
+  .pb-form .sceditor-container { background: var(--section) !important; border-color: rgba(224,225,221,0.15) !important; border-radius: 10px; overflow: hidden; }
+  .pb-form .sceditor-toolbar { background: var(--frame1) !important; border-color: rgba(224,225,221,0.15) !important; }
+  .pb-form .sceditor-grip { background: rgba(224,225,221,0.15) !important; }
+  .pb-form iframe { border: none !important; }
+
+  .pb-submit-row { display: flex; justify-content: flex-end; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .pb-btn {
+    background: var(--frame-grad); color: var(--chip-ink); border: none;
+    border-radius: 8px; padding: 8px 18px; font-size: 12px; cursor: pointer;
+  }
+  .pb-btn-ghost { background: transparent; border: 1px solid var(--ink-muted-light); color: var(--ink-body-light); }
+  .pb-btn-primary { font-weight: 700; }
+  .pb-warning { font-size: 11px; color: #e08080; }
+
+  /* "Sauter vers" masqué (demandé explicitement). */
+  .pb-jumpbox-form { display: none; }
+
+  /* Prévisualisation : avatar/nom remplis en JS depuis _userdata
+     (pfaPostingPreview dans site.js) — pas de variable FA "auteur" fournie
+     par posting_preview, une prévisualisation est forcément celle du membre
+     connecté. */
+  .pb-preview-name { color: var(--ink-hi-light); font-weight: 600; }
+
+  .pb-review-post { margin-top: 0; }
