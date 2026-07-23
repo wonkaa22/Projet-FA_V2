@@ -1609,10 +1609,14 @@
 
   /* Barre d'outils SCEditor : petit cadre replié en haut à droite, avec
      seulement les bases + une icône pour déplier le reste. .sceditor-group
-     en display:contents (comme sur Selenujo) : les groupes FA n'imposent plus
-     leur propre mise en page, chaque bouton devient un enfant direct de
-     .sceditor-toolbar, qu'on peut alors filtrer un par un par sa vraie classe
-     de commande. */
+     en display:contents : les groupes FA n'imposent plus leur propre mise en
+     page, chaque bouton devient un enfant direct de .sceditor-toolbar, qu'on
+     peut alors filtrer un par un par sa vraie classe de commande — confirmées
+     via reference/Inspecteurs et codes sources forum fonctionnel/
+     inspecteur_sujet.html.txt (DOM réel d'un SCEditor Forumactif en usage :
+     chaque bouton est <a class="sceditor-button sceditor-button-{commande}">
+     <div>Libellé</div></a>, le libellé texte étant recouvert par une image de
+     fond posée sur ce <div> pour les commandes reconnues). */
   .vt-quickreply .sceditor-toolbar {
     position: absolute; top: 8px; right: 8px; z-index: 4;
     max-width: 200px;
@@ -1626,25 +1630,28 @@
   .vt-quickreply .sceditor-toolbar .sceditor-button-underline,
   .vt-quickreply .sceditor-toolbar .sceditor-button-strike,
   .vt-quickreply .sceditor-toolbar .sceditor-button-mention,
-  .vt-quickreply .sceditor-toolbar .sceditor-button-member,
   .vt-quickreply .sceditor-toolbar .sceditor-button-image,
-  .vt-quickreply .sceditor-toolbar .sceditor-button-emoticon,
-  .vt-quickreply .sceditor-toolbar .vt-sc-toggle {
+  .vt-quickreply .sceditor-toolbar .sceditor-button-emoticon {
     display: inline-flex !important; align-items: center; justify-content: center;
     width: 24px; height: 24px; border-radius: 6px; color: var(--ink-body-light); cursor: pointer;
   }
   .vt-quickreply .sceditor-toolbar .sceditor-button:hover { background: rgba(255,255,255,0.08); }
   .vt-quickreply .sceditor-toolbar.vt-sc-expanded .sceditor-button { display: inline-flex !important; }
-  /* Texte brut ("⋯"), pas une icône Font Awesome : B/I/U/S dans ce même
-     SCEditor s'affichent déjà comme du texte stylé plutôt que des glyphes
-     d'icône — {SCEDITOR} étant une variable opaque (rien vu dans
-     reference/templates-source à ce sujet), on ne sait pas pourquoi un <i>
-     FA restait invisible ici, donc on reprend la même approche déjà connue
-     pour marcher dans ce contexte précis. */
+  /* Bouton "..." : élément à nous, PAS classé .sceditor-button (contrairement
+     au premier essai) — le thème SCEditor de base (fa.default.min.css, chargé
+     par FA, hors de notre feuille de style) applique visiblement un fond
+     générique aux boutons non reconnus, qui masquait notre texte quelle que
+     soit sa forme (icône ou "⋯"). En restant hors de cette famille de
+     classes, on n'hérite plus jamais de ce fond, garanti visible. */
   .vt-sc-toggle {
-    border: 1px dashed rgba(224,225,221,0.35);
+    display: inline-flex !important; align-items: center; justify-content: center;
+    width: 24px; height: 24px; border-radius: 6px; cursor: pointer;
+    background: rgba(224,225,221,0.1) !important;
+    border: 1px dashed rgba(224,225,221,0.35) !important;
+    color: var(--ink-body-light) !important;
     font-size: 16px; font-weight: 700; line-height: 1;
   }
+  .vt-sc-toggle:hover { background: rgba(224,225,221,0.18) !important; }
 
   /* "Sauter vers" (jumpbox) : masqué, demandé explicitement. */
   .vt-jumpbox-form { display: none; }

@@ -1022,14 +1022,16 @@
        nouvelle — d'où le bouton "toujours absent" malgré le fix précédent. */
     if (toolbar.querySelector('.vt-sc-toggle')) { return; }
     var toggle = document.createElement('div');
-    toggle.className = 'sceditor-button vt-sc-toggle';
+    /* PAS de classe "sceditor-button" : le thème SCEditor de base (chargé par
+       FA, hors de notre feuille de style) pose visiblement un fond générique
+       sur les boutons qu'il ne reconnaît pas, qui masquait notre contenu
+       (icône ou texte) quelle que soit sa forme — confirmé en comparant avec
+       le DOM réel d'un SCEditor Forumactif (reference/Inspecteurs et codes
+       sources forum fonctionnel/inspecteur_sujet.html.txt) : les boutons
+       "reconnus" ont une image de fond dédiée par commande, les autres
+       héritent d'un style par défaut qui rend leur propre texte illisible. */
+    toggle.className = 'vt-sc-toggle';
     toggle.title = 'Afficher plus d\'options de mise en forme';
-    /* Texte brut ("⋯"), pas une icône FA : B/I/U/S de ce même SCEditor
-       s'affichent déjà en texte stylé (pas en glyphe d'icône) dans ce
-       contexte précis — un <i class="fa-solid ..."> y restait invisible pour
-       une raison qu'on n'a pas pu identifier (le HTML réel de la barre
-       d'outils est généré côté serveur par FA, {SCEDITOR} est une variable
-       opaque). */
     toggle.textContent = '⋯';
     toggle.addEventListener('click', function () { toolbar.classList.toggle('vt-sc-expanded'); });
     toolbar.appendChild(toggle);
