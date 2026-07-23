@@ -1041,25 +1041,22 @@
     var scFrame = qr.querySelector('.sceditor-container iframe');
     if (!scFrame) { return; }
     var doc = scFrame.contentDocument || (scFrame.contentWindow && scFrame.contentWindow.document);
-    if (!doc || !doc.head || !doc.body) { return; }
-    /* Pas de drapeau "déjà fait" : on revérifie à chaque tick plutôt qu'une
-       seule fois. Le fond restait blanc malgré l'injection initiale — signe
-       probable que SCEditor recharge/remplace le document de son iframe
-       après notre premier passage (son propre script d'initialisation tourne
-       de façon asynchrone), ce qui effaçait le <style> déjà posé. Rejouer
-       l'injection tant que la marque n'est plus là corrige ça sans savoir
-       exactement quand SCEditor la reconstruit. */
-    if (doc.getElementById('vtQrFrameStyle')) { return; }
-    /* L'iframe SCEditor a son propre document, indépendant de notre feuille
-       de style : on lit nos variables CSS (résolues sur la page hôte) et on
-       les réinjecte en dur dans un <style> ajouté à ce document, pour que le
-       fond "sur lequel on écrit" corresponde à celui d'un post (--section). */
+    if (!doc || !doc.body) { return; }
+    /* Deuxième essai : la feuille <style> injectée dans <head> ne suffisait
+       pas (probablement une règle !important propre au thème SCEditor,
+       chargée dans l'iframe après notre passage, qui la battait sur l'ordre
+       des règles). Un style EN LIGNE posé avec priorité !important (via
+       setProperty, pas juste .style.background=...) bat toute règle externe
+       venant après, importante ou non — et on le réapplique à chaque tick
+       (pas de drapeau "déjà fait") au cas où SCEditor réinitialise son
+       document par-dessus entre-temps. */
     var sectionColor = getComputedStyle(document.documentElement).getPropertyValue('--section').trim();
     var textColor = getComputedStyle(document.documentElement).getPropertyValue('--ink-body-light').trim();
-    var st = doc.createElement('style');
-    st.id = 'vtQrFrameStyle';
-    st.textContent = 'html,body{background:' + sectionColor + ' !important;color:' + textColor + ' !important;}';
-    doc.head.appendChild(st);
+    if (doc.documentElement) {
+      doc.documentElement.style.setProperty('background', sectionColor, 'important');
+    }
+    doc.body.style.setProperty('background', sectionColor, 'important');
+    doc.body.style.setProperty('color', textColor, 'important');
   }
 
   function ensureCounter() {

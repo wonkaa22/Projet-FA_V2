@@ -182,11 +182,19 @@
 	<!-- BEGIN topicpagination -->
 	<div class="vt-pagination">{PAGINATION}</div>
 	<!-- END topicpagination -->
-	<!-- BEGIN switch_user_logged_in -->
-	<!-- BEGIN watchtopic -->
-	<div class="vt-watch">{S_WATCH_TOPIC}</div>
-	<!-- END watchtopic -->
-	<!-- END switch_user_logged_in -->
+	<div class="vt-bottom-actions">
+		<!-- BEGIN switch_user_authreply -->
+		<a href="{U_POST_REPLY_TOPIC}" {S_POST_REPLY_TOPIC} title="{T_POST_REPLY_TOPIC}" class="pfa-btn vt-reply-btn">Répondre</a>
+		<!-- END switch_user_authreply -->
+		<!-- BEGIN switch_user_authnoreply -->
+		<a href="{U_LOGIN_REPLY_TOPIC}" title="{T_LOGIN_REPLY_TOPIC}" class="pfa-btn vt-reply-btn">{L_LOGIN_REPLY_TOPIC}</a>
+		<!-- END switch_user_authnoreply -->
+		<!-- BEGIN switch_user_logged_in -->
+		<!-- BEGIN watchtopic -->
+		<div class="vt-watch">{S_WATCH_TOPIC}</div>
+		<!-- END watchtopic -->
+		<!-- END switch_user_logged_in -->
+	</div>
 </div>
 
 <!-- BEGIN switch_forum_rules -->

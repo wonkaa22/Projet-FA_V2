@@ -1409,12 +1409,13 @@
   .vt-pagination a { color: var(--ink-hi-light); }
   .vt-bottom { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px; }
   .vt-bottom .vt-pagination { margin-top: 0; }
-  /* Bouton "surveiller ce sujet" natif FA (S_WATCH_TOPIC, déjà "arrêter de
+  /* Répondre + "surveiller ce sujet" (S_WATCH_TOPIC, déjà "arrêter de
      surveiller" une fois suivi — le libellé change tout seul côté FA) :
-     poussé à droite même sans pagination à côté (margin-left:auto plutôt que
-     justify-content:space-between, qui n'aurait rien à "pousser contre" si
-     la pagination est absente). */
-  .vt-watch { margin-left: auto; }
+     groupés dans la même pilule, poussée à droite même sans pagination à
+     côté (margin-left:auto plutôt que justify-content:space-between, qui
+     n'aurait rien à "pousser contre" si la pagination est absente). */
+  .vt-bottom-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+  .vt-reply-btn { text-decoration: none; white-space: nowrap; }
   .vt-watch a {
     display: inline-flex; align-items: center; gap: 6px;
     background: var(--section); color: var(--ink-body-light);
@@ -1570,6 +1571,15 @@
      correctif que .vt-like-list plus haut). */
   .vt-quickreply, .vt-quickreply * { border-color: rgba(224,225,221,0.15) !important; }
   .vt-quickreply { position: relative; color: var(--ink-body-light); padding-bottom: 46px; }
+  /* Titre "Réponse rapide:" natif FA : même convention que .h3 vue dans
+     reference/templates-source/posting_body ("Poster un nouveau message"
+     rendu en <div class="h3">...</div>) — la ligne dessous vient du
+     border-bottom que cette classe pose ailleurs sur le site, retirée ici. */
+  .vt-quickreply .h3 {
+    color: var(--ink-hi-light) !important;
+    font-weight: 700 !important;
+    border-bottom: none !important;
+  }
   .vt-quickreply textarea,
   .vt-quickreply input[type="text"] { width: 100%; background: var(--section); color: var(--ink-body-light); border: 1px solid rgba(224,225,221,0.15); border-radius: 8px; padding: 10px; font-size: 13px; }
   .vt-quickreply input[type="submit"],
@@ -1595,7 +1605,7 @@
      dessus) : .vt-qr-row est le vrai conteneur flex créé en JS autour de
      l'avatar + de l'éditeur (voir pfaViewtopicQuickReply). */
   .vt-qr-row { display: flex; gap: 12px; align-items: flex-start; }
-  .vt-qr-avatar { flex-shrink: 0; width: 44px; height: 44px; border-radius: 10px; overflow: hidden; }
+  .vt-qr-avatar { flex-shrink: 0; width: 64px; height: 64px; border-radius: 10px; overflow: hidden; }
   .vt-qr-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .vt-qr-row .sceditor-container,
   .vt-qr-row > textarea { flex: 1; min-width: 0; }
@@ -1607,19 +1617,21 @@
   /* Compteur de mots, coin inférieur droit */
   .vt-word-counter { position: absolute; right: 16px; bottom: 14px; font-size: 10px; color: var(--ink-muted-light); background: rgba(0,0,0,0.2); padding: 3px 9px; border-radius: 6px; z-index: 3; }
 
-  /* Barre d'outils SCEditor : petit cadre replié en haut à droite, avec
-     seulement les bases + une icône pour déplier le reste. .sceditor-group
-     en display:contents : les groupes FA n'imposent plus leur propre mise en
-     page, chaque bouton devient un enfant direct de .sceditor-toolbar, qu'on
-     peut alors filtrer un par un par sa vraie classe de commande — confirmées
-     via reference/Inspecteurs et codes sources forum fonctionnel/
-     inspecteur_sujet.html.txt (DOM réel d'un SCEditor Forumactif en usage :
-     chaque bouton est <a class="sceditor-button sceditor-button-{commande}">
-     <div>Libellé</div></a>, le libellé texte étant recouvert par une image de
-     fond posée sur ce <div> pour les commandes reconnues). */
+  /* Barre d'outils SCEditor : petit cadre en ligne, en haut à gauche de la
+     zone d'écriture (pas en survol par-dessus) — un positionnement en overlay
+     perturbait l'affichage de la liste de suggestions au "@" (mention) ;
+     replié avec seulement les bases + une icône pour déplier le reste.
+     .sceditor-group en display:contents : les groupes FA n'imposent plus
+     leur propre mise en page, chaque bouton devient un enfant direct de
+     .sceditor-toolbar, qu'on peut alors filtrer un par un par sa vraie classe
+     de commande — confirmées via reference/Inspecteurs et codes sources
+     forum fonctionnel/inspecteur_sujet.html.txt (DOM réel d'un SCEditor
+     Forumactif en usage : chaque bouton est <a class="sceditor-button
+     sceditor-button-{commande}"><div>Libellé</div></a>, le libellé texte
+     étant recouvert par une image de fond posée sur ce <div> pour les
+     commandes reconnues). */
   .vt-quickreply .sceditor-toolbar {
-    position: absolute; top: 8px; right: 8px; z-index: 4;
-    max-width: 200px;
+    width: fit-content; margin-bottom: 6px;
     background: var(--frame1); border: 1px solid rgba(224,225,221,0.15); border-radius: 10px;
     padding: 4px 5px !important; display: flex !important; flex-wrap: wrap; gap: 2px; align-items: center;
   }
