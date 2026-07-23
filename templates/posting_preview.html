@@ -6,17 +6,27 @@
      variable "auteur" côté FA ici (contrairement à viewtopic_body) puisqu'une
      prévisualisation est forcément celle du membre connecté. On réutilise
      donc _userdata (même technique que l'avatar de la réponse rapide, voir
-     pfaViewtopicQuickReply dans site.js) plutôt qu'une variable serveur.
-     Les vraies données de champs de profil ne sont pas disponibles ici :
-     remplacées par un texte générique ("Informations du profil"), accepté
-     explicitement plutôt que de les redemander à FA.
+     pfaPostingPreview dans site.js) plutôt qu'une variable serveur — pas de
+     "groupe" à afficher dans le bandeau faute de source fiable pour ça côté
+     _userdata (juste un niveau numérique), le rang reste donc vide/masqué
+     comme sur un vrai message sans rang. Les vraies données de champs de
+     profil ne sont pas disponibles ici non plus : remplacées par un texte
+     générique ("Informations du profil"), accepté explicitement plutôt que
+     de les redemander à FA.
 
      Réutilise directement les classes de viewtopic_body (.vt-post/.vt-profile/
-     .vt-postcard/.vt-avatar) pour un rendu identique à un vrai message —
-     même feuille de style, aucun CSS dupliqué. -->
+     .vt-postcard/.vt-avatar/.vt-post-banner) pour un rendu identique à un
+     vrai message — même feuille de style, aucun CSS dupliqué. -->
 <div id="preview" class="content-frame pb-preview-wrap">
 	<div class="h3">{L_PREVIEW}</div>
 	<div class="vt-post pb-preview">
+		<div class="vt-post-banner">
+			<div class="vt-banner-text">
+				<span class="vt-banner-name pb-preview-name"></span>
+				<span class="vt-rank"></span>
+			</div>
+			<div class="vt-banner-img"></div>
+		</div>
 		<div class="vt-profile gborder">
 			<div class="vt-avatar ph pb-preview-avatar"></div>
 			<div class="vt-stats">
@@ -24,9 +34,6 @@
 			</div>
 		</div>
 		<div class="vt-postcard gborder">
-			<div class="vt-post-head">
-				<span class="vt-post-num pb-preview-name"></span>
-			</div>
 			<div class="vt-post-body">
 				{MESSAGE_NEW}
 			</div>

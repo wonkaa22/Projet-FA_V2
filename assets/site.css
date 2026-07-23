@@ -1762,11 +1762,13 @@
   .pb-icon-row { display: flex; flex-wrap: wrap; gap: 6px; }
   .pb-icon-opt { display: inline-flex; align-items: center; cursor: pointer; }
 
-  /* Emoji natif FA : même piège de fond blanc que la réponse rapide. */
-  .pb-smiley-box { background: var(--section) !important; border-radius: 8px; padding: 10px; margin-top: 4px; }
+  /* Emoji natif FA à droite de la zone d'écriture (position native FA,
+     perdue dans une 1re version qui empilait tout verticalement) — même
+     piège de fond blanc que la réponse rapide sur le cadre lui-même. */
+  .pb-message-row { display: flex; gap: 12px; align-items: flex-start; margin-top: 10px; }
+  .pb-message-box { flex: 1; min-width: 0; margin-top: 0; position: relative; }
+  .pb-smiley-box { flex-shrink: 0; width: 170px; background: var(--section) !important; border-radius: 8px; padding: 10px; }
   .pb-smiley-box, .pb-smiley-box * { border-color: rgba(224,225,221,0.15) !important; }
-
-  .pb-message-box { margin-top: 10px; position: relative; }
   .pb-helpline { font-size: 11px; color: var(--ink-muted-light); }
 
   /* Zone d'écriture (textarea + SCEditor) : même technique que la réponse
@@ -1782,16 +1784,32 @@
   .pb-form iframe { border: none !important; }
 
   .pb-submit-row { display: flex; justify-content: flex-end; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  /* !important : les boutons "Prévisualiser"/"Brouillon" ressortaient bleus
+     (style natif input[type=submit] du navigateur ou de fa.default.min.css,
+     même famille de piège que le fond blanc de la réponse rapide — gagnant
+     l'égalité de spécificité avec .pb-btn faute de !important ici). */
   .pb-btn {
-    background: var(--frame-grad); color: var(--chip-ink); border: none;
+    background: var(--frame-grad) !important; color: var(--chip-ink) !important; border: none !important;
     border-radius: 8px; padding: 8px 18px; font-size: 12px; cursor: pointer;
   }
-  .pb-btn-ghost { background: transparent; border: 1px solid var(--ink-muted-light); color: var(--ink-body-light); }
+  .pb-btn-ghost { background: transparent !important; border: 1px solid var(--ink-muted-light) !important; color: var(--ink-body-light) !important; }
   .pb-btn-primary { font-weight: 700; }
   .pb-warning { font-size: 11px; color: #e08080; }
 
   /* "Sauter vers" masqué (demandé explicitement). */
   .pb-jumpbox-form { display: none; }
+
+  /* Pliage des sections (dés/pièces jointes/options/calendrier/SEO) : à nous
+     (pfaPostingCollapsibles dans site.js), pas le mécanisme natif FA
+     (.forum-hideable), qui suppose une structure entête+panneau frères que
+     notre restructuration en une seule .content-frame ne respecte plus.
+     Replié par défaut (demandé explicitement) : .pb-collapse-body caché tant
+     que .pb-form n'a pas la classe .is-open. */
+  .pb-collapsible { cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 8px; user-select: none; }
+  .pb-collapse-arrow { font-size: 12px; color: var(--ink-muted-light); transition: transform 0.2s ease; }
+  .pb-form.is-open .pb-collapse-arrow { transform: rotate(180deg); }
+  .pb-collapse-body { display: none; margin-top: 10px; }
+  .pb-form.is-open .pb-collapse-body { display: block; }
 
   /* Prévisualisation : avatar/nom remplis en JS depuis _userdata
      (pfaPostingPreview dans site.js) — pas de variable FA "auteur" fournie
@@ -1799,4 +1817,11 @@
      connecté. */
   .pb-preview-name { color: var(--ink-hi-light); font-weight: 600; }
 
-  .pb-review-post { margin-top: 0; }
+  /* Revue du sujet : avatar réduit à la taille d'une icône plutôt que la
+     taille pleine d'un vrai message (200x320) — beaucoup trop grand ici vu le
+     peu de texte par entrée. Règle placée après .vt-post (plus haut dans ce
+     fichier) : à spécificité égale, l'ordre dans le fichier tranche, piège
+     déjà rencontré sur ce projet (voir .side-toggle/.event-card). */
+  .pb-review-post { grid-template-columns: 52px 1fr !important; gap: 10px; }
+  .pb-review-post .vt-profile { padding: 6px; }
+  .pb-review-post .vt-avatar { aspect-ratio: 1 / 1; border-radius: 50%; }

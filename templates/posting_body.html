@@ -120,17 +120,20 @@
 			</div>
 			<!-- END switch_description -->
 
-			<!-- Emoji natif FA gardés (le sélecteur visuel), les 3 lignes de statut
-			     (HTML/BBCode/smileys activés) volontairement omises — demandé
-			     explicitement, ce ne sont que des rappels de configuration admin. -->
-			<div id="smiley-box" class="pb-smiley-box">
-				<div id="smileyContainer">{L_SMILIES_PREVIEW_NEW}</div>
-			</div>
-
-			<div id="message-box" class="pb-message-box">
-				<span id="helpbox" class="pb-helpline"></span>
-				<div id="textarea_content">
-					<textarea id="text_editor_textarea" name="message">{MESSAGE}</textarea>
+			<!-- Emoji natif FA gardés (le sélecteur visuel) à droite de la zone
+			     d'écriture (position native FA, perdue dans une 1re version en
+			     pile verticale) ; les 3 lignes de statut (HTML/BBCode/smileys
+			     activés) volontairement omises — demandé explicitement, ce ne
+			     sont que des rappels de configuration admin. -->
+			<div class="pb-message-row">
+				<div id="message-box" class="pb-message-box">
+					<span id="helpbox" class="pb-helpline"></span>
+					<div id="textarea_content">
+						<textarea id="text_editor_textarea" name="message">{MESSAGE}</textarea>
+					</div>
+				</div>
+				<div id="smiley-box" class="pb-smiley-box">
+					<div id="smileyContainer">{L_SMILIES_PREVIEW_NEW}</div>
 				</div>
 			</div>
 			{SCEDITOR}
@@ -167,7 +170,8 @@
 
 	<!-- BEGIN switch_roll_dice -->
 	<div class="content-frame pb-form">
-		<div class="h3 forum-hideable">{ROLL_DICE_TITLE}</div>
+		<div class="h3 pb-collapsible">{ROLL_DICE_TITLE}<i class="fa-solid fa-chevron-down pb-collapse-arrow"></i></div>
+		<div class="pb-collapse-body">
 		<script type="text/javascript">
 			function add_dice(dice_number,dice,number) {
 				var content = document.getElementById('post_dice').innerHTML;
@@ -199,12 +203,14 @@
 			</td></tr>
 		</table>
 		{switch_roll_dice.DICE_SCRIPT}
+		</div>
 	</div>
 	<!-- END switch_roll_dice -->
 
 	<!-- BEGIN switch_attachment_list -->
 	<div class="content-frame pb-form">
-		<div class="h3 forum-hideable" id="attachments">{L_ATTACHMENTS}</div>
+		<div class="h3 pb-collapsible" id="attachments">{L_ATTACHMENTS}<i class="fa-solid fa-chevron-down pb-collapse-arrow"></i></div>
+		<div class="pb-collapse-body">
 		<!-- BEGIN attachments -->
 		<div class="pb-field">
 			<label>{L_ATTACHMENT_FILENAME}</label>
@@ -227,12 +233,14 @@
 			<input type="hidden" value="{switch_attachment_list.attachments.ATTACH_COMMENT}" name="attachment_data[{switch_attachment_list.attachments.ATTACH_POS}][attach_comment]" />
 		</div>
 		<!-- END attachments -->
+		</div>
 	</div>
 	<!-- END switch_attachment_list -->
 
 	<!-- BEGIN switch_attachment -->
 	<div class="content-frame pb-form">
-		<div class="h3 forum-hideable" id="attachment">{L_ATTACHMENT_ADD}</div>
+		<div class="h3 pb-collapsible" id="attachment">{L_ATTACHMENT_ADD}<i class="fa-solid fa-chevron-down pb-collapse-arrow"></i></div>
+		<div class="pb-collapse-body">
 		<div id="attachment_show">
 			{L_ATTACHMENT_ADD_HELP}<br /><span class="pb-hint">{EXT_LIST}</span><br /><br />
 			<div class="pb-field">
@@ -244,12 +252,13 @@
 				<input class="pb-input" type="text" value="" id="filecomment" name="filecomment" maxlength="255" />
 			</div>
 		</div>
+		</div>
 	</div>
 	<!-- END switch_attachment -->
 
 	<div class="content-frame pb-form">
-		<div class="h3 forum-hideable">{L_OPTIONS}</div>
-		<div class="pb-options">
+		<div class="h3 pb-collapsible">{L_OPTIONS}<i class="fa-solid fa-chevron-down pb-collapse-arrow"></i></div>
+		<div class="pb-collapse-body pb-options">
 			<!-- BEGIN switch_topic_modif -->
 			<!-- BEGIN switch_icon_checkbox -->
 			<div class="pb-field">
@@ -304,7 +313,8 @@
 
 	<!-- BEGIN switch_type_cal -->
 	<div class="content-frame pb-form">
-		<div class="h3 forum-hideable">{L_CALENDAR}</div>
+		<div class="h3 pb-collapsible">{L_CALENDAR}<i class="fa-solid fa-chevron-down pb-collapse-arrow"></i></div>
+		<div class="pb-collapse-body">
 		<div class="pb-field">
 			<label>{L_CALENDAR_TITLE} :</label>
 			<div>
@@ -329,6 +339,7 @@
 				<input name="calendar_d" type="hidden" value="{CALENDAR_D}" />
 			</div>
 		</div>
+		</div>
 	</div>
 	<!-- END switch_type_cal -->
 
@@ -336,7 +347,8 @@
 
 	<!-- BEGIN switch_type_seo -->
 	<div class="content-frame pb-form">
-		<div class="h3 forum-hideable">{switch_type_seo.L_SEO}</div>
+		<div class="h3 pb-collapsible">{switch_type_seo.L_SEO}<i class="fa-solid fa-chevron-down pb-collapse-arrow"></i></div>
+		<div class="pb-collapse-body">
 		<div class="pb-field">
 			<label for="topic_seo_title">{switch_type_seo.L_SEO_TITLE}&nbsp;:</label>
 			<input class="pb-input" type="text" maxlength="75" name="topic_seo_title" id="topic_seo_title" value="{switch_type_seo.SEO_TITLE}" />
@@ -356,6 +368,7 @@
 			<label for="topic_og_img_facebook">{switch_type_seo.L_OG_IMG_FACEBOOK_URL}&nbsp;:</label>
 			<input class="pb-input" type="url" maxlength="255" name="topic_og_img_facebook" id="topic_og_img_facebook" placeholder="https://..." value="{switch_type_seo.OG_IMG_FACEBOOK}" />
 			<span class="pb-hint">{switch_type_seo.L_OG_IMG_FACEBOOK_EXPLAIN}</span>
+		</div>
 		</div>
 	</div>
 	<!-- END switch_type_seo -->
@@ -388,22 +401,11 @@ $(function(){
 	resize_images({ 'selector' : '.pb-message-box .content, .pb-form .content', 'max_width' : {switch_image_resize.IMG_RESIZE_WIDTH}, 'max_height' : {switch_image_resize.IMG_RESIZE_HEIGHT} });
 <!-- END switch_image_resize -->
 });
-
-$(document).ready(function () {
-	var btn_collapse = $('<div/>', {
-		class: 'forum-hide',
-		html: '<div class="forum-hide-icon-a"></div><div class="forum-hide-icon-b"></div>',
-	});
-	$(document).on('click', '.forum-hideable', function () {
-		$(this).find('.forum-hide').toggleClass('forum-show');
-		$(this).toggleClass('forum-hidden');
-	});
-	$('.forum-hideable').each(function (i) {
-		$(btn_collapse).clone().appendTo($(this));
-		$(this).find('.forum-hide').toggleClass('forum-show');
-		$(this).toggleClass('forum-hidden');
-	});
-});
+/* Pliage des sections (dés/pièces jointes/options/calendrier/SEO) : géré par
+   pfaPostingCollapsibles dans site.js (.pb-collapsible/.pb-collapse-body),
+   pas par le mécanisme natif FA (.forum-hideable) — son propre script ne
+   sait replier qu'une structure entête+panneau frères (.h3 + .panel.row3
+   voisins), pas la nôtre où tout reste dans une seule .content-frame. */
 //]]>
 </script>
 

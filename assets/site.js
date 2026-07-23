@@ -1179,3 +1179,18 @@
     nameEl.textContent = _userdata['username'];
   }
 })();
+
+/* ---------- POSTING_BODY : pliage des sections (dés/pièces jointes/options/calendrier/SEO) ----------
+   Remplace le mécanisme natif FA (.forum-hideable, voir le script conservé
+   dans posting_body.html) : ce dernier suppose une structure entête + panneau
+   frères, plus le cas ici où tout reste dans une seule .content-frame.
+   Repliées par défaut (demandé explicitement) : .pb-collapse-body est cachée
+   en CSS tant que .pb-form n'a pas .is-open. */
+(function pfaPostingCollapsibles() {
+  document.querySelectorAll('.pb-collapsible').forEach(function (header) {
+    header.addEventListener('click', function () {
+      var card = header.closest('.pb-form');
+      if (card) { card.classList.toggle('is-open'); }
+    });
+  });
+})();
