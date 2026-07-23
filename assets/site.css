@@ -1739,12 +1739,12 @@
      aucune règle dupliquée ici pour ces classes. */
   .pb-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; font-size: 26px; color: var(--ink-hi-light); }
   .pb-form, .pb-rules, .pb-review-head, .pb-warning-box { color: var(--ink-body-light); }
-  /* Dégradé discret (pas le rose vif de --frame-grad, juste une touche dans
-     les mêmes tons) sur les deux cadres-titres demandés — une fine teinte
-     superposée au fond --frame2 habituel des .content-frame plutôt qu'un
-     dégradé plein, pour rester "pas criard". */
+  /* Dégradé (pas le rose vif de --frame-grad, mais accentué par rapport au 1er
+     essai, jugé trop discret) sur les deux cadres-titres demandés — une
+     teinte superposée au fond --frame2 habituel des .content-frame plutôt
+     qu'un dégradé plein. */
   .pb-head, .pb-review-head {
-    background: linear-gradient(135deg, rgba(96,73,90,0.35), rgba(255,111,145,0.12)), var(--frame2);
+    background: linear-gradient(135deg, rgba(96,73,90,0.75), rgba(255,111,145,0.4)), var(--frame2);
   }
   /* form[name="post"] : pas un .content-frame lui-même, juste le conteneur
      qui regroupe plusieurs .content-frame (fiche, options, dés...) — sans ce
@@ -1785,6 +1785,17 @@
      pousser en permanence sur la largeur du textarea. */
   .pb-message-row { display: flex; gap: 8px; align-items: flex-start; margin-top: 10px; }
   .pb-message-box { flex: 1; min-width: 0; margin-top: 0; position: relative; }
+  /* SCEditor mesure la largeur disponible UNE FOIS à son initialisation et la
+     fige en pixels via style="width:...px" en ligne sur son propre conteneur/
+     textarea/iframe (repéré via les captures de Noémie, ex. "1012 x 164") —
+     ne se recalcule pas tout seul quand on montre/cache le panneau smileys
+     ensuite, d'où le grand vide resté figé à l'ancienne largeur. !important
+     pour battre ce style en ligne (même famille de piège que le fond blanc/
+     l'avatar plus haut dans ce fichier). */
+  .pb-message-box .sceditor-container,
+  .pb-message-box .sceditor-container textarea,
+  .pb-message-box .sceditor-container iframe,
+  .pb-message-box > textarea { width: 100% !important; }
   .pb-emoji-toggle {
     flex-shrink: 0; width: 34px; height: 34px; border-radius: 8px;
     background: var(--section); color: var(--ink-body-light); border: none;
@@ -1850,7 +1861,15 @@
      taille pleine d'un vrai message (200x320) — beaucoup trop grand ici vu le
      peu de texte par entrée. Règle placée après .vt-post (plus haut dans ce
      fichier) : à spécificité égale, l'ordre dans le fichier tranche, piège
-     déjà rencontré sur ce projet (voir .side-toggle/.event-card). */
+     déjà rencontré sur ce projet (voir .side-toggle/.event-card).
+     min-width:0 sur .vt-profile/.vt-avatar : la vraie cause du "toujours
+     énorme" malgré la colonne de grille à 52px — confirmé via l'inspecteur
+     de Noémie (.vt-profile mesurait 1062x1062px). Un item de grille/flex a
+     par défaut min-width:auto (sa taille "naturelle" de contenu), qui prime
+     sur la largeur de la piste de grille tant qu'il n'est pas mis à 0 —
+     l'image de l'avatar poussait donc toute la colonne à s'agrandir pour la
+     contenir, peu importe grid-template-columns. Même famille de piège que
+     .mini-card.tall/.stack-cards plus haut dans ce fichier. */
   .pb-review-post { grid-template-columns: 52px 1fr !important; gap: 10px; }
-  .pb-review-post .vt-profile { padding: 6px; }
-  .pb-review-post .vt-avatar { aspect-ratio: 1 / 1; border-radius: 50%; }
+  .pb-review-post .vt-profile { padding: 6px; min-width: 0; }
+  .pb-review-post .vt-avatar { aspect-ratio: 1 / 1; border-radius: 50%; min-width: 0; }
