@@ -1872,14 +1872,21 @@
      peu de texte par entrée. Règle placée après .vt-post (plus haut dans ce
      fichier) : à spécificité égale, l'ordre dans le fichier tranche, piège
      déjà rencontré sur ce projet (voir .side-toggle/.event-card).
-     min-width:0 sur .vt-profile/.vt-avatar : la vraie cause du "toujours
-     énorme" malgré la colonne de grille à 52px — confirmé via l'inspecteur
-     de Noémie (.vt-profile mesurait 1062x1062px). Un item de grille/flex a
-     par défaut min-width:auto (sa taille "naturelle" de contenu), qui prime
-     sur la largeur de la piste de grille tant qu'il n'est pas mis à 0 —
-     l'image de l'avatar poussait donc toute la colonne à s'agrandir pour la
-     contenir, peu importe grid-template-columns. Même famille de piège que
-     .mini-card.tall/.stack-cards plus haut dans ce fichier. */
+     La vraie cause de "toujours énorme" (les min-width:0 ci-dessous restent
+     utiles mais n'étaient pas LE problème) : posting_topic_review.html place
+     <a name="{POST_ID}"></a> comme enfant direct de .pb-review-post, AVANT
+     .vt-profile — contrairement à l'ancre de viewtopic_body (un <div id=...>
+     sans classe, déjà neutralisée par ".vt-post > div[id]:not([class])" plus
+     haut dans ce fichier). Cette balise <a>, elle, reste un vrai enfant de la
+     grille : avec 2 colonnes définies (52px 1fr) et 3 enfants (l'ancre +
+     .vt-profile + .vt-postcard), l'auto-placement de la grille consommait la
+     1re cellule avec l'ancre et décalait tout — .vt-profile atterrissait dans
+     la colonne large (1fr) et .vt-postcard passait à la ligne suivante dans
+     la colonne étroite (52px). Confirmé via l'inspecteur de Noémie
+     (.pb-review-post bien en display:grid, mais le AVATAR toujours dans la
+     mauvaise colonne). Neutralisée en position:absolute, même traitement que
+     l'ancre de viewtopic_body. */
+  .pb-review-post > a[name] { position: absolute !important; width: 0 !important; height: 0 !important; overflow: hidden; }
   .pb-review-post { grid-template-columns: 52px 1fr !important; gap: 10px; }
   .pb-review-post .vt-profile { padding: 6px; min-width: 0; }
   .pb-review-post .vt-avatar { aspect-ratio: 1 / 1; border-radius: 50%; min-width: 0; }
