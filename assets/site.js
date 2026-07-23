@@ -1002,6 +1002,19 @@
   var avatarDone = false;
   var counterEl = null;
 
+  /* Empêche Entrée (seule, avec ou sans modificateur) d'envoyer le message —
+     ne bloque QUE la propagation de l'événement (pas preventDefault), donc
+     le retour à la ligne natif du textarea continue de fonctionner
+     normalement ; seul un gestionnaire qui écouterait Entrée pour déclencher
+     l'envoi (SCEditor ou FA, peu importe où il est accroché dans l'arbre)
+     ne le voit jamais passer. Capture (pas bubble) sur #quick_reply : se
+     déclenche avant tout gestionnaire posé plus bas dans l'arbre, y compris
+     directement sur le textarea. */
+  function blockEnterSubmit(e) {
+    if (e.key === 'Enter') { e.stopPropagation(); }
+  }
+  qr.addEventListener('keydown', blockEnterSubmit, true);
+
   function ensureAvatarRow() {
     if (avatarDone) { return; }
     if (typeof _userdata === 'undefined' || !_userdata['session_logged_in'] || !_userdata['avatar_link']) { avatarDone = true; return; }
@@ -1071,6 +1084,31 @@
     }
     doc.body.style.setProperty('background', sectionColor, 'important');
     doc.body.style.setProperty('color', textColor, 'important');
+
+    /* Barre de défilement propre à l'iframe : un style en ligne (setProperty
+       ci-dessus) ne peut pas cibler un pseudo-élément (::-webkit-scrollbar),
+       il faut une vraie règle CSS posée dans ce document. Même marque que
+       pour le blocage d'Entrée : réinjectée automatiquement si SCEditor
+       remplace le document. */
+    if (doc.head && !doc.__vtScrollbarStyled) {
+      doc.__vtScrollbarStyled = true;
+      var scrollSt = doc.createElement('style');
+      scrollSt.textContent = 'body{scrollbar-width:thin;scrollbar-color:rgba(224,225,221,0.3) transparent;}' +
+        '::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:transparent;}' +
+        '::-webkit-scrollbar-thumb{background:rgba(224,225,221,0.3);border-radius:3px;}';
+      doc.head.appendChild(scrollSt);
+    }
+
+    /* En mode WYSIWYG, la frappe se fait dans le document PROPRE à l'iframe :
+       un blocage posé sur #quick_reply (document principal) ne voit jamais
+       ces événements, il faut le poser directement dedans. Marque posée sur
+       le document lui-même (pas une simple variable fermée) : si SCEditor le
+       remplace entièrement (même piège que le fond de couleur plus haut), le
+       nouveau document n'a pas la marque et on rebranche automatiquement. */
+    if (doc.addEventListener && !doc.__vtEnterBound) {
+      doc.__vtEnterBound = true;
+      doc.addEventListener('keydown', blockEnterSubmit, true);
+    }
   }
 
   function ensureCounter() {

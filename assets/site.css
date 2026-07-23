@@ -1622,6 +1622,35 @@
      bordure à nous qu'on puisse recolorer, un <iframe> a son propre style par
      défaut tant qu'il n'est pas explicitement annulé). */
   .vt-quickreply iframe { border: none !important; }
+  /* .sceditor-container lui-même (pas seulement son textarea/iframe interne) :
+     fond + coins arrondis + overflow:hidden, pour contenir tout élément à
+     coins carrés qui dépasserait sinon du cadre arrondi (la poignée de
+     redimensionnement .sceditor-grip en bas à droite notamment — repérée en
+     blanc dans un coin sur la capture de Noémie). Sélecteur à 2 classes
+     (.vt-quickreply .sceditor-container) plutôt qu'un sélecteur générique à
+     une seule classe : gagne face à fa.default.min.css même en cas d'égalité
+     de !important, la spécificité restant le premier critère de départage
+     avant l'ordre d'arrivée (leçon du fond blanc du textarea, déjà rencontré
+     sur ce même bloc). */
+  .vt-quickreply .sceditor-container {
+    background: var(--section) !important;
+    border-color: rgba(224,225,221,0.15) !important;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .vt-quickreply .sceditor-grip { background: rgba(224,225,221,0.15) !important; }
+  /* Barre d'outils : même renfort de spécificité que .sceditor-container
+     ci-dessus (le sélecteur plus bas dans ce fichier, .vt-quickreply
+     .sceditor-toolbar, a la même spécificité qu'une éventuelle règle FA sur
+     .sceditor-toolbar seul seul — !important ajouté par précaution). */
+  .vt-quickreply .sceditor-toolbar { background: var(--frame1) !important; border-color: rgba(224,225,221,0.15) !important; }
+  /* Barres de défilement (mode texte brut uniquement : un <iframe> a les
+     siennes propres, dans son document séparé, pas atteignables d'ici — voir
+     pfaViewtopicQuickReply/ensureIframeStyle dans site.js). */
+  .vt-quickreply .sceditor-container textarea { scrollbar-width: thin; scrollbar-color: rgba(224,225,221,0.3) var(--section); }
+  .vt-quickreply .sceditor-container textarea::-webkit-scrollbar { width: 6px; }
+  .vt-quickreply .sceditor-container textarea::-webkit-scrollbar-track { background: var(--section); }
+  .vt-quickreply .sceditor-container textarea::-webkit-scrollbar-thumb { background: rgba(224,225,221,0.3); border-radius: 3px; }
 
   /* Compteur de mots, coin inférieur droit */
   .vt-word-counter { position: absolute; right: 16px; bottom: 14px; font-size: 10px; color: var(--ink-muted-light); background: rgba(0,0,0,0.2); padding: 3px 9px; border-radius: 6px; z-index: 3; }
