@@ -1207,3 +1207,32 @@
     box.classList.toggle('pb-open');
   });
 })();
+
+/* ---------- POSTING_BODY : largeur de l'éditeur (SCEditor) ----------
+   Même piège que la réponse rapide (voir pfaViewtopicQuickReply/ensureIframeStyle
+   plus haut) : un max-width/width posé une seule fois en CSS (même en
+   !important) ne suffit pas — confirmé par Noémie (CSS v=68 bien chargé,
+   écart toujours là, avec ou sans le mode "source") — car SCEditor réapplique
+   lui-même une largeur figée en pixels sur son iframe/textarea directement en
+   style inline, pas juste à l'init mais en continu (redimensionnement,
+   bascule source/wysiwyg...). Un style inline posé avec priorité !important
+   (via setProperty) bat n'importe quel style inline qu'il repose ensuite —
+   réappliqué à chaque tick (pas de drapeau "déjà fait") pour rester devant
+   quel que soit le moment où SCEditor recalcule. */
+(function pfaPostingEditorWidth() {
+  var messageBox = document.querySelector('.pb-message-box');
+  if (!messageBox) { return; }
+
+  function forceFullWidth(el) {
+    if (!el) { return; }
+    el.style.setProperty('width', '100%', 'important');
+    el.style.setProperty('max-width', '100%', 'important');
+  }
+
+  setInterval(function () {
+    forceFullWidth(messageBox.querySelector('.sceditor-container'));
+    forceFullWidth(messageBox.querySelector('.sceditor-toolbar'));
+    forceFullWidth(messageBox.querySelector('.sceditor-container iframe'));
+    forceFullWidth(messageBox.querySelector('.sceditor-container textarea'));
+  }, 300);
+})();
