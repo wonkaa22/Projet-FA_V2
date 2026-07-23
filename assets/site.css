@@ -1465,7 +1465,17 @@
      vraie cause de "l'avatar toujours trop grand/mal positionné" dans
      posting_topic_review (conteneur réduit à 52px, mais l'image elle-même
      restait bloquée à 200px par son propre style, débordant de son cadre). */
-  .vt-avatar img { width: 100% !important; height: 100% !important; max-width: 100% !important; max-height: 100% !important; object-fit: cover; display: block; }
+  /* min-width/min-height:0 en plus du width/height:100% ci-dessus : .vt-avatar
+     porte aussi la classe .ph (display:flex, voir plus haut dans ce fichier),
+     ce qui fait de cette image elle-même un item flex — et un item flex a
+     par défaut min-width:auto (sa taille de contenu naturelle) sur l'axe
+     principal, exactement le même piège que celui déjà corrigé sur
+     .vt-profile/.vt-avatar (pb-review-post) mais un niveau plus bas, sur
+     l'élément qui débordait réellement. Sans ça, width:100% ne suffisait
+     pas à le faire rétrécir sous sa taille naturelle (confirmé par
+     l'inspecteur de Noémie : image encore à sa taille native malgré un
+     conteneur réduit à 52px). */
+  .vt-avatar img { width: 100% !important; height: 100% !important; max-width: 100% !important; max-height: 100% !important; min-width: 0 !important; min-height: 0 !important; object-fit: cover; display: block; }
   /* Icône seule (pas de texte "En ligne"/"Hors ligne", pas de puce) : lune/
      soleil plutôt qu'un point de couleur générique, cohérent avec le reste du
      thème (widget lunaire, bouton clair/sombre) — voir title="" pour le texte,
