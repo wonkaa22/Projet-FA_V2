@@ -32,7 +32,10 @@
 		</div>
 		<div class="vt-postcard gborder">
 			<div class="vt-post-head">
-				<span class="vt-post-date">{postrow.displayed.L_TOPIC_BY} {postrow.displayed.POSTER_NAME} {postrow.displayed.L_TOPIC_ON} {postrow.displayed.POST_DATE}</span>
+				<!-- Simplifié à la demande : "Nom (gras) | date - heure", sans les
+				     mots de liaison FA ({L_TOPIC_BY}/{L_TOPIC_ON} = "par"/"le") —
+				     {POST_DATE} contient déjà "jour date - heure" en un seul bloc. -->
+				<span class="vt-post-date"><strong class="pb-review-name">{postrow.displayed.POSTER_NAME}</strong> | {postrow.displayed.POST_DATE}</span>
 			</div>
 			<div class="vt-post-body">{postrow.displayed.MESSAGE}</div>
 		</div>

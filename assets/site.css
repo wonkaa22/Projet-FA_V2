@@ -1797,15 +1797,29 @@
   .pb-message-box { flex: 1; min-width: 0; margin-top: 0; position: relative; }
   /* SCEditor mesure la largeur disponible UNE FOIS à son initialisation et la
      fige en pixels via style="width:...px" en ligne sur son propre conteneur/
-     textarea/iframe (repéré via les captures de Noémie, ex. "1012 x 164") —
-     ne se recalcule pas tout seul quand on montre/cache le panneau smileys
-     ensuite, d'où le grand vide resté figé à l'ancienne largeur. !important
+     barre d'outils/textarea/iframe (repéré via les captures de Noémie, ex.
+     "1012 x 164") — ne se recalcule pas tout seul quand on montre/cache le
+     panneau smileys ensuite, d'où le vide clair (fond de .content-frame,
+     plus clair que .section) resté visible entre le bord réel de l'éditeur
+     (bloqué à son ancienne largeur figée) et le bouton smileys. !important
      pour battre ce style en ligne (même famille de piège que le fond blanc/
-     l'avatar plus haut dans ce fichier). */
+     l'avatar plus haut dans ce fichier) ; max-width en plus de width, au cas
+     où SCEditor fige aussi une max-width en ligne à côté de la width — sinon
+     une max-width non couverte continue de plafonner la largeur même avec
+     width:100% !important posé. #message-box/#textarea_content ajoutés :
+     wrappers à nous autour du textarea d'origine, pas de raison qu'ils
+     rétrécissent avant l'éditeur lui-même mais couverts par sécurité. */
+  .pb-message-box,
+  #message-box,
+  #textarea_content,
   .pb-message-box .sceditor-container,
+  .pb-message-box .sceditor-toolbar,
   .pb-message-box .sceditor-container textarea,
   .pb-message-box .sceditor-container iframe,
-  .pb-message-box > textarea { width: 100% !important; }
+  .pb-message-box > textarea {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
   .pb-emoji-toggle {
     flex-shrink: 0; width: 34px; height: 34px; border-radius: 8px;
     background: var(--section); color: var(--ink-body-light); border: none;
@@ -1887,6 +1901,11 @@
      mauvaise colonne). Neutralisée en position:absolute, même traitement que
      l'ancre de viewtopic_body. */
   .pb-review-post > a[name] { position: absolute !important; width: 0 !important; height: 0 !important; overflow: hidden; }
-  .pb-review-post { grid-template-columns: 52px 1fr !important; gap: 10px; }
+  /* Agrandi (72px, était 52px) et repassé au ratio 200/320 d'un vrai message
+     (était un cercle 1/1) : demandé explicitement — un rectangle à bord
+     arrondi (comme .vt-avatar normal) plutôt qu'un cercle, pour rester
+     cohérent avec le rendu d'un vrai message plutôt qu'une icône générique. */
+  .pb-review-post { grid-template-columns: 72px 1fr !important; gap: 10px; }
   .pb-review-post .vt-profile { padding: 6px; min-width: 0; }
-  .pb-review-post .vt-avatar { aspect-ratio: 1 / 1; border-radius: 50%; min-width: 0; }
+  .pb-review-post .vt-avatar { aspect-ratio: 200 / 320; border-radius: 10px; min-width: 0; }
+  .pb-review-name { color: var(--ink-hi-light); font-weight: 700; }
