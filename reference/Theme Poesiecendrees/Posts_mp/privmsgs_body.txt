@@ -1,0 +1,109 @@
+<form action="{S_PRIVMSGS_ACTION}" method="post" name="privmsg_list">
+
+  <div class="flex lowercase" style="--max: 120px; grid-gap: var(--mo);">
+    <div class="simple light">
+      {INBOX}
+    </div>
+    <div class="simple light">
+      {SENTBOX}
+    </div>
+    <div class="simple light">
+      {OUTBOX}
+    </div>
+    <div class="simple light">
+      {SAVEBOX}
+    </div>
+  </div>
+
+<div class="flexrow simple nopadding">
+  <a href="/privmsg?mode=post" class="simple button1 no-extend table_js">mpotter quelqu'un</a>
+
+  <!-- BEGIN switch_box_size_notice -->
+  <div class="simple light lowercase table_js no-extend">
+  	{BOX_SIZE_STATUS}
+  </div>
+  <!-- END switch_box_size_notice -->
+
+  <div class="simple small light extend right-align lowercase flex" style="--max: 100px;">
+    <select name="msgdays" class="lowercase">{S_SELECT_MSG_DAYS}
+    </select> <input class="button2" type="submit" name="submit_msgdays" value="filtrer" />
+  </div>
+</div>
+
+
+
+<div class="bp_topiclist mp_topiclist simple light">
+	<!-- BEGIN listrow -->
+  	<div class="checkbox_topiclist flexrow simple nopadding">
+
+          	<div class="content_topiclist search_topiclist simple middle extend">
+
+
+                  <div class="icon_topiclist table_js">
+                    <img src="{listrow.PRIVMSG_FOLDER_IMG}"/>
+                  </div>
+
+                  <div class="title_topiclist">
+                    	<a href="{listrow.U_READ}"><h3>{listrow.SUBJECT}</h3></a>
+                  </div>
+
+                  <div class="stats_topiclist lowercase">
+                    <pl>{listrow.DATE}</pl>
+                  </div>
+
+                  <div class="infos_topiclist table_js">
+                    <pl class="lowercase">
+                      de {listrow.FROM}
+                    </pl>
+
+
+                  </div>
+
+                </div>
+
+          	<div class="checkingbox_topiclist no-extend table_js">
+                  <input type="checkbox" name="mark[]2" value="{listrow.S_MARK_ID}" />
+          	</div>
+  	</div>
+
+	<!-- END listrow -->
+	<!-- BEGIN switch_no_messages -->
+  		<wxcv><ro>aucun message</ro></wxcv>
+	<!-- END switch_no_messages -->
+</div>
+
+
+
+<div class="small_options_bottom_topiclist flexrow simple nopadding">
+
+  <p><span class="pagination">{PAGINATION}{PAGE_NUMBER}</span><br/></p>
+  <a href="javascript:select_switch_privmsg(true);" class="simple middle small no-extend">tout sélectionner</a>
+  <a href="javascript:select_switch_privmsg(false);" class="simple middle small no-extend">tout dé sélectionner</a>
+</div>
+
+<div class="small_options_bottom_topiclist flexrow simple nopadding">
+    {S_HIDDEN_FIELDS}
+
+    <!-- BEGIN switch_save -->
+    <input class="button1" type="submit" name="save" value="{L_SAVE_MARKED}" />
+    <!-- END switch_save -->
+    <!-- BEGIN switch_move_profile -->
+    <input class="button1" type="submit" name="moveprofile" value="{L_MOVE_PROFILE_MARKED}" />
+    <!-- END switch_move_profile -->
+    <!-- BEGIN switch_mark_as_read -->
+    <input class="button1" type="submit" name="mark_as_read" value="{switch_mark_as_read.L_MARK_AS_READ}" />
+    <input class="button1" type="submit" name="mark_as_unread" value="{switch_mark_as_read.L_MARK_AS_UNREAD}" />
+    <!-- END switch_mark_as_read -->
+</div>
+
+<div class="small_options_bottom_topiclist flexrow simple nopadding">
+    <input class="button2" type="submit" name="delete" value="{L_DELETE_MARKED}" />
+    <input class="button2" type="submit" name="deleteall" value="{L_DELETE_ALL}" />
+</div>
+
+
+</form>
+<br>
+  <div class="lowercase">{JUMPBOX}</div>
+
+<br style="clear:both" />

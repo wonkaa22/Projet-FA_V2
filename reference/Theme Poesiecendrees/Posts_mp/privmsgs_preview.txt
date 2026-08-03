@@ -1,0 +1,8 @@
+<h4>{POST_SUBJECT}</h4>
+<div class="post_preview postbody simple light">
+  <div class="author simple middle lowercase">{L_FROM} {MESSAGE_FROM} {L_TO} {MESSAGE_TO}, {POST_DATE}</div>
+    <div class="content">
+            {MESSAGE_NEW}
+    </div>
+</div>
+<br />

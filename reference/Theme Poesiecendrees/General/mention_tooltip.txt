@@ -1,0 +1,34 @@
+<span class="light bp_tooltip" style="background: transparent; box-shadow: none;">
+  <div class="name_tooltip simple small light lowercase">{USER_NAME_COLORED}</div>
+  <div class="avatar_tooltip simple middle">
+    <!-- BEGIN switch_button_tooltip_PROFILE -->
+    <a href="{switch_button_tooltip_PROFILE.URL}" title="{switch_button_tooltip_PROFILE.LANG}"><img src="{USER_AVATAR}" alt="{USER_NAME}" /></a>
+    <!-- END switch_button_tooltip_PROFILE -->
+  </div>
+
+  <div class="rank_tooltip simple small light flexrow">
+  <!-- BEGIN switch_rank_info -->
+    <ro class="displayed_rank_tooltip">{switch_rank_info.RANK_TITLE}</ro>
+  <!-- END switch_rank_info -->
+    <ro class="no_rank_tooltip">aucun rang assigné</ro>
+
+    <rou class="right-align no-extend">{POSTS} posts</rou>
+  </div>
+
+  <scroll class="infos_tooltip table_js scroll_js">
+    <!-- BEGIN switch_button_tooltip_PM -->
+    <a href="{switch_button_tooltip_PM.URL}" title="{switch_button_tooltip_PM.LANG}">mps</a>
+    <!-- END switch_button_tooltip_PM -->
+
+    <!-- BEGIN switch_button_tooltip_MESSAGES -->
+    — <a href="{switch_button_tooltip_MESSAGES.URL}" rel="nofollow" title="{switch_button_tooltip_MESSAGES.LANG}">messages</a><br/>
+    <!-- END switch_button_tooltip_MESSAGES -->
+    <!-- BEGIN switch_button_tooltip_FACEBOOK -->
+    <a href="{switch_button_tooltip_FACEBOOK.URL}" target="_blank" title="{switch_button_tooltip_FACEBOOK.LANG}">facebook</a><br/>
+    <!-- END switch_button_tooltip_FACEBOOK -->
+    <!-- BEGIN switch_button_tooltip_TWITTER -->
+    <a href="{switch_button_tooltip_TWITTER.URL}" target="_blank" title="{switch_button_tooltip_TWITTER.LANG}">twitter</a>
+    <!-- END switch_button_tooltip_TWITTER -->
+  </scroll>
+
+</span>

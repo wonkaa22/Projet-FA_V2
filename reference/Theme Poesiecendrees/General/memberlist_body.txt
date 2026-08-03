@@ -1,0 +1,67 @@
+<div class="simple dark highlight">
+  <h2>{PAGE_TITLE}</h2>
+  <!-- BEGIN switch_pagination -->
+  <pp>{PAGINATION}</pp>
+  <!-- END switch_pagination -->
+</div>
+
+<form action="{S_MODE_ACTION}" method="get">
+  <div class="simple light">
+    <h3>{L_ORDER_OR_SELECT}</h3>
+  </div>
+  <div class="simple light right-align">
+    {L_USER_SELECT}&nbsp;<input type="text" class="inputbox tiny lowercase" name="username" maxlength="25" size="20" value="{L_USER_SELECT_VALUE}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    {L_SELECT_SORT_METHOD}&nbsp;{S_MODE_SELECT}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    {L_ORDER}&nbsp;{S_ORDER_SELECT}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    {S_HIDDEN_SID}
+            <input class="button2" type="submit" name="submit" value="{L_SUBMIT}" />
+  </div><br/><br/>
+</form>
+
+
+
+<div class="simple light">
+  <h3>les membres</h3>
+</div>
+<!-- BEGIN switch_no_user -->
+<div class="nomember_ml simple dark center-align">
+  <rou>aucun membre ne correspond à votre recherche</rou>
+</div>
+<!-- END switch_no_user -->
+
+
+<div class="bp_ml simple light">
+  <!-- BEGIN memberrow -->
+    <div class="container_ml simple light nopadding">
+    <a href="{memberrow.U_VIEWPROFILE}" class="small light">
+      <h3>{memberrow.USERNAME}</h3>
+    </a>
+
+    <div class="main_ml">
+      <a href="{memberrow.U_VIEWPROFILE}" class="icon_ml light">
+        {memberrow.AVATAR_IMG}
+      </a>
+
+      <scroll class="infos_ml table_js">
+        {memberrow.POSTS} messages<br/>
+        depuis le {memberrow.JOINED}
+      </scroll>
+
+      <div class="online_ml flexrow">
+        <div class="simple light small lowercase center-align">
+          <pl>{memberrow.LASTVISIT}</pl>
+        </div>
+
+        {memberrow.PM_IMG}
+      </div>
+    </div>
+  </div>
+  <!-- END memberrow -->
+</div>
+<br/>
+
+<div class="pagination" style="float:none;">
+	<!-- BEGIN switch_pagination -->
+	{PAGINATION}<br /><br />
+	<!-- END switch_pagination -->
+</div>

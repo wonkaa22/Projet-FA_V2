@@ -1,0 +1,86 @@
+{BOARD_INDEX}
+
+<section class="bp_topic">
+  <div class="simple dark highlight">
+    <h2>{FORUM_NAME}</h2>
+    <pp>{PAGINATION}</pp>
+  </div>
+
+
+  <div class="simple light small search_topic_xx" id="search_topic">
+
+    <form method="get" id="forum-search" action="{S_SEARCHBOX_ACTION}">
+            <input class="inputbox search tiny" style="width: 97%" type="text" name="search_keywords" id="search_keywords" size="20" value="{L_SEARCH}" onclick="if (this.value == '{L_SEARCH}') this.value = '';" onblur="if (this.value == '') this.value = '{L_SEARCH}';" />
+            <button type="submit"><i class="ion-android-search"></i></button>
+            <input type="hidden" value="{SEARCH_WHERE}" name="search_where" />
+    </form>
+  </div>
+
+
+  <div class="subtitle_topic">
+    <!-- BEGIN switch_user_authpost -->
+    <a href="{U_POST_NEW_TOPIC}" accesskey="n" rel="nofollow"><btag>nouveau</btag></a>
+    <!-- END switch_user_authpost -->
+
+    <!-- BEGIN switch_user_authreply -->
+    <a href="{U_POST_REPLY_TOPIC}"><btag>réponse</btag></a>
+    <!-- END switch_user_authreply -->
+
+    <a href="{U_MARK_READ}"><btag><i class="ion-android-checkmark-circle"></i>marquer les sujets comme lus</btag></a>
+
+
+    <pl class="navtree_topic"><a class="nav" href="{U_INDEX}">{L_INDEX}</a> {NAV_CAT_DESC}</pl>
+
+  </div>
+
+
+  <br/>
+</section>
+
+
+
+{TOPICS_LIST_BOX}
+
+<div class="topic-actions bottom simple light">
+  <div class="flexrow">
+	<div class="pagination left-align lowercase no-extend">
+		{PAGINATION}
+	</div>
+
+	<div class="topic-actions-buttons right-align">
+		<!-- BEGIN switch_user_authpost -->
+			<a href="{U_POST_NEW_TOPIC}" accesskey="n" rel="nofollow" class="ion-edit button1">poster</a>
+		<!-- END switch_user_authpost -->
+	</div>
+  </div>
+  <br/>
+
+  <div class="flexrow">
+    <div class="left-align lowercase no-extend table_js">
+      <span id="watchforum">{S_WATCH_FORUM}</span><br/>
+      <a href="{U_MARK_READ}">{L_MARK_TOPICS_READ}</a>
+    </div>
+
+    <div class="right-align lowercase">
+      <form action="{S_JUMPBOX_ACTION}" method="get" name="jumpbox" onsubmit="if(document.jumpbox.f.value == -1){return false;}">
+	<fieldset class="vf_jumpbox">
+		<label>{L_JUMP_TO}:</label>
+		{S_JUMPBOX_SELECT}
+		<input class="button2" type="submit" value="{L_GO}" />
+	</fieldset>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div class="infos_bottom_topiclist simple light lowercase">
+  {LOGGED_IN_USER_LIST}
+  <lgn></lgn>
+  {S_AUTH_LIST}
+  <lgn></lgn>
+</div>
+
+<div class="simple light lowercase">
+  <pl><a class="nav" href="{U_INDEX}">{L_INDEX}</a> {NAV_CAT_DESC}</pl>
+</div>

@@ -1,0 +1,166 @@
+{JAVASCRIPT}
+
+<!-- BEGIN switch_user_login_form_header -->
+<div class="panel">
+	<form action="{S_LOGIN_ACTION}" method="post" name="form_login">
+		<div class="user_login_form center">
+			<input placeholder="{L_USERNAME}" class="inputbox fl_username" type="text" size="10" name="username" />
+			<input placeholder="{L_PASSWORD}" class="inputbox fl_password" type="password" size="10" name="password" />
+			<br />
+			<label>{L_AUTO_LOGIN}: <input class="radio" type="checkbox" name="autologin" {AUTOLOGIN_CHECKED} /></label>
+			{S_HIDDEN_FIELDS}<input class="mainoption button1" type="submit" name="login" value="{L_LOGIN}" />
+            <!-- BEGIN switch_social_login -->
+            <div class="social_btn">
+                <!-- BEGIN fb_connect -->
+                <div class="fb-login-button"></div>
+                <!-- END fb_connect -->
+                <!-- BEGIN topicit_connect -->
+                <div class="ti-connect"></div>
+                <!-- END topicit_connect -->
+            </div>
+            <!-- END switch_social_login -->
+		</div>
+	</form>
+</div>
+<!-- END switch_user_login_form_header -->
+
+<!-- BEGIN message_admin_index -->
+	<div class="panel introduction">
+		<!-- BEGIN message_admin_titre -->
+			<div class="h3">{message_admin_index.message_admin_titre.MES_TITRE}</div>
+		<!-- END message_admin_titre -->
+
+		<!-- BEGIN message_admin_txt -->
+			<div class="mes-txt">{message_admin_index.message_admin_txt.MES_TXT}</div>
+		<!-- END message_admin_txt -->
+	</div>
+<!-- END message_admin_index -->
+
+<div style="width: 100%; height: 350px; position: relative;">
+  <iframe style="width: 100%;height:350px;border: none; padding: 0px; position: absolute; top: 0px;" scrolling="no" src="https://ghostly-daze.forumactif.com/h1-pa"> </iframe>
+</div>
+
+{CHATBOX_TOP}
+
+{BOARD_INDEX}
+
+<!-- BEGIN disable_viewonline -->
+
+	<div class="simple dark highlight">
+          <h2>qui est en ligne</h2>
+	</div>
+
+
+	<div class="bp_qeel simple light">
+          <div class="online_qeel simple light lowercase">
+            <scroll>
+              <div id="current_members">
+                {TOTAL_USERS_ONLINE}
+              </div>
+              <br/><lgn class="nomargin"></lgn>
+
+              <span id="list_current_members">{LOGGED_IN_USER_LIST}</span>
+            </scroll>
+          </div>
+
+          <div class="newest_qeel table_js left-align simple middle small lowercase">
+            <ro id="newest_user_qeel">{NEWEST_USER}</ro>
+          </div>
+
+          <div class="stats_qeel table_js simple middle center-align small lowercase">
+            <div class="flexrow">
+              <ro class="left-align" id="total_users_qeel">{TOTAL_USERS}</ro>
+              <ro class="right-align" id="total_posts_qeel">{TOTAL_POSTS}</ro>
+            </div>
+          </div>
+
+          <div class="infos_qeel simple light lowercase">
+            <scroll id="record_members">
+              {RECORD_USERS}
+            </scroll>
+          </div>
+
+          <div class="recorded_qeel simple light lowercase">
+            <scroll>
+              {L_CONNECTED_MEMBERS}
+
+            </scroll>
+          </div>
+
+          <div class="groups_qeel flex lowercase">
+            <a href="#top">
+              <div class="simple h1 center-align"><ro>groupe ici</ro></div>
+            </a>
+
+            <a href="#top">
+              <div class="simple h2 center-align"><ro>groupe ici</ro></div>
+            </a>
+
+            <a href="#top">
+              <div class="simple h3 center-align"><ro>groupe ici</ro></div>
+            </a>
+
+            <a href="#top">
+              <div class="simple h4 center-align"><ro>groupe ici</ro></div>
+            </a>
+
+          </div>
+	</div>
+
+
+
+
+<script type="text/javascript">
+    document.getElementById('total_users_qeel').innerHTML=document.getElementById('total_users_qeel').innerHTML.replace(/Nous avons (.+) membre(s?) enregistré(s?)/,'$1 membre$2');
+    document.getElementById('total_posts_qeel').innerHTML=document.getElementById('total_posts_qeel').innerHTML.replace(/Nos membres ont posté un total de (.+) message(s?)/,'$1 message$2');
+    document.getElementById('newest_user_qeel').innerHTML=document.getElementById('newest_user_qeel').innerHTML.replace(/L'utilisateur enregistré le plus récent est /,'bienvenue à ');
+    document.getElementById('record_members').innerHTML=document.getElementById('record_members').innerHTML.replace(/Le record du nombre d'utilisateurs en ligne est de (.+) le (.+) (.+) (.+) (.+) - (.+)/,'le $2 $3 $4 $5 à $6, nous avions $1 habitants dans les rues.');
+    document.getElementById('current_members').innerHTML=document.getElementById('current_members').innerHTML.replace(/Il y a en tout (.+) utilisateur(s?) en ligne :: (.+) Enregistré(s?), (.+) Invisible(s?) et (.+) Invité(s?)/, '<pl>$1 utilisateur$2 en ligne</pl><br/>($3 membre$4 - $5 invisible$6 - $7 invité$8)');
+    document.getElementById('list_current_members').innerHTML=document.getElementById('list_current_members').innerHTML.replace(/Utilisateurs enregistrés:/, '');
+
+</script>
+
+<!-- END disable_viewonline -->
+
+{CHATBOX_BOTTOM}
+
+<!-- BEGIN switch_user_login_form_footer -->
+<div class="panel">
+	<form action="{S_LOGIN_ACTION}" method="post" name="form_login">
+		<div class="user_login_form center">
+			<input placeholder="{L_USERNAME}" class="inputbox fl_username" type="text" size="10" name="username" />
+			<input placeholder="{L_PASSWORD}" class="inputbox fl_password" type="password" size="10" name="password" />
+			<br />
+			<label>{L_AUTO_LOGIN}: <input class="radio" type="checkbox" name="autologin" {AUTOLOGIN_CHECKED} /></label>
+			{S_HIDDEN_FIELDS}<input class="mainoption button1" type="submit" name="login" value="{L_LOGIN}" />
+			<!-- BEGIN switch_social_login -->
+            <div class="social_btn">
+                <!-- BEGIN fb_connect -->
+                <div class="fb-login-button"></div>
+                <!-- END fb_connect -->
+                <!-- BEGIN topicit_connect -->
+                <div class="ti-connect"></div>
+                <!-- END topicit_connect -->
+            </div>
+            <!-- END switch_social_login -->
+		</div>
+	</form>
+</div>
+<!-- END switch_user_login_form_footer -->
+
+
+<!-- SEPARATION DES LIENS DANS LES CATEGORIES
+     ajoute ce qui est contenu dans la var toAdd-->
+<script>
+  var toAddToFirst = `<span>— </span>`;
+  var toAdd = `<span><br/>— </span>`;
+  var count = 1;
+  $('.links_cat').each(function() {
+    var count = 1;
+    $(this).find('a').each(function() {
+      if (count != 1) $(toAdd).insertBefore($(this));
+      else $(toAddToFirst).insertBefore($(this));
+      count++;
+    });
+  });
+</script>

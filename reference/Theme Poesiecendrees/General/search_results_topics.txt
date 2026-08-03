@@ -1,0 +1,67 @@
+<section class="bp_topic">
+  <div class="simple dark highlight">
+    <h2>{L_SEARCH_MATCHES}</h2>
+    <pp>{PAGINATION}</pp>
+  </div>
+
+
+  <div class="subtitle_topic">
+    <!-- BEGIN navmenu -->
+    <pl class="navtree_topic"><a class="nav" href="{U_INDEX}">{L_INDEX}</a> :: {L_SEARCH_TITLE}</pl>
+    <!-- END navmenu -->
+  </div>
+
+
+  <br/>
+</section>
+
+
+
+
+<form action="{S_ACTION}" method="post" name="post" onsubmit="return verify_select();">
+
+  <div class="bp_topiclist simple light">
+  	<!-- BEGIN searchresults -->
+	<div class="content_topiclist search_topiclist simple middle">
+
+
+                  <div class="icon_topiclist table_js">
+                    <img src="{searchresults.TOPIC_FOLDER_IMG}"/>
+                  </div>
+
+                  <div class="title_topiclist">
+                    	<a href="{searchresults.U_VIEW_TOPIC}"><h3>{searchresults.PARTICIPATE_POST_IMG} {searchresults.TOPIC_TYPE} {searchresults.TOPIC_TITLE}</h3></a>
+
+                        <i>dans <a href="{searchresults.U_VIEW_FORUM}">{searchresults.FORUM_NAME}</a></i>
+                  </div>
+
+                  <div class="stats_topiclist lowercase">
+                    par <pl>{searchresults.TOPIC_AUTHOR}</pl> — {searchresults.REPLIES} messages ; {searchresults.VIEWS} vues
+                  </div>
+
+                  <div class="nav_topiclist right-align lowercase">
+                    {searchresults.GOTO_PAGE_NEW}
+                    <!-- BEGIN nav_tree -->
+                            {searchresults.TOPIC_NAV_TREE_NEW}
+                    <!-- END nav_tree -->
+                  </div>
+
+                  <div class="infos_topiclist table_js">
+                    <pl class="lowercase">
+                      {searchresults.LAST_POST_TIME}<br/>
+                      {searchresults.LAST_POST_AUTHOR} {searchresults.LAST_POST_IMG}
+                    </pl>
+
+                                        <!-- BEGIN multi_selection -->
+                                                <input onclick="javascript:check_uncheck_main_{topics_list_box.row.BOX_ID}();" type="checkbox" name="{topics_list_box.FIELDNAME}[]{topics_list_box.row.BOX_ID}" value="{topics_list_box.row.FID}" {topics_list_box.row.L_SELECT} />
+                                        <!-- END multi_selection -->
+                  </div>
+
+                </div>
+  	<!-- END searchresults -->
+
+  </div><br/>
+	<p class="pagination">{PAGINATION}</p>
+</form>
+
+{JUMPBOX}

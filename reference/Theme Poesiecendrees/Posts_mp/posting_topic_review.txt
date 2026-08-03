@@ -1,0 +1,29 @@
+<!-- BEGIN switch_inline_mode -->
+<br><br>
+<h4>{L_TOPIC_REVIEW}</h4>
+<!-- END switch_inline_mode -->
+
+<!-- BEGIN postrow -->
+	<!-- BEGIN displayed -->
+
+
+		<div class="post_preview simple light">
+                  <a name="{postrow.displayed.POST_ID}"></a>
+                  <div class="author simple middle small lowercase">
+                    <img src="{postrow.displayed.MINI_POST_IMG}" alt="" /> {postrow.displayed.L_TOPIC_BY} {postrow.displayed.POSTER_NAME} {postrow.displayed.L_TOPIC_ON} {postrow.displayed.POST_DATE}
+                  </div>
+
+                  <div class="content">
+                    {postrow.displayed.MESSAGE}
+                  </div>
+		</div>
+
+	<!-- END displayed -->
+	<!-- BEGIN hidden -->
+		<div class="post row2">
+				<p style="text-align:center">{postrow.hidden.MESSAGE}</p>
+			</div>
+		</div>
+	<!-- END hidden -->
+<!-- END postrow -->
+<br />

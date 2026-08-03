@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+
+
+<!--
+
+        NOTE IMPORTANTE :
+        ne pas utiliser de bbcode [ ]
+	les retours à la ligne dans cet éditeur ne sont pas pris en compte, il faut rajouter un <br/> à la place
+	ne pas oublier de changer le lien de votre PA actuelle dans le template index_body
+	des notes vous indiquent les endroits où changer le texte et les images
+
+	en installant le thème vous aurez éventuellement effectué des changements d'apparance globale, il se peut que vous ayez à les reproduire ici
+	(il s'agirait de changements dans des balises génériques qui sont aussi présentes ici à savoir .simple, .small, etc.)
+
+	pour les maj, à priori vous n'aurez qu'à changer la palette de couleurs dans les premières lignes de CSS de cette page
+	à moins que les changements de couleur ne requièrent d'autres changements
+
+        et pour les liens, toujours mentionner le target :
+        <a href="URL" target="_blank">texte</a> (ouverture dans une autre fenêtre) ou
+        <a href="URL" target="_top">texte</a>   (ouverture dans la même fenêtre)
+
+
+
+-->
+
+
+<html>
+  <head>
+    <title>pa</title>
+    <link rel="icon" href="https://2img.net/i/fa/favicon/discussion.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Mulish:wght@200&family=Oswald&family=Playfair+Display&family=Rozha+One&display=swap" rel="stylesheet"/>
+    <meta content="text/html;charset=UTF-8" http-equiv="Content-type" />
+    
+    <style>
+/*- - - - - - - - - - - - - - - - - - - - GLOBAL GLOBAL GLOBAL - - - - - - - - - - - - - - - - - - - -*/
+
+:root{
+  --l0: #ffffff; /*light 0*/
+  --l1: #FAFAFA; /*light 1*/
+  --l2: #F6F6F6; /*light 2*/
+  --l3: #F1F1F1; /*#light 3*/
+  --l4: #EBEBEB; /*light 4*/
+
+  --m1: #E4E4E4; /*moyen 1*/
+  --m2: #CACACA; /*moyen 2*/
+
+  --d1: #31465C; /*dark 1*/
+  --d2: #1B2736; /*dark 2*/
+  --d3: #0F161E; /*dark 3*/
+
+  --h1: #3E6EAB; /*highlight 1: bleu moyen*/
+  --h2: #7392B5; /*highlight 2: bleu clair*/
+  --h3: #EABF8A; /*highlight 3: brun moyen*/
+  --h4: #EFCEA7; /*highlight 4: brun clair*/
+
+  --sm: 6px;
+  --mo: 12px;
+  --bg: 25px;
+  --lg: 50px;
+  --gi: 100px;
+  
+  --grid-gap: var(--mo);
+  
+  
+  --header-width: 850px;
+  
+  --main-color: var(--d3);
+  --main-font: 'Mulish', Verdana, sans-serif;
+  
+  --main-border-thin: 2px solid var(--m1);
+  --main-border: 3px solid var(--m1);
+  --main-border-thick: 6px solid var(--m1);
+  --main-border-radius: 2px;/*2*/
+  --main-box-shadow: 0 0 5px var(--m1); /*0 0 5*/
+  --main-box-shadow-highlight: 0 0 3px var(--d1); /*0 0 3*/
+  
+  --table-background: var(--l2);
+  --table-highlight-background: var(--l3);
+  --table-header-background: var(--h1);
+  
+  color: var(--d3);
+  font-family: 'Mulish';
+  font-size: 14px;
+  line-height: 16px;
+  text-align: justify;
+}
+
+
+
+
+
+
+
+
+
+
+/*- - - - - - - - - - - - - - - - - - - - OVERALL PACK - - - - - - - - - - - - - - - - - - - -*/
+
+/* nom | durée | fonction | retard */
+body {
+  background: transparent;
+}
+
+HTML *{
+  transition: all var(--transt) ease;
+  -webkit-transition: all var(--transt) ease;
+  -moz-transition: all var(--transt) ease;
+  -ms-transition: all var(--transt) ease;
+  -o-transition: all var(--transt) ease;
+  --transt: .4s;
+}
+
+HTML, HTML * {
+  box-sizing: border-box;
+}
+
+
+
+
+
+
+
+
+
+
+/*- - - - - - - - - - - - - - - - - - - - FONTS FONTS FONTS - - - - - - - - - - - - - - - - - - - -*/
+
+a{
+  color: var(--h3);
+  text-decoration: none !important;
+}
+
+a:hover{
+  color: var(--h4);
+}
+
+a, a:visited{
+  text-decoration: none;
+}
+
+a:hover, input:hover, label:hover{
+  color: var(--h2);
+  cursor: crosshair;
+}
+
+a.forumtitle, a.forumtitle:visited, a.forumtitle:link {
+  color: unset;
+}
+
+input[type=text]:hover{
+  color: unset;
+}
+
+u {
+  text-decoration: none;
+  border-bottom: 1px solid;
+}
+
+::selection{
+  background: var(--m2);
+  color: var(--l2);
+}
+
+
+
+
+
+/*- - - - - h2, h3, h4, h5, h6 - - - - -*/
+
+h2 {
+  color: var(--m2);
+  font-family: 'Playfair Display';
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  text-transform: uppercase;
+}
+
+h2::before {
+  content: '[ ';
+}
+
+h2::after {
+  content: ' ]'
+}
+
+.simple h2 {
+  margin: 0;
+}
+
+h2 + pp {
+  display: block;
+  margin-top: var(--sm);
+  border-top: 1px solid;
+  padding: var(--sm) var(--sm) 0;
+  opacity: .7;
+  
+  text-transform: lowercase;
+}
+
+h2 + pp a {
+  color: inherit !important;
+}
+
+h3{
+  margin: 0;
+  color: var(--h4);
+  font-family: 'Playfair Display';
+  font-size: 18px;
+  letter-spacing: -1px;
+  font-weight: normal;
+  text-transform: lowercase;
+}
+
+h4, .quick_reply_topic div.h3 {
+  padding: 0 var(--mo) var(--sm);
+  border: 0;
+  border-bottom: 1px solid var(--highlight-color);
+  
+  color: var(--d3);
+  font-family: 'Rozha One', 'Abril Fatface', serif;
+  font-size: 24px;
+  font-weight: normal;
+  text-shadow: 1px 0 0 var(--highlight-color);
+  --highlight-color: var(--m2);
+}
+
+
+
+
+
+/*- - - - - ro, rou - - - - -*/
+
+ro, rou {
+  font-family: 'Rozha One', 'Abril Fatface', serif;
+  font-weight: normal;
+  font-style: normal;
+}
+
+ro {
+  color: var(--d3);
+  text-transform: lowercase;
+}
+
+rou {
+  color: var(--d2);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.dark ro, .dark rou {
+  color: var(--l4);
+}
+
+
+
+
+
+/*- - - - - pl, plu, pp, ppb - - - - -*/
+
+pl, plu, pp, ppb {
+  font-family: 'Playfair Display';
+  font-weight: normal;
+}
+
+pl {
+  text-transform: lowercase;
+}
+
+plu {
+  color: var(--d1);
+  text-transform: uppercase;
+  font-style: normal;
+}
+
+pp, ppb {
+  color: var(--m2);
+  font-size: 10px;
+  font-style: italic;
+  letter-spacing: 5px;
+}
+
+pp:hover, ppb:hover {
+  color: var(--m1);
+  letter-spacing: 6px;
+}
+
+ppb {
+  display: block;
+  width: 90%;
+  margin: var(--sm) auto 0;
+}
+
+ppb:before, ppb:after {
+  content: ' — ';
+}
+
+
+
+
+
+/*- - - - - tag, btag, dtag - - - - -*/
+
+tag, btag, dtag {
+  text-transform: lowercase;
+  font-style: normal;
+  font-weight: bold;
+  text-align: left;
+}
+
+tag {
+  padding: 3px var(--sm);
+}
+
+tag, btag {
+  background: var(--l4);
+  
+  color: var(--d3);
+}
+
+dtag {
+  background: var(--d1);
+  margin: var(--sm);
+  
+  color: var(--l4);
+}
+
+btag, dtag {
+  box-shadow: var(--main-box-shadow);
+  padding: var(--sm) var(--mo);
+}
+
+a tag, a btag {
+  color: var(--h1);
+}
+
+a dtag {
+  color: var(--h1);
+}
+
+
+
+
+
+/*- - - - - ch, vh - - - - -*/
+
+ch, vh, cv {
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+ch {
+  color: var(--h1);
+}
+
+vh {
+  color: var(--h3);
+}
+
+cv {
+  color: var(--d3);
+}
+
+
+
+
+
+/*- - - - - other - - - - -*/
+
+qq {
+  opacity: .7;
+  
+  font-size: 10px;
+  font-style: normal;
+  font-weight: normal;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+sms {
+  opacity: .7;
+  
+  font-family: 'Courrier New', monospace;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: normal;
+  letter-spacing: 1px;
+}
+
+lgn{
+  display: block;
+  width: 100%;
+  height: 0;
+  border-bottom: 1px solid var(--l4);
+  margin: var(--grid-gap) auto;
+}
+
+
+
+
+
+
+
+
+
+/*- - - - - - - - - - - - - - - - - - - - ELEMENTS (buttons, inputs & co) - - - - - - - - - - - - - - - - - - - -*/
+
+input, button, textarea {
+  outline: none;
+  font-family: inherit;
+}
+
+a, input, button {
+  cursor: crosshair;
+}
+
+button, .button1, .button2 {
+  text-transform: lowercase;
+}
+
+[class^=bp_] input, [class^=bp_] button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0px;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.button1 {
+  background: var(--h3) !important;
+  box-shadow: var(--main-box-shadow) !important;
+  
+  font-family: inherit;
+}
+
+.button1:hover {
+  background: var(--h4) !important;
+  box-shadow: var(--main-box-shadow-highlight) !important;
+}
+
+.button2 {
+  background: var(--h1) !important;
+  box-shadow: var(--main-box-shadow) !important;
+  
+  font-family: inherit;
+}
+
+.button2:hover {
+  background: var(--h2) !important;
+  box-shadow: var(--main-box-shadow-highlight) !important;
+}
+
+img {
+  object-fit: cover;
+}
+
+
+
+
+
+
+
+
+
+
+/*- - - - - - - - - - - - - - - - - - - - BLOCKS BLOCKS BLOCKS - - - - - - - - - - - - - - - - - - - -*/
+
+
+
+
+
+/* - - - - - FORUMACTIF - - - - - */
+
+.codebox::before, blockquote::before {
+  display: none !important;
+  content: none !important;
+}
+
+dl.codebox {
+  padding: var(--mo);
+  margin: var(--mo) auto;
+  border: 0;
+  border-radius: var(--main-border-radius);
+  box-shadow: var(--main-box-shadow);
+}
+
+dl.codebox:not(.spoiler):not(.hidecode) {
+  padding-bottom: 30px;
+}
+
+dl.codebox > dt, blockquote cite {
+  color: var(--d3);
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: bold;
+}
+
+dl.codebox:not(.spoiler) > dt, blockquote cite {
+  text-transform: lowercase;
+}
+
+.codebox.spoiler {
+}
+
+.codebox.hidecode {
+}
+
+blockquote {
+  background: transparent !important;
+  border: unset;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+blockquote cite {
+  background: var(--m2);
+  margin-left: calc(-1 * var(--mo));
+  margin-right: calc(-1 * var(--mo));
+  margin-bottom: var(--sm);
+  padding: var(--sm) var(--mo);
+  border-radius: var(--main-border-radius);
+  box-shadow: var(--main-box-shadow);
+}
+
+
+
+
+
+/* - - - - - GENERAL - - - - - */
+
+scroll{
+    flex: 1 1 auto;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+*::-webkit-scrollbar{
+  width: 0px;
+}
+
+[class^=bp_] input.onglet + div, [class^=bp_] input.onglet + label + div{
+  display: none;
+}
+
+[class^=bp_] input.onglet:checked + div, [class^=bp_] input.onglet:checked + label + div{
+  display: block;
+}
+
+table{
+  width: 100%;
+  height: 100%;
+  border-collapse: collapse;
+
+  color: inherit;
+  text-align: inherit;
+  font-size: inherit;
+}
+
+
+
+
+
+/* - - - - - BLOCKS DIVERS - - - - - */
+
+.column{
+  column-count: 2;
+  column-gap: 25px;
+}
+
+.column.rule{
+  column-gap: 40px;
+  column-rule: 1px solid var(--l4);
+}
+
+.column *{
+  break-inside: avoid;
+}
+
+k{
+  display: block;
+  text-align: center;
+}
+
+k img{
+  max-width: 200px;
+}
+
+.moodboard{
+  width: 100%;
+  column-count: 3;
+  column-gap: var(--gap);
+  --gap: 15px;
+}
+
+.moodboard:hover img{
+  opacity: 1;
+}
+
+.moodboard img{
+  width: 100%;
+  margin-bottom: var(--gap);
+  opacity: .7;
+  border-radius: 3px;
+}
+
+
+/* - - - - - FLEX - - - - - */
+
+.flexrow, .flexcolumn{
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.flexcolumn{
+  flex-direction: column;
+}
+
+.flexcolumn > *{
+  flex: 1;
+  margin: 0 !important;
+  margin-bottom: var(--grid-gap) !important;
+}
+
+.flexrow > *{
+  flex: 1;
+  margin: 0 !important;
+  margin-right: var(--grid-gap) !important;
+}
+
+.flexcolumn > *:last-child, .flexrow > *:last-child{
+  margin: 0px !important;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  grid-gap: var(--mo);
+  --max: 250px;
+}
+
+.flex > * {
+  flex: 1 0 var(--max);
+  margin: 0 !important;
+}
+
+.flex .first{
+  flex: 0 0 100% !important;
+}
+
+.no-extend{
+    flex: 0 0 auto;
+}
+
+.extend{
+    flex: 1 1 auto;
+}
+
+/*- - - - - AESTHETIC BLOCKS - - - - -*/
+
+.simple{
+  margin: var(--mo) 0 0;
+  padding: var(--mo);
+  border-radius: var(--main-border-radius);
+}
+
+.small{
+  padding: var(--sm);
+}
+
+.nomargin{
+  margin: 0 !important;
+}
+
+.nopadding{
+  padding: 0 !important;
+}
+
+.noborder{
+    border: 0 !important;
+}
+
+ul.nobullet{
+    list-style-type: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.none{
+    display: none;
+}
+
+.relative{
+  position: relative;
+}
+
+.absolute{
+  position: absolute;
+}
+
+.fixed{
+  position: fixed;
+}
+
+.light{
+  background: var(--l1);
+  box-shadow: var(--main-box-shadow);
+}
+
+.light .light{
+  background: var(--l2);
+}
+
+.light .light .light {
+  background: var(--l3);
+}
+
+.light .light .light .light {
+  background: var(--l4);
+}
+
+.light.highlight:hover {
+  background: var(--d1);
+  
+  color: var(--l4);
+}
+
+.middle{
+  background: var(--m1);
+  box-shadow: var(--main-box-shadow);
+}
+
+.middle.highlight:hover {
+  background: var(--d1);
+  color: var(--l4);
+}
+
+.dark{
+  background: var(--d2);
+  box-shadow: var(--main-box-shadow);
+
+  color: var(--l4);
+}
+
+.dark.highlight:hover {
+  background: var(--d3);
+  color: var(--h3);
+}
+
+.h1{
+  background: var(--h1);
+  box-shadow: var(--main-box-shadow);
+}
+
+.h2{
+  background: var(--h2);
+  box-shadow: var(--main-box-shadow);
+}
+
+.h3:not(h2){
+  background: var(--h3);
+  box-shadow: var(--main-box-shadow);
+  font-size: inherit !important;
+  border: unset;
+}
+
+.h4{
+  background: var(--h4);
+  box-shadow: var(--main-box-shadow);
+}
+
+.left-align{
+  text-align: left !important;
+}
+
+.center-align{
+  text-align: center !important;
+}
+
+.right-align{
+  text-align: right !important;
+}
+
+.justify-align{
+  text-align: justify !important;
+}
+
+qsdf{
+  display: block;
+  text-align: right;
+}
+
+wxcv{
+  display: block;
+  text-align: center;
+}
+
+.lowercase{
+  text-transform: lowercase;
+}
+
+.uppercase{
+  text-transform: uppercase;
+}
+
+qt{
+    display: block;
+    margin: var(--mo) 0 var(--mo) var(--mo);
+    padding: var(--sm) 0 var(--sm) var(--mo);
+    border-left: 1px solid var(--l4);
+}
+
+
+
+
+
+
+
+
+
+
+/*- - - - - - - - - - - - - - - - - - - - PA PA PA - - - - - - - - - - - - - - - - - - - -*/
+
+.subtitle_pa, .subtitle_pa * {
+  color: var(--d3);
+  font-size: 10px;
+}
+
+.bp_pa {
+  display: grid;
+  grid-gap: var(--mo);
+  grid-template:
+    "top_left top_center top_right" 150px
+    "bottom_left bottom_center bottom_right" var(--total-height-staff)
+   / 1fr 1fr 1fr;
+  --actual-height-input-staff: 4px;
+  --height-infos-staff: 50px;
+  --height-input-staff: calc(var(--actual-height-input-staff) + var(--margin-staff));
+  --margin-staff: var(--mo);
+  
+  --total-height-staff: calc(var(--height-input-staff) + var(--height-infos-staff));
+}
+
+.bp_pa > * {
+  margin: 0 !important;
+}
+
+.icon_pa {
+  grid-area: top_left;
+}
+
+.icon_pa img {
+  width: 100%;
+  height: 100%;
+}
+
+.context_pa {
+  grid-area: top_center;
+}
+
+.infos1_pa {
+  grid-area: top_right;
+}
+
+.infos2_pa {
+  grid-area: bottom_left;
+  
+  font-size: 11px;
+  font-style: italic;
+  line-height: 14px;
+  text-align: justify;
+}
+
+/*staff*/
+
+.staff_pa {
+  grid-area: bottom_center;
+  position: relative;
+}
+
+.input_pa {
+  height: var(--height-input-staff);
+  border-bottom: var(--margin-staff) solid var(--l1);
+  background: var(--m1);
+}
+
+.input_pa:last-of-type {
+  margin: 0 !important;
+}
+
+.input_pa:hover {
+  background: var(--h1);
+}
+
+.input_pa:checked {
+  background: var(--h2);
+}
+
+.about_staff_pa {
+  display: none;
+  width: 100%;
+  height: calc(100% - var(--height-input-staff));
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.input_pa:checked + .about_staff_pa {
+  display: block;
+}
+
+.about_staff_pa > div {
+  width: 100%;
+  height: 100%;
+}
+
+.infos_staff_pa {
+  padding-right: var(--mo);
+  
+  font-size: 11px;
+}
+
+.infos_staff_pa i {
+  opacity: .8;
+  
+  font-size: 10px;
+}
+
+.infos_staff_pa a {
+  color: inherit;
+}
+
+.icon_staff_pa {
+  width: var(--height-infos-staff);
+  height: var(--height-infos-staff);
+}
+
+.icon_staff_pa img {
+  width: 100%;
+  height: 100%;
+}
+
+/*partners*/
+
+.partners_pa {
+  grid-area: bottom_right;
+  
+  line-height: 20px;
+}
+
+.partners_pa tag {
+  font-size: 10px;
+}
+    </style>
+  </head>
+  
+  
+  <!-------------------- DÉBUT PARTIE HTML : REMPLISSAGE DU TEXTE ------------------------->
+
+  <body>
+    
+    <header>
+    </header>
+    
+    
+    <main>
+      <div class="simple light center-align">
+        <h3>&#8212; thème en libre service (modernBB) &#8212;</h3>
+        
+          <!----- DÉBUT LIENS SOUS LE TITRE
+        	  (ajouter ou supprimer à votre guise les liens,
+        	   supprimer tout le code entre ce commentaire et le commentaire < FIN LIENS SOUS LE TITRE >
+        	   pour supprimer complètement les liens sous le titre)
+          ----->
+        <pl class="subtitle_pa">
+          
+          <a href="https://ghostly-daze.forumactif.com/t24-1-theme-modernbb" target="_top">sujet explicatif</a> &#8212;
+          <a href="https://ghostly-daze.forumactif.com/f12-sujets-predefinis" target="_top">sujets prédéfinis</a> &#8212;
+          <a href="https://ghostly-daze.forumactif.com/f13-questions-suggestions-et-reports-de-problemes" target="_top">poser une question / rapporter un problème</a> &#8212;
+          <a href="https://ghostly-daze.forumactif.com/c1-world-gone-mad" target="_top">catégorie exemple</a>
+        </pl>
+        
+          <!----- FIN LIENS SOUS LE TITRE ----->
+      </div>
+      
+      <div class="bp_pa simple light">
+        <div class="icon_pa simple middle small">
+          
+          <!----- IMAGE EN HAUT A GAUCHE ----->
+          <img src="https://i.pinimg.com/564x/02/33/8f/02338f8c42c3f6c3fd40f91d32a1733d.jpg"/>
+        </div>
+        
+        <div class="context_pa simple light">
+          <scroll>
+            <!----- TEXTE EN HAUT AU MILIEU ----->
+            <ro>libre service</ro> bienvenue !
+            ghostly daze est le forum vitrine au thème qu'il aborde. mis en libre service par <cv>@poesiescendrees</cv>, vous pouvez l'utilisez comme vous voulez pour votre forum.
+            c'est un thème complet qui porte une petite trentaine de templates, le css assorti et la configuration du panneau admin. 
+            tout est expliqué sur <a href="https://ghostly-daze.forumactif.com/t24-1-theme-modernbb" target="_top">ce sujet</a>.
+            les codes sont libres d'accès, je vous recommande d'aller lire tous les sujets de prise en main afin que vous puissiez facilement les modifier dans le futur.
+            au plaisir de vous y retrouver :)
+          </scroll>
+        </div>
+        
+        <div class="infos1_pa simple light">
+          <scroll>
+            <!----- TEXTE EN HAUT A DROITE ----->
+            <ro>informations diverses</ro> la première catégorie <cv>"codes en libre service"</cv> regroupe, en toute logique, les codes du thème.
+            les deux catégories suivantes et leurs forums, <cv>"world gone mad"</cv> et <cv>"phoenix"</cv> sont des exemples de vraies catégories classiques d'administration,
+            pour que vous puissiez avoir une idée de ce que ça donne.
+          </scroll>
+        </div>
+        
+        <scroll class="infos2_pa">
+          <!----- TEXTE EN BAS A GAUCHE ----->
+          <ro>disclaimer</ro> le thème du forum, son thème et son design (dont le header) ont été réalisés par <cv>@poesiescendrees</cv>. 
+          la partie javascript permettant de sélectionner les codes en un clic a été réalisé par <a href="https://forum.forumactif.com/t309759-bouton-selectionner-le-contenu-pour-les-balises-de-code" target="_top"><cv>@Ea</cv></a>.
+        </scroll>
+        
+        <div class="staff_pa flexrow">
+          
+          <!--------------------
+          			 AJOUTER/SUPPRIMER DU STAFF EN BAS AU MILIEU :
+          
+          			 le code contenu entre les commmentaires < DÉBUT / FIN STAFFIEN.NE >
+          			 est celui correspondant au bloc d'une seule personne du staff;
+          			 vous pouvez en ajouter et en supprimer autant que vous voulez
+          			 du moment qu'il y en a au moins un et que les boutons restent
+          			 suffisamment grands sur votre forum
+          -------------------->
+          
+          <!----- DÉBUT STAFFIEN.NE ----->
+          <input type="radio" name="staff_pa" class="input_pa" checked/>
+          <div class="about_staff_pa">
+            <div class="flexrow">
+              <div class="infos_staff_pa table_js right-align">
+                <ro>poésies cendrées (em)</ro><br/>
+                <i><a href="https://ghostly-daze.forumactif.com/u1" target="_top">profil</a> + <a href="https://poesiescendrees.tumblr.com/" target="_top">tumblr</a> + <a href="https://test-renegade.kanak.fr/" target="_top">forum ressource</a></i>
+              </div>
+
+              <div class="icon_staff_pa no-extend small middle">
+                <img src="https://i.pinimg.com/564x/7e/b3/39/7eb339754c6396217385b93ec63a243f.jpg"/>
+              </div>
+            </div>
+          </div>
+          <!----- FIN STAFFIEN.NE ----->
+          
+          
+          <!----- DÉBUT STAFFIEN.NE ----->
+          <input type="radio" name="staff_pa" class="input_pa"/>
+          <div class="about_staff_pa">
+            <div class="flexrow">
+              <div class="infos_staff_pa table_js right-align">
+                <ro>admin 2</ro><br/>
+                <i><a href="#top" target="_top">compte 1</a> + <a href="#top" target="_top">compte 1</a> + <a href="#top" target="_top">compte 1</a></i>
+              </div>
+
+              <div class="icon_staff_pa no-extend small middle">
+                <img src="https://i.pinimg.com/564x/7e/b3/39/7eb339754c6396217385b93ec63a243f.jpg"/>
+              </div>
+            </div>
+          </div>
+          <!----- FIN STAFFIEN.NE ----->
+          
+          
+          <!----- DÉBUT STAFFIEN.NE ----->
+          <input type="radio" name="staff_pa" class="input_pa"/>
+          <div class="about_staff_pa">
+            <div class="flexrow">
+              <div class="infos_staff_pa table_js right-align">
+                <ro>modo</ro><br/>
+                <i><a href="#top" target="_top">compte 1</a> + <a href="#top" target="_top">compte 1</a> + <a href="#top" target="_top">compte 1</a></i>
+              </div>
+
+              <div class="icon_staff_pa no-extend small middle">
+                <img src="https://i.pinimg.com/564x/7e/b3/39/7eb339754c6396217385b93ec63a243f.jpg"/>
+              </div>
+            </div>
+          </div>
+          <!----- FIN STAFFIEN.NE ----->
+          
+          
+          <!----- DÉBUT STAFFIEN.NE ----->
+          <input type="radio" name="staff_pa" class="input_pa"/>
+          <div class="about_staff_pa">
+            <div class="flexrow">
+              <div class="infos_staff_pa table_js right-align">
+                <ro>graphiste</ro><br/>
+                <i><a href="#top" target="_top">compte 1</a> + <a href="#top" target="_top">compte 1</a> + <a href="#top" target="_top">compte 1</a></i>
+              </div>
+
+              <div class="icon_staff_pa no-extend small middle">
+                <img src="https://i.pinimg.com/564x/7e/b3/39/7eb339754c6396217385b93ec63a243f.jpg"/>
+              </div>
+            </div>
+          </div>
+          <!----- FIN STAFFIEN.NE ----->
+          
+          
+        </div>
+          
+          
+        <div class="partners_pa">
+          <scroll>
+            <ro>voir aussi</ro><br/>
+            
+            <!----- PARTENAIRES EN BAS A DROITE : ajouter et supprimer autant de liens que voulu ----->
+            <a href="https://poesiescendrees.tumblr.com/tagged/code" target="_top"><tag>autres codes en libre service</tag></a><br/>
+            <a href="https://ghostlydazecendres.forumactif.com/" target="_top"><tag>l'autre version du thème</tag></a>
+          </scroll>
+        </div>
+      </div>
+    </main>
+    
+    
+    
+    <script>
+        $('.table_js').wrapInner('<table><tr><td></table></tr></td>');
+  	$('.scroll_js').wrapInner('<scroll></scroll>');
+    </script>
+  </body>
+</html>

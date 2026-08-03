@@ -1,0 +1,49 @@
+<div class="simple dark highlight">
+  <h2>{L_SEARCH_MATCHES}</h2>
+</div>
+
+
+
+
+<!-- BEGIN searchresults -->
+
+<div class="bp_messagelist simple light">
+
+  <a class="title_messagelist simple light highlight" href="{searchresults.U_TOPIC}">
+    <h3>{searchresults.TOPIC_TITLE}</h3>
+  </a>
+
+  <div class="author_messagelist simple middle small right-align lowercase table_js">
+    <ro>{searchresults.POSTER_NAME}</ro>
+  </div>
+
+  <div class="stats_messagelist simple middle small left-align lowercase table_js">
+    <ro>{searchresults.TOPIC_REPLIES}</ro> r ; <ro>{searchresults.TOPIC_VIEWS}</ro> v.
+  </div>
+
+  <div class="place_messagelist simple middle small center-align lowercase">
+    dans <a href="{searchresults.U_FORUM}"><rou>{searchresults.FORUM_NAME}</rou></a>
+  </div>
+  <div class="date_messagelist center-align lowercase">
+    <pl>{searchresults.POST_DATE}</pl>
+  </div>
+
+  <div class="message_messagelist simple light">
+    {searchresults.MESSAGE}
+        </div>
+
+</div>
+
+<!-- END searchresults -->
+
+<p class="pagination">{PAGINATION}</p>
+
+{JUMPBOX}
+
+<!-- BEGIN switch_image_resize -->
+<script type="text/javascript">
+//<![CDATA[
+$(resize_images({ 'selector' : '.postbody', 'max_width' : {switch_image_resize.IMG_RESIZE_WIDTH}, 'max_height' : {switch_image_resize.IMG_RESIZE_HEIGHT} }));
+//]]>
+</script>
+<!-- END switch_image_resize -->

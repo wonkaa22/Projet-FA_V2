@@ -1,0 +1,4 @@
+<div id="preview" class="post_preview postbody simple light">
+  {MESSAGE_NEW}
+</div>
+<hr />

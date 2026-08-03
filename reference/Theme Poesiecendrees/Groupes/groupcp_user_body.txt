@@ -1,0 +1,40 @@
+<div class="simple dark highlight">
+  <h2>{L_USERGROUPS}</h2>
+</div>
+
+<div class="flex simple nopadding">
+  <!-- BEGIN switch_groups_joined -->
+          <!-- BEGIN switch_groups_member -->
+          <div class="simple light">
+            <h3>{L_GROUP_MEMBERSHIP_DETAILS}</h3>
+            {GROUP_MEMBER_SELECT_NEW}
+          </div>
+          <!-- END switch_groups_member -->
+
+          <!-- BEGIN switch_groups_pending -->
+          <div class="simple light">
+            <h3>demandes d'adhésion</h3>
+            {GROUP_PENDING_SELECT_NEW}
+          </div>
+          <!-- END switch_groups_pending -->
+  <!-- END switch_groups_joined -->
+
+  <!-- BEGIN switch_groups_remaining -->
+  <div class="simple light">
+            <h3>{L_JOIN_A_GROUP}</h3>
+          <form action="{U_USERGROUP_ACTION}" method="get">
+            {S_HIDDEN_FIELDS}<br/>
+            <div class="flexrow">
+              {GROUP_LIST_SELECT}
+              <input class="button2 no-extend" type="submit" value="{L_VIEW_INFORMATION}" />
+            </div>
+          </form>
+  </div>
+  <!-- END switch_groups_remaining -->
+</div>
+
+<div class="simple light right-align">
+  <form action="{S_JUMPBOX_ACTION}" method="get" name="jumpbox" onsubmit="if(document.jumpbox.f.value == -1){return false;}">
+    :&nbsp;{S_JUMPBOX_SELECT}&nbsp;<input class="button2" type="submit" value="{L_GO}" />
+  </form>
+</div>

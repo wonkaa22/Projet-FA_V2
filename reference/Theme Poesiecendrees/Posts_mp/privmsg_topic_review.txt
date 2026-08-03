@@ -1,0 +1,16 @@
+<!-- BEGIN switch_inline_mode -->
+<h4>{L_TOPIC_REVIEW}</h4>
+<!-- END switch_inline_mode -->
+
+<!-- BEGIN postrow -->
+<div class="simple light post {postrow.ROW_CLASS}">
+	<div class="postprofile"><dl><dt><div class="postprofile-avatar">{postrow.POSTER_AVATAR}</div><div class="postprofile-name">{postrow.POSTER_NAME}</div></dt></dl></div>
+	<div class="postbody">
+          <div class="author simple middle small lowercase">
+            <img src="{postrow.MINI_POST_IMG}" alt="" /> {postrow.L_TOPIC_BY} {postrow.POSTER_NAME} {postrow.L_TOPIC_ON} {postrow.POST_DATE}
+          </div><br>
+		<div class="content">{postrow.MESSAGE}</div>
+	</div>
+
+</div>
+<!-- END postrow -->

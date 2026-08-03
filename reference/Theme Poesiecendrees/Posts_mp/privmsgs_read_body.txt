@@ -1,0 +1,100 @@
+<form action="{S_PRIVMSGS_ACTION}" method="post">
+
+<div class="simple dark">
+  <h2>{POST_SUBJECT}</h2>
+  <pp>{BOX_NAME} :: {L_MESSAGE}</pp>
+</div>
+
+
+    <div class="flex simple nopadding lowercase" style="--max: 120px; grid-gap: var(--mo);">
+      <div class="simple light">
+        {INBOX}
+      </div>
+      <div class="simple light">
+        {SENTBOX}
+      </div>
+      <div class="simple light">
+        {OUTBOX}
+      </div>
+      <div class="simple light">
+        {SAVEBOX}
+      </div>
+  </div>
+
+
+
+<div class="post simple light">
+	<div class="postprofile">
+	<dl>
+		<dt>
+			<div class="postprofile-avatar">{AVATAR_FROM}</div>
+			<div class="postprofile-name">{MESSAGE_FROM}</div>
+		</dt>
+		<dd class="postprofile-contact">
+			<!-- BEGIN switch_user_contact -->
+			{PROFILE_IMG} {PM_IMG} {EMAIL_IMG} {WWW_IMG} {AIM_IMG} {YIM_IMG} {MSN_IMG} {SKYPE_IMG}
+			<!-- END switch_user_contact -->
+		</dd>
+	</dl>
+	</div>
+	<div class="postbody">
+
+          <pl><div class="flexrow" style="--height: auto;">
+            <div class="simple light lowercase no-extend">
+              {POST_DATE}
+            </div>
+            <div class="author simple middle lowercase">
+              de {MESSAGE_FROM}
+            </div>
+
+            <!-- BEGIN switch_quote -->
+              <div class="mp_answer_img_topiclist quote_topiclist no-extend">
+                {QUOTE_PM_IMG}
+              </div>
+            <!-- END switch_quote -->
+            </div></pl>
+
+          <br/>
+
+		<div class="content">
+			{MESSAGE}
+		</div>
+	</div>
+</div>
+<fieldset class="submit-buttons">
+	{S_HIDDEN_FIELDS}
+
+
+  <div class="flexrow simple nopadding">
+
+    <!-- BEGIN switch_post_reply -->
+      <div class="button1">
+        <a href="{REPLY_PM_URL}" rel="nofollow" title="{REPLY_PM_IMG}" style="color: var(--l1);">répondre</a>
+      </div>
+    <!-- END switch_post_reply -->
+
+    <!-- BEGIN switch_save -->
+    <input class="button2 nomargin" type="submit" name="save" value="{L_SAVE_MSG}" />&nbsp;&nbsp;
+    <!-- END switch_save -->
+    <!-- BEGIN switch_move_profile -->
+    <input class="button2 nomargin" type="submit" name="moveprofile" value="{L_MOVE_PROFILE}" />&nbsp;&nbsp;
+    <!-- END switch_move_profile -->
+    <input class="button2" type="submit" name="delete" value="{L_DELETE_MSG}" />
+
+  </div>
+</fieldset>
+</form>
+
+<!-- BEGIN switch_review_box -->
+<br/><br/>{TOPIC_REVIEW_BOX}
+<!-- END switch_review_box -->
+
+{JUMPBOX}
+
+<!-- BEGIN switch_image_resize -->
+<script type="text/javascript">
+//<![CDATA[
+$(resize_images({ 'selector' : '.postbody .content', 'max_width' : {switch_image_resize.IMG_RESIZE_WIDTH}, 'max_height' : {switch_image_resize.IMG_RESIZE_HEIGHT} }));
+//]]>
+</script>
+<!-- END switch_image_resize -->

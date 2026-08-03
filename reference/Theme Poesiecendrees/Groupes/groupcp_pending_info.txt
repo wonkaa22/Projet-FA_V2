@@ -1,0 +1,43 @@
+<br/><br/><div class="simple light">
+    <h3>membres en attente d'adhésion dans le groupe</h3>
+  </div>
+
+
+  <div class="bp_ml simple light">
+
+
+
+    <!-- BEGIN pending_members_row -->
+    <div class="container_ml simple light nopadding">
+      <a href="{member_row.U_VIEWPROFILE}" class="small light">
+        <h3>{pending_members_row.USERNAME}</h3>
+      </a>
+
+      <div class="simple nomargin extend flexrow">
+          <div class="left-align table_js">
+            {pending_members_row.POSTS} messages
+
+          </div>
+
+          <div class="no-extend table_js">
+            {pending_members_row.PM_IMG}
+          </div>
+
+          <div class="modoption_ml no-extend table_js">
+            <input type="checkbox" name="pending_members[]" value="{pending_members_row.USER_ID}" checked="checked" />
+          </div>
+      </div>
+
+    </div>
+    <!-- END pending_members_row -->
+
+
+
+
+  </div>
+
+<div class="flex simple nopadding">
+  <input class="button2" type="submit" name="approve" value="{L_APPROVE_SELECTED}" />
+  <input class="button2" type="submit" name="deny" value="{L_DENY_SELECTED}" />
+</div>
+<br/>

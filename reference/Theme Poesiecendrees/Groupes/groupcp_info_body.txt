@@ -1,0 +1,157 @@
+<div class="simple dark highlight">
+  <h2>{PAGE_TITLE}</h2>
+  <!-- BEGIN switch_pagination -->
+  <pp>{PAGINATION}</pp>
+  <!-- END switch_pagination -->
+</div>
+
+<div class="simple light">
+  <h3>informations du groupe : {GROUP_NAME}</h3>
+</div>
+
+<form action="{S_GROUPCP_ACTION}" method="post">
+	<div class="simple light">
+          <ro>description</ro> {GROUP_DESC}<br/>
+          <ro>statut dans le groupe</ro> {GROUP_DETAILS}
+
+            <!-- BEGIN switch_subscribe_group_input -->
+            <input class="button2" type="submit" name="joingroup" value="{L_JOIN_GROUP}" />
+            <!-- END switch_subscribe_group_input -->
+            <!-- BEGIN switch_unsubscribe_group_input -->
+            <input class="button2" type="submit" name="unsub" value="{L_UNSUBSCRIBE_GROUP}" />
+            <!-- END switch_unsubscribe_group_input -->
+        </div>
+
+          <!-- BEGIN switch_mod_option -->
+            <div class="simple light">
+              <h3>mettre à jour le type du groupe</h3>
+            </div>
+
+          <div class="flexrow simple nopadding">
+            <label class="button1"><input type="radio" name="group_type" value="{S_GROUP_OPEN_TYPE}" {S_GROUP_OPEN_CHECKED} {S_GROUP_OPEN_DISABLED} />{L_GROUP_OPEN}</label>
+            <label class="button1"><input type="radio" name="group_type" value="{S_GROUP_CLOSED_TYPE}" {S_GROUP_CLOSED_CHECKED} />&nbsp;{L_GROUP_CLOSED}</label>
+            <label class="button1"><input type="radio" name="group_type" value="{S_GROUP_HIDDEN_TYPE}" {S_GROUP_HIDDEN_CHECKED} />&nbsp;{L_GROUP_HIDDEN}</label>
+          </div>
+          <!-- END switch_mod_option -->
+
+		{S_HIDDEN_FIELDS}
+</form><br/><br/>
+
+<form action="{S_GROUPCP_ACTION}" method="post" name="post">
+  <!-- BEGIN switch_hidden_group -->
+    <div class="simple dark center-align">
+      <rou>{L_HIDDEN_MEMBERS}</rou>
+    </div>
+  <!-- END switch_hidden_group -->
+
+  <!-- BEGIN switch_no_user -->
+    <div class="nomember_ml simple dark center-align">
+      <rou>aucun membre ne fait partie de ce groupe</rou>
+    </div>
+  <!-- END switch_no_user -->
+
+
+
+
+
+  <div class="bp_ml simple light">
+    <div class="container_ml simple light nopadding">
+      <a href="{U_MOD_VIEWPROFILE}" class="small light">
+        <h3>{MOD_USERNAME}</h3>
+      </a>
+
+      <div class="simple nomargin extend flexrow">
+          <div class="left-align">
+            <ro>modérateur</ro><br/>
+          {MOD_POSTS} messages
+          </div>
+          <div class="no-extend table_js">
+            {MOD_PM_IMG}
+          </div>
+      </div>
+
+      </div>
+
+
+
+
+
+    <!-- BEGIN member_row -->
+    <div class="container_ml simple light nopadding">
+      <a href="{member_row.U_VIEWPROFILE}" class="small light">
+        <h3>{member_row.USERNAME}</h3>
+      </a>
+
+      <div class="simple nomargin extend flexrow">
+          <div class="left-align table_js">
+            {member_row.POSTS} messages
+
+          </div>
+
+          <div class="no-extend table_js">
+            {member_row.PM_IMG}
+          </div>
+
+        <!-- BEGIN switch_mod_option -->
+          <div class="modoption_ml no-extend table_js">
+            <input type="checkbox" name="members[]" value="{member_row.USER_ID}" />
+          </div>
+        <!-- END switch_mod_option -->
+      </div>
+
+    </div>
+    <!-- END member_row -->
+
+
+
+
+  </div>
+
+
+
+
+<!-- BEGIN switch_mod_option -->
+    <!-- BEGIN switch_grp_admin -->
+    <div class="simple light"><strong>{L_ADMIN_GRP_EXPLAIN}</strong></div>
+    <!-- END switch_grp_admin -->
+    <div class="simple light flexrow">
+            <p>
+                <input class="inputbox tiny" type="text" id="username" name="username" />&nbsp;
+                &nbsp;<input class="button2" type="submit" name="add" value="{L_ADD_MEMBER}" />&nbsp;
+                &nbsp;<input class="button2" type="button" id="find_user" value="{L_FIND_USERNAME}" />
+            </p>
+            <p class="no-extend"><input class="button2" type="submit" name="remove" value="{L_REMOVE_SELECTED}" />{S_HIDDEN_FIELDS}</p>
+    </div>
+<!-- END switch_mod_option -->
+<p class="pagination">{PAGINATION}</p>
+<div class="clear"></div>
+{PENDING_USER_BOX}
+</form>
+<form action="{S_JUMPBOX_ACTION}" method="get" name="jumpbox" onsubmit="if(document.jumpbox.f.value == -1){return false;}">
+	<p class="right">{L_JUMP_TO}:&nbsp;{S_JUMPBOX_SELECT}&nbsp;<input class="button2" type="submit" value="{L_GO}" /></p>
+</form>
+
+<!-- BEGIN switch_mod_option -->
+<div id="find_username" class="jqmWindow"></div>
+
+<script src="{JQUERY_DIR}jqmodal/jqmodal.js" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+	$(document).ready(function(){
+		function find_username(fieldname) {
+			$.get('{U_SEARCH_USER}&fieldname=' + fieldname + '&time=' + timestamp(), '',
+				function(data){
+					$('#find_username').html(data).jqmShow();
+					$('.jqmOverlay').bgiframe();
+					$('#find_username').bgiframe();
+				});
+			return false;
+		}
+		$('#find_user').click(function(){
+			return find_username('username');
+		});
+		$('#find_username').jqm({toTop: true});
+	});
+//]]>
+</script>
+<!-- END switch_mod_option -->

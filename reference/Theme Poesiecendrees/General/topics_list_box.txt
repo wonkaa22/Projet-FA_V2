@@ -1,0 +1,115 @@
+<!-- BEGIN topics_list_box -->
+<!-- BEGIN row -->
+<!-- BEGIN header_table -->
+	<!-- BEGIN multi_selection -->
+		<script type="text/javascript">
+
+		function check_uncheck_main_{topics_list_box.row.header_table.BOX_ID}()
+		{
+			alert('MAIN');
+
+			var all_checked = true;
+
+			for (i = 0; (i < document.{topics_list_box.FORMNAME}.elements.length) && all_checked; i++)
+			{
+				if (document.{topics_list_box.FORMNAME}.elements[i].name == '{topics_list_box.FIELDNAME}[]{topics_list_box.row.header_table.BOX_ID}')
+				{
+					all_checked = document.{topics_list_box.FORMNAME}.elements[i].checked;
+				}
+			}
+
+			document.{topics_list_box.FORMNAME}.all_mark_{topics_list_box.row.header_table.BOX_ID}.checked = all_checked;
+		}
+
+		function check_uncheck_all_{topics_list_box.row.header_table.BOX_ID}()
+		{
+			alert('ALL');
+
+			for (i = 0; i < document.{topics_list_box.FORMNAME}.length; i++)
+			{
+				if (document.{topics_list_box.FORMNAME}.elements[i].name == '{topics_list_box.FIELDNAME}[]{topics_list_box.row.header_table.BOX_ID}')
+				{
+					document.{topics_list_box.FORMNAME}.elements[i].checked = document.{topics_list_box.FORMNAME}.all_mark_{topics_list_box.row.header_table.BOX_ID}.checked;
+				}
+			}
+		}
+
+		</script>
+	<!-- END multi_selection -->
+
+	<div class="announcement">
+		<div class="bp_topiclist simple light">
+<!-- END header_table -->
+
+<!-- BEGIN header_row -->
+		<strong>{topics_list_box.row.L_TITLE}</strong>
+<!-- END header_row -->
+
+<!-- BEGIN topic -->
+
+<div class="content_topiclist simple middle">
+
+          <div class="icon_topiclist table_js">
+            <img src="{topics_list_box.row.TOPIC_FOLDER_IMG}"/>
+          </div>
+
+          <a class="title_topiclist" href="{topics_list_box.row.U_VIEW_TOPIC}">
+		<h3>{topics_list_box.row.PARTICIPATE_POST_IMG} {topics_list_box.row.TOPIC_TYPE} {topics_list_box.row.TOPIC_TITLE}</h3>
+
+		<!-- BEGIN switch_description -->
+		<i>{topics_list_box.row.topic.switch_description.TOPIC_DESCRIPTION}</i>
+		<!-- END switch_description -->
+          </a>
+
+          <div class="stats_topiclist lowercase">
+            par <pl>{topics_list_box.row.TOPIC_AUTHOR}</pl> — {topics_list_box.row.REPLIES} messages
+          </div>
+
+          <div class="nav_topiclist right-align lowercase">
+            {topics_list_box.row.GOTO_PAGE_NEW}
+            <!-- BEGIN nav_tree -->
+                    {topics_list_box.row.TOPIC_NAV_TREE_NEW}
+            <!-- END nav_tree -->
+          </div>
+
+          <!-- BEGIN single_selection -->
+            <div class="input_topiclist table_js">
+	      <input type="radio" name="{topics_list_box.FIELDNAME}" value="{topics_list_box.row.FID}" {topics_list_box.row.L_SELECT} />
+	    </div>
+          <!-- END single_selection -->
+
+          <!-- BEGIN avatar -->
+            <div class="avatar_topiclist table_js">
+              {topics_list_box.row.topic.avatar.LAST_POST_AVATAR}
+            </div>
+          <!-- END avatar -->
+
+
+          <div class="infos_topiclist table_js">
+            <pl class="lowercase">
+	      {topics_list_box.row.LAST_POST_TIME}<br/>
+              {topics_list_box.row.LAST_POST_AUTHOR} {topics_list_box.row.LAST_POST_IMG}
+            </pl>
+
+				<!-- BEGIN multi_selection -->
+					<input onclick="javascript:check_uncheck_main_{topics_list_box.row.BOX_ID}();" type="checkbox" name="{topics_list_box.FIELDNAME}[]{topics_list_box.row.BOX_ID}" value="{topics_list_box.row.FID}" {topics_list_box.row.L_SELECT} />
+				<!-- END multi_selection -->
+          </div>
+
+        </div>
+
+
+<!-- END topic -->
+<!-- BEGIN no_topics -->
+<div class="simple middle highlight center-align lowercase">
+<ro>{topics_list_box.row.L_NO_TOPICS}</ro>
+</div>
+<!-- END no_topics -->
+
+<!-- BEGIN bottom -->
+	</div>
+</div>
+<!-- END bottom -->
+<!-- BEGIN spacer --><br /><!-- END spacer -->
+<!-- END row -->
+<!-- END topics_list_box -->
