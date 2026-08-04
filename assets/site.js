@@ -1236,3 +1236,147 @@
     forceFullWidth(messageBox.querySelector('.sceditor-container textarea'));
   }, 300);
 })();
+
+/* ---------- PROFILE_ADVANCED_BODY : redistribution des champs personnalisés ----------
+   {profile_field.LABEL}/{profile_field.CONTENT} sortent de Forumactif en une
+   seule liste plate (#profFieldSource, voir profile_advanced_body.html), dans
+   l'ordre où Noémie les a configurés côté admin — pas de moyen, côté
+   template, de cibler "le champ Pronoms" individuellement dans cette boucle.
+   Même technique que pfaViewtopicPosts plus haut (correspondance par libellé
+   normalisé) : chaque <dl id="field_id..."> natif est DÉPLACÉ (pas cloné) au
+   bon endroit, en conservant sa structure field_editable/field_uneditable
+   intacte pour que l'édition rapide au survol (script natif en bas de la
+   page) continue de fonctionner après coup — jQuery reste attaché à
+   l'élément déplacé, pas à sa position d'origine dans le DOM.
+   Libellé non reconnu (faute de frappe, champ renommé...) : atterrit quand
+   même dans le cadre "Personnage" plutôt que de disparaître silencieusement.
+   Pour ajouter/renommer un champ reconnu : éditer FIELD_MAP ci-dessous (voir
+   README.md pour la liste à jour). */
+(function pfaProfileFields() {
+  var source = document.getElementById('profFieldSource');
+  if (!source) { return; }
+
+  var FIELD_MAP = {
+    'pronoms': { slot: 'personnage' },
+    'langues': { slot: 'personnage' },
+    'occupation': { slot: 'personnage' },
+    'residence': { slot: 'personnage' },
+    'faceclaim': { slot: 'personnage' },
+    'commentaires': { slot: 'personnage' },
+    'image de deco': { slot: 'deco', type: 'image' },
+    'image de decoration': { slot: 'deco', type: 'image' },
+    'vojoj': { slot: 'jauges', type: 'gauge' },
+    'profunda': { slot: 'jauges', type: 'gauge' },
+    'memore': { slot: 'jauges', type: 'gauge' },
+    'pronoms irl': { slot: 'ooc' },
+    'pseudo': { slot: 'ooc' },
+    'date de naissance': { slot: 'ooc' },
+    'dcs': { slot: 'ooc' },
+    'triggers': { slot: 'ooc' },
+    'a propos': { slot: 'bio', type: 'bio' },
+    'presentation': { slot: 'bio', type: 'bio' },
+    'url fiche': { slot: 'url-fiche', type: 'link' },
+    'url relations': { slot: 'url-relations', type: 'link' }
+  };
+
+  function normalize(text) {
+    var stripped = text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    return stripped.toLowerCase().trim().replace(/\s*:\s*$/, '');
+  }
+
+  function slotEl(name) {
+    return document.querySelector('[data-prof-slot="' + name + '"]');
+  }
+
+  source.querySelectorAll('dl[id^="field_id"]').forEach(function (dl) {
+    var dt = dl.querySelector('dt');
+    var dd = dl.querySelector('dd');
+    if (!dt || !dd) { return; }
+
+    var key = normalize(dt.textContent);
+    var entry = FIELD_MAP[key] || { slot: 'personnage' };
+
+    if (entry.type === 'image') {
+      var holder = slotEl('deco');
+      var img = dd.querySelector('img');
+      if (holder && img) { holder.appendChild(img.cloneNode(true)); }
+      dl.style.display = 'none';
+      source.appendChild(dl);
+      return;
+    }
+
+    if (entry.type === 'link') {
+      var target = slotEl(entry.slot);
+      if (target) {
+        var link = dd.querySelector('a[href]');
+        var href = link ? link.getAttribute('href') : dd.textContent.trim();
+        if (href) {
+          var a = document.createElement('a');
+          a.className = 'link-chip featured';
+          a.href = href;
+          a.textContent = entry.slot === 'url-fiche' ? 'Fiche' : 'Relations';
+          target.replaceWith(a);
+        }
+      }
+      dl.style.display = 'none';
+      source.appendChild(dl);
+      return;
+    }
+
+    if (entry.type === 'bio') {
+      var bio = slotEl('bio');
+      if (bio) { bio.appendChild(dl); dl.classList.add('bio-field'); }
+      return;
+    }
+
+    if (entry.type === 'gauge') {
+      var gauges = slotEl('jauges');
+      if (!gauges) { return; }
+      var val = parseInt(dd.textContent, 10);
+      if (isNaN(val)) { val = 0; }
+      val = Math.max(0, Math.min(100, val));
+      var row = document.createElement('div');
+      row.className = 'gauge-row';
+      row.innerHTML =
+        '<div class="gauge-top"><span class="gauge-name"></span><span>' + val + ' / 100</span></div>' +
+        '<div class="gauge-track"><div class="gauge-fill" style="width:' + val + '%"></div></div>';
+      row.querySelector('.gauge-name').textContent = dt.textContent.replace(/\s*:\s*$/, '');
+      dl.classList.add('gauge-value');
+      row.appendChild(dl);
+      gauges.appendChild(row);
+      return;
+    }
+
+    var plain = slotEl(entry.slot);
+    if (plain) { plain.appendChild(dl); }
+  });
+})();
+
+/* ---------- PROFILE_ADVANCED_BODY : icônes propriétaire vs visiteur ----------
+   Aucune variable native "c'est mon propre profil" dans profile_advanced_body
+   — départage fait ici en comparant _userdata.user_id (membre connecté, même
+   convention que pfaSidebarAuthState plus haut) à data-prof-uid (profil
+   affiché, {CUR_USER_ID}). Statut admin détecté via la présence de
+   .admin-note plutôt qu'en devinant la valeur de _userdata.user_level : ce
+   bloc n'est rendu par Forumactif (switch_auth_user) que pour les comptes
+   réellement autorisés à administrer le membre affiché, signal déjà fiable
+   côté serveur. */
+(function pfaProfileOwnerView() {
+  var root = document.getElementById('profActions');
+  var page = document.getElementById('profile-advanced-layout');
+  if (!root || !page) { return; }
+
+  var viewedId = parseInt(page.getAttribute('data-prof-uid'), 10);
+  var isOwner = false;
+  try {
+    if (typeof _userdata !== 'undefined' && _userdata && _userdata.user_id && viewedId) {
+      isOwner = parseInt(_userdata.user_id, 10) === viewedId;
+    }
+  } catch (e) { /* ignore */ }
+  var isAdmin = !!document.querySelector('.admin-note');
+
+  var state = (isOwner || isAdmin) ? 'owner' : 'visitor';
+  root.querySelectorAll('.prof-actions-state').forEach(function (el) {
+    el.hidden = el.getAttribute('data-state') !== state;
+  });
+})();

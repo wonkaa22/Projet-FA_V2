@@ -1909,3 +1909,151 @@
   .pb-review-post .vt-profile { padding: 6px; min-width: 0; }
   .pb-review-post .vt-avatar { aspect-ratio: 200 / 320; border-radius: 10px; min-width: 0; }
   .pb-review-name { color: var(--ink-hi-light); font-weight: 700; }
+
+  /* ==========================================================================
+     PAGE PROFIL (profile_advanced_body) — mockup validé, voir README.md pour
+     l'onglet réellement géré (Infos) et le mapping libellé -> emplacement
+     appliqué par pfaProfileFields (site.js). ========================== */
+
+  /* ---- bandeau d'identité ---- */
+  .prof-id-row { display: flex; gap: 20px; }
+  .prof-avatar {
+    flex-shrink: 0; width: 132px; aspect-ratio: 200 / 320; border-radius: 12px;
+    overflow: hidden;
+  }
+  .prof-avatar img {
+    width: 100% !important; height: 100% !important; max-width: 100% !important; max-height: 100% !important;
+    min-width: 0 !important; min-height: 0 !important; object-fit: cover; display: block;
+  }
+  .prof-id-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+  .prof-name-row { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .prof-name {
+    font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 700;
+    font-size: 30px; color: var(--ink-hi-light); text-wrap: balance; line-height: 1.1;
+  }
+  .prof-online, .prof-lastseen { font-size: 11px; color: var(--ink-muted-light); }
+  .prof-online:empty, .prof-lastseen:empty { display: none; }
+  .prof-rank { font-size: 11px; font-style: italic; color: var(--ink-muted-light); }
+  .prof-rank:empty { display: none; }
+  .prof-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip {
+    font-size: 11px; padding: 5px 11px; border-radius: 999px; background: rgba(0,0,0,0.14);
+    color: var(--ink-body-light); display: inline-flex; align-items: center; gap: 5px;
+  }
+  .chip b { font-variant-numeric: tabular-nums; color: var(--ink-hi-light); }
+
+  .prof-links-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .link-chip {
+    font-size: 11px; padding: 7px 12px; border-radius: 9px; background: var(--section);
+    border: 1px solid rgba(224,225,221,0.14); color: var(--ink-body-light); text-decoration: none;
+    max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .link-chip:hover { border-color: var(--ink-muted-light); }
+  /* Slots "Fiche"/"Relations" (data-prof-slot dans le HTML) restent hidden tant que
+     pfaProfileFields ne les a pas remplis : évite un lien vide/cliquable dans le vide
+     si le champ personnalisé correspondant n'existe pas. */
+  .link-chip[hidden] { display: none; }
+  .link-chip.featured { background: var(--frame-grad); border-color: transparent; color: var(--chip-ink); font-weight: 600; }
+
+  /* ---- icônes propriétaire/visiteur : les deux hidden par défaut, l'une des
+     deux retirée par pfaProfileOwnerView une fois _userdata disponible. ---- */
+  .prof-actions { flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; }
+  .prof-actions-state[hidden] { display: none; }
+  .prof-action-btn {
+    width: 38px; height: 38px; border-radius: 10px;
+    background: var(--section); border: 1px solid rgba(224,225,221,0.14); color: var(--ink-hi-light);
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none; cursor: pointer;
+  }
+  .prof-action-btn svg { width: 16px; height: 16px; }
+  .prof-action-btn:hover { background: var(--frame-grad); color: var(--chip-ink); border-color: transparent; }
+
+  /* ---- grille principale ---- */
+  .prof-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 14px; align-items: start; }
+  .prof-col { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+  .prof-col .content-frame .h4 {
+    font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 600;
+    font-size: 15px; color: var(--ink-hi-light); text-wrap: balance;
+  }
+
+  /* ---- champs (Personnage / En dehors du jeu) : les <dl id="field_id...">
+     natifs sont déplacés ici tels quels par pfaProfileFields (voir site.js) —
+     .fields ne fait qu'habiller la disposition, id="field_id..." et la
+     structure interne field_editable/field_uneditable restent intactes pour
+     l'édition rapide native au survol. */
+  .fields { display: flex; flex-direction: column; gap: 9px; }
+  .fields:empty { display: none; }
+  .fields dl { display: flex; gap: 10px; font-size: 12.5px; line-height: 1.5; margin: 0; }
+  .fields dt {
+    flex: 0 0 128px; font-weight: 700; letter-spacing: 0.2px; color: var(--ink-muted-light);
+  }
+  .fields dd { margin: 0; color: var(--ink-body-light); word-break: break-word; }
+
+  .prof-deco-holder { width: 100%; max-width: 260px; }
+  .prof-deco-holder:empty { display: none; }
+  .prof-deco-holder img { width: 100%; border-radius: 10px; display: block; }
+
+  /* ---- jauges : barres construites en JS (pfaProfileGauges) à partir de la
+     valeur numérique du champ personnalisé correspondant (Vojoj/Profunda/
+     Memore) — le champ natif reste éditable au survol juste en dessous,
+     la largeur de la barre ne se recalcule qu'au prochain chargement de
+     page après une modification (limitation connue, pas de mise à jour
+     "live" de la barre sans re-brancher sur le succès de l'appel AJAX natif). */
+  .gauges:empty { display: none; }
+  .gauge-row { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
+  .gauge-row:last-child { margin-bottom: 0; }
+  .gauge-top { display: flex; justify-content: space-between; align-items: baseline; font-size: 11.5px; }
+  .gauge-top .gauge-name { color: var(--ink-hi-light); font-weight: 600; }
+  .gauge-track { height: 8px; border-radius: 999px; background: rgba(0,0,0,0.16); overflow: hidden; }
+  .gauge-fill { height: 100%; border-radius: 999px; background: var(--frame-grad); }
+  .gauge-value { margin-top: 2px; }
+  .gauge-value dt, .gauge-value dd { font-size: 10.5px; }
+
+  .prof-ooc-layout { display: flex; gap: 18px; align-items: stretch; }
+  .prof-ooc-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 14px; }
+
+  /* ---- "À propos" : hauteur fixe + défilement interne, même convention de
+     scrollbar que .side-card-list. ---- */
+  .bio-body {
+    max-height: 460px; overflow-y: auto; padding-right: 6px;
+    scrollbar-width: thin; scrollbar-color: rgba(224,225,221,0.3) transparent;
+    font-size: 12.5px; line-height: 1.75; color: var(--ink-body-light);
+  }
+  .bio-body::-webkit-scrollbar { width: 5px; }
+  .bio-body::-webkit-scrollbar-track { background: transparent; }
+  .bio-body::-webkit-scrollbar-thumb { background: rgba(224,225,221,0.3); border-radius: 3px; }
+
+  /* ---- Coffre : widget compact natif (switch_awards, {AWARDS_LIST}) —
+     sélecteurs volontairement génériques tant qu'on n'a pas inspecté la
+     vraie sortie HTML de {AWARDS_LIST} sur le forum ; à affiner une fois
+     collé (voir commentaire dans profile_advanced_body.html). */
+  .prof-coffre-widget { display: flex; flex-wrap: wrap; gap: 10px; }
+  .prof-coffre-widget img { max-width: 64px; height: auto; border-radius: 10px; }
+
+  .card-link {
+    display: inline-block; margin-top: 6px; font-size: 11.5px; color: var(--ink-hi-light);
+    text-decoration: none; border-bottom: 1px solid transparent;
+  }
+  .card-link:hover { border-color: var(--ink-hi-light); }
+
+  .admin-note {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+    background: var(--section); border: 1px solid rgba(224,225,221,0.14); border-radius: 14px;
+    padding: 12px 16px; font-size: 11.5px; color: var(--ink-muted-light);
+  }
+  .admin-note a { color: var(--ink-hi-light); text-decoration: none; font-weight: 600; }
+  .admin-note a:hover { text-decoration: underline; }
+
+  @media (max-width: 860px) {
+    .prof-grid { grid-template-columns: 1fr; }
+    /* .prof-id-row garde sa mise en page large (avatar à gauche, texte à
+       droite) le plus longtemps possible : seul l'avatar rétrécit d'abord,
+       comme validé sur le mockup. */
+    .prof-avatar { width: 96px; }
+    .prof-ooc-layout { flex-direction: column; }
+  }
+  @media (max-width: 520px) {
+    .prof-id-row { flex-direction: column; }
+    .prof-avatar { width: 120px; }
+    .prof-actions { flex-direction: row; }
+  }

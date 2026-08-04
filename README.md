@@ -45,3 +45,41 @@ du thème "Selenujo" existant. Point de départ : mockup HTML/CSS validé
   fichier de référence FA pour ce sous-template précis (seulement vu dans
   `reference/templates-source/viewtopic_body.html`), à vérifier une fois collé
   en vrai sur le forum.
+
+## Page Profil (`templates/profile_advanced_body.html`)
+
+Ne gère que l'onglet natif "Infos" (celui par défaut sur un lien `/uXX`) —
+pas d'onglet Statistiques/Amis/Suivi/Groupes/Récompenses/Messages habillé
+(hors sujet pour l'instant, voir le commentaire en haut du fichier).
+
+Les champs personnalisés créés côté admin FA sortent tous dans une seule
+boucle (`{profile_field.LABEL}`/`{profile_field.CONTENT}`), sans moyen d'en
+cibler un précisément dans le template — `pfaProfileFields` (`site.js`) les
+redistribue dans les bons cadres en comparant le libellé (normalisé, sans
+accents/casse) à cette liste :
+
+| Libellé attendu (FA)     | Cadre         |
+|---------------------------|---------------|
+| Pronoms, Langues, Occupation, Résidence, Faceclaim, Commentaires | Personnage |
+| Image de déco             | Personnage (image, à droite) |
+| Vojoj, Profunda, Memore   | Jauges (barre 0-100) |
+| Pronoms IRL, Pseudo, Date de naissance, DCs, Triggers | En dehors du jeu |
+| À propos / Présentation   | À propos (texte défilant) |
+| URL Fiche, URL Relations  | Bandeau du haut (mêmes champs que côté viewtopic) |
+
+Un champ dont le libellé ne correspond à rien dans cette liste atterrit par
+défaut dans "Personnage" plutôt que de disparaître — pour en ajouter un
+nouveau ou corriger un libellé, éditer `FIELD_MAP` dans `pfaProfileFields`
+(`assets/site.js`).
+
+**À vérifier une fois collé sur le forum** (points non confirmables depuis
+les fichiers de référence seuls, voir le commentaire en haut de
+`profile_advanced_body.html` pour le raisonnement) :
+- `{JOINED}`, `{PUSERNAME}`, `{LAST_VISIT_TIME}` s'affichent-elles bien
+  (plutôt que le texte brut de la variable) alors qu'on n'est pas sur
+  l'onglet Statistiques natif ?
+- `{switch_awards.AWARDS_LIST}` (widget "Coffre") : à inspecter pour voir sa
+  vraie structure HTML et ajuster les sélecteurs CSS (`.prof-coffre-widget`)
+  en conséquence — notamment le tri Objets/Récompenses par classe CSS
+  personnalisée (`obj`/`reward`) et le grisé/encadré selon possédé ou non,
+  pas encore branchés.
