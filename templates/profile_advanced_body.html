@@ -2,8 +2,8 @@
   Page Profil (profile_advanced_body). Voir README.md pour :
   - la liste des libellés de champs personnalisés reconnus par site.js
     (pfaProfileFields) et comment en ajouter/renommer sans casser la mise en page ;
-  - la nature "vérifiée mais pas garantie" de {JOINED}/{PUSERNAME}/{LAST_VISIT_TIME}
-    ci-dessous (détails dans le commentaire juste en dessous).
+  - le résultat confirmé (pas juste supposé) du test réel sur le forum pour
+    la portée des variables — détails ci-dessous.
 
   IMPORTANT — architecture des onglets natifs Forumactif : ce template gère
   UNIQUEMENT l'onglet "Infos" (switch_profile_tab, celui qui s'affiche par
@@ -18,21 +18,27 @@
   système d'onglets) s'afficheront ; le reste de la page sera vide. À
   refaire plus tard si besoin d'un onglet Statistiques habillé.
 
-  {JOINED}, {PUSERNAME}, {LAST_VISIT_TIME}/{L_LAST_VISITED} : dans le
-  template natif (reference/templates-source/Profil/profile_advanced_body.txt),
-  ces variables sont physiquement écrites À L'INTÉRIEUR du bloc
-  switch_stats_tab, mais SANS le préfixe à points (switch_stats_tab.xxx)
-  que porte systématiquement tout ce qui est vraiment scopé à cet onglet
-  (ex. switch_stats_tab.points_fieldset.POINTS) — signe qu'il s'agit de
-  variables globales à la page, simplement affichées dans cet onglet par
-  le thème d'origine, pas de données calculées seulement pour lui. Pari
-  fait ici qu'elles restent disponibles même en dehors de switch_stats_tab
-  (JOINED/PUSERNAME notamment sont des informations d'identité basiques,
-  généralement assignées une fois pour toute la page côté serveur). À
-  VÉRIFIER après collage : si "{JOINED}" ou "{PUSERNAME}" s'affichent tels
-  quels au lieu d'une vraie valeur, c'est qu'elles sont bien confinées à
-  l'onglet Statistiques — prévenir pour qu'on retire ces champs ou qu'on
-  trouve une alternative.
+  CONFIRMÉ par un test réel (inspecteur de Noémie sur /u1) :
+  - {switch_profile_tab.profile_field.ID}/.LABEL/.CONTENT — le chemin complet
+    avec le préfixe du bloc englobant est OBLIGATOIRE ; la forme courte
+    {profile_field.ID} vue ailleurs dans ce fichier de référence (à un autre
+    endroit du template natif, hors switch_profile_tab) ne se résout pas du
+    tout ici et rend une chaîne vide. Sans préfixe, les 19 champs
+    personnalisés sortaient comme des <dl> totalement vides — corrigé.
+  - {JOINED}/{L_JOINED} et {LAST_VISIT_TIME}/{L_LAST_VISITED} : confirmées
+    VIDES sur l'onglet Infos malgré l'absence de préfixe dans leur nom
+    (elles sont physiquement écrites dans switch_stats_tab dans le fichier
+    natif) — la portée d'une variable dépend du bloc BEGIN/END qui
+    l'entoure, pas de son nom. Retirées du bandeau (pas d'alternative
+    trouvée pour l'instant sur cet onglet).
+  - {PUSERNAME} : confirmée disponible même hors switch_stats_tab (a bien
+    rendu "u1") — gardée pour "Tous les sujets"/"Tous les messages".
+  - {switch_awards.AWARDS_LIST} (widget Coffre) : le bloc entier ne s'est
+    PAS affiché du tout (pas même vide) alors qu'Admin possède une
+    récompense d'après Noémie — donc soit ce widget compact est lui aussi
+    gated à un onglet particulier malgré sa position dans #profile-advanced-right
+    du fichier natif, soit autre chose bloque son affichage. Pas encore
+    résolu, à re-vérifier avec Noémie.
 -->
 <div id="profile-advanced-layout" class="prof-page" data-prof-uid="{CUR_USER_ID}">
 
@@ -44,12 +50,8 @@
 				<div class="prof-name-row">
 					<h1 class="prof-name">{USERNAME}</h1>
 					<span class="prof-online">{USER_ONLINE_ONLY}</span>
-					<span class="prof-lastseen">{L_LAST_VISITED} {LAST_VISIT_TIME}</span>
 				</div>
 				<div class="prof-rank">{POSTER_RANK_ONLY}</div>
-				<div class="prof-chips">
-					<span class="chip">{L_JOINED} <b>{JOINED}</b></span>
-				</div>
 				<!-- "Fiche"/"Relations" : réutilise les champs personnalisés "URL Fiche"/
 				     "URL Relations" déjà exploités côté viewtopic (pfaViewtopicPosts dans
 				     site.js) — même correspondance par libellé ici (pfaProfileFields).
@@ -147,9 +149,9 @@
 	     du cadre "Personnage" plutôt que de disparaître silencieusement. -->
 	<div id="profFieldSource" hidden>
 		<!-- BEGIN profile_field -->
-		<dl id="field_id{profile_field.ID}">
-			<dt>{profile_field.LABEL}</dt>
-			<dd>{profile_field.CONTENT}</dd>
+		<dl id="field_id{switch_profile_tab.profile_field.ID}">
+			<dt>{switch_profile_tab.profile_field.LABEL}</dt>
+			<dd>{switch_profile_tab.profile_field.CONTENT}</dd>
 		</dl>
 		<!-- END profile_field -->
 	</div>

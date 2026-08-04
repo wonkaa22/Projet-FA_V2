@@ -53,10 +53,12 @@ pas d'onglet Statistiques/Amis/Suivi/Groupes/Récompenses/Messages habillé
 (hors sujet pour l'instant, voir le commentaire en haut du fichier).
 
 Les champs personnalisés créés côté admin FA sortent tous dans une seule
-boucle (`{profile_field.LABEL}`/`{profile_field.CONTENT}`), sans moyen d'en
-cibler un précisément dans le template — `pfaProfileFields` (`site.js`) les
-redistribue dans les bons cadres en comparant le libellé (normalisé, sans
-accents/casse) à cette liste :
+boucle (`{switch_profile_tab.profile_field.LABEL}`/`.CONTENT` — le préfixe du
+bloc englobant est obligatoire, confirmé par un test réel : sans lui la
+boucle tourne bien mais chaque variable rend une chaîne vide), sans moyen
+d'en cibler un précisément dans le template — `pfaProfileFields` (`site.js`)
+les redistribue dans les bons cadres en comparant le libellé (normalisé,
+sans accents/casse) à cette liste :
 
 | Libellé attendu (FA)     | Cadre         |
 |---------------------------|---------------|
@@ -72,14 +74,14 @@ défaut dans "Personnage" plutôt que de disparaître — pour en ajouter un
 nouveau ou corriger un libellé, éditer `FIELD_MAP` dans `pfaProfileFields`
 (`assets/site.js`).
 
-**À vérifier une fois collé sur le forum** (points non confirmables depuis
-les fichiers de référence seuls, voir le commentaire en haut de
-`profile_advanced_body.html` pour le raisonnement) :
-- `{JOINED}`, `{PUSERNAME}`, `{LAST_VISIT_TIME}` s'affichent-elles bien
-  (plutôt que le texte brut de la variable) alors qu'on n'est pas sur
-  l'onglet Statistiques natif ?
-- `{switch_awards.AWARDS_LIST}` (widget "Coffre") : à inspecter pour voir sa
-  vraie structure HTML et ajuster les sélecteurs CSS (`.prof-coffre-widget`)
-  en conséquence — notamment le tri Objets/Récompenses par classe CSS
-  personnalisée (`obj`/`reward`) et le grisé/encadré selon possédé ou non,
-  pas encore branchés.
+**Confirmé par un test réel** (inspecteur de Noémie sur `/u1`, voir le
+commentaire en haut de `profile_advanced_body.html`) :
+- `{JOINED}`/`{LAST_VISIT_TIME}` sont bien vides sur l'onglet Infos (retirées
+  du bandeau, pas d'alternative trouvée) ; `{PUSERNAME}` fonctionne bien.
+- Le widget compact "Coffre" (`{switch_awards.AWARDS_LIST}`) ne s'affiche pas
+  du tout sur cet onglet, alors qu'Admin possède une récompense — **encore
+  non résolu**. À revérifier avec Noémie (peut-être aussi gated à un onglet
+  particulier, comme `profile_field` l'était avant le correctif ci-dessus) —
+  le tri Objets/Récompenses par classe CSS personnalisée (`obj`/`reward`) et
+  le grisé/encadré selon possédé ou non restent à brancher une fois ce
+  widget résolu.

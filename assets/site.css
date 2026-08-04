@@ -1932,15 +1932,9 @@
     font-size: 30px; color: var(--ink-hi-light); text-wrap: balance; line-height: 1.1;
   }
   .prof-online, .prof-lastseen { font-size: 11px; color: var(--ink-muted-light); }
-  .prof-online:empty, .prof-lastseen:empty { display: none; }
+  .prof-online:empty { display: none; }
   .prof-rank { font-size: 11px; font-style: italic; color: var(--ink-muted-light); }
   .prof-rank:empty { display: none; }
-  .prof-chips { display: flex; gap: 8px; flex-wrap: wrap; }
-  .chip {
-    font-size: 11px; padding: 5px 11px; border-radius: 999px; background: rgba(0,0,0,0.14);
-    color: var(--ink-body-light); display: inline-flex; align-items: center; gap: 5px;
-  }
-  .chip b { font-variant-numeric: tabular-nums; color: var(--ink-hi-light); }
 
   .prof-links-row { display: flex; flex-wrap: wrap; gap: 8px; }
   .link-chip {
