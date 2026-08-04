@@ -1982,6 +1982,14 @@
     flex: 0 0 128px; font-weight: 700; letter-spacing: 0.2px; color: var(--ink-muted-light);
   }
   .fields dd { margin: 0; color: var(--ink-body-light); word-break: break-word; }
+  /* Filet de sécurité : un champ image dont le libellé ne correspond à rien
+     dans FIELD_MAP (pfaProfileFields, site.js) atterrit dans "Personnage"
+     comme n'importe quel champ texte, avec son <img> natif affiché à sa
+     taille réelle — vu en vrai sur le forum (image de déco bien plus large
+     que la carte). Contrainte ici même pour les champs non reconnus, en
+     plus de la vraie mise en page (.prof-deco-holder img) pour ceux qui
+     matchent "image de deco". */
+  .fields dd img { max-width: 100%; height: auto; border-radius: 8px; display: block; }
 
   .prof-deco-holder { width: 100%; max-width: 260px; }
   .prof-deco-holder:empty { display: none; }
@@ -2001,7 +2009,17 @@
   .gauge-track { height: 8px; border-radius: 999px; background: rgba(0,0,0,0.16); overflow: hidden; }
   .gauge-fill { height: 100%; border-radius: 999px; background: var(--frame-grad); }
   .gauge-value { margin-top: 2px; }
-  .gauge-value dt, .gauge-value dd { font-size: 10.5px; }
+  .gauge-value dt, .gauge-value dd { font-size: 10.5px; color: var(--ink-muted-light); }
+  /* Le <input> natif (édition rapide au survol) hérite sinon du style par
+     défaut du navigateur (pilule blanche pleine largeur) — vu en vrai sur
+     le forum, entre chaque barre de jauge et la suivante. Discret par
+     défaut, seule sa valeur (déjà affichée dans .gauge-top) compte tant
+     qu'on ne survole pas pour éditer. */
+  .gauge-value input {
+    background: var(--section) !important; color: var(--ink-body-light) !important;
+    border: 1px solid rgba(224,225,221,0.14) !important; border-radius: 6px;
+    font-size: 10.5px; width: 60px; padding: 2px 6px;
+  }
 
   .prof-ooc-layout { display: flex; gap: 18px; align-items: stretch; }
   .prof-ooc-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 14px; }
